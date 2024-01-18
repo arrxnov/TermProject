@@ -4,50 +4,85 @@ html {
 }
 
 body {
+    display: flex;
+    flex-flow: column nowrap;
     margin: 0;
     padding: 0;
+    border: 1vh solid black;
+    min-height: 100vh;
 }
 
 #top-bar {
     display: flex;
     flex-flow: row nowrap;
-    min-width: 100%;
+    border: 1vh solid black;
+}
+
+#top-words {
+    justify-content: flex-start;
+    border: 1vh solid lime;
 }
 
 #top-spacer {
     flex-grow: 1;
+    border: 1vh solid blue;
 }
 
-#top-btns {
-    justify-content: flex-end;
+#top-btn-container {
+    align-items: center;
+    display: flex;
+    justify-self: flex-end;
+    flex: column nowrap;
+    border: 1vh dotted red;
+}
+
+.top-btn {
+    border: 1vh solid black;
+    margin: 1vw;
 }
 
 #main-container {
     display: flex;
-    flex-flow: row wrap;
+    flex: 1;
+    flex-flow: row nowrap;
+    border: 1vh solid yellow;
 }
 
 #reqs {
-    max-width: 20%;
-    border: 1px solid black;
     flex-grow: 1;
+    border: 1vh solid rgb(255, 0, 0);
 }
 
 #plan-finder-container {
+    flex: 1;
+    flex-grow: 7;
     display: flex;
     flex-flow: column wrap;
+    border: 1vh solid rgb(238, 0, 255);
 }
 
-
-
 #plan {
+    flex: 1;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
+    border: 1vh solid black;
+}
+
+.year {
+    flex: 1;
+    border: 1vh solid pink; 
+    display: flex;
+    flex-direction: row;
+}
+
+#course-finder {
+    flex: 1;
+    flex-grow: 0;
+    border: 1vh solid teal ;
 }
 
 .semester {
-    border: 1px solid black;
-    min-width: 10%;
-    min-height: 10%;
+    flex: 1;
     margin: 4px;
+    border: 1vh solid black;
 }
