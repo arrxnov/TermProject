@@ -8,32 +8,41 @@ body {
     flex-flow: column nowrap;
     margin: 0;
     padding: 0;
-    border: none;
     background-image: url("../images/bg.jpg");
     min-height: 100vh;
+    font-family: Montserrat;
 }
 
 #top-bar {
     display: flex;
+    min-width: 100vw;
     flex-flow: row nowrap;
-    border: none;
 }
 
 #top-words {
+    flex: 1;
     justify-content: flex-start;
-    border: none;
-    margin-left: 1vh;
+    align-self: center;
+    border: 1px solid red;
+    font-size: 10pt;
+}
+
+#top-img {
+    flex: 1;
+    flex-grow: 0;
+    min-width: 5%;
+    min-height: 5%;
+    max-height: 5%;
+    max-height: 5%;
 }
 
 #top-spacer {
-    flex-grow: 1;
     border: none;
 }
 
 #top-btn-container {
     align-items: center;
     display: flex;
-    justify-self: flex-end;
     justify-content: flex-end;
     flex: column nowrap;
     flex-grow: 1;
@@ -43,7 +52,10 @@ body {
 .top-btn {
     border: none;
     margin: 1vw;
-    padding: 2%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 1vh;
+    padding-right: 1vh;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -94,6 +106,14 @@ body {
     border: none;
 }
 
+#course-finder {
+    flex: 1;
+    flex-grow: 1;
+    border: none;
+    margin: 4px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
 .year {
     flex: 1;
     border: none; 
@@ -103,13 +123,6 @@ body {
     flex-direction: row;
 }
 
-#course-finder {
-    flex: 1;
-    flex-grow: 1;
-    border: none;
-    margin: 4px;
-    background-color: rgba(0, 0, 0, 0.3);
-}
 
 .semester {
     flex: 1;
