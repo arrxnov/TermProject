@@ -55,7 +55,18 @@ body {
     padding-bottom: 5px;
     padding-left: 1vh;
     padding-right: 1vh;
-    background-color: rgba(0, 0, 0, 0.3);
+    background: linear-gradient(
+        45deg,
+        #ff0000,
+        #ff7300,
+        #fffb00,
+        #48ff00,
+        #00ffd5,
+        #002bff,
+        #7a00ff,
+        #ff00c8,
+        #ff0000
+      );;
 }
 
 #main-container {
