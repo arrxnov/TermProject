@@ -21,23 +21,22 @@ body {
 
 #top-words {
     flex: 1;
+    flex-grow: 4;
     justify-content: flex-start;
     align-self: center;
-    border: 1px solid red;
+    border: none;
     font-size: 10pt;
 }
 
 #top-img {
     flex: 1;
     flex-grow: 0;
+    flex-shrink: 0;
+    object-fit: cover;
     min-width: 5%;
     min-height: 5%;
     max-height: 5%;
     max-height: 5%;
-}
-
-#top-spacer {
-    border: none;
 }
 
 #top-btn-container {
@@ -92,7 +91,7 @@ body {
 
 #plan-finder-container {
     flex: 1;
-    flex-grow: 7;
+    flex-grow: 10;
     display: flex;
     flex-flow: column wrap;
     border: none;
