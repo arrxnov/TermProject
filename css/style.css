@@ -8,81 +8,129 @@ body {
     flex-flow: column nowrap;
     margin: 0;
     padding: 0;
-    border: 1vh solid black;
+    background-image: url("../images/bg.jpg");
     min-height: 100vh;
+    font-family: Montserrat;
 }
 
 #top-bar {
     display: flex;
+    min-width: 100vw;
     flex-flow: row nowrap;
-    border: 1vh solid black;
 }
 
 #top-words {
+    flex: 1;
+    flex-grow: 4;
     justify-content: flex-start;
-    border: 1vh solid lime;
+    align-self: center;
+    border: none;
+    font-size: 10pt;
 }
 
-#top-spacer {
-    flex-grow: 1;
-    border: 1vh solid blue;
+#top-img {
+    flex: 1;
+    flex-grow: 0;
+    flex-shrink: 0;
+    object-fit: cover;
+    min-width: 5%;
+    min-height: 5%;
+    max-height: 5%;
+    max-height: 5%;
 }
 
 #top-btn-container {
     align-items: center;
     display: flex;
-    justify-self: flex-end;
+    justify-content: flex-end;
     flex: column nowrap;
-    border: 1vh dotted red;
+    flex-grow: 1;
+    border: none;
 }
 
 .top-btn {
-    border: 1vh solid black;
+    border: none;
     margin: 1vw;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 #main-container {
     display: flex;
     flex: 1;
     flex-flow: row nowrap;
-    border: 1vh solid yellow;
+    border: none;
+}
+
+#left-container {
+    flex: 1;
+    flex-grow: 2;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 #reqs {
+    flex: 1;
+    flex-grow: 8;
+    border: none;
+    margin: 4px;
+    min-width: 10%;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 5px;
+}
+
+#links {
+    flex: 1;
     flex-grow: 1;
-    border: 1vh solid rgb(255, 0, 0);
+    margin: 4px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 5px;
 }
 
 #plan-finder-container {
     flex: 1;
-    flex-grow: 7;
+    flex-grow: 10;
     display: flex;
     flex-flow: column wrap;
-    border: 1vh solid rgb(238, 0, 255);
+    border: none;
 }
 
 #plan {
     flex: 1;
+    flex-grow: 8;
     display: flex;
     flex-flow: column wrap;
-    border: 1vh solid black;
-}
-
-.year {
-    flex: 1;
-    border: 1vh solid pink; 
-    display: flex;
-    flex-direction: row;
+    border: none;
 }
 
 #course-finder {
     flex: 1;
-    flex-grow: 0;
-    border: 1vh solid teal ;
+    flex-grow: 1;
+    border: none;
+    box-shadow: 1px 1px 5px;
+    margin: 4px;
+    background-color: rgba(0, 0, 0, 0.3);
 }
+
+.year {
+    flex: 1;
+    border: none; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+
 
 .semester {
     flex: 1;
     margin: 4px;
-    border: 1vh solid black;
+    padding: 10px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 7px;
 }
