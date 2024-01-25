@@ -2,8 +2,6 @@
     --btn-color: rgb(100, 100, 100);
     --text-color-light: rgb(230, 230, 230); /*rgb(167, 167, 167)*/
     --text-color-dark: black;
-    --text-color1: #720000;
-    --text-color2: #ff5800;
     --transparency-dark: rgba(0, 0, 0, 0.7);
     --transparency-light: rgba(0, 0, 0, 0.4);
 }
@@ -71,7 +69,7 @@ button:active {
     font-weight: bold;
     border: none;
     border-radius: 4px;
-    background-color: var(--transparency-dark);
+    background-color: var(--transparency-dark); /* change to dark blue or dark gray?*/
     box-shadow: 1px 1px 7px;
 }
 /* Generic Classes ------------------------------------------------------------- */
@@ -298,7 +296,6 @@ main {
 #lr-course-finder {
     flex: 1;
     flex-grow: 1;
-    min-height: 15vh;
     max-height: 20vh;
     border: none;
     border-radius: 4px;
