@@ -60,6 +60,9 @@ button:active {
 
 /* Generic Classes ------------------------------------------------------------- */
 .labels {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
     flex: 1;
     flex-grow: 0;
     margin: 4px;
@@ -226,9 +229,18 @@ main {
 }
 
 /* Upper right container (plan) ------------------------------------------------ */
+#ur-header {
+    justify-content: space-around;
+}
+
+#ur-header-2 {
+    font-weight: normal;
+    justify-content: space-around;
+}
+
 #ur-plan {
     flex: 1;
-    flex-grow: 5;
+    flex-grow: 1;
     flex-flow: column nowrap;
     display: flex;
 }
@@ -276,12 +288,17 @@ main {
     margin-bottom: 10px;
 }
 
+/* .term {
+    text-decoration: underline;
+} */
+
 /* Upper right container (plan) ------------------------------------------------ */
 
 /* Lower right container (course finder) --------------------------------------- */
 #lr-course-finder {
     flex: 1;
     flex-grow: 1;
+    min-height: 15vh;
     max-height: 20vh;
     border: none;
     border-radius: 4px;
