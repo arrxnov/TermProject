@@ -1,6 +1,6 @@
 :root {
     --btn-color: rgb(100, 100, 100);
-    --text-color-light: rgb(230, 230, 230); /*rgb(167, 167, 167)*/
+    --text-color-light: rgb(230, 230, 230);
     --text-color-dark: black;
     --transparency-dark: rgba(0, 0, 0, 0.7);
     --transparency-light: rgba(0, 0, 0, 0.4);
@@ -77,10 +77,7 @@ button:active {
 /* Header ---------------------------------------------------------------------- */
 header {
     display: flex;
-    /* min-width: 100vw; */
     flex-flow: row nowrap;
-    /* margin: 8px;
-    border: black 2px solid; */
 }
 
 header h1 {
@@ -100,9 +97,6 @@ header button {
 }
 
 #icon {
-    /* flex: 1;
-    flex-grow: 0; */
-    /* flex-shrink: 0; */
     object-fit: cover;
     min-width: 70px;
     min-height: 70px;
@@ -289,11 +283,6 @@ main {
     font-weight: bold;
     margin-bottom: 10px;
 }
-
-/* .term {
-    text-decoration: underline;
-} */
-
 /* Upper right container (plan) ------------------------------------------------ */
 
 /* Lower right container (course finder) --------------------------------------- */
