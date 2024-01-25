@@ -282,7 +282,6 @@ main {
 #lr-course-finder {
     flex: 1;
     flex-grow: 1;
-    min-height: 20vh;
     max-height: 20vh;
     border: none;
     border-radius: 4px;
