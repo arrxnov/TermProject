@@ -77,8 +77,10 @@ button:active {
 /* Header ---------------------------------------------------------------------- */
 header {
     display: flex;
-    min-width: 100vw;
+    /* min-width: 100vw; */
     flex-flow: row nowrap;
+    /* margin: 8px;
+    border: black 2px solid; */
 }
 
 header h1 {
@@ -94,16 +96,18 @@ header h1 {
 
 header button {
     margin: 1vw;
+    min-width: 80px;
 }
 
 #icon {
-    flex: 1;
-    flex-grow: 0;
-    flex-shrink: 0;
+    /* flex: 1;
+    flex-grow: 0; */
+    /* flex-shrink: 0; */
     object-fit: cover;
-    min-width: 5%;
-    min-height: 5%;
-    max-height: 5%;
+    min-width: 70px;
+    min-height: 70px;
+    max-height: 70px;
+    margin: 4px;
 }
 
 #header-btns {
@@ -295,8 +299,7 @@ main {
 /* Lower right container (course finder) --------------------------------------- */
 #lr-course-finder {
     flex: 1;
-    flex-grow: 1;
-    max-height: 20vh;
+    flex-grow: 0;
     border: none;
     border-radius: 4px;
     box-shadow: 1px 1px 5px;
