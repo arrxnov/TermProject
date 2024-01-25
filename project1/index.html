@@ -1,71 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+    
     <head>
         <title>APE</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
     </head>
+
     <body>
         
-        <header id="top-bar">
-            <img src="images/ape-no-bg.png" id="top-img" alt="image of an ape reading">
-            <div id="top-words">
-                <h1>ACADEMIC PLANNING ENVIRONMENT</h1>
-            </div>
-            <div id="top-btn-container">    
-                <button id="logout" class="btn top-btn">Log Out</button>
-                <button id="options" class="btn top-btn">Options</button>
-                <button id="save" class="btn top-btn">Save</button>
+        <header>
+            <img src="images/ape-no-bg.png" id="icon" alt="image of an ape reading">
+
+            <h1>ACADEMIC PLANNING ENVIRONMENT</h1>
+
+            <div id="header-btns">    
+                <button id="logout">Log Out</button>
+                <button id="options">Options</button>
+                <button id="save">Save</button>
             </div> 
+
         </header>
 
-        <div id="main-container">
-            
+        <main>
             <div id="left-container">
-                <div id="reqs">
-                    <ul>
-                        <li>Req 1</li>
-                        <li>Req 2</li>
-                        <li>Req 3</li>
-                        <li>Req 4</li>
-                    </ul>
+                <div class="labels">
+                    <p>Requirements</p>
                 </div>
-                <div id="links">
-                    <ul>
-                        <li>Jacob</li>
-                        <li>Kai</li>
-                        <li>Logan</li>
-                    </ul>
+                <div id="ul-course-reqs">
+                    <p>
+                        Reqs
+                    </p>
+                </div>
+                <div class="labels">
+                        <p>Homepages</p>
+                    </div>
+                <div id="ll-misc">
+                    <div id="home-pages">
+                        <form>
+                            <a href="http://judah.cedarville.edu/~grady/cs3220.html" target="_blank">Jacob Grady</a>
+                            <a href="http://judah.cedarville.edu/~delsing/cs3220.html" target="_blank">Kai Delsing</a>
+                            <a href="http://judah.cedarville.edu/~lmiller/cs3220.html" target="_blank">Logan Miller</a>
+                        </form>
+                    </div>
+                    <div id="voting">
+                        <form>
+                            <a href="http://judah.cedarville.edu/index.php" target="_blank">Vote for us here</a>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-            <div id="plan-finder-container">
-                
-                <div id="plan">
+            <div id="right-container">
+                <div id="ur-plan">
+                    <div class="labels">
+                        <p>Course Plan --- GPA: 3.074 --- Major GPA: 2.904 --- Total Hours:: 124</p>
+                    </div>
                     <div id="year1" class="year">
-                        <div id="box1" class="semester">
+                        <div id="semester1" class="semester fall">
                             <p>MATH-1710 Calculus I</p>
                             <p>CS-1210 C++ Programming</p>
                             <p>EGCP-1010 Digital Logic Design</p>
                             <p>COM-1100 Fundamentals of Speech</p>
                             <p>BTGE-1725 Bible & the Gospel</p>
                         </div>
-                        <div id="box2" class="semester">
+                        <div id="semester2" class="semester spring">
                             <p>CY-1000 Intro to Cybersecurity</p>
                             <p>PHYS-2110 General Physics I</p>
                             <p>CS-1220 Obj-Orient Design/C++</p>
                             <p>PEAI-1600 Racquetball (coed)</p>
                             <p>MATH-1720 Calculus II</p>
                         </div>
-                        <div id="box3" class="semester">
+                        <div id="semester3" class="semester summer">
                             <p>Empty</p>
                         </div>
                     </div>
                     
                     <div id="year2" class="year">
-                        <div id="box4" class="semester">
+                        <div id="semester4" class="semester fall">
                             <p>BTGE-2730 Old Testament Literature</p>
                             <p>CS-2210 Data Struct Using Java</p>
                             <p>CS-3210 Programming Lang Survey</p>
@@ -73,59 +86,61 @@
                             <p>PLMU-1810 Contemporary Piano</p>
                             <p>CY-3420 Cyber Defense</p>
                         </div>
-                        <div id="box5" class="semester">
+                        <div id="semester5" class="semester spring">
                             <p>BTGE-2740 New Testament Literature</p>
                             <p>CS-3310 Operating Systems</p>
                             <p>EGCP-3210 Computer Architecture</p>
                             <p>GBIO-1000 Prin of Biology</p>
                             <p>MATH-2520 Discrete Math/Prob Principles</p>
                         </div>
-                        <div id="box6" class="semester">
+                        <div id="semester6" class="semester summer">
                             <p>Empty</p>
                         </div>
                     </div>
                     
                     <div id="year3" class="year">
-                        <div id="box7" class="semester">
+                        <div id="semester7" class="semester fall">
                             <p>BTGE-3755 Theology I</p>
                             <p>CS-3410 Algorithms</p>
                             <p>CY-3320 Linux Systems Programming</p>
                             <p>EGCP-2120 Microcontrollers</p>
                             <p>EGCP-4310 Computer Networks</p>
                         </div>
-                        <div id="box8" class="semester">
+                        <div id="semester8" class="semester spring">
                             <p>CS-3610 Database Org & Design</p>
                             <p>CS-3220 Web Applications</p>
                             <p>CY-4330 Software Security</p>
                             <p>HIST-4500 Seminar: Modern Warfare</p>
                             <p>LIT-2340 Western Literature</p>
                         </div>
-                        <div id="box9" class="semester">
+                        <div id="semester9" class="semester summer">
                             <p>Empty</p>
                         </div>
                     </div>
                     
                     <div id="year4" class="year">
-                        <div id="box10" class="semester">
+                        <div id="semester10" class="semester fall">
                             <p>EGGN-4010 Senior Seminar</p>
                             <p>CY-4810 Secure Software Engineering I</p>
                             <p>CY-2310 Cyber Forensics</p>
                             <p>BTGE-3765 Theology II</p>
                         </div>
-                        <div id="box11" class="semester">
+                        <div id="semester11" class="semester summer">
                             <p>CY-4310 Cyber Operations</p>
                             <p>EGGN-3110 Professional Ethics</p>
                             <p>CY-4820 Secure Software Engineering II</p>
                             <p>CS-3510 Compiler Theory & Practice</p>
                         </div>
-                        <div id="box12" class="semester">
+                        <div id="semester12" class="semester spring">
                             <p>Empty</p>
                         </div>
                     </div>
 
                 </div>
-                
-                <div id="course-finder">
+                <div class="labels">
+                    <p>Course Finder</p>
+                </div>
+                <div id="lr-course-finder">
                     <ul>
                         <li>Course 1</li>
                         <li>Course 2</li>
@@ -134,6 +149,9 @@
                 </div>
 
             </div>
-        </div>
+
+        </main>
+
     </body>
+    
 </html>

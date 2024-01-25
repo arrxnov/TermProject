@@ -1,3 +1,17 @@
+/* Classes --------------------------------------------------------------------- */
+
+/* Document sections ----------------------------------------------------------- */
+
+:root {
+    --btn-color: rgb(100, 100, 100);
+    --text-color-light: rgb(167, 167, 167);
+    --text-color-dark: black;
+    --text-color1: #720000;
+    --text-color2: #ff5800;
+    --transparency-dark: rgba(0, 0, 0, 0.7);
+    --transparency-light: rgba(0, 0, 0, 0.4);
+}
+
 html {
     margin: 0;
     padding: 0;
@@ -10,25 +24,41 @@ body {
     padding: 0;
     background-image: url("../images/bg.jpg");
     min-height: 100vh;
+    max-height: 100vh;
     font-family: Montserrat;
+    color: var(--text-color-light);
 }
 
-#top-bar {
+/* Universal tag categories ---------------------------------------------------- */
+
+
+
+/* Universal tag categories ---------------------------------------------------- */
+
+/* Header ---------------------------------------------------------------------- */
+
+header {
     display: flex;
     min-width: 100vw;
     flex-flow: row nowrap;
 }
 
-#top-words {
+header h1 {
     flex: 1;
-    flex-grow: 4;
+    flex-grow: 3;
     justify-content: flex-start;
     align-self: center;
     border: none;
-    font-size: 10pt;
+    font-size: 3rem;
+    margin: 10px;
+    color: var(--text-color-dark);
 }
 
-#top-img {
+header button {
+    margin: 1vw;
+}
+
+#icon {
     flex: 1;
     flex-grow: 0;
     flex-shrink: 0;
@@ -36,10 +66,9 @@ body {
     min-width: 5%;
     min-height: 5%;
     max-height: 5%;
-    max-height: 5%;
 }
 
-#top-btn-container {
+#header-btns {
     align-items: center;
     display: flex;
     justify-content: flex-end;
@@ -48,21 +77,47 @@ body {
     border: none;
 }
 
-.top-btn {
-    border: none;
-    margin: 1vw;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 1vh;
-    padding-right: 1vh;
-    background-color: rgba(0, 0, 0, 0.3);
-}
+/* Header ---------------------------------------------------------------------- */
 
-#main-container {
+/* Main ------------------------------------------------------------------------ */
+
+main {
     display: flex;
     flex: 1;
     flex-flow: row nowrap;
     border: none;
+    
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    transition: all .4s ease-in-out;
+    flex: 1;
+    flex-grow: 1;
+    border: none;
+    border-radius: 4px;
+    margin: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    background-color: var(--transparency-dark);
+    box-shadow: 1px 1px 5px;
+    color: var(--text-color-light);
+}
+
+button:hover {
+    transition: all .2s ease-in-out;
+    background-color: var(--transparency-light);
+}
+
+button:active {
+    transition: all 0s;
+    box-shadow: none;
 }
 
 #left-container {
@@ -72,65 +127,155 @@ body {
     flex-flow: column nowrap;
 }
 
-#reqs {
-    flex: 1;
-    flex-grow: 8;
-    border: none;
-    margin: 4px;
-    min-width: 10%;
-    background-color: rgba(0, 0, 0, 0.3);
-    box-shadow: 1px 1px 5px;
-}
-
-#links {
+#ul-course-reqs {
     flex: 1;
     flex-grow: 1;
-    margin: 4px;
     border: none;
-    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    margin: 4px;
+    padding: 10px;
+    min-width: 10%;
+    background-color: var(--transparency-light);
     box-shadow: 1px 1px 5px;
 }
 
-#plan-finder-container {
+#ll-misc {
+    flex: 1;
+    flex-grow: 0;
+    margin: 4px;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: var(--transparency-light);
+    box-shadow: 1px 1px 5px;
+}
+
+#ll-misc a {
+    display: block;
+    flex: 1;
+    flex-grow: 1;
+    border: none;
+    border-radius: 4px;
+    margin: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    background-color: var(--transparency-dark);
+    box-shadow: 1px 1px 5px;
+    text-decoration: none;
+    color: var(--fnt-folor);
+    justify-content: space-evenly;
+}
+
+#ll-misc a:hover {
+    transition: all .2s ease-in-out;
+    background-color: var(--transparency-light);
+}
+
+#ll-misc a:active {
+    transition: all 0s;
+    box-shadow: none;
+}
+
+#home-pages {
+    flex: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#voting {
+    display: flex;
+    flex: 1;
+    flex-grow: 1;
+    justify-content: space-around;
+    border-radius: 4px;
+}
+
+#voting-btn {
+    flex: 1;
+    flex-grow: 1;
+}
+
+#right-container {
     flex: 1;
     flex-grow: 10;
     display: flex;
-    flex-flow: column wrap;
-    border: none;
+    flex-flow: column nowrap;
 }
 
-#plan {
+#ur-plan {
     flex: 1;
-    flex-grow: 8;
+    flex-grow: 5;
+    flex-flow: column nowrap;
     display: flex;
-    flex-flow: column wrap;
-    border: none;
 }
 
-#course-finder {
+.labels {
     flex: 1;
-    flex-grow: 1;
-    border: none;
-    box-shadow: 1px 1px 5px;
+    flex-grow: 0;
     margin: 4px;
-    background-color: rgba(0, 0, 0, 0.3);
+    padding: 4px;
+    font-size: 10pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--transparency-dark);
+    box-shadow: 1px 1px 7px;
 }
 
 .year {
     flex: 1;
-    border: none; 
+    flex-grow: 1;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: row;
 }
 
-
 .semester {
+    transition: all .4s ease-in-out;
     flex: 1;
+    flex-grow: 1;
     margin: 4px;
     padding: 10px;
+    font-size: 11pt;
     border: none;
-    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    background-color: var(--transparency-dark);
     box-shadow: 1px 1px 7px;
+    color: var(--text-color-light);
 }
+
+.semester:hover {
+    transition: all .4s ease-in-out;
+    background-color: var(--transparency-light);
+}
+
+.semester p {
+    border-radius: 4px;
+}
+
+.semester p:hover {
+    background-color: var(--transparency-dark);
+}
+
+#lr-course-finder {
+    flex: 1;
+    flex-grow: 1;
+    min-height: 20vh;
+    max-height: 20vh;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 1px 1px 5px;
+    margin: 4px;
+    background-color: var(--transparency-light);
+}
+
+/* Main ------------------------------------------------------------------------ */
