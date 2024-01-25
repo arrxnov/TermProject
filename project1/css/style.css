@@ -1,10 +1,6 @@
-/* Classes --------------------------------------------------------------------- */
-
-/* Document sections ----------------------------------------------------------- */
-
 :root {
     --btn-color: rgb(100, 100, 100);
-    --text-color-light: rgb(167, 167, 167);
+    --text-color-light: rgb(230, 230, 230); /*rgb(167, 167, 167)*/
     --text-color-dark: black;
     --text-color1: #720000;
     --text-color2: #ff5800;
@@ -30,13 +26,54 @@ body {
 }
 
 /* Universal tag categories ---------------------------------------------------- */
+p {
+    margin: 0;
+    padding: 0;
+}
 
+button {
+    transition: all .4s ease-in-out;
+    flex: 1;
+    flex-grow: 1;
+    border: none;
+    border-radius: 4px;
+    margin: 4px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    background-color: var(--transparency-dark);
+    box-shadow: 1px 1px 5px;
+    color: var(--text-color-light);
+}
 
+button:hover {
+    transition: all .2s ease-in-out;
+    background-color: var(--transparency-light);
+}
 
+button:active {
+    transition: all 0s;
+    box-shadow: none;
+}
 /* Universal tag categories ---------------------------------------------------- */
 
-/* Header ---------------------------------------------------------------------- */
+/* Generic Classes ------------------------------------------------------------- */
+.labels {
+    flex: 1;
+    flex-grow: 0;
+    margin: 4px;
+    padding: 4px;
+    font-size: 10pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--transparency-dark);
+    box-shadow: 1px 1px 7px;
+}
+/* Generic Classes ------------------------------------------------------------- */
 
+/* Header ---------------------------------------------------------------------- */
 header {
     display: flex;
     min-width: 100vw;
@@ -76,11 +113,9 @@ header button {
     flex-grow: 1;
     border: none;
 }
-
 /* Header ---------------------------------------------------------------------- */
 
 /* Main ------------------------------------------------------------------------ */
-
 main {
     display: flex;
     flex: 1;
@@ -89,37 +124,7 @@ main {
     
 }
 
-p {
-    margin: 0;
-    padding: 0;
-}
-
-button {
-    transition: all .4s ease-in-out;
-    flex: 1;
-    flex-grow: 1;
-    border: none;
-    border-radius: 4px;
-    margin: 4px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 1vh;
-    padding-right: 1vh;
-    background-color: var(--transparency-dark);
-    box-shadow: 1px 1px 5px;
-    color: var(--text-color-light);
-}
-
-button:hover {
-    transition: all .2s ease-in-out;
-    background-color: var(--transparency-light);
-}
-
-button:active {
-    transition: all 0s;
-    box-shadow: none;
-}
-
+/* Left container -------------------------------------------------------------- */
 #left-container {
     flex: 1;
     flex-grow: 2;
@@ -127,6 +132,7 @@ button:active {
     flex-flow: column nowrap;
 }
 
+/* Upper left container (requirements) ----------------------------------------- */
 #ul-course-reqs {
     flex: 1;
     flex-grow: 1;
@@ -138,7 +144,9 @@ button:active {
     background-color: var(--transparency-light);
     box-shadow: 1px 1px 5px;
 }
+/* Upper left container (requirements) ----------------------------------------- */
 
+/* Lower left container (misc) ------------------------------------------------- */
 #ll-misc {
     flex: 1;
     flex-grow: 0;
@@ -180,14 +188,14 @@ button:active {
 }
 
 #home-pages {
+    text-align: center;
+    display: flex;
+    flex-flow: column nowrap;
+
     flex: 1;
     flex-grow: 1;
-    display: flex;
-    flex-flow: row nowrap;
     justify-content: space-around;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    align-items: center;
 }
 
 #voting {
@@ -202,7 +210,14 @@ button:active {
     flex: 1;
     flex-grow: 1;
 }
+/* Lower left container (misc) ------------------------------------------------- */
+.wide-button {
+    width: 90%;
+}
 
+/* Left container -------------------------------------------------------------- */
+
+/* Right container ------------------------------------------------------------- */
 #right-container {
     flex: 1;
     flex-grow: 10;
@@ -210,24 +225,12 @@ button:active {
     flex-flow: column nowrap;
 }
 
+/* Upper right container (plan) ------------------------------------------------ */
 #ur-plan {
     flex: 1;
     flex-grow: 5;
     flex-flow: column nowrap;
     display: flex;
-}
-
-.labels {
-    flex: 1;
-    flex-grow: 0;
-    margin: 4px;
-    padding: 4px;
-    font-size: 10pt;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    background-color: var(--transparency-dark);
-    box-shadow: 1px 1px 7px;
 }
 
 .year {
@@ -266,6 +269,16 @@ button:active {
     background-color: var(--transparency-dark);
 }
 
+.semester-hdr {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Upper right container (plan) ------------------------------------------------ */
+
+/* Lower right container (course finder) --------------------------------------- */
 #lr-course-finder {
     flex: 1;
     flex-grow: 1;
@@ -278,4 +291,9 @@ button:active {
     background-color: var(--transparency-light);
 }
 
+#lr-course-finder p {
+    margin: 8px;
+}
+/* Lower right container (course finder) --------------------------------------- */
+/* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
