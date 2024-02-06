@@ -42,7 +42,7 @@ Year = {
 
 function validateForm() {
     const termRE = new RegExp("((S|s)pring|(S|s)ummer|(F|f)all)");
-    const yearRE = new RegExp("[1-2][0-9]{3}");
+    const yearRE = new RegExp("[0-2][0-9]{3}");
 
     let form = document.forms["courseform"]
     if (form["coursenum"].value == "") {
@@ -51,8 +51,12 @@ function validateForm() {
     } else if (form["coursename"].value == "") {
         alert("Course Name must be filled out");
         return false;
-    } else if (termRE.test(form["term"])) {
-
-    } else if (yearRE.test(form["year"])) {
+    } else if (!termRE.test(form["term"])) {
+        alert("Invalid course term");
+        return 
+    } else if (!yearRE.test(form["year"])) {
+        alert("Invalid course year");
+        return 
     }
 }
+
