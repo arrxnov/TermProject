@@ -1,0 +1,130 @@
+{
+    "plan_name": "Dr. White: Karate Legend",
+    "catalog_year": "1960",
+    "major": "Karate",
+    "student_name": "Dr. White",
+    "current_semester": "SP2024",
+    "courses": [
+        {
+            "term": "FA",
+            "year": "1960",
+            "course_des": "LANG-9090",
+            "course_name": "Southern Accent I",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1960",
+            "course_des": "LANG-9090",
+            "course_name": "Southern Accent I",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1960",
+            "course_des": "LANG-9090",
+            "course_name": "Southern Accent I",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1960",
+            "course_des": "LANG-9090",
+            "course_name": "Southern Accent I",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1960",
+            "course_des": "LANG-9090",
+            "course_name": "Southern Accent I",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1960",
+            "course_des": "LANG-9091",
+            "course_name": "Southern Accent II",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1960",
+            "course_des": "LANG-9091",
+            "course_name": "Southern Accent II",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1960",
+            "course_des": "LANG-9091",
+            "course_name": "Southern Accent II",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1960",
+            "course_des": "LANG-9091",
+            "course_name": "Southern Accent II",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1960",
+            "course_des": "LANG-9091",
+            "course_name": "Southern Accent II",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1961",
+            "course_des": "LANG-9092",
+            "course_name": "Southern Accent III",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1961",
+            "course_des": "LANG-9092",
+            "course_name": "Southern Accent III",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1961",
+            "course_des": "LANG-9092",
+            "course_name": "Southern Accent III",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1961",
+            "course_des": "LANG-9092",
+            "course_name": "Southern Accent III",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1961",
+            "course_des": "LANG-9092",
+            "course_name": "Southern Accent III",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1962",
+            "course_des": "LANG-9094",
+            "course_name": "Southern Accent Capstone",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1962",
+            "course_des": "LANG-9094",
+            "course_name": "Southern Accent Capstone",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1962",
+            "course_des": "LANG-9094",
+            "course_name": "Southern Accent Capstone",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1962",
+            "course_des": "LANG-9094",
+            "course_name": "Southern Accent Capstone",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1962",
+            "course_des": "LANG-9094",
+            "course_name": "Southern Accent Capstone",
+            "credits": 3
+        }
+    ]
+}
