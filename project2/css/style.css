@@ -20,6 +20,7 @@ body {
     min-height: 100vh;
     max-height: 100vh;
     font-family: Montserrat;
+    font-size: 11pt;
     color: var(--text-color-light);
 }
 
@@ -65,7 +66,7 @@ button:active {
     flex-grow: 0;
     margin: 4px;
     padding: 4px;
-    font-size: 10pt;
+    font-size: 12pt;
     font-weight: bold;
     border: none;
     border-radius: 4px;
@@ -300,11 +301,72 @@ main {
     margin: 8px;
 }
 
-#lr-course-finder form {
+#course-finder-form {
     display: flex;
     flex-flow: row;
+    padding: 8px;
+}
+
+#course-search {
+    display: flex;
+    flex-grow: 2;
+    flex-flow: row;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
+
+#course-search div {
+    margin: 4px;
+}
+
+#course-search label {
+    font-weight: bold;
+}
+
+#course-submit {
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row;
+    justify-content: center;
+}
+
+#course-submit input[type=submit] {
+    min-width: 80px;
+    background: var(--transparency-dark);
+    border: none;
+    border-radius: 4px;
+    color: var(--fnt-folor);
+    font-weight: bold;
+    box-shadow: 1px 1px 5px;
+}
+
+/* #course-submit input[type=submit] {
+    background: var(--transparency-dark);
+    border: none;
+    border-radius: 4px;
+    color: var(--fnt-folor);
+    font-weight: bold;
+    box-shadow: 1px 1px 5px;
+    flex-grow: 1;
+}
+
+#course-submit input[type=submit]:focus {
+    transition: all .4s ease-in-out;
+} */
+    
+/* button {
+    transition: all .4s ease-in-out;
+    flex: 1;
+    flex-grow: 1;
+    border: none;
+    border-radius: 4px;
+    margin: 4px;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    background-color: var(--transparency-dark);
+    box-shadow: 1px 1px 5px;
+    color: var(--text-color-light);
+} */
 /* Lower right container (course finder) --------------------------------------- */
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
