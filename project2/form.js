@@ -16,7 +16,8 @@ Course = {
     term: "",
     year: "",
     course_des: "",
-    course_name: ""
+    course_name: "",
+    credits: 0
 };
 
 Plan = {
@@ -28,20 +29,87 @@ Plan = {
     courses: {}
 };
 
+let data = {};
 
+function planToYear(planJSON) {
+    let years = {};
+    years.push({
+        "9999": {
+            plan_name:          planJSON["plan_name"],
+            catalog_year:       planJSON["catalog_year"],
+            major:              planJSON["major"],
+            student_name:       planJSON["student_name"],
+            current_semester:   planJSON["current_semester"],
+        }
+    });
+
+    for (var course in planJSON["courses"]) {
+        let y = course["year"];
+        let t = course["term"];
+
+        if (!(y in years)) {
+            years.push({
+                y: {
+                    FA: {},
+                    SP: {},
+                    SU: {}
+                }
+            })
+        }
+
+        years[y][t].push(course);
+    }
+
+    return years;
+}
+
+
+function updateCourses(years) {
+    let header = document.getElementById("#ur-header");
+    /*
+    <div id="ur-header" class="labels">
+        <p><strong>Student:</strong> loganmiller216</p>
+        <p><strong>Course Plan:</strong> CS/CY Double Major</p>
+        <p><strong>Total Hours:</strong> 137.5</p>
+    </div>
+    */
+
+   let header2 = document.getElementById("#ur-header-2");
+    /*
+    <div id="ur-header-2" class="labels">
+        <p><strong>Major:</strong> Computer Science, Cyber Operations</p>
+        <p><strong>Minor:</strong> Bible</p>
+        <p><strong>Catalog:</strong> 2021</p>
+        <p><strong>GPA:</strong> 3.60</p>
+        <p><strong>Major GPA:</strong> 3.55</p>
+    </div>
+    */
+
+    
+}
+
+
+/*
+fetch('C:\Users\\manic\\Documents\\GitHub\\web-term-project\\project2\\plan.json')
+    .then(response => response.json())
+    .then(data => {
+        console.log('Data from JSON file:', data);
+    })
+    .catch(error => {
+        console.error('Error reading file:', error);
+    })
+
+    
+console.log('Real data from JSON file:', data);
+*/
 
 /*
 Convert the Course objects into a new Year object, which contains Terms containing Courses. In other words, just re-organize the data by year and term.
 */
-Year = {
-    year: "",
-    spring: {},
-    summer: {},
-    fall: {}
-};
+
 
 function validateForm() {
-    const termRE = new RegExp("((S|s)pring|(S|s)ummer|(F|f)all)");
+    const termRE = new RegExp("(SP|SU|FA)");
     const yearRE = new RegExp("[0-2][0-9]{3}");
 
     let form = document.forms["courseform"]
