@@ -210,9 +210,14 @@ let courseCreditsWidget = document.querySelector("#courseCredits");
 courseCreditsWidget.addEventListener("input", checkCourseCredits);
 
 function checkCourseNum() {
-   let regex = /^\D\D-\d\d\d\d$/;
-   let courseNum = courseNumWidget.value.trim();
-   courseNumValid = courseNum.match(regex);
+    let regex = /^\D\D-\d\d\d\d$/;
+    let courseNum = courseNumWidget.value.trim();
+    courseNumValid = courseNum.match(regex);
+    if (!courseNumValid) {
+        //courseNumeWidget set to red border
+    } else {
+        //set to normal, apply to all text boxes
+    }
 }
 
 function checkCourseTitle() {
@@ -228,18 +233,15 @@ function checkCourseTitle() {
  }
 
 // Check data validity on submit
-// let courseFinderForm = document.querySelector("#courseFinderForm");
-// courseFinderForm.addEventListener("submit", checkCourseFinderForm);
-
 function submitCourseFinderForm() {
-   if (!courseNumValid || !courseTitleValid || !courseCreditsValid) {
-      console.log("invalid form data");
-      console.log("courseNumValid: " + courseNumValid);
-      console.log("courseTitleValid: " + courseTitleValid);
-      console.log("courseCreditsValid: " + courseCreditsValid);
-   } else {
+    if (!courseNumValid || !courseTitleValid || !courseCreditsValid) {
+        console.log("invalid form data");
+        console.log("courseNumValid: " + courseNumValid);
+        console.log("courseTitleValid: " + courseTitleValid);
+        console.log("courseCreditsValid: " + courseCreditsValid);
+    } else {
         console.log("successful submission");
-   }
+    }
    
 }
 
