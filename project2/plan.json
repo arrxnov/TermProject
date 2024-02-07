@@ -35,37 +35,41 @@
             "course_des": "LANG-9090",
             "course_name": "Southern Accent I",
             "credits": 3
-        },{
+        },
+        
+        {
             "term": "SP",
-            "year": "1960",
+            "year": "1961",
             "course_des": "LANG-9091",
             "course_name": "Southern Accent II",
             "credits": 3
         },{
             "term": "SP",
-            "year": "1960",
+            "year": "1961",
             "course_des": "LANG-9091",
             "course_name": "Southern Accent II",
             "credits": 3
         },{
             "term": "SP",
-            "year": "1960",
+            "year": "1961",
             "course_des": "LANG-9091",
             "course_name": "Southern Accent II",
             "credits": 3
         },{
             "term": "SP",
-            "year": "1960",
+            "year": "1961",
             "course_des": "LANG-9091",
             "course_name": "Southern Accent II",
             "credits": 3
         },{
             "term": "SP",
-            "year": "1960",
+            "year": "1961",
             "course_des": "LANG-9091",
             "course_name": "Southern Accent II",
             "credits": 3
-        },{
+        },
+        
+        {
             "term": "FA",
             "year": "1961",
             "course_des": "LANG-9092",
@@ -95,7 +99,9 @@
             "course_des": "LANG-9092",
             "course_name": "Southern Accent III",
             "credits": 3
-        },{
+        },
+        
+        {
             "term": "SP",
             "year": "1962",
             "course_des": "LANG-9094",
@@ -124,7 +130,137 @@
             "year": "1962",
             "course_des": "LANG-9094",
             "course_name": "Southern Accent Capstone",
+            "credits": 3
+        },
+
+        {
+            "term": "FA",
+            "year": "1962",
+            "course_des": "MART-1776",
+            "course_name": "Aikido I",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1962",
+            "course_des": "MART-1777",
+            "course_name": "Aikido II",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1962",
+            "course_des": "MART-1778",
+            "course_name": "Aikido III",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1962",
+            "course_des": "MART-1779",
+            "course_name": "Aikido IV",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1962",
+            "course_des": "MART-1780",
+            "course_name": "Aikido Capstone",
+            "credits": 3
+        },
+
+        {
+            "term": "SP",
+            "year": "1963",
+            "course_des": "MART-1875",
+            "course_name": "Jiu Jitsu I",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1963",
+            "course_des": "MART-1876",
+            "course_name": "Jiu Jitsu II",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1963",
+            "course_des": "MART-1877",
+            "course_name": "Jiu Jitsu III",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1963",
+            "course_des": "MART-1878",
+            "course_name": "Jiu Jitsu IV",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1963",
+            "course_des": "MART-1879",
+            "course_name": "Jiu Jitsu Capstone",
+            "credits": 3
+        },
+
+        {
+            "term": "FA",
+            "year": "1963",
+            "course_des": "MART-1975",
+            "course_name": "Karate I",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1963",
+            "course_des": "MART-1976",
+            "course_name": "Karate II",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1963",
+            "course_des": "MART-1977",
+            "course_name": "Karate III",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1963",
+            "course_des": "MART-1978",
+            "course_name": "Katate IV",
+            "credits": 3
+        },{
+            "term": "SP",
+            "year": "1963",
+            "course_des": "MART-1979",
+            "course_name": "Karate Capstone",
+            "credits": 3
+        },
+        
+        {
+            "term": "FA",
+            "year": "1963",
+            "course_des": "MART-1475",
+            "course_name": "Krav Maga I",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1963",
+            "course_des": "MART-1476",
+            "course_name": "Krav Maga II",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1963",
+            "course_des": "MART-1477",
+            "course_name": "Krav Maga III",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1963",
+            "course_des": "MART-1478",
+            "course_name": "Krav Maga IV",
+            "credits": 3
+        },{
+            "term": "FA",
+            "year": "1963",
+            "course_des": "MART-1479",
+            "course_name": "Krav Maga Capstone",
             "credits": 3
         }
+
+        
     ]
 }
