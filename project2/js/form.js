@@ -215,6 +215,7 @@ function checkCourseNum() {
     courseNumValid = courseNum.match(regex);
     if (!courseNumValid) {
         //courseNumeWidget set to red border
+        // gray out button
     } else {
         //set to normal, apply to all text boxes
     }
@@ -232,22 +233,22 @@ function checkCourseTitle() {
     courseCreditsValid = courseCredits.match(regex);
  }
 
+let courseFinderForm = document.querySelector("#courseFinderForm");
+courseFinderForm.addEventListener("submit", checkCourseFinderForm);
+
 // Check data validity on submit
-function submitCourseFinderForm() {
+function checkCourseFinderForm(event) {
     if (!courseNumValid || !courseTitleValid || !courseCreditsValid) {
         console.log("invalid form data");
         console.log("courseNumValid: " + courseNumValid);
         console.log("courseTitleValid: " + courseTitleValid);
         console.log("courseCreditsValid: " + courseCreditsValid);
-        // need to say don't submit
+        event.preventDefault();
     } else {
         console.log("successful submission");
         // need to assemble post request
     }
 
-    // let frm = document.querySelector("#courseFinderForm");
-    // frm.reset()
-
-    // return false; // Prevent page refresh
+    courseFinderForm.reset();
 }
 
