@@ -47,6 +47,7 @@ function planToYear(planJSON) {
             current_semester:   planJSON["current_semester"],
         }
     });
+}
 
 //     for (var course in planJSON["courses"]) {
 //         let y = course["year"];
