@@ -197,40 +197,67 @@ function updateCourses(years) {
 // }
 
 // Check data validity on change
+let courseDeptValid = false;
+let courseDeptWidget = document.getElementById("courseDept");
+courseDeptWidget.addEventListener("input", checkCourseDept);
+
 let courseNumValid = false;
-let courseNumWidget = document.querySelector("#courseNum");
+let courseNumWidget = document.getElementById("courseNum");
 courseNumWidget.addEventListener("input", checkCourseNum);
 
 let courseTitleValid = false;
-let courseTitleWidget = document.querySelector("#courseTitle");
+let courseTitleWidget = document.getElementById("courseTitle");
 courseTitleWidget.addEventListener("input", checkCourseTitle);
 
 let courseCreditsValid = false;
-let courseCreditsWidget = document.querySelector("#courseCredits");
+let courseCreditsWidget = document.getElementById("courseCredits");
 courseCreditsWidget.addEventListener("input", checkCourseCredits);
 
-function checkCourseNum() {
-    let regex = /^\D\D-\d\d\d\d$/;
-    let courseNum = courseNumWidget.value.trim();
-    courseNumValid = courseNum.match(regex);
-    if (!courseNumValid) {
-        //courseNumeWidget set to red border
+function checkCourseDept() {
+    let regex = /^[a-zA-z]{1,5}$/;
+    let courseDept = courseDeptWidget.value.trim();
+    courseDeptValid = courseDept.match(regex);
+    if (!courseDeptValid) {
+        courseDeptWidget.style.setProperty("background", "red");
+        //courseNumWidget set to red border
         // gray out button
     } else {
+        courseDeptWidget.style.setProperty("background", "white");
         //set to normal, apply to all text boxes
     }
 }
 
+function checkCourseNum() {
+    let regex = /^\d{1,4}$/;
+    let courseNum = courseNumWidget.value.trim();
+    courseNumValid = courseNum.match(regex);
+    if (!courseNumValid) {
+        courseNumWidget.style.setProperty("background", "red");
+    } else {
+        courseNumWidget.style.setProperty("background", "white");
+    }
+}
+
 function checkCourseTitle() {
-    let regex = /^.*$/; // don't allow <
+    let regex = /^[a-zA-Z0-9():\-\[\]]*$/;
     let courseTitle = courseTitleWidget.value.trim();
     courseTitleValid = courseTitle.match(regex);
+    if (!courseTitleValid) {
+        courseTitleWidget.style.setProperty("background", "red");
+    } else {
+        courseTitleWidget.style.setProperty("background", "white");
+    }
  }
 
  function checkCourseCredits() {
-    let regex = /^\d{1,2}\.\d$/;
+    let regex = /^(\d{1,2})(\.[05])?$/;
     let courseCredits = courseCreditsWidget.value.trim();
     courseCreditsValid = courseCredits.match(regex);
+    if (!courseCreditsValid) {
+        courseCreditsWidget.style.setProperty("background", "red");
+    } else {
+        courseCreditsWidget.style.setProperty("background", "white");
+    }
  }
 
 let courseFinderForm = document.querySelector("#courseFinderForm");
@@ -246,7 +273,7 @@ function checkCourseFinderForm(event) {
         event.preventDefault();
     } else {
         console.log("successful submission");
-        // need to assemble post request
+        // need to assemble post request (use fetch API?)
     }
 
     courseFinderForm.reset();
