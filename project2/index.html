@@ -7,7 +7,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
-        <script type="text/javascript" src="js/form.js"></script>
+        <script src="js/form.js" defer></script>
     </head>
 
     <body>
@@ -192,27 +192,23 @@
                     <p>Course Finder</p>
                 </div>
                 <div id="lr-course-finder">
-                    <form name="course_finder" id="course-finder-form" onsubmit="return validateForm()" method="post">
+                    <form name="courseFinder" id="courseFinderForm" onsubmit="return validateForm()" method="POST">
                         <div id="course-search">
                             <div>
-                                <label for="course_dept">Dept: </label>
-                                <input type="text" id="course_dept">
+                                <label for="courseNum">Number: </label>
+                                <input type="text" name="courseNum" id="courseNum">
                             </div>
                             <div>
-                                <label for="course_num">Number: </label>
-                                <input type="text" id="course_num">
+                                <label for="courseTitle">Title: </label>
+                                <input type="text" name="courseTitle" id="courseTitle">
                             </div>
                             <div>
-                                <label for="course_title">Title: </label>
-                                <input type="text" id="course_title">
-                            </div>
-                            <div>
-                                <label for="course_credits">Credits: </label>
-                                <input type="text" id="course_credits">
+                                <label for="courseCredits">Credits: </label>
+                                <input type="text" name="courseCredits" id="courseCredits">
                             </div>
                         </div>
                         <div id="course-submit">
-                            <input type="submit" value="Submit" id="course-finder-submit">
+                            <input type="submit" value="Submit" id="courseFinderSubmit"> <!--remove value parm?-->
                         </div>
                         <!--http://judah.cedarville.edu/echo.php-->
                     </form>
