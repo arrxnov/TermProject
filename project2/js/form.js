@@ -155,47 +155,6 @@ function updateCourses(years) {
     header.innerHTML += "<p><strong>Total Hours:</strong> " + totalCreds + "</p>\n";
 }
 
-
-
-// // TODO: figure out why this doesn't validate properly
-// function validateForm() {
-//     console.log("Validating");
-//     const termRE = new RegExp("(SP|SU|FA)");
-//     const yearRE = new RegExp("[0-2][0-9]{3}");
-
-//     const deptRE = new RegExp("[A-Z]{2,5}-[0-9]{4}");
-
-//     // TODO: combine the dept des and number form fields
-
-//     let form = document.forms["course_finder"]
-//     if (!termRE.test(form["course_dept"])) {
-//         alert("Course Dept. invalid");
-//         console.log("course_dept invalid");
-//         return false;
-//     } 
-    
-//     else if (form["course_title"].value == "") {
-//         alert("Course Title must be filled out");
-//         console.log("course_title empty");
-//         return false;
-//     }
-
-
-//     else if (form["course_num"].value == "") {
-//         alert("Course Number must be filled out");
-//         console.log("coursenum empty");
-//         return false;
-//     }  else if (!termRE.test(form["term"])) {
-//         alert("Invalid course term");
-//         console.log("term empty");
-//         return false;
-//     } else if (!yearRE.test(form["year"])) {
-//         alert("Invalid course year");
-//         console.log("year empty");
-//         return false;
-//     }
-// }
-
 // Check data validity on change
 let courseDeptValid = false;
 let courseDeptWidget = document.getElementById("courseDept");
@@ -219,9 +178,10 @@ courseFinderForm.addEventListener("submit", checkCourseFinderForm);
 function checkCourseDept() {
     let regex = /^[a-zA-z]{1,5}$/;
     let courseDeptValue = courseDeptWidget.value.trim();
+    let courseDeptEmpty = courseDeptValue == "";
     courseDeptValid = courseDeptValue.match(regex);
-    if ((!courseDeptValid) && (courseDeptValue != null)) { // not working to allow empty, also need to not allow empty on all boxes
-        courseDeptWidget.style.setProperty("background", "red");
+    if (!courseDeptValid && !courseDeptEmpty) { // not working to allow empty, need to add solution to all input boxes
+        courseDeptWidget.style.setProperty("background", "red"); // change to be border, also change css widths, colors of widgets
     } else {
         courseDeptWidget.style.setProperty("background", "white");
     }
