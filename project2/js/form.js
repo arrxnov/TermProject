@@ -182,22 +182,22 @@ function validateForm() {
 }
 
 
-// let zipCodeValid = false;
-// let zipCodeWidget = document.querySelector("#zip");
-// zipCodeWidget.addEventListener("input", checkZipCode);
+let courseNumValid = false;
+let courseNumWidget = document.querySelector("#courseNum");
+courseNumWidget.addEventListener("input", checkCourseNum);
 
-// function checkZipCode() {
-//    let regex = /^\d\d\d\d\d$/;
-//    let zip = zipCodeWidget.value.trim();
-//    zipCodeValid = zip.match(regex);
-// }
+function checkCourseNum() {
+   let regex = /^\d\d\d\d\d$/;
+   let zip = courseNumWidget.value.trim();
+   courseNumValid = zip.match(regex);
+}
 
-// let tosForm = document.querySelector("#tosForm");
-// tosForm.addEventListener("submit", checkForm);
+let courseFinderForm = document.querySelector("#courseFinderForm");
+courseFinderForm.addEventListener("submit", checkCourseFinderForm);
 
-// function checkForm(event) {
-//    if (!zipCodeValid) {
-//       event.preventDefault();
-//    }
-// }
+function checkCourseFinderForm(event) {
+   if (!zipCodeValid) {
+      event.preventDefault();
+   }
+}
 
