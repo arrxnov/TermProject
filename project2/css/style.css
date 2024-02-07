@@ -330,7 +330,7 @@ main {
     justify-content: center;
 }
 
-#course-submit input[type=button] {
+#course-submit input[type=submit] {
     min-width: 80px;
     background: var(--transparency-dark);
     border: none;
@@ -340,7 +340,7 @@ main {
     box-shadow: 1px 1px 5px;
 }
 
-#course-submit input[type=button]:hover {
+#course-submit input[type=submit]:hover {
     background: var(--transparency-light);
     transition: all .4s ease-in-out;
 }

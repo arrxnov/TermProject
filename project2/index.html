@@ -192,7 +192,7 @@
                     <p>Course Finder</p>
                 </div>
                 <div id="lr-course-finder">
-                    <form id="courseFinderForm" action="http://judah.cedarville.edu/echo.php" method="POST">
+                    <form id="courseFinderForm" action="http://judah.cedarville.edu/echo.php" method="POST" onsubmit="submitCourseFinderForm()">
                         <div id="course-search">
                             <div>
                                 <label for="courseNum">Number: </label>
@@ -208,7 +208,7 @@
                             </div>
                         </div>
                         <div id="course-submit">
-                            <input type="button" value="Submit" id="courseFinderSubmit" onclick="submitCourseFinderForm()">
+                            <input type="submit" value="Search" id="courseFinderSubmit">
                         </div>
                     </form>
                 </div>
