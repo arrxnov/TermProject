@@ -213,24 +213,24 @@ let courseCreditsValid = false;
 let courseCreditsWidget = document.getElementById("courseCredits");
 courseCreditsWidget.addEventListener("input", checkCourseCredits);
 
+let courseFinderForm = document.getElementById("courseFinderForm");
+courseFinderForm.addEventListener("submit", checkCourseFinderForm);
+
 function checkCourseDept() {
     let regex = /^[a-zA-z]{1,5}$/;
-    let courseDept = courseDeptWidget.value.trim();
-    courseDeptValid = courseDept.match(regex);
-    if (!courseDeptValid) {
+    let courseDeptValue = courseDeptWidget.value.trim();
+    courseDeptValid = courseDeptValue.match(regex);
+    if ((!courseDeptValid) && (courseDeptValue != null)) { // not working to allow empty, also need to not allow empty on all boxes
         courseDeptWidget.style.setProperty("background", "red");
-        //courseNumWidget set to red border
-        // gray out button
     } else {
         courseDeptWidget.style.setProperty("background", "white");
-        //set to normal, apply to all text boxes
     }
 }
 
 function checkCourseNum() {
     let regex = /^\d{1,4}$/;
-    let courseNum = courseNumWidget.value.trim();
-    courseNumValid = courseNum.match(regex);
+    let courseNumValue = courseNumWidget.value.trim();
+    courseNumValid = courseNumValue.match(regex);
     if (!courseNumValid) {
         courseNumWidget.style.setProperty("background", "red");
     } else {
@@ -239,9 +239,9 @@ function checkCourseNum() {
 }
 
 function checkCourseTitle() {
-    let regex = /^[a-zA-Z0-9():\-\[\]]*$/;
-    let courseTitle = courseTitleWidget.value.trim();
-    courseTitleValid = courseTitle.match(regex);
+    let regex = /^[a-zA-Z0-9 ():\-\[\]]*$/;
+    let courseTitleValue = courseTitleWidget.value.trim();
+    courseTitleValid = courseTitleValue.match(regex);
     if (!courseTitleValid) {
         courseTitleWidget.style.setProperty("background", "red");
     } else {
@@ -251,8 +251,8 @@ function checkCourseTitle() {
 
  function checkCourseCredits() {
     let regex = /^(\d{1,2})(\.[05])?$/;
-    let courseCredits = courseCreditsWidget.value.trim();
-    courseCreditsValid = courseCredits.match(regex);
+    let courseCreditsValue = courseCreditsWidget.value.trim();
+    courseCreditsValid = courseCreditsValue.match(regex);
     if (!courseCreditsValid) {
         courseCreditsWidget.style.setProperty("background", "red");
     } else {
@@ -260,19 +260,21 @@ function checkCourseTitle() {
     }
  }
 
-let courseFinderForm = document.querySelector("#courseFinderForm");
-courseFinderForm.addEventListener("submit", checkCourseFinderForm);
-
 // Check data validity on submit
 function checkCourseFinderForm(event) {
-    if (!courseNumValid || !courseTitleValid || !courseCreditsValid) {
+    if (!courseDeptValid && !courseNumValid && !courseTitleValid && !courseCreditsValid) {
         console.log("invalid form data");
+        console.log("courseDeptValid: " + courseDeptValid);
         console.log("courseNumValid: " + courseNumValid);
         console.log("courseTitleValid: " + courseTitleValid);
         console.log("courseCreditsValid: " + courseCreditsValid);
         event.preventDefault();
     } else {
         console.log("successful submission");
+        console.log("courseDept: " + courseDeptValue);
+        console.log("courseNum: " + courseNumValue);
+        console.log("courseTitle: " + courseTitleValue);
+        console.log("courseCredits: " + courseCreditsValue);
         // need to assemble post request (use fetch API?)
     }
 
