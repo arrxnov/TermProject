@@ -239,9 +239,15 @@ function submitCourseFinderForm() {
         console.log("courseNumValid: " + courseNumValid);
         console.log("courseTitleValid: " + courseTitleValid);
         console.log("courseCreditsValid: " + courseCreditsValid);
+        // need to say don't submit
     } else {
         console.log("successful submission");
+        // need to assemble post request
     }
-   
+
+    // let frm = document.querySelector("#courseFinderForm");
+    // frm.reset()
+
+    // return false; // Prevent page refresh
 }
 
