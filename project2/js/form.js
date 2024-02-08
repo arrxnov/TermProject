@@ -135,6 +135,10 @@ function updateCourses(planJSON) {
         if (semester.getElementsByClassName("term")[0].innerHTML != term) {
             semester.getElementsByClassName("term")[0].innerHTML = term;
         }
+        console.log("" + t + y);
+        if ("" + t + y == planJSON["current_semester"]) {
+            semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
+        }
         if (!(y in years)) {
             continue;
         }
