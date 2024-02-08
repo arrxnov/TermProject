@@ -325,12 +325,11 @@ main {
 }
 
 #course-search input[type=text] {
-    border: hidden red 2px;
+    outline: none;
     padding: 4px;
     width: 10vw;
     color: var(--text-color-light);
     background-color: var(--transparency-dark);
-    transition: all .4s ease-in-out;
     border-radius: 4px;
     box-shadow: 1px 1px 7px;
 }

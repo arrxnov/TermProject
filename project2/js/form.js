@@ -236,9 +236,9 @@ function checkCourseDept() {
     }
     courseDeptValid = courseDeptValue.match(regex) || (courseDeptValue == "");
     if (!courseDeptValid) {
-        courseDeptWidget.style.setProperty("border-style", "solid");
+        courseDeptWidget.style.setProperty("outline", "solid red 1px");
     } else {
-        courseDeptWidget.style.setProperty("border-style", "hidden");
+        courseDeptWidget.style.setProperty("outline", "none");
     }
 }
 
@@ -250,9 +250,9 @@ function checkCourseNum() {
     }
     courseNumValid = courseNumValue.match(regex) || (courseNumValue == "");
     if (!courseNumValid) {
-        courseNumWidget.style.setProperty("border-style", "solid");
+        courseNumWidget.style.setProperty("outline", "solid red 1px");
     } else {
-        courseNumWidget.style.setProperty("border-style", "hidden");
+        courseNumWidget.style.setProperty("outline", "none");
     }
 }
 
@@ -264,9 +264,9 @@ function checkCourseTitle() {
     }
     courseTitleValid = courseTitleValue.match(regex) || (courseTitleValue == "");
     if (!courseTitleValid) {
-        courseTitleWidget.style.setProperty("border-style", "solid");
+        courseTitleWidget.style.setProperty("outline", "solid red 1px");
     } else {
-        courseTitleWidget.style.setProperty("border-style", "hidden");
+        courseTitleWidget.style.setProperty("outline", "none");
     }
 }
 
@@ -278,8 +278,8 @@ function checkCourseCredits() {
     }
     courseCreditsValid = courseCreditsValue.match(regex) || (courseCreditsValue == "");
     if (!courseCreditsValid) {
-        courseCreditsWidget.style.setProperty("border-style", "solid");
+        courseCreditsWidget.style.setProperty("outline", "solid red 1px");
     } else {
-        courseCreditsWidget.style.setProperty("border-style", "hidden");
+        courseCreditsWidget.style.setProperty("outline", "none");
     }
 }
