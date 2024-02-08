@@ -82,7 +82,7 @@ function updateCourses(planJSON) {
     let header = document.getElementById("ur-header");
     // TODO: set header values (other than total hours)
     console.log(planJSON);
-    header.innerHTML += "<p><strong>Student</strong> " + planJSON["student_name"] + "</p>\n";
+    header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student_name"] + "</p>\n";
     header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["year"] + "</p>\n";
     /*
     <div id="ur-header" class="labels">
@@ -132,6 +132,9 @@ function updateCourses(planJSON) {
                 break; 
         }
         term += " " + y;
+        if (semester.getElementsByClassName("term")[0].innerHTML != term) {
+            semester.getElementsByClassName("term")[0].innerHTML = term;
+        }
         if (!(y in years)) {
             continue;
         }
