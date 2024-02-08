@@ -234,6 +234,7 @@ function submitCourseFinderForm(event) {
     checkCourseFinderForm(event);
 }
 
+// Validate form on button mouseover, styling button as appropriate
 function checkCourseSubmitActive(event) {
     if (!checkCourseFinderForm(event) || courseFinderFormEmpty) {
         event.target.style.setProperty("transition", "none");
