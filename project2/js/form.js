@@ -44,23 +44,6 @@ Appearance should remain the same, and still use the same CSS.
 // }
 
 function planToYear(planJSON) {
-    // years["9999"] = {
-    //         plan_name:          planJSON["plan_name"],
-    //         catalog_year:       planJSON["catalog_year"],
-    //         major:              planJSON["major"],
-    //         minor:              planJSON["minor"],
-    //         gpa:                planJSON["gpa"],
-    //         major_gpa:          planJSON["major_gpa"],
-    //         student_name:       planJSON["student_name"],
-    //         current_semester:   planJSON["current_semester"],
-    // };
-    console.log(planJSON);
-    // for (let course in planJSON["courses"]) {
-    //     course = planJSON["courses"][course];
-    //     console.log(course);
-    //     plan[course["year"]][course["term"]].push(course);
-    // }
-
     for (var course in planJSON["courses"]) {
         course = planJSON["courses"][course];
         let y = course["year"];
@@ -74,7 +57,6 @@ function planToYear(planJSON) {
         }
         years[y][t].push(course);
     }
-
     return years;
 }
 
@@ -135,7 +117,6 @@ function updateCourses(planJSON) {
         if (semester.getElementsByClassName("term")[0].innerHTML != term) {
             semester.getElementsByClassName("term")[0].innerHTML = term;
         }
-        console.log("" + t + y);
         if ("" + t + y == planJSON["current_semester"]) {
             semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
         }
