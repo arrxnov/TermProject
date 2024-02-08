@@ -360,13 +360,13 @@ main {
 }
 
 #course-submit input[type=submit]:hover {
-    background: var(--transparency-light);
     transition: all .4s ease-in-out;
+    background: var(--transparency-light);
 }
 
-#course-submit input[type=submit]:active {
+/* #course-submit input[type=submit]:active {
     box-shadow: none;
-}
+} */
 
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
