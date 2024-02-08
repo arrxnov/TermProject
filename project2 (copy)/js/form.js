@@ -9,8 +9,7 @@ An array of Course objects, each with term, year, course designator, and course 
 
 
 
-Replace the static HTML in the UR div with dynamic data stored in your Year objects.
-Appearance should remain the same, and still use the same CSS.
+Replace the static HTML in the UR div with dynamic data stored in your Year objects. Appearance should remain the same, and still use the same CSS.
 */
 
 // Course = {
@@ -83,7 +82,7 @@ function updateCourses(planJSON) {
     let header = document.getElementById("ur-header");
     // TODO: set header values (other than total hours)
     console.log(planJSON);
-    header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student_name"] + "</p>\n";
+    header.innerHTML += "<p><strong>Student</strong> " + planJSON["student_name"] + "</p>\n";
     header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["year"] + "</p>\n";
     /*
     <div id="ur-header" class="labels">
@@ -133,9 +132,6 @@ function updateCourses(planJSON) {
                 break; 
         }
         term += " " + y;
-        if (semester.getElementsByClassName("term")[0].innerHTML != term) {
-            semester.getElementsByClassName("term")[0].innerHTML = term;
-        }
         if (!(y in years)) {
             continue;
         }
@@ -172,15 +168,6 @@ function updateCourses(planJSON) {
     }
     header.innerHTML += "<p><strong>Total Hours:</strong> " + totalCreds + "</p>\n";
 }
-
-let years = {};
-async function doThings() {
-    const response = await fetch("./plan.json");
-    const json = await response.json();
-    planToYear(json);
-    updateCourses(json);
-}
-doThings();
 
 // Widget and validation variables
 let courseFinderFormEmpty = true;
