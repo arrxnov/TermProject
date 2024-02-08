@@ -349,6 +349,7 @@ main {
 }
 
 #course-submit input[type=submit] {
+    transition: all .4s ease-in-out;
     min-width: 80px;
     background: var(--transparency-dark);
     border: none;
@@ -363,8 +364,9 @@ main {
     transition: all .4s ease-in-out;
 }
 
-#course-submit input[type=submit]:focus {
+#course-submit input[type=submit]:active {
     box-shadow: none;
 }
+
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
