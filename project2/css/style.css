@@ -16,13 +16,14 @@ body {
     flex-flow: column nowrap;
     margin: 0;
     padding: 0;
-    background-image: url("../images/bg.jpg");
     min-height: 100vh;
     max-height: 100vh;
     font-family: Montserrat;
     font-size: 11pt;
     color: var(--text-color-light);
+    background-image: url("../images/bg.jpg");
 }
+
 
 /* Universal tag categories ---------------------------------------------------- */
 p {
@@ -284,12 +285,36 @@ main {
     font-weight: bold;
     margin-bottom: 10px;
 }
+
+.input {
+    transition: all .4s ease-in-out;
+    flex: 1;
+    flex-grow: 1;
+    margin: 4px;
+    padding: 10px;
+    font-size: 11pt;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--transparency-dark);
+    box-shadow: 1px 1px 7px;
+    color: var(--text-color-light);
+    outline-color: red;
+}
+
+input:focus {
+    transition: all .4s ease-in-out;
+    background-color: var(--transparency-light);
+    outline-style: none;
+}
+
+
+
 /* Upper right container (plan) ------------------------------------------------ */
 
 /* Lower right container (course finder) --------------------------------------- */
 #lr-course-finder {
     flex: 1;
-    flex-grow: 1;
+    flex-grow: 0;
     border: none;
     border-radius: 4px;
     box-shadow: 1px 1px 5px;
@@ -309,7 +334,7 @@ main {
 
 #course-search {
     display: flex;
-    flex-grow: 2;
+    flex-shrink: 1;
     flex-flow: row;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -329,25 +354,28 @@ main {
 
 #course-submit {
     display: flex;
+    flex: 1;
     flex-grow: 1;
     flex-flow: row;
     justify-content: center;
 }
 
 #course-submit input[type=submit] {
+    flex: 1;
     min-width: 80px;
     background: var(--transparency-dark);
     border: none;
     border-radius: 4px;
     color: var(--fnt-folor);
-    font-weight: bold;
     box-shadow: 1px 1px 5px;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
 }
 
 #course-submit input[type=submit]:hover {
     background: var(--transparency-light);
     transition: all .4s ease-in-out;
 }
-/* Lower right container (course finder) --------------------------------------- */
+
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */

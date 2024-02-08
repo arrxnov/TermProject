@@ -12,70 +12,78 @@ An array of Course objects, each with term, year, course designator, and course 
 Replace the static HTML in the UR div with dynamic data stored in your Year objects. Appearance should remain the same, and still use the same CSS.
 */
 
-Course = {
-    term: "",
-    year: "",
-    course_des: "",
-    course_name: "",
-    credits: 0
-};
-
-Plan = {
-    plan_name: "",
-    catalog_year: "",
-    major: "",
-    minor: "",
-    gpa: "",
-    student_name: "",
-    current_semester: "",
-    courses: {}
-};
-
-// let data = {};
-
-function planToYear(planJSON) {
-    let years = {};
-    years.push({
-        "9999": {
-            plan_name:          planJSON["plan_name"],
-            catalog_year:       planJSON["catalog_year"],
-            major:              planJSON["major"],
-            minor:              planJSON["minor"],
-            gpa:                planJSON["gpa"],
-            major_gpa:          planJSON["major_gpa"],
-            student_name:       planJSON["student_name"],
-            current_semester:   planJSON["current_semester"],
-        }
-    });
-}
-
-//     for (var course in planJSON["courses"]) {
-//         let y = course["year"];
-//         let t = course["term"];
-
-//         if (!(y in years)) {
-//             years.push({
-//                 y: {
-//                     FA: {},
-//                     SP: {},
-//                     SU: {}
-//                 }
-//             })
-//         }
-
-//         years[y][t].push(course);
-//     }
-
-//     return years;
+// Course = {
+//     term: "",
+//     year: "",
+//     course_des: "",
+//     course_name: "",
+//     credits: 0
+// };
+// 
+// Plan = {
+//     plan_name: "",
+//     catalog_year: "",
+//     major: "",
+//     minor: "",
+//     gpa: "",
+//     student_name: "",
+//     current_semester: "",
+//     courses: {}
+// };
+//Plan = {
+//    year: {}
+//}
+//
+// Year = {
+//     terms: {}
+// }
+// 
+// Term = {
+//     courses: []
 // }
 
+function planToYear(planJSON) {
+    // years["9999"] = {
+    //         plan_name:          planJSON["plan_name"],
+    //         catalog_year:       planJSON["catalog_year"],
+    //         major:              planJSON["major"],
+    //         minor:              planJSON["minor"],
+    //         gpa:                planJSON["gpa"],
+    //         major_gpa:          planJSON["major_gpa"],
+    //         student_name:       planJSON["student_name"],
+    //         current_semester:   planJSON["current_semester"],
+    // };
+    console.log(planJSON);
+    // for (let course in planJSON["courses"]) {
+    //     course = planJSON["courses"][course];
+    //     console.log(course);
+    //     plan[course["year"]][course["term"]].push(course);
+    // }
 
-function updateCourses(years) {
-    let header = document.getElementById("#ur-header");
+    for (var course in planJSON["courses"]) {
+        course = planJSON["courses"][course];
+        let y = course["year"];
+        let t = course["term"];
+        if (!(y in years)) {
+            years[y] = {
+                FA: [],
+                SP: [],
+                SU: []
+            };
+        }
+        years[y][t].push(course);
+    }
+
+    return years;
+}
+
+
+function updateCourses(planJSON) {
+    let header = document.getElementById("ur-header");
     // TODO: set header values (other than total hours)
-    
-    header.innerHTML += "<p><strong>Student</strong> " + years["9999"].student_name + "</p>\n";
-    header.innerHTML += "<p><strong>Course Plan:</strong> " + years["9999"].year + "</p>\n";
+    console.log(planJSON);
+    header.innerHTML += "<p><strong>Student</strong> " + planJSON["student_name"] + "</p>\n";
+    header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["year"] + "</p>\n";
     /*
     <div id="ur-header" class="labels">
         <p><strong>Student:</strong> loganmiller216</p>
@@ -84,13 +92,13 @@ function updateCourses(years) {
     </div>
     */
 
-    let header2 = document.getElementById("#ur-header-2");
+    let header2 = document.getElementById("ur-header-2");
     // TODO: set header values
-    header2.innerHTML += "<p><strong>Major:</strong> " + years["9999"].major + "</p>\n";
-    header2.innerHTML += "<p><strong>Minor:</strong> " + years["9999"].minor + "</p>\n";
-    header2.innerHTML += "<p><strong>Catalog:</strong> " + years["9999"].catalog_year + "</p>\n";
-    header2.innerHTML += "<p><strong>GPA:</strong> " + years["9999"].gpa + "</p>\n";
-    header2.innerHTML += "<p><strong>Major GPA:</strong> " + years["9999"].major_gpa + "</p>\n";
+    header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
+    header2.innerHTML += "<p><strong>Minor:</strong> " + planJSON["minor"] + "</p>\n";
+    header2.innerHTML += "<p><strong>Catalog:</strong> " + planJSON["catalog_year"] + "</p>\n";
+    header2.innerHTML += "<p><strong>GPA:</strong> " + planJSON["gpa"] + "</p>\n";
+    header2.innerHTML += "<p><strong>Major GPA:</strong> " + planJSON["major_gpa"] + "</p>\n";
     
     /*
     <div id="ur-header-2" class="labels">
@@ -103,10 +111,10 @@ function updateCourses(years) {
     */
     let totalCreds = 0;
 
-    for (let i=1; i<13; i++) {
-        let semester = document.getElementById("#semester"+i);
-        let base_y = years["9999"]["catalog_year"];
-        let y = base_y + int((i+1)/3);
+    for (let i=1; i<=12; i++) {
+        let semester = document.getElementById("semester"+i);
+        let base_y = planJSON["catalog_year"];
+        let y = parseInt(base_y) + parseInt((i+1)/3);
         let t;
         let term;
         switch(i%3) {
@@ -124,18 +132,24 @@ function updateCourses(years) {
                 break; 
         }
         term += " " + y;
-
+        if (!(y in years)) {
+            continue;
+        }
         let courses = years[y][t];
+        //console.log(courses);
         let credits = 0;
-        for (let course in courses) {
+        for (let key in courses) {
+            let course = courses[key];
             credits += course["credits"];
             // DONE: append course to semester div
-            semester.innerHTML += "<p>" + course.course_des + " " + course.course_name + "</p>\n";
+            semester.innerHTML += "<p>" + course["course_des"] + " " + course["course_name"] + "</p>\n";
         }
+        
         totalCreds += credits;
-        // DONE: set credits div
+        // TODO: set credits div
         let year = semester.getElementsByClassName("credits")[0];
-        year.textContent = "Credits: " + credits;
+        console.log(year);
+        year.innerHTML = "Credits: " + credits + "";
 
         /*
         <div id="semester1" class="semester fall">
@@ -205,7 +219,7 @@ function submitCourseFinderForm(event) {
 
 // Validation functions
 function checkCourseDept() {
-    let regex = /^[a-zA-z]{1,5}$/;
+    let regex = /^$|^[a-zA-z]{1,5}$/;
     let courseDeptValue = courseDeptWidget.value.trim();
     if (courseDeptValue != "") {
         courseFinderFormEmpty = false;
@@ -219,7 +233,7 @@ function checkCourseDept() {
 }
 
 function checkCourseNum() {
-    let regex = /^\d{1,4}$/;
+    let regex = /^$|^\d{1,4}$/;
     let courseNumValue = courseNumWidget.value.trim();
     if (courseNumValue != "") {
         courseFinderFormEmpty = false;

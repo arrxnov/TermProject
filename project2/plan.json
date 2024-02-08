@@ -2,6 +2,10 @@
     "plan_name": "Dr. White: Karate Legend",
     "catalog_year": "1960",
     "major": "Karate",
+    "minor": "Christlike Domination",
+    "year": "1960",
+    "gpa": "8.2",
+    "major_gpa": "9.5",
     "student_name": "Dr. White",
     "current_semester": "SP2024",
     "courses": [
@@ -204,25 +208,25 @@
             "course_name": "Karate I",
             "credits": 3
         },{
-            "term": "SP",
+            "term": "FA",
             "year": "1963",
             "course_des": "MART-1976",
             "course_name": "Karate II",
             "credits": 3
         },{
-            "term": "SP",
+            "term": "FA",
             "year": "1963",
             "course_des": "MART-1977",
             "course_name": "Karate III",
             "credits": 3
         },{
-            "term": "SP",
+            "term": "FA",
             "year": "1963",
             "course_des": "MART-1978",
             "course_name": "Katate IV",
             "credits": 3
         },{
-            "term": "SP",
+            "term": "FA",
             "year": "1963",
             "course_des": "MART-1979",
             "course_name": "Karate Capstone",
@@ -231,34 +235,92 @@
         
         {
             "term": "FA",
-            "year": "1963",
+            "year": "1964",
             "course_des": "MART-1475",
             "course_name": "Krav Maga I",
             "credits": 3
         },{
             "term": "FA",
-            "year": "1963",
+            "year": "1964",
             "course_des": "MART-1476",
             "course_name": "Krav Maga II",
             "credits": 3
         },{
             "term": "FA",
-            "year": "1963",
+            "year": "1964",
             "course_des": "MART-1477",
             "course_name": "Krav Maga III",
             "credits": 3
         },{
             "term": "FA",
-            "year": "1963",
+            "year": "1964",
             "course_des": "MART-1478",
             "course_name": "Krav Maga IV",
             "credits": 3
         },{
             "term": "FA",
-            "year": "1963",
+            "year": "1964",
             "course_des": "MART-1479",
             "course_name": "Krav Maga Capstone",
             "credits": 3
+        },
+
+        {
+            "term": "SP",
+            "year": "1964",
+            "course_des": "FORT-1337",
+            "course_name": "Fortnite Basics",
+            "credits": 8
+        },{
+            "term": "SP",
+            "year": "1964",
+            "course_des": "FORT-1337",
+            "course_name": "Intermediate Fortnite",
+            "credits": 8
+        },{
+            "term": "SP",
+            "year": "1964",
+            "course_des": "FORT-1337",
+            "course_name": "Advanced Fortnite",
+            "credits": 8
+        },{
+            "term": "SP",
+            "year": "1964",
+            "course_des": "FORT-1337",
+            "course_name": "Fortnite Master",
+            "credits": 8
+        },{
+            "term": "SP",
+            "year": "1964",
+            "course_des": "FORT-1337",
+            "course_name": "Fortnite Legend",
+            "credits": 8
+        },
+
+        {
+            "term": "SU",
+            "year": "1961",
+            "course_des": "COCO-5050",
+            "course_name": "Coconut Hatin'",
+            "credits": 7
+        },{
+            "term": "SU",
+            "year": "1962",
+            "course_des": "COCO-5050",
+            "course_name": "Coconut Hatin'",
+            "credits": 7
+        },{
+            "term": "SU",
+            "year": "1963",
+            "course_des": "COCO-5050",
+            "course_name": "Coconut Hatin'",
+            "credits": 7
+        },{
+            "term": "SU",
+            "year": "1964",
+            "course_des": "COCO-5050",
+            "course_name": "Coconut Hatin'",
+            "credits": 7
         }
 
         
