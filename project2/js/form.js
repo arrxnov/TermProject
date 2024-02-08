@@ -202,6 +202,8 @@ courseFinderForm.addEventListener("change", checkCourseFinderForm);
 
 // Check data validity on change
 function checkCourseFinderForm(event) {
+    courseFinderFormEmpty = true;
+    
     checkCourseDept();
     checkCourseNum();
     checkCourseTitle();
@@ -223,7 +225,6 @@ function submitCourseFinderForm(event) {
     }
 
     // Reevaluate form after return if there was an error
-    courseFinderFormEmpty = true;
     checkCourseFinderForm(event);
 }
 
