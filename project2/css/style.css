@@ -362,5 +362,9 @@ main {
     background: var(--transparency-light);
     transition: all .4s ease-in-out;
 }
+
+#course-submit input[type=submit]:focus {
+    box-shadow: none;
+}
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
