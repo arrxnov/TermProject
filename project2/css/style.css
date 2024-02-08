@@ -330,6 +330,7 @@ main {
     width: 10vw;
     color: var(--text-color-light);
     background-color: var(--transparency-dark);
+    border: none;
     border-radius: 4px;
     box-shadow: 1px 1px 7px;
 }
@@ -348,6 +349,7 @@ main {
 }
 
 #course-submit input[type=submit] {
+    transition: all .4s ease-in-out;
     min-width: 80px;
     background: var(--transparency-dark);
     border: none;
@@ -361,5 +363,10 @@ main {
     background: var(--transparency-light);
     transition: all .4s ease-in-out;
 }
+
+#course-submit input[type=submit]:active {
+    box-shadow: none;
+}
+
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
