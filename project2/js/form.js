@@ -81,8 +81,7 @@ function planToYear(planJSON) {
 
 function updateCourses(planJSON) {
     let header = document.getElementById("ur-header");
-    // TODO: set header values (other than total hours)
-    console.log(planJSON);
+    // DONE: set header values (other than total hours)
     header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student_name"] + "</p>\n";
     header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["year"] + "</p>\n";
     /*
@@ -94,7 +93,7 @@ function updateCourses(planJSON) {
     */
 
     let header2 = document.getElementById("ur-header-2");
-    // TODO: set header values
+    // DONE: set header values
     header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
     header2.innerHTML += "<p><strong>Minor:</strong> " + planJSON["minor"] + "</p>\n";
     header2.innerHTML += "<p><strong>Catalog:</strong> " + planJSON["catalog_year"] + "</p>\n";
@@ -140,7 +139,6 @@ function updateCourses(planJSON) {
             continue;
         }
         let courses = years[y][t];
-        //console.log(courses);
         let credits = 0;
         for (let key in courses) {
             let course = courses[key];
@@ -150,9 +148,8 @@ function updateCourses(planJSON) {
         }
         
         totalCreds += credits;
-        // TODO: set credits div
+        // DONE: set credits div
         let year = semester.getElementsByClassName("credits")[0];
-        console.log(year);
         year.innerHTML = "Credits: " + credits + "";
 
         /*
