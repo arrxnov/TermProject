@@ -364,9 +364,9 @@ main {
     background: var(--transparency-light);
 }
 
-/* #course-submit input[type=submit]:active {
+#course-submit input[type=submit]:active {
     box-shadow: none;
-} */
+}
 
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
