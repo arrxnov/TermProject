@@ -111,10 +111,9 @@ function updateCourses(planJSON) {
     */
     let totalCreds = 0;
 
-    for (let i=1; i<13; i++) {
+    for (let i=1; i<=12; i++) {
         let semester = document.getElementById("semester"+i);
         let base_y = planJSON["catalog_year"];
-        console.log(base_y, i);
         let y = parseInt(base_y) + parseInt((i+1)/3);
         let t;
         let term;
@@ -133,18 +132,24 @@ function updateCourses(planJSON) {
                 break; 
         }
         term += " " + y;
-        console.log(y + " " + t);
+        if (!(y in years)) {
+            continue;
+        }
         let courses = years[y][t];
+        //console.log(courses);
         let credits = 0;
-        for (let course in courses) {
+        for (let key in courses) {
+            let course = courses[key];
             credits += course["credits"];
             // DONE: append course to semester div
-            semester.innerHTML += "<p>" + course.course_des + " " + course.course_name + "</p>\n";
+            semester.innerHTML += "<p>" + course["course_des"] + " " + course["course_name"] + "</p>\n";
         }
+        
         totalCreds += credits;
-        // DONE: set credits div
+        // TODO: set credits div
         let year = semester.getElementsByClassName("credits")[0];
-        year.textContent = "Credits: " + credits;
+        console.log(year);
+        year.innerHTML = "Credits: " + credits + "";
 
         /*
         <div id="semester1" class="semester fall">
@@ -185,47 +190,63 @@ let courseFinderForm = document.getElementById("courseFinderForm");
 courseFinderForm.addEventListener("submit", checkCourseFinderForm);
 
 function checkCourseDept() {
-    let regex = /^[a-zA-z]{1,5}$/;
+    let regex = /^$|^[a-zA-z]{1,5}$/;
     let courseDeptValue = courseDeptWidget.value.trim();
     let courseDeptEmpty = courseDeptValue == "";
     courseDeptValid = courseDeptValue.match(regex);
-    if (!courseDeptValid && !courseDeptEmpty) { // not working to allow empty, need to add solution to all input boxes
-        courseDeptWidget.style.setProperty("background", "red"); // change to be border, also change css widths, colors of widgets
+    if (!courseDeptValid) {
+        courseDeptWidget.style.setProperty("outline-style", "groove"); // change to be border, also change css widths, colors of widgets
+        courseDeptWidget.style.setProperty("outline-width", "1px"); // change to be border, also change css widths, colors of widgets
+        courseDeptWidget.style.setProperty("outline-color", "red"); // change to be border, also change css widths, colors of widgets
     } else {
-        courseDeptWidget.style.setProperty("background", "white");
+        courseDeptWidget.style.setProperty("outline-style", "none"); // change to be border, also change css widths, colors of widgets
+        courseDeptWidget.style.setProperty("outline-width", "0px"); // change to be border, also change css widths, colors of widgets
+        courseDeptWidget.style.setProperty("outline-color", "red"); // change to be border, also change css widths, colors of widgets
     }
 }
 
 function checkCourseNum() {
-    let regex = /^\d{1,4}$/;
+    let regex = /^$|^\d{1,4}$/;
     let courseNumValue = courseNumWidget.value.trim();
     courseNumValid = courseNumValue.match(regex);
     if (!courseNumValid) {
-        courseNumWidget.style.setProperty("background", "red");
+        courseNumWidget.style.setProperty("outline-style", "groove"); // change to be border, also change css widths, colors of widgets
+        courseNumWidget.style.setProperty("outline-width", "1px"); // change to be border, also change css widths, colors of widgets
+        courseNumWidget.style.setProperty("outline-color", "red"); // change to be border, also change css widths, colors of widgets
     } else {
-        courseNumWidget.style.setProperty("background", "white");
+        courseNumWidget.style.setProperty("outline-style", "none"); // change to be border, also change css widths, colors of widgets
+        courseNumWidget.style.setProperty("outline-width", "0px"); // change to be border, also change css widths, colors of widgets
+        courseNumWidget.style.setProperty("outline-color", "red"); // change to be border, also change css widths, colors of widgets
     }
 }
 
 function checkCourseTitle() {
-    let regex = /^[a-zA-Z0-9 ():\-\[\]]*$/;
+    let regex = /^$|^[a-zA-Z0-9 ():\-\[\]]*$/;
     let courseTitleValue = courseTitleWidget.value.trim();
     courseTitleValid = courseTitleValue.match(regex);
     if (!courseTitleValid) {
-        courseTitleWidget.style.setProperty("background", "red");
+        courseTitleWidget.style.setProperty("outline-style", "groove"); // change to be border, also change css widths, colors of widgets
+        courseTitleWidget.style.setProperty("outline-width", "1px"); // change to be border, also change css widths, colors of widgets
+        courseTitleWidget.style.setProperty("outline-color", "red"); // change to be border, also change css widths, colors of widgets
     } else {
-        courseTitleWidget.style.setProperty("background", "white");
+        courseTitleWidget.style.setProperty("outline-style", "none"); // change to be border, also change css widths, colors of widgets
+        courseTitleWidget.style.setProperty("outline-width", "0px"); // change to be border, also change css widths, colors of widgets
+        courseTitleWidget.style.setProperty("outline-color", "red"); // change to be border, also change css widths, colors of widgets
     }
  }
 
  function checkCourseCredits() {
-    let regex = /^(\d{1,2})(\.[05])?$/;
+    let regex = /^$|^(\d{1,2})(\.[05])?$/;
     let courseCreditsValue = courseCreditsWidget.value.trim();
     courseCreditsValid = courseCreditsValue.match(regex);
     if (!courseCreditsValid) {
-        courseCreditsWidget.style.setProperty("background", "red");
+        courseCreditsWidget.style.setProperty("outline-style", "groove"); // change to be border, also change css widths, colors of widgets
+        courseCreditsWidget.style.setProperty("outline-width", "1px"); // change to be border, also change css widths, colors of widgets
+        courseCreditsWidget.style.setProperty("outline-color", "red"); // change to be border, also change css widths, colors of widgets
     } else {
-        courseCreditsWidget.style.setProperty("background", "white");
+        courseCreditsWidget.style.setProperty("outline-style", "none"); // change to be border, also change css widths, colors of widgets
+        courseCreditsWidget.style.setProperty("outline-width", "0px"); // change to be border, also change css widths, colors of widgets
+        courseCreditsWidget.style.setProperty("outline-color", "red"); // change to be border, also change css widths, colors of widgets
     }
  }
 
@@ -258,4 +279,3 @@ async function doThings() {
     updateCourses(json);
 }
 doThings();
-
