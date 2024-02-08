@@ -323,6 +323,10 @@ main {
     font-weight: bold;
 }
 
+#course-search input[type=text] {
+    border: hidden red 2px;
+}
+
 #course-submit {
     display: flex;
     flex-grow: 1;

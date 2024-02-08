@@ -155,89 +155,107 @@ function updateCourses(years) {
     header.innerHTML += "<p><strong>Total Hours:</strong> " + totalCreds + "</p>\n";
 }
 
-// Check data validity on change
+// Widget and validation variables
+let courseFinderFormEmpty = true;
+
 let courseDeptValid = false;
 let courseDeptWidget = document.getElementById("courseDept");
-courseDeptWidget.addEventListener("input", checkCourseDept);
 
 let courseNumValid = false;
 let courseNumWidget = document.getElementById("courseNum");
-courseNumWidget.addEventListener("input", checkCourseNum);
 
 let courseTitleValid = false;
 let courseTitleWidget = document.getElementById("courseTitle");
-courseTitleWidget.addEventListener("input", checkCourseTitle);
 
 let courseCreditsValid = false;
 let courseCreditsWidget = document.getElementById("courseCredits");
-courseCreditsWidget.addEventListener("input", checkCourseCredits);
 
 let courseFinderForm = document.getElementById("courseFinderForm");
-courseFinderForm.addEventListener("submit", checkCourseFinderForm);
 
+// Register course finder form event handlers
+courseFinderForm.addEventListener("submit", submitCourseFinderForm);
+courseFinderForm.addEventListener("change", checkCourseFinderForm);
+
+// Check data validity on change
+function checkCourseFinderForm(event) {
+    checkCourseDept();
+    checkCourseNum();
+    checkCourseTitle();
+    checkCourseCredits();    
+    
+    if (!courseDeptValid || !courseNumValid || !courseTitleValid || !courseCreditsValid) {
+        return false;
+    } 
+    return true;
+}
+
+// Check data validity on submit
+function submitCourseFinderForm(event) {
+    if (!checkCourseFinderForm(event) || courseFinderFormEmpty) {
+        console.log("invalid form data");
+        event.preventDefault();
+    } else {
+        event.target.submit();
+    }
+
+    // Reevaluate form after return if there was an error
+    courseFinderFormEmpty = true;
+    checkCourseFinderForm(event);
+}
+
+// Validation functions
 function checkCourseDept() {
     let regex = /^[a-zA-z]{1,5}$/;
     let courseDeptValue = courseDeptWidget.value.trim();
-    let courseDeptEmpty = courseDeptValue == "";
-    courseDeptValid = courseDeptValue.match(regex);
-    if (!courseDeptValid && !courseDeptEmpty) { // not working to allow empty, need to add solution to all input boxes
-        courseDeptWidget.style.setProperty("background", "red"); // change to be border, also change css widths, colors of widgets
+    if (courseDeptValue != "") {
+        courseFinderFormEmpty = false;
+    }
+    courseDeptValid = courseDeptValue.match(regex) || (courseDeptValue == "");
+    if (!courseDeptValid) {
+        courseDeptWidget.style.setProperty("border-style", "solid");
     } else {
-        courseDeptWidget.style.setProperty("background", "white");
+        courseDeptWidget.style.setProperty("border-style", "hidden");
     }
 }
 
 function checkCourseNum() {
     let regex = /^\d{1,4}$/;
     let courseNumValue = courseNumWidget.value.trim();
-    courseNumValid = courseNumValue.match(regex);
+    if (courseNumValue != "") {
+        courseFinderFormEmpty = false;
+    }
+    courseNumValid = courseNumValue.match(regex) || (courseNumValue == "");
     if (!courseNumValid) {
-        courseNumWidget.style.setProperty("background", "red");
+        courseNumWidget.style.setProperty("border-style", "solid");
     } else {
-        courseNumWidget.style.setProperty("background", "white");
+        courseNumWidget.style.setProperty("border-style", "hidden");
     }
 }
 
 function checkCourseTitle() {
-    let regex = /^[a-zA-Z0-9 ():\-\[\]]*$/;
+    let regex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
     let courseTitleValue = courseTitleWidget.value.trim();
-    courseTitleValid = courseTitleValue.match(regex);
+    if (courseTitleValue != "") {
+        courseFinderFormEmpty = false;
+    }
+    courseTitleValid = courseTitleValue.match(regex) || (courseTitleValue == "");
     if (!courseTitleValid) {
-        courseTitleWidget.style.setProperty("background", "red");
+        courseTitleWidget.style.setProperty("border-style", "solid");
     } else {
-        courseTitleWidget.style.setProperty("background", "white");
+        courseTitleWidget.style.setProperty("border-style", "hidden");
     }
- }
-
- function checkCourseCredits() {
-    let regex = /^(\d{1,2})(\.[05])?$/;
-    let courseCreditsValue = courseCreditsWidget.value.trim();
-    courseCreditsValid = courseCreditsValue.match(regex);
-    if (!courseCreditsValid) {
-        courseCreditsWidget.style.setProperty("background", "red");
-    } else {
-        courseCreditsWidget.style.setProperty("background", "white");
-    }
- }
-
-// Check data validity on submit
-function checkCourseFinderForm(event) {
-    if (!courseDeptValid && !courseNumValid && !courseTitleValid && !courseCreditsValid) {
-        console.log("invalid form data");
-        console.log("courseDeptValid: " + courseDeptValid);
-        console.log("courseNumValid: " + courseNumValid);
-        console.log("courseTitleValid: " + courseTitleValid);
-        console.log("courseCreditsValid: " + courseCreditsValid);
-        event.preventDefault();
-    } else {
-        console.log("successful submission");
-        console.log("courseDept: " + courseDeptValue);
-        console.log("courseNum: " + courseNumValue);
-        console.log("courseTitle: " + courseTitleValue);
-        console.log("courseCredits: " + courseCreditsValue);
-        // need to assemble post request (use fetch API?)
-    }
-
-    courseFinderForm.reset();
 }
 
+function checkCourseCredits() {
+    let regex = /^([1-9]{1,2})(\.[05])?$/;
+    let courseCreditsValue = courseCreditsWidget.value.trim();
+    if (courseCreditsValue != "") {
+        courseFinderFormEmpty = false;
+    }
+    courseCreditsValid = courseCreditsValue.match(regex) || (courseCreditsValue == "");
+    if (!courseCreditsValid) {
+        courseCreditsWidget.style.setProperty("border-style", "solid");
+    } else {
+        courseCreditsWidget.style.setProperty("border-style", "hidden");
+    }
+}
