@@ -180,10 +180,12 @@ let courseCreditsValid = false;
 let courseCreditsWidget = document.getElementById("courseCredits");
 
 let courseFinderForm = document.getElementById("courseFinderForm");
+let courseFinderSubmitBtn = document.getElementById("courseFinderSubmit");
 
 // Register course finder form event handlers
-courseFinderForm.addEventListener("submit", submitCourseFinderForm);
 courseFinderForm.addEventListener("change", checkCourseFinderForm);
+courseFinderForm.addEventListener("submit", submitCourseFinderForm);
+courseFinderSubmitBtn.addEventListener("focus", checkCourseSubmitActive)
 
 // Check data validity on change
 function checkCourseFinderForm(event) {
@@ -211,6 +213,16 @@ function submitCourseFinderForm(event) {
 
     // Reevaluate form after return if there was an error
     checkCourseFinderForm(event);
+}
+
+function checkCourseSubmitActive(event) {
+    if (!checkCourseFinderForm(event) || courseFinderFormEmpty) {
+        event.target.style.setProperty("transition", "none");
+        return false;
+    } else {
+        event.target.style.setProperty("transition", "all .4s ease-in-out");
+        return true;
+    }
 }
 
 // Validation functions
