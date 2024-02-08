@@ -330,6 +330,7 @@ main {
     width: 10vw;
     color: var(--text-color-light);
     background-color: var(--transparency-dark);
+    border: none;
     border-radius: 4px;
     box-shadow: 1px 1px 7px;
 }
