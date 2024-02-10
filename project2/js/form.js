@@ -164,109 +164,115 @@ async function doThings() {
 }
 doThings();
 
-// Widget and validation variables
-let courseFinderFormEmpty = true;
-
-let courseDeptValid = false;
+// Course finder form validation and submission --------------------------------
 let courseDeptWidget = document.getElementById("courseDept");
-
-let courseNumValid = false;
 let courseNumWidget = document.getElementById("courseNum");
-
-let courseTitleValid = false;
 let courseTitleWidget = document.getElementById("courseTitle");
-
-let courseCreditsValid = false;
 let courseCreditsWidget = document.getElementById("courseCredits");
-
 let courseFinderForm = document.getElementById("courseFinderForm");
 let courseFinderSubmitBtn = document.getElementById("courseFinderSubmit");
 
-// Register course finder form event handlers
-courseFinderForm.addEventListener("change", checkCourseFinderForm);
+courseFinderForm.addEventListener("input", checkCourseFinderForm);
 courseFinderForm.addEventListener("submit", submitCourseFinderForm);
 
-// Check data validity on change
+async function submitCourseFinderForm(event) {
+    event.preventDefault();
+
+    let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
+                                 !courseNumWidget.value.trim() && 
+                                 !courseTitleWidget.value.trim() && 
+                                 !courseCreditsWidget.value.trim());
+
+    if (checkCourseFinderForm(event) && !courseFinderFormEmpty) {
+        let response = await fetch("http://judah.cedarville.edu/echo.php", {
+            method: "POST",
+            body: new FormData(courseFinderForm)
+         });
+         
+         let result = await response.text();
+         alert(result);
+    }
+}
+
 function checkCourseFinderForm(event) {
-    courseFinderFormEmpty = true;
+    const deptRegex = /^$|^[a-zA-z]{1,5}$/;
+    const numRegex = /^$|^\d{1,4}$/;
+    const titleRegex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
+    const creditsRegex = /^([1-9]{1,2})(\.[05])?$/;
+
+    let deptValid = checkWidget(courseDeptWidget, deptRegex);
+    let numValid = checkWidget(courseNumWidget, numRegex);
+    let titleValid = checkWidget(courseTitleWidget, titleRegex);
+    let creditsValid = checkWidget(courseCreditsWidget, creditsRegex);
     
-    checkCourseDept();
-    checkCourseNum();
-    checkCourseTitle();
-    checkCourseCredits();    
-    
-    if (!courseDeptValid || !courseNumValid || !courseTitleValid || !courseCreditsValid) {
+    return deptValid && numValid && titleValid && creditsValid;
+}
+
+function checkWidget(courseWidget, regex) {
+    let courseValue = courseWidget.value.trim();
+
+    if (courseValue.match(regex) || (courseValue == "")) {
+        courseWidget.style.setProperty("outline", "none");
+        return true;
+        
+    } else {
+        courseWidget.style.setProperty("outline", "solid red 1px");
         return false;
-    } 
-    return true;
-}
-
-// Check data validity on submit
-function submitCourseFinderForm(event) {
-    if (!checkCourseFinderForm(event) || courseFinderFormEmpty) {
-        console.log("invalid form data");
-        event.preventDefault();
-    } else {
-        event.target.submit();
-    }
-
-    // Reevaluate form after return if there was an error
-    checkCourseFinderForm(event);
-}
-
-// Validation functions
-function checkCourseDept() {
-    let regex = /^$|^[a-zA-z]{1,5}$/;
-    let courseDeptValue = courseDeptWidget.value.trim();
-    if (courseDeptValue != "") {
-        courseFinderFormEmpty = false;
-    }
-    courseDeptValid = courseDeptValue.match(regex) || (courseDeptValue == "");
-    if (!courseDeptValid) {
-        courseDeptWidget.style.setProperty("outline", "solid red 1px");
-    } else {
-        courseDeptWidget.style.setProperty("outline", "none");
     }
 }
 
-function checkCourseNum() {
-    let regex = /^$|^\d{1,4}$/;
-    let courseNumValue = courseNumWidget.value.trim();
-    if (courseNumValue != "") {
-        courseFinderFormEmpty = false;
-    }
-    courseNumValid = courseNumValue.match(regex) || (courseNumValue == "");
-    if (!courseNumValid) {
-        courseNumWidget.style.setProperty("outline", "solid red 1px");
-    } else {
-        courseNumWidget.style.setProperty("outline", "none");
-    }
-}
+// function checkCourseDept() {
+//     let regex = /^$|^[a-zA-z]{1,5}$/;
+//     let courseDeptValue = courseDeptWidget.value.trim();
 
-function checkCourseTitle() {
-    let regex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
-    let courseTitleValue = courseTitleWidget.value.trim();
-    if (courseTitleValue != "") {
-        courseFinderFormEmpty = false;
-    }
-    courseTitleValid = courseTitleValue.match(regex) || (courseTitleValue == "");
-    if (!courseTitleValid) {
-        courseTitleWidget.style.setProperty("outline", "solid red 1px");
-    } else {
-        courseTitleWidget.style.setProperty("outline", "none");
-    }
-}
+//     if (courseDeptValue.match(regex) || (courseDeptValue == "")) {
+//         courseDeptWidget.style.setProperty("outline", "none");
+//         return true;
 
-function checkCourseCredits() {
-    let regex = /^([1-9]{1,2})(\.[05])?$/;
-    let courseCreditsValue = courseCreditsWidget.value.trim();
-    if (courseCreditsValue != "") {
-        courseFinderFormEmpty = false;
-    }
-    courseCreditsValid = courseCreditsValue.match(regex) || (courseCreditsValue == "");
-    if (!courseCreditsValid) {
-        courseCreditsWidget.style.setProperty("outline", "solid red 1px");
-    } else {
-        courseCreditsWidget.style.setProperty("outline", "none");
-    }
-}
+//     } else {
+//         courseDeptWidget.style.setProperty("outline", "solid red 1px");
+//         return false;
+//     }
+// }
+
+// function checkCourseNum() {
+//     let regex = /^$|^\d{1,4}$/;
+//     let courseNumValue = courseNumWidget.value.trim();
+//     if (courseNumValue != "") {
+//         courseFinderFormEmpty = false;
+//     }
+//     courseNumValid = courseNumValue.match(regex) || (courseNumValue == "");
+//     if (!courseNumValid) {
+//         courseNumWidget.style.setProperty("outline", "solid red 1px");
+//     } else {
+//         courseNumWidget.style.setProperty("outline", "none");
+//     }
+// }
+
+// function checkCourseTitle() {
+//     let regex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
+//     let courseTitleValue = courseTitleWidget.value.trim();
+//     if (courseTitleValue != "") {
+//         courseFinderFormEmpty = false;
+//     }
+//     courseTitleValid = courseTitleValue.match(regex) || (courseTitleValue == "");
+//     if (!courseTitleValid) {
+//         courseTitleWidget.style.setProperty("outline", "solid red 1px");
+//     } else {
+//         courseTitleWidget.style.setProperty("outline", "none");
+//     }
+// }
+
+// function checkCourseCredits() {
+//     let regex = /^([1-9]{1,2})(\.[05])?$/;
+//     let courseCreditsValue = courseCreditsWidget.value.trim();
+//     if (courseCreditsValue != "") {
+//         courseFinderFormEmpty = false;
+//     }
+//     courseCreditsValid = courseCreditsValue.match(regex) || (courseCreditsValue == "");
+//     if (!courseCreditsValid) {
+//         courseCreditsWidget.style.setProperty("outline", "solid red 1px");
+//     } else {
+//         courseCreditsWidget.style.setProperty("outline", "none");
+//     }
+// }
