@@ -220,3 +220,11 @@ function checkWidget(courseWidget, regex) {
         return false;
     }
 }
+
+function setClickable(widget, clickable) {
+    if (widget.style.getProperty('background-color') == none) {
+        // set ddark
+    } else {
+        // set dark
+    }
+}
