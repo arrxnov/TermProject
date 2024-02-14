@@ -44,23 +44,6 @@ Appearance should remain the same, and still use the same CSS.
 // }
 
 function planToYear(planJSON) {
-    // years["9999"] = {
-    //         plan_name:          planJSON["plan_name"],
-    //         catalog_year:       planJSON["catalog_year"],
-    //         major:              planJSON["major"],
-    //         minor:              planJSON["minor"],
-    //         gpa:                planJSON["gpa"],
-    //         major_gpa:          planJSON["major_gpa"],
-    //         student_name:       planJSON["student_name"],
-    //         current_semester:   planJSON["current_semester"],
-    // };
-    console.log(planJSON);
-    // for (let course in planJSON["courses"]) {
-    //     course = planJSON["courses"][course];
-    //     console.log(course);
-    //     plan[course["year"]][course["term"]].push(course);
-    // }
-
     for (var course in planJSON["courses"]) {
         course = planJSON["courses"][course];
         let y = course["year"];
@@ -74,7 +57,6 @@ function planToYear(planJSON) {
         }
         years[y][t].push(course);
     }
-
     return years;
 }
 
@@ -135,6 +117,9 @@ function updateCourses(planJSON) {
         if (semester.getElementsByClassName("term")[0].innerHTML != term) {
             semester.getElementsByClassName("term")[0].innerHTML = term;
         }
+        if ("" + t + y == planJSON["current_semester"]) {
+            semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
+        }
         if (!(y in years)) {
             continue;
         }
@@ -179,107 +164,67 @@ async function doThings() {
 }
 doThings();
 
-// Widget and validation variables
-let courseFinderFormEmpty = true;
-
-let courseDeptValid = false;
+// Course finder form validation and submission --------------------------------
 let courseDeptWidget = document.getElementById("courseDept");
-
-let courseNumValid = false;
 let courseNumWidget = document.getElementById("courseNum");
-
-let courseTitleValid = false;
 let courseTitleWidget = document.getElementById("courseTitle");
-
-let courseCreditsValid = false;
 let courseCreditsWidget = document.getElementById("courseCredits");
-
 let courseFinderForm = document.getElementById("courseFinderForm");
+let courseFinderSubmitBtn = document.getElementById("courseFinderSubmit");
 
-// Register course finder form event handlers
+courseFinderForm.addEventListener("input", checkCourseFinderForm);
 courseFinderForm.addEventListener("submit", submitCourseFinderForm);
-courseFinderForm.addEventListener("change", checkCourseFinderForm);
 
-// Check data validity on change
+async function submitCourseFinderForm(event) {
+    event.preventDefault();
+
+    let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
+                                 !courseNumWidget.value.trim() && 
+                                 !courseTitleWidget.value.trim() && 
+                                 !courseCreditsWidget.value.trim());
+
+    if (checkCourseFinderForm(event) && !courseFinderFormEmpty) {
+        let response = await fetch("http://judah.cedarville.edu/echo.php", {
+            method: "POST",
+            body: new FormData(courseFinderForm)
+         });
+         
+         let result = await response.text();
+         alert(result);
+    }
+}
+
 function checkCourseFinderForm(event) {
-    checkCourseDept();
-    checkCourseNum();
-    checkCourseTitle();
-    checkCourseCredits();    
+    const deptRegex = /^$|^[a-zA-z]{1,5}$/;
+    const numRegex = /^$|^\d{1,4}$/;
+    const titleRegex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
+    const creditsRegex = /^([1-9]{1,2})(\.[05])?$/;
+
+    let deptValid = checkWidget(courseDeptWidget, deptRegex);
+    let numValid = checkWidget(courseNumWidget, numRegex);
+    let titleValid = checkWidget(courseTitleWidget, titleRegex);
+    let creditsValid = checkWidget(courseCreditsWidget, creditsRegex);
     
-    if (!courseDeptValid || !courseNumValid || !courseTitleValid || !courseCreditsValid) {
+    return deptValid && numValid && titleValid && creditsValid;
+}
+
+function checkWidget(courseWidget, regex) {
+    let courseValue = courseWidget.value.trim();
+
+    if (courseValue.match(regex) || (courseValue == "")) {
+        courseWidget.style.setProperty("outline", "none");
+        return true;
+        
+    } else {
+        courseWidget.style.setProperty("outline", "solid red 1px");
         return false;
-    } 
-    return true;
-}
-
-// Check data validity on submit
-function submitCourseFinderForm(event) {
-    if (!checkCourseFinderForm(event) || courseFinderFormEmpty) {
-        console.log("invalid form data");
-        event.preventDefault();
-    } else {
-        event.target.submit();
-    }
-
-    // Reevaluate form after return if there was an error
-    courseFinderFormEmpty = true;
-    checkCourseFinderForm(event);
-}
-
-// Validation functions
-function checkCourseDept() {
-    let regex = /^$|^[a-zA-z]{1,5}$/;
-    let courseDeptValue = courseDeptWidget.value.trim();
-    if (courseDeptValue != "") {
-        courseFinderFormEmpty = false;
-    }
-    courseDeptValid = courseDeptValue.match(regex) || (courseDeptValue == "");
-    if (!courseDeptValid) {
-        courseDeptWidget.style.setProperty("border-style", "solid");
-    } else {
-        courseDeptWidget.style.setProperty("border-style", "hidden");
     }
 }
 
-function checkCourseNum() {
-    let regex = /^$|^\d{1,4}$/;
-    let courseNumValue = courseNumWidget.value.trim();
-    if (courseNumValue != "") {
-        courseFinderFormEmpty = false;
-    }
-    courseNumValid = courseNumValue.match(regex) || (courseNumValue == "");
-    if (!courseNumValid) {
-        courseNumWidget.style.setProperty("border-style", "solid");
+function setClickable(widget, clickable) {
+    if (widget.style.getProperty('background-color') == none) {
+        // set ddark
     } else {
-        courseNumWidget.style.setProperty("border-style", "hidden");
-    }
-}
-
-function checkCourseTitle() {
-    let regex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
-    let courseTitleValue = courseTitleWidget.value.trim();
-    if (courseTitleValue != "") {
-        courseFinderFormEmpty = false;
-    }
-    courseTitleValid = courseTitleValue.match(regex) || (courseTitleValue == "");
-    if (!courseTitleValid) {
-        courseTitleWidget.style.setProperty("border-style", "solid");
-    } else {
-        courseTitleWidget.style.setProperty("border-style", "hidden");
-    }
-}
-
-function checkCourseCredits() {
-    let regex = /^([1-9]{1,2})(\.[05])?$/;
-    let courseCreditsValue = courseCreditsWidget.value.trim();
-    if (courseCreditsValue != "") {
-        courseFinderFormEmpty = false;
-    }
-    courseCreditsValid = courseCreditsValue.match(regex) || (courseCreditsValue == "");
-    if (!courseCreditsValid) {
-        courseCreditsWidget.style.setProperty("border-style", "solid");
-    } else {
-        courseCreditsWidget.style.setProperty("border-style", "hidden");
+        // set dark
     }
 }
