@@ -165,71 +165,68 @@ async function doThings() {
 doThings();
 
 // Course finder form validation and submission --------------------------------
-/* note: put all javascript modifying the dom in ... 
 jQuery(function() {
-   // DOM is ready to go
-});
-*/
-let courseDeptWidget = document.getElementById("courseDept");
-let courseNumWidget = document.getElementById("courseNum");
-let courseTitleWidget = document.getElementById("courseTitle");
-let courseCreditsWidget = document.getElementById("courseCredits");
-let courseFinderForm = document.getElementById("courseFinderForm");
-let courseFinderSubmitBtn = document.getElementById("courseFinderSubmit");
+    let courseDeptWidget = document.getElementById("courseDept");
+    let courseNumWidget = document.getElementById("courseNum");
+    let courseTitleWidget = document.getElementById("courseTitle");
+    let courseCreditsWidget = document.getElementById("courseCredits");
+    let courseFinderForm = document.getElementById("courseFinderForm");
+    let courseFinderSubmitBtn = document.getElementById("courseFinderSubmit");
 
-courseFinderForm.addEventListener("input", checkCourseFinderForm);
-courseFinderForm.addEventListener("submit", submitCourseFinderForm);
+    courseFinderForm.addEventListener("input", checkCourseFinderForm);
+    courseFinderForm.addEventListener("submit", submitCourseFinderForm);
 
-async function submitCourseFinderForm(event) {
-    event.preventDefault();
-
-    let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
-                                 !courseNumWidget.value.trim() && 
-                                 !courseTitleWidget.value.trim() && 
-                                 !courseCreditsWidget.value.trim());
-
-    if (checkCourseFinderForm(event) && !courseFinderFormEmpty) {
-        let response = await fetch("http://judah.cedarville.edu/echo.php", {
-            method: "POST",
-            body: new FormData(courseFinderForm)
-         });
-         
-         let result = await response.text();
-         alert(result);
-    }
-}
-
-function checkCourseFinderForm(event) {
-    const deptRegex = /^$|^[a-zA-z]{1,5}$/;
-    const numRegex = /^$|^\d{1,4}$/;
-    const titleRegex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
-    const creditsRegex = /^([1-9]{1,2})(\.[05])?$/;
-
-    let deptValid = checkWidget(courseDeptWidget, deptRegex);
-    let numValid = checkWidget(courseNumWidget, numRegex);
-    let titleValid = checkWidget(courseTitleWidget, titleRegex);
-    let creditsValid = checkWidget(courseCreditsWidget, creditsRegex);
+    async function submitCourseFinderForm(event) {
+        event.preventDefault();
     
-    return deptValid && numValid && titleValid && creditsValid;
-}
-
-function checkWidget(courseWidget, regex) {
-    let courseValue = courseWidget.value.trim();
-
-    if (courseValue.match(regex) || (courseValue == "")) {
-        courseWidget.style.setProperty("outline", "none");
-        return true;
+        let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
+                                     !courseNumWidget.value.trim() && 
+                                     !courseTitleWidget.value.trim() && 
+                                     !courseCreditsWidget.value.trim());
+    
+        if (checkCourseFinderForm(event) && !courseFinderFormEmpty) {
+            let response = await fetch("http://judah.cedarville.edu/echo.php", {
+                method: "POST",
+                body: new FormData(courseFinderForm)
+             });
+             
+             let result = await response.text();
+             alert(result);
+        }
+    }
+    
+    function checkCourseFinderForm(event) {
+        const deptRegex = /^$|^[a-zA-z]{1,5}$/;
+        const numRegex = /^$|^\d{1,4}$/;
+        const titleRegex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
+        const creditsRegex = /^([1-9]{1,2})(\.[05])?$/;
+    
+        let deptValid = checkWidget(courseDeptWidget, deptRegex);
+        let numValid = checkWidget(courseNumWidget, numRegex);
+        let titleValid = checkWidget(courseTitleWidget, titleRegex);
+        let creditsValid = checkWidget(courseCreditsWidget, creditsRegex);
         
-    } else {
-        courseWidget.style.setProperty("outline", "solid red 1px");
-        return false;
+        return deptValid && numValid && titleValid && creditsValid;
     }
-}
-
-function setClickable(widget, clickable) {
-    if (widget.style.getProperty('background-color') == none) {
-        // set ddark
-    } else {
-        // set dark
+    
+    function checkWidget(courseWidget, regex) {
+        let courseValue = courseWidget.value.trim();
+    
+        if (courseValue.match(regex) || (courseValue == "")) {
+            courseWidget.style.setProperty("outline", "none");
+            return true;
+            
+        } else {
+            courseWidget.style.setProperty("outline", "solid red 1px");
+            return false;
+        }
     }
-}
+    
+    function setClickable(widget, clickable) {
+        if (widget.style.getProperty('background-color') == none) {
+            // set ddark
+        } else {
+            // set dark
+        }
+    }
+});
