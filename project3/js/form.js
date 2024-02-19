@@ -1,4 +1,20 @@
 /*
+ * Filename: form.js
+ * Authors: Logan Miller, Jacob Grady, Kai Delsing
+ * 
+ * To Do's:
+ *  Fix button css to make buttons "clickable" --logan
+ *  Add dropdown for options with an entry for theme (change background color)
+ *  Add drag and drop
+ *  Update Logan's homepage --logan
+ *  Update Jacob's page --jacob
+ *  Remove all comments on js code
+ *  Migrate code to jQuery
+ *  Complete project part 1
+ *  Complete project part 2
+ */
+
+/*
 Create a JavaScript Plan object containing the following fields:
 Plan name
 Catalog year
@@ -46,7 +62,7 @@ Appearance should remain the same, and still use the same CSS.
 // Delay code execution until html is loaded
 jQuery(function() {
     function planToYear(planJSON) {
-        for (var course in planJSON["courses"]) {
+        for (let course in planJSON["courses"]) { // changed var to let
             course = planJSON["courses"][course];
             let y = course["year"];
             let t = course["term"];
@@ -224,7 +240,7 @@ jQuery(function() {
     }
     
     function setClickable(widget, clickable) {
-        if (widget.style.getProperty('background-color') == none) {
+        if (clickable) {
             // set ddark
         } else {
             // set dark
