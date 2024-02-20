@@ -7,6 +7,9 @@ TODO:
     --btn-color: rgb(100, 100, 100);
     --text-color-light: rgb(230, 230, 230);
     --text-color-dark: black;
+    --btn-green: rgb(7, 65, 42);
+    --btn-blue: #14175a;
+    --btn-gray: #262730;
     --transparency-dark: rgba(0, 0, 0, 0.6);
     --transparency-light: rgba(0, 0, 0, 0.35);
     --transparency-ddark: rgba(0, 0, 0, 0.74); /*0.74=(1-0.35)*0.6+0.35*/
@@ -79,14 +82,14 @@ p {
     border: none;
     border-radius: 4px;
     color: var(--text-color-light);
-    background-color: var(--transparency-dark);
+    background-color: var(--btn-green);
     transition: all .4s ease-in-out;
     box-shadow: 1px 1px 5px;
 }
 
 .btn:hover {
     transition: all .2s ease-in-out;
-    background-color: var(--transparency-dark);
+    background-color: var(--transparency-light);
 }
 
 .btn:active {
@@ -120,7 +123,7 @@ header h1 {
     margin: 4px;
 }
 
-#header-btns {
+#headerBtns {
     align-items: center;
     display: flex;
     justify-content: flex-end;
@@ -140,21 +143,18 @@ main {
 }
 
 /* Left container -------------------------------------------------------------- */
-#left-container {
+#leftContainer {
     flex: 1;
     flex-grow: 2;
     display: flex;
     flex-flow: column nowrap;
 }
 
-/* Upper left container (requirements) ----------------------------------------- */
-#ul-course-reqs {
+#courseReqs {
     flex-grow: 1;
     min-width: 10%;
 }
-/* Upper left container (requirements) ----------------------------------------- */
 
-/* Lower left container (misc) ------------------------------------------------- */
 #homePages {
     display: flex;
     flex-grow: 1;
@@ -163,28 +163,10 @@ main {
     flex-flow: column nowrap;
     justify-content: space-around;
 }  
-
-#voting {
-    display: flex;
-    flex: 1;
-    flex-grow: 1;
-    justify-content: space-around;
-    border-radius: 4px;
-}
-
-#voting-btn {
-    flex: 1;
-    flex-grow: 1;
-}
-/* Lower left container (misc) ------------------------------------------------- */
-.wide-button {
-    width: 90%;
-}
-
 /* Left container -------------------------------------------------------------- */
 
 /* Right container ------------------------------------------------------------- */
-#right-container {
+#rightContainer {
     flex: 1;
     flex-grow: 10;
     display: flex;
@@ -192,20 +174,20 @@ main {
 }
 
 /* Upper right container (plan) ------------------------------------------------ */
-#ur-header {
-    justify-content: space-around;
-}
-
-#ur-header-2 {
-    font-weight: normal;
-    justify-content: space-around;
-}
-
-#ur-plan {
+#plan {
     flex: 1;
     flex-grow: 1;
     flex-flow: column nowrap;
     display: flex;
+}
+
+#planHeader {
+    justify-content: space-around;
+}
+
+#planSubheader {
+    font-weight: normal;
+    justify-content: space-around;
 }
 
 .year {
@@ -244,7 +226,7 @@ main {
     background-color: var(--transparency-dark);
 }
 
-.semester-hdr {
+.semesterHeader {
     display: flex;
     justify-content: space-between;
     font-weight: bold;
@@ -253,27 +235,15 @@ main {
 /* Upper right container (plan) ------------------------------------------------ */
 
 /* Lower right container (course finder) --------------------------------------- */
-/* #lr-course-finder {
-    flex: 1;
-    flex-grow: 0;
-    border: none;
-    border-radius: 4px;
-    box-shadow: 1px 1px 5px;
-    margin: 4px;
-    background-color: var(--transparency-light);
-} */
-
-#lr-course-finder p {
-    margin: 8px;
-}
-
 #courseFinderForm {
     display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
     flex-flow: row;
-    padding: 8px;
+    align-items: center;
 }
 
-#course-search {
+#courseSearch {
     display: flex;
     flex-grow: 2;
     flex-flow: row;
@@ -281,56 +251,36 @@ main {
     justify-content: space-between;
 }
 
-#course-search div {
+#courseSearch div {
     margin: 4px;
 }
 
-#course-search label {
+#courseSearch label {
     font-weight: bold;
 }
 
-#course-search input[type=text] {
+#courseSearch input[type=text] {
     outline: none;
     padding: 4px;
     width: 10vw;
     color: var(--text-color-light);
-    background-color: var(--transparency-dark);
+    background-color: var(--btn-green);
     border: none;
     border-radius: 4px;
     box-shadow: 1px 1px 7px;
 }
 
-#course-search input[type=text]:focus {
+#courseSearch input[type=text]:focus {
     transition: all .4s ease-in-out;
     background-color: var(--transparency-light);
 }
 
-#course-submit {
+#courseSubmit {
     display: flex;
-    flex: 1;
     flex-grow: 1;
+    flex-shrink: 1;
     flex-flow: row;
     justify-content: center;
-}
-
-#course-submit input[type=submit] {
-    transition: all .4s ease-in-out;
-    min-width: 80px;
-    background: var(--transparency-dark);
-    border: none;
-    border-radius: 4px;
-    color: var(--fnt-folor);
-    box-shadow: 1px 1px 5px;
-    font-weight: bold;
-}
-
-#course-submit input[type=submit]:hover {
-    transition: all .4s ease-in-out;
-    background: var(--transparency-light);
-}
-
-#course-submit input[type=submit]:active {
-    box-shadow: none;
 }
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
