@@ -9,7 +9,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
-        <script src="js/form.js"></script>
+        <script src="js/form.js" defer></script>
         <script src="js/jquery-3.7.1.js"></script>
     </head>
 
@@ -20,9 +20,9 @@
             <h1>APE</h1>
 
             <div id="header-btns">    
-                <button id="options">Options</button>
-                <button id="save">Save</button>
-                <button id="logout">Log Out</button>
+                <button class="btn" id="options">Options</button>
+                <button class="btn" id="save">Save</button>
+                <button class="btn" id="logout">Log Out</button>
             </div> 
 
         </header>
@@ -32,7 +32,7 @@
                 <div class="labels">
                     <p>Requirements</p>
                 </div>
-                <div id="ul-course-reqs">
+                <div class="basicContainer" id="ul-course-reqs">
                     <p>
                         In Cedarville's halls, a leader stands tall,<br>
                         With wisdom's grace and martial arts' might,<br>
@@ -56,12 +56,12 @@
                 <div class="labels">
                         <p>Homepages</p>
                     </div>
-                <div id="ll-misc">
-                    <div id="home-pages">
-                        <a class="wide-button" href="http://judah.cedarville.edu/~grady/cs3220.html" target="_blank">Jacob Grady</a>
-                        <a class="wide-button" href="http://judah.cedarville.edu/~delsing/cs3220.html" target="_blank">Kai Delsing</a>
-                        <a class="wide-button" href="http://judah.cedarville.edu/~lmiller/cs3220.html" target="_blank">Logan Miller</a>
-                        <a class="wide-button" href="http://judah.cedarville.edu/index.php" target="_blank">VOTE FOR US HERE!!</a>
+                <div class="basicContainer" id="ll-misc">
+                    <div id="homePages">
+                        <button class="btn" id="jgradyBtn">Jacob Grady</button>
+                        <button class="btn" id="kdelsingBtn">Kai Delsing</button>
+                        <button class="btn" id="lmillerBtn">Logan Miller</button>
+                        <button class="btn" id="votingBtn">VOTE FOR US HERE!!</button>
                     </div>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                 <div class="labels">
                     <p>Course Finder</p>
                 </div>
-                <div id="lr-course-finder">
+                <div class="basicContainer" id="lr-course-finder">
                     <form id="courseFinderForm">
                         <div id="course-search">
                             <div>
@@ -184,7 +184,7 @@
                             </div>
                         </div>
                         <div id="course-submit">
-                            <input type="submit" value="Search" id="courseFinderSubmit">
+                            <button class="btn" id="courseFinderSubmit" type="submit">Search</button>
                         </div>
                     </form>
 

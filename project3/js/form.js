@@ -60,7 +60,7 @@ Appearance should remain the same, and still use the same CSS.
 // }
 
 // Delay code execution until html is loaded
-jQuery(function() {
+jQuery(document).ready(function() {
     function planToYear(planJSON) {
         for (let course in planJSON["courses"]) { // changed var to let
             course = planJSON["courses"][course];
@@ -183,17 +183,35 @@ jQuery(function() {
     doThings();
 
     // Course finder form validation and submission ----------------------------
+    
+
+    // Course finder form validation and submission ----------------------------
     let courseDeptWidget = document.getElementById("courseDept");
     let courseNumWidget = document.getElementById("courseNum");
     let courseTitleWidget = document.getElementById("courseTitle");
     let courseCreditsWidget = document.getElementById("courseCredits");
     let courseFinderForm = document.getElementById("courseFinderForm");
+    courseFinderForm.addEventListener("input", checkCourseFinderForm); // change to jQuery
     let courseFinderSubmitBtn = document.getElementById("courseFinderSubmit");
 
-    courseFinderForm.addEventListener("input", checkCourseFinderForm);
-    courseFinderForm.addEventListener("submit", submitCourseFinderForm);
+    // ll button actions
+    jQuery("#jgradyBtn").click(function() {
+        window.open("http://judah.cedarville.edu/~grady/cs3220.html", "_blank");
+    });
+    jQuery("#kdelsingBtn").click(function() {
+        window.open("http://judah.cedarville.edu/~delsing/cs3220.html", "_blank");
+    });
+    jQuery("#lmillerBtn").click(function() {
+        window.open("http://judah.cedarville.edu/~lmiller/cs3220.html", "_blank");
+    });
+    jQuery("#votingBtn").click(function() {
+        window.open("http://judah.cedarville.edu/index.php", "_blank");
+    });
 
-    async function submitCourseFinderForm(event) {
+    // courseFinderForm.addEventListener("input", checkCourseFinderForm); // change to jQuery
+    // courseFinderForm.addEventListener("submit", submitCourseFinderForm);
+
+    jQuery("#courseFinderSubmit").click(async function(event) {
         event.preventDefault();
     
         let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
@@ -210,7 +228,26 @@ jQuery(function() {
              let result = await response.text();
              alert(result);
         }
-    }
+    });
+    
+    // async function submitCourseFinderForm(event) {
+    //     event.preventDefault();
+    
+    //     let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
+    //                                  !courseNumWidget.value.trim() && 
+    //                                  !courseTitleWidget.value.trim() && 
+    //                                  !courseCreditsWidget.value.trim());
+    
+    //     if (checkCourseFinderForm(event) && !courseFinderFormEmpty) {
+    //         let response = await fetch("http://judah.cedarville.edu/echo.php", {
+    //             method: "POST",
+    //             body: new FormData(courseFinderForm)
+    //          });
+             
+    //          let result = await response.text();
+    //          alert(result);
+    //     }
+    // }
     
     function checkCourseFinderForm(event) {
         const deptRegex = /^$|^[a-zA-z]{1,5}$/;
@@ -240,15 +277,15 @@ jQuery(function() {
     }
     
     function setClickable(widget, clickable) {
-        let bkg = "--transparency-ddark";
-        if (widget.parentElement.style.getProperty("background") == "--transparency-light") {
-            bkg = "--transparency-dark";
-        }
+        // let bkg = "--transparency-ddark";
+        // if (widget.parentElement.style.getProperty("background") == "--transparency-light") {
+        //     bkg = "--transparency-dark";
+        // }
         
         if (clickable) {
-            widget.style.setProperty("background", bkg);
+            widget.style.setProperty("border", "solid red 4px");
         } else {
-            widget.style.setProperty("background", "none");
+            widget.style.setProperty("border", "none");
         }
     }
 });
