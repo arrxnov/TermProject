@@ -240,10 +240,15 @@ jQuery(function() {
     }
     
     function setClickable(widget, clickable) {
+        let bkg = "--transparency-ddark";
+        if (widget.parentElement.style.getProperty("background") == "--transparency-light") {
+            bkg = "--transparency-dark";
+        }
+        
         if (clickable) {
-            // set ddark
+            widget.style.setProperty("background", bkg);
         } else {
-            // set dark
+            widget.style.setProperty("background", "none");
         }
     }
 });
