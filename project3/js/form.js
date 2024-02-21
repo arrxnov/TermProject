@@ -3,7 +3,6 @@
  * Authors: Logan Miller, Jacob Grady, Kai Delsing
  * 
  * To Do's:
- *  Fix button css to make buttons "clickable" --logan
  *  Add dropdown for options with an entry for theme (change background color)
  *  Add drag and drop
  *  Update Logan's homepage --logan
@@ -80,7 +79,7 @@ jQuery(document).ready(function() {
 
 
     function updateCourses(planJSON) {
-        let header = document.getElementById("ur-header");
+        let header = document.getElementById("planHeader");
         // DONE: set header values (other than total hours)
         header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student_name"] + "</p>\n";
         header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["year"] + "</p>\n";
@@ -92,7 +91,7 @@ jQuery(document).ready(function() {
         </div>
         */
 
-        let header2 = document.getElementById("ur-header-2");
+        let header2 = document.getElementById("planSubheader");
         // DONE: set header values
         header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
         header2.innerHTML += "<p><strong>Minor:</strong> " + planJSON["minor"] + "</p>\n";
@@ -182,19 +181,17 @@ jQuery(document).ready(function() {
     }
     doThings();
 
-    // Course finder form validation and submission ----------------------------
-    
+    jQuery(".blink").each(function() {
+        var elem = jQuery(this);
+        setInterval(function() {
+            if (elem.css("color") == "rgb(255, 0, 0)") {
+                elem.css("color", "var(--text-color-light)");
+            } else {
+                elem.css("color", "red");
+            }    
+        }, 500);
+    });
 
-    // Course finder form validation and submission ----------------------------
-    let courseDeptWidget = document.getElementById("courseDept");
-    let courseNumWidget = document.getElementById("courseNum");
-    let courseTitleWidget = document.getElementById("courseTitle");
-    let courseCreditsWidget = document.getElementById("courseCredits");
-    let courseFinderForm = document.getElementById("courseFinderForm");
-    courseFinderForm.addEventListener("input", checkCourseFinderForm); // change to jQuery
-    let courseFinderSubmitBtn = document.getElementById("courseFinderSubmit");
-
-    // ll button actions
     jQuery("#jgradyBtn").click(function() {
         window.open("http://judah.cedarville.edu/~grady/cs3220.html", "_blank");
     });
@@ -208,21 +205,15 @@ jQuery(document).ready(function() {
         window.open("http://judah.cedarville.edu/index.php", "_blank");
     });
 
-    // courseFinderForm.addEventListener("input", checkCourseFinderForm); // change to jQuery
-    // courseFinderForm.addEventListener("submit", submitCourseFinderForm);
+    jQuery("#courseFinderForm").on("input", checkCourseFinderForm);
 
     jQuery("#courseFinderSubmit").click(async function(event) {
         event.preventDefault();
     
-        let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
-                                     !courseNumWidget.value.trim() && 
-                                     !courseTitleWidget.value.trim() && 
-                                     !courseCreditsWidget.value.trim());
-    
-        if (checkCourseFinderForm(event) && !courseFinderFormEmpty) {
+        if (checkCourseFinderForm()) {
             let response = await fetch("http://judah.cedarville.edu/echo.php", {
                 method: "POST",
-                body: new FormData(courseFinderForm)
+                body: new FormData(document.getElementById("courseFinderForm"))
              });
              
              let result = await response.text();
@@ -230,37 +221,41 @@ jQuery(document).ready(function() {
         }
     });
     
-    // async function submitCourseFinderForm(event) {
-    //     event.preventDefault();
-    
-    //     let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
-    //                                  !courseNumWidget.value.trim() && 
-    //                                  !courseTitleWidget.value.trim() && 
-    //                                  !courseCreditsWidget.value.trim());
-    
-    //     if (checkCourseFinderForm(event) && !courseFinderFormEmpty) {
-    //         let response = await fetch("http://judah.cedarville.edu/echo.php", {
-    //             method: "POST",
-    //             body: new FormData(courseFinderForm)
-    //          });
-             
-    //          let result = await response.text();
-    //          alert(result);
-    //     }
-    // }
-    
-    function checkCourseFinderForm(event) {
+    function checkCourseFinderForm() {
         const deptRegex = /^$|^[a-zA-z]{1,5}$/;
         const numRegex = /^$|^\d{1,4}$/;
         const titleRegex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
         const creditsRegex = /^([1-9]{1,2})(\.[05])?$/;
     
+        let courseDeptWidget = document.getElementById("courseDept");
+        let courseNumWidget = document.getElementById("courseNum");
+        let courseTitleWidget = document.getElementById("courseTitle");
+        let courseCreditsWidget = document.getElementById("courseCredits");
+        
+        
         let deptValid = checkWidget(courseDeptWidget, deptRegex);
         let numValid = checkWidget(courseNumWidget, numRegex);
         let titleValid = checkWidget(courseTitleWidget, titleRegex);
         let creditsValid = checkWidget(courseCreditsWidget, creditsRegex);
+
+        let validValues = deptValid && numValid && titleValid && creditsValid;
+
+        let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
+                                     !courseNumWidget.value.trim() && 
+                                     !courseTitleWidget.value.trim() && 
+                                     !courseCreditsWidget.value.trim());
+
+        let valid = validValues && !courseFinderFormEmpty;
+
+        if (valid) {
+            jQuery("#courseFinderSubmit").removeClass("btn").addClass("btn-clickable");
+            console.log("valid")
+        } else {
+            jQuery("#courseFinderSubmit").addClass("btn").removeClass("btn-clickable");
+            console.log("invalid")
+        }
         
-        return deptValid && numValid && titleValid && creditsValid;
+        return valid;
     }
     
     function checkWidget(courseWidget, regex) {
@@ -273,19 +268,6 @@ jQuery(document).ready(function() {
         } else {
             courseWidget.style.setProperty("outline", "solid red 1px");
             return false;
-        }
-    }
-    
-    function setClickable(widget, clickable) {
-        // let bkg = "--transparency-ddark";
-        // if (widget.parentElement.style.getProperty("background") == "--transparency-light") {
-        //     bkg = "--transparency-dark";
-        // }
-        
-        if (clickable) {
-            widget.style.setProperty("border", "solid red 4px");
-        } else {
-            widget.style.setProperty("border", "none");
         }
     }
 });
