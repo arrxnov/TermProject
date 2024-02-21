@@ -146,7 +146,7 @@ jQuery(document).ready(function() {
                 let course = courses[key];
                 credits += course["credits"];
                 // DONE: append course to semester div
-                semester.innerHTML += "<p>" + course["course_des"] + " " + course["course_name"] + "</p>\n";
+                semester.innerHTML += "<p draggable=\"true\">" + course["course_des"] + " " + course["course_name"] + "</p>\n";
             }
             
             totalCreds += credits;
@@ -182,14 +182,14 @@ jQuery(document).ready(function() {
     doThings();
 
     jQuery(".blink").each(function() {
-        var elem = jQuery(this);
+        let elem = jQuery(this);
         setInterval(function() {
             if (elem.css("color") == "rgb(255, 0, 0)") {
                 elem.css("color", "var(--text-color-light)");
             } else {
                 elem.css("color", "red");
             }    
-        }, 500);
+        }, 400);
     });
 
     jQuery("#jgradyBtn").click(function() {
