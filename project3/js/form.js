@@ -14,6 +14,50 @@
  */
 
 /*
+Improve the term project by adding AJAX and JQuery.
+
+Specific guidelines:
+
+Part 1: 
+
+We are retrieving data from the web server using AJAX.  For this first part, data should be retrieved using JSON format.
+
+Plan and Catalog data:   /~knoerr/cs3220/termProject/getCombined.php
+Requirements data:        /~knoerr/cs3220/termProject/getRequirements.php
+Plan and Catalog data is used to populate the 4-year plan (UR) and the Catalog Search table (LR) portion of the application. 
+
+In the 4-year plan, the display should combine the course id (“CS-1210”) and the name (“C++ Programming”) to display both.
+
+The Catalog search table should have columns for each of the properties for the courses in the catalog object.
+The search box needs to dynamically reduce the table as more characters are entered in it. 
+An example can be found at Datatables.net, but you can utilize any JavaScript mechanism for the table/search functionality.
+
+Requirements data (UL) is displayed using a jQuery UI accordion widget and populated from the second AJAX call. 
+Again, you will need to pull the name from the catalog object to display both id and name within the accordion. 
+The Categories will be the section headers within the accordion.
+
+Part 2:
+
+Solve the Kelley Blue Book (KBB) problem using basic AJAX techniques from scratch (no jQuery). 
+Data must be retrieved and processed using the XML format.  
+Three new form widgets will be added to the LL region (along with your course and home page links).
+
+The URI to call in this case is: /~gallaghd/ymm/ymmdb.php
+
+Fetch the year data by adding the name/value pair: “fmt=xml” after the page loads to populate the year dropdown list.
+Once a year is selected, that should automatically trigger another Ajax call, 
+this time adding the selected year as a second parameter: “year=yr” and populate the make field.
+Finally, selecting a make will also trigger an Ajax call, this time passing in a third parameter: “make=mk” and populating the model field.  
+So, the complete URL will be something like:  /~gallaghd/ymm/ymmdb.php?fmt=xml&year=2008&make=4
+
+Part 3:
+
+Feel free to add any other cool features you like!
+
+Regex fields from project 2 can be removed for this project.
+*/
+
+/*
 Create a JavaScript Plan object containing the following fields:
 Plan name
 Catalog year
@@ -60,6 +104,22 @@ Appearance should remain the same, and still use the same CSS.
 
 // Delay code execution until html is loaded
 jQuery(document).ready(function() {
+
+    async function getCombined() {
+        const response = await fetch("/~knoerr/cs3220/termProject/getCombined.php");
+        const data = await response.json();
+        console.log(data);
+    }
+
+    async function getRequirements() {
+        const response = await fetch("/~knoerr/cs3220/termProject/getRequirements.php");
+        const data = await response.json();
+        console.log(data);
+    }
+
+    getCombined();
+    getRequirements();
+
     function planToYear(planJSON) {
         for (let course in planJSON["courses"]) { // changed var to let
             course = planJSON["courses"][course];
