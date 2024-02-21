@@ -108,17 +108,14 @@ jQuery(document).ready(function() {
     async function getCombined() {
         const response = await fetch("/~knoerr/cs3220/termProject/getCombined.php");
         const data = await response.json();
-        console.log(data);
+        return data;
     }
 
     async function getRequirements() {
         const response = await fetch("/~knoerr/cs3220/termProject/getRequirements.php");
         const data = await response.json();
-        console.log(data);
+        return data;
     }
-
-    getCombined();
-    getRequirements();
 
     function planToYear(planJSON) {
         for (let course in planJSON["courses"]) { // changed var to let
