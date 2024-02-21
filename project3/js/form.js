@@ -238,6 +238,7 @@ jQuery(document).ready(function() {
     }
     doThings();
 
+    // Function which blinks the vote button
     jQuery(".blink").each(function() {
         let elem = jQuery(this);
         setInterval(function() {
@@ -249,6 +250,7 @@ jQuery(document).ready(function() {
         }, 400);
     });
 
+    // Functions that handle button clicks
     jQuery("#jgradyBtn").click(function() {
         window.open("http://judah.cedarville.edu/~grady/cs3220.html", "_blank");
     });
@@ -306,10 +308,8 @@ jQuery(document).ready(function() {
 
         if (valid) {
             jQuery("#courseFinderSubmit").removeClass("btn").addClass("btn-clickable");
-            console.log("valid")
         } else {
             jQuery("#courseFinderSubmit").addClass("btn").removeClass("btn-clickable");
-            console.log("invalid")
         }
         
         return valid;
@@ -327,4 +327,6 @@ jQuery(document).ready(function() {
             return false;
         }
     }
+
+    // add code to create new dataTable
 });
