@@ -276,6 +276,11 @@ main {
 /* Upper right container (plan) ------------------------------------------------ */
 
 /* Lower right container (course finder) --------------------------------------- */
+#courseFinder {
+    display: flex;
+    flex-flow: column;
+}
+
 #courseFinderForm {
     display: flex;
     flex-grow: 1;
@@ -288,7 +293,7 @@ main {
     display: flex;
     flex-grow: 2;
     flex-flow: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
 }
 
@@ -323,5 +328,14 @@ main {
     flex-flow: row;
     justify-content: center;
 }
+
+/* #searchTable {
+    display: flex;
+    justify-content: left;
+}
+
+#searchTable th {
+    justify-content: left;
+} */
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
