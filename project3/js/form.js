@@ -108,7 +108,6 @@ jQuery(document).ready(function () {
     async function getCombined() {
         const response = await fetch("/~knoerr/cs3220/termProject/getCombined.php");
         const data = await response.json();
-        console.log(data);
         return data;
     }
 
@@ -119,7 +118,7 @@ jQuery(document).ready(function () {
     }
 
     function planToYear(planJSON) {
-        for (let course in planJSON["courses"]) { // changed var to let
+        for (let course in planJSON["courses"]) {
             course = planJSON["courses"][course];
             let y = course["year"];
             let t = course["term"];
@@ -145,25 +144,25 @@ jQuery(document).ready(function () {
 
     async function updateReqs() {
         reqs = await getRequirements();
-        console.log(reqs);
+        // console.log(reqs);
         for (let course in reqs.categories.Cognates.courses) {
             course = reqs.categories.Cognates.courses[course];
-            courseName = getCourseName(course);
+            let courseName = getCourseName(course);
             document.getElementById("cognates").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
         for (let course in reqs.categories.Electives.courses) {
             course = reqs.categories.Electives.courses[course];
-            courseName = getCourseName(course);
+            let courseName = getCourseName(course);
             document.getElementById("electives").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
         for (let course in reqs.categories.Core.courses) {
             course = reqs.categories.Core.courses[course];
-            courseName = getCourseName(course);
+            let courseName = getCourseName(course);
             document.getElementById("core").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
         for (let course in reqs.categories.GenEds.courses) {
             course = reqs.categories.GenEds.courses[course];
-            courseName = getCourseName(course);
+            let courseName = getCourseName(course);
             document.getElementById("geneds").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
     }
@@ -281,19 +280,19 @@ jQuery(document).ready(function () {
             };
 
         }
-        console.log("courseNames:");
-        console.log(courseNames);
+        // console.log("courseNames:");
+        // console.log(courseNames);
 
         let plan = response.plan;
-        console.log("doThings:");
+        // console.log("doThings:");
 
-        console.log("Plan:");
-        console.log(plan);
+        // console.log("Plan:");
+        // console.log(plan);
         // console.log(response)
         // console.log(plan);
         planToYear(plan);
-        console.log("Years");
-        console.log(years);
+        // console.log("Years");
+        // console.log(years);
         updateCourses(plan);
         await updateReqs();
         jQuery("#courseReqs").accordion();
@@ -447,6 +446,13 @@ jQuery(document).ready(function () {
     // add code to create new dataTable
     let table = jQuery('#searchTable').dataTable().api(); //dataTable() returns a jQuery object
 
-    table.rows.add(getCombined()["catalog"]["courses"]);
+    // table.rows.add(getCombined()["catalog"]["courses"]);
+
+    async function populateSearchTable() {
+        let response = await getCombined();
+        console.log(response.catalog.courses);
+    }
+
+    populateSearchTable();
 
 });
