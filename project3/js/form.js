@@ -328,6 +328,9 @@ jQuery(document).ready(function () {
         let response = await getCombined();
 
         jQuery("#searchTable").DataTable( {
+            paging: false,
+            scrollCollapse: true,
+            scrollY: '25vh',
             data: Object.values(response.catalog.courses),
             columns: [
                 { data: 'id' },

@@ -200,7 +200,7 @@ main {
     display: flex;
     flex-flow: column nowrap;
     flex-grow: 2;
-    min-width: 10%;
+    min-width: 20%;
 }
 
 #courseReqs div {
@@ -256,6 +256,8 @@ main {
     flex-grow: 2;
     flex-flow: column nowrap;
     display: flex;
+    overflow:scroll;
+    overflow-x:hidden;
 }
 
 #plan div div p {
