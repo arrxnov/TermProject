@@ -216,6 +216,9 @@ main {
     flex-grow: 2;
     display: flex;
     flex-flow: column nowrap;
+
+    resize: both;
+    overflow: auto;
 }
 
 #courseReqs {
@@ -270,6 +273,23 @@ main {
     flex-grow: 10;
     display: flex;
     flex-flow: column nowrap;
+
+    resize: both;
+    overflow: auto;
+}
+
+
+#resizer {
+    /* grid-area: resize; */
+    resize: both;
+    overflow: auto;
+    height: 5px;
+    width: 100%;
+    margin: 3px;
+    margin-top: 1px;
+    opacity: 0;
+    cursor: row-resize;
+    z-index: 1;
 }
 
 /* Upper right container (plan) ------------------------------------------------ */

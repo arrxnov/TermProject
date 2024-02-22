@@ -71,7 +71,7 @@ jQuery(document).ready(function () {
         planToYear(plan);
         updateCourses(plan);
         await updateReqs();
-        jQuery("#courseReqs").accordion();
+        jQuery("#courseReqs").accordion({ collapsible: true, });
     }
 
     async function getCombined() {
@@ -225,10 +225,6 @@ jQuery(document).ready(function () {
         header.innerHTML += "<p><strong>Total Hours:</strong> " + totalCreds.toPrecision(prec) + "</p>\n";
     }
 
-
-   
-
-    
     async function populateSearchTable() {
         let response = await getCombined();
 
