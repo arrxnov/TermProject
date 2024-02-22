@@ -403,6 +403,4 @@ jQuery(document).ready(function() {
 
     table.rows.add(getCombined()["catalog"]["courses"]);
 
-    //test 
-
 });
