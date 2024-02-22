@@ -99,6 +99,7 @@ p {
     font-size: 12pt;
     font-weight: bold;
     flex-grow: 1;
+    cursor: pointer;
     border: none;
     border-radius: 4px;
     color: var(--text-color);
@@ -113,6 +114,24 @@ p {
 }
 
 .btn-clickable:active {
+    transition: all 0s;
+    box-shadow: none;
+}
+
+.btn-accordion {
+    cursor: pointer;
+    text-align: center;
+    background-color: var(--transparency-dark);
+    border-radius: 4px;
+    box-shadow: 1px 1px 7px;
+}
+
+.btn-accordion:hover {
+    transition: all .4s ease-in-out;
+    background-color: var(--transparency-light);
+}
+
+.btn-accordion:active {
     transition: all 0s;
     box-shadow: none;
 }
@@ -151,6 +170,12 @@ header h1 {
     flex-grow: 1;
     border: none;
 }
+
+#dropdown {
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row;
+}
 /* Header ---------------------------------------------------------------------- */
 
 /* Main ------------------------------------------------------------------------ */
@@ -171,17 +196,10 @@ main {
 }
 
 #courseReqs {
-    flex-grow: 1;
+    flex-grow: 0;
     min-width: 10%;
     display: flex;
     flex-flow: column nowrap;
-}
-
-#courseReqs h3 {
-    text-align: center;
-    background-color: var(--transparency-dark);
-    border-radius: 4px;
-    box-shadow: 1px 1px 7px;
 }
 
 #courseReqs div {
@@ -189,11 +207,6 @@ main {
     border-radius: 4px;
     padding: 4px;
     box-shadow: 1px 1px 7px;
-}
-
-#courseReqs h3:hover {
-    transition: all .4s ease-in-out;
-    background-color: var(--transparency-light);
 }
 
 #homePages {
@@ -204,6 +217,35 @@ main {
     flex-flow: column nowrap;
     justify-content: space-around;
 }  
+
+#kbb .drop {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-content: space-around;
+    background-color: var(--btn-mint);
+    min-width: 100%;
+    outline: none;
+    border: none;
+    margin-top: 4px;
+    padding: 4px;
+    border-radius: 4px;
+    color: var(--text-color); 
+}
+
+#miscBox {
+    flex-grow: 0;
+    min-width: 10%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+/* #miscBox div {
+    background-color: var(--transparency-light);
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: 1px 1px 7px;
+} */
 /* Left container -------------------------------------------------------------- */
 
 /* Right container ------------------------------------------------------------- */
@@ -220,6 +262,10 @@ main {
     flex-grow: 1;
     flex-flow: column nowrap;
     display: flex;
+}
+
+#plan div div p {
+    cursor: pointer;
 }
 
 #planHeader {
@@ -328,14 +374,5 @@ main {
     flex-flow: row;
     justify-content: center;
 }
-
-/* #searchTable {
-    display: flex;
-    justify-content: left;
-}
-
-#searchTable th {
-    justify-content: left;
-} */
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
