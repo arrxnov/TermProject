@@ -208,7 +208,6 @@ main {
 #kbb {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-around;
 }
 
 #miscBox {

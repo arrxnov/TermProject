@@ -144,7 +144,6 @@ jQuery(document).ready(function () {
 
     async function updateReqs() {
         reqs = await getRequirements();
-        // console.log(reqs);
         for (let course in reqs.categories.Cognates.courses) {
             course = reqs.categories.Cognates.courses[course];
             let courseName = getCourseName(course);
@@ -280,19 +279,9 @@ jQuery(document).ready(function () {
             };
 
         }
-        // console.log("courseNames:");
-        // console.log(courseNames);
 
         let plan = response.plan;
-        // console.log("doThings:");
-
-        // console.log("Plan:");
-        // console.log(plan);
-        // console.log(response)
-        // console.log(plan);
         planToYear(plan);
-        // console.log("Years");
-        // console.log(years);
         updateCourses(plan);
         await updateReqs();
         jQuery("#courseReqs").accordion();
@@ -394,22 +383,28 @@ jQuery(document).ready(function () {
         }
     }
 
-    function initKbbYear() {
-        
+    async function initKbbYear() {
+        document.getElementById("car-year").innerHTML = '<option selected="true" style="display: none"></option>';
+        let model_years = await getYears();
+        for (let yr of model_years) {
+            document.getElementById("car-year").innerHTML += '<option>' + yr + '</option>';
+        }
     }
 
-    function updateKbbYear() {
+    async function updateKbbYear() {
         year = document.getElementById("car-year").value;
         if (year) {
             document.getElementById("make").innerHTML = '<option selected="true" style="display: none"></option>';
-            for (let make in getMakesByYear(year)) {
+            let makes,ids = await getMakesByYear(year)
+            console.log(makes);
+            console.log(ids);
+            for (let make in makes) {
                 document.getElementById("make").innerHTML += "<option>" + make + "</option>";
             }
             document.getElementById("make").removeAttribute("disabled");
         }
         else {
             document.getElementById("make").setAttribute("disabled");
-
         }
         document.getElementById("model").setAttribute("disabled");
     }
@@ -432,11 +427,38 @@ jQuery(document).ready(function () {
 
     }
 
-    function getMakesByYear(year) {
-        fetch("/~gallaghd/ymm/ymmdb.php?fmt=xml")
+    async function getYears() {
+        let model_years = [];
+        await fetch("http://judah.cedarville.edu/~gallaghd/ymm/ymmdb.php?fmt=xml")
             .then(response => response.text())
-            .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-            .then(data => console.log(data))
+            .then(text => {
+                let parser = new DOMParser();
+                let xml = parser.parseFromString(text, "text/xml");
+                let temp_years = xml.getElementsByTagName("year");
+                for (let i = 0; i < temp_years.length; i++) {
+                    model_years.push(temp_years[i].innerHTML);
+                }
+            });
+        return model_years;
+    }
+
+    async function getMakesByYear(year) {
+        makes = [];
+        await fetch("/~gallaghd/ymm/ymmdb.php?fmt=xml&year=" + year)
+            .then(response => response.text())
+            .then(text => {
+                let parser = new DOMParser();
+                let xml = parser.parseFromString(text, "text/xml");
+                let temp_makes = xml.getElementsByTagName("make");
+                for (let i = 0; i < temp_makes.length; i++) {
+                    makes.push(temp_makes[i].innerHTML);
+                }
+                let temp_ids = xml.getElementsByTagName("names");
+                for (let i = 0; i < temp_ids.length; i++) {
+                    makes.push(temp_ids[i].innerHTML);
+                }
+            });
+        return makes,ids;
     }
 
     function getModelsByMakeAndYear(make, year) {
@@ -450,9 +472,11 @@ jQuery(document).ready(function () {
 
     async function populateSearchTable() {
         let response = await getCombined();
+        console.log("populateSearchTable");
         console.log(response.catalog.courses);
     }
 
     populateSearchTable();
+    initKbbYear();
 
 });
