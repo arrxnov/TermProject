@@ -14,28 +14,6 @@
  */
 
 /*
-Improve the term project by adding AJAX and JQuery.
-
-Specific guidelines:
-
-Part 1: 
-
-We are retrieving data from the web server using AJAX.  For this first part, data should be retrieved using JSON format.
-
-Plan and Catalog data:   /~knoerr/cs3220/termProject/getCombined.php
-Requirements data:        /~knoerr/cs3220/termProject/getRequirements.php
-Plan and Catalog data is used to populate the 4-year plan (UR) and the Catalog Search table (LR) portion of the application. 
-
-In the 4-year plan, the display should combine the course id (“CS-1210”) and the name (“C++ Programming”) to display both.
-
-The Catalog search table should have columns for each of the properties for the courses in the catalog object.
-The search box needs to dynamically reduce the table as more characters are entered in it. 
-An example can be found at Datatables.net, but you can utilize any JavaScript mechanism for the table/search functionality.
-
-Requirements data (UL) is displayed using a jQuery UI accordion widget and populated from the second AJAX call. 
-Again, you will need to pull the name from the catalog object to display both id and name within the accordion. 
-The Categories will be the section headers within the accordion.
-
 Part 2:
 
 Solve the Kelley Blue Book (KBB) problem using basic AJAX techniques from scratch (no jQuery). 
@@ -49,15 +27,93 @@ Once a year is selected, that should automatically trigger another Ajax call,
 this time adding the selected year as a second parameter: “year=yr” and populate the make field.
 Finally, selecting a make will also trigger an Ajax call, this time passing in a third parameter: “make=mk” and populating the model field.  
 So, the complete URL will be something like:  /~gallaghd/ymm/ymmdb.php?fmt=xml&year=2008&make=4
-
-Part 3:
-
-Feel free to add any other cool features you like!
-
-Regex fields from project 2 can be removed for this project.
 */
 
 jQuery(document).ready(function () {
+
+    let years = {};
+    let courseNames = {};
+    doThings();
+    initKbbYear();
+    populateSearchTable();
+
+    jQuery("#jgradyBtn").click(function () {
+        window.open("http://judah.cedarville.edu/~grady/cs3220.html", "_blank");
+    });
+
+    jQuery("#kdelsingBtn").click(function () {
+        window.open("http://judah.cedarville.edu/~delsing/cs3220.html", "_blank");
+    });
+
+    jQuery("#lmillerBtn").click(function () {
+        window.open("http://judah.cedarville.edu/~lmiller/cs3220.html", "_blank");
+    });
+
+    jQuery("#votingBtn").click(function () {
+        window.open("http://judah.cedarville.edu/index.php", "_blank");
+    });
+
+    jQuery("#car-year").on("input", async function() {
+        let year = document.getElementById("car-year").value;
+        if (year) {
+            document.getElementById("make").innerHTML = '<option selected="true" style="display: none"></option>';
+            let makes = await getMakesByYear(year);
+            for (let make of makes) {
+                document.getElementById("make").innerHTML += "<option>" + make + "</option>";
+            }
+            document.getElementById("make").removeAttribute("disabled");
+        }
+        else {
+            document.getElementById("make").setAttribute("disabled");
+        }
+        document.getElementById("model").setAttribute("disabled", "true");
+        document.getElementById("model").innerHTML = '<option selected="true" style="display: none"></option>';
+    });
+
+    jQuery("#make").on("input", async function() {
+        let make = document.getElementById("make").value;
+        if (make) {
+            document.getElementById("model").innerHTML = '<option selected="true" style="display: none"></option>';
+            let year = document.getElementById("car-year").value;
+            let models = await getModelsByMakeAndYear(await idFromMake(make, year), year);
+            for (let model of models) {
+                document.getElementById("model").innerHTML += "<option>" + model + "</option>";
+            }
+            document.getElementById("model").removeAttribute("disabled");
+        }
+        else {
+            document.getElementById("model").setAttribute("disabled", "true");
+        }
+    });
+
+    jQuery(".blink").each(function () {
+        let elem = jQuery(this);
+        setInterval(function () {
+            if (elem.css("color") == "rgb(255, 0, 0)") {
+                elem.css("color", "var(--text-color-light)");
+            } else {
+                elem.css("color", "red");
+            }
+        }, 400);
+    });
+
+    async function doThings() {
+        let response = await getCombined();
+
+        for (let course in response.catalog.courses) {
+            courseNames[course] = {
+                "name": response.catalog.courses[course].name,
+                "credits": response.catalog.courses[course].credits
+            };
+        }
+
+        let plan = response.plan;
+        planToYear(plan);
+        updateCourses(plan);
+        await updateReqs();
+        jQuery("#courseReqs").accordion();
+        jQuery("#miscBox").accordion();
+    }
 
     async function getCombined() {
         const response = await fetch("/~knoerr/cs3220/termProject/getCombined.php");
@@ -69,6 +125,14 @@ jQuery(document).ready(function () {
         const response = await fetch("/~knoerr/cs3220/termProject/getRequirements.php");
         const data = await response.json();
         return data;
+    }
+
+    function getCourseName(courseId) {
+        return courseNames[courseId].name;
+    }
+
+    function getCourseCredits(courseId) {
+        return courseNames[courseId].credits;
     }
 
     function planToYear(planJSON) {
@@ -86,14 +150,6 @@ jQuery(document).ready(function () {
             years[y][t].push(course);
         }
         return years;
-    }
-
-    function getCourseName(courseId) {
-        return courseNames[courseId].name;
-    }
-
-    function getCourseCredits(courseId) {
-        return courseNames[courseId].credits;
     }
 
     async function updateReqs() {
@@ -126,12 +182,10 @@ jQuery(document).ready(function () {
 
     function updateCourses(planJSON) {
         let header = document.getElementById("planHeader");
-        // DONE: set header values (other than total hours)
         header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student"] + "</p>\n";
         header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["currYear"] + "</p>\n";
 
         let header2 = document.getElementById("planSubheader");
-        // DONE: set header values
         header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
         header2.innerHTML += "<p><strong>Minor:</strong> " + "Your Mom" + "</p>\n";
         header2.innerHTML += "<p><strong>Catalog:</strong> " + planJSON["catYear"] + "</p>\n";
@@ -181,12 +235,10 @@ jQuery(document).ready(function () {
             for (let key in courses) {
                 let course = courses[key];
                 credits += getCourseCredits(course["id"]);
-                // DONE: append course to semester div
                 semester.innerHTML += "<p draggable=\"true\">" + course["id"] + " " + getCourseName(course["id"]) + "</p>\n";
             }
 
             totalCreds += credits;
-            // DONE: set credits div
             let year = semester.getElementsByClassName("credits")[0];
             year.innerHTML = "Credits: " + credits + "";
 
@@ -194,94 +246,11 @@ jQuery(document).ready(function () {
         header.innerHTML += "<p><strong>Total Hours:</strong> " + totalCreds + "</p>\n";
     }
 
-    let years = {};
-    let courseNames = {};
-    async function doThings() {
-        let response = await getCombined();
-
-        for (let course in response.catalog.courses) {
-            courseNames[course] = {
-                "name": response.catalog.courses[course].name,
-                "credits": response.catalog.courses[course].credits
-            };
-
-        }
-
-        let plan = response.plan;
-        planToYear(plan);
-        updateCourses(plan);
-        await updateReqs();
-        jQuery("#courseReqs").accordion();
-        jQuery("#miscBox").accordion();
-    }
-    doThings();
-
-    jQuery(".blink").each(function () {
-        let elem = jQuery(this);
-        setInterval(function () {
-            if (elem.css("color") == "rgb(255, 0, 0)") {
-                elem.css("color", "var(--text-color-light)");
-            } else {
-                elem.css("color", "red");
-            }
-        }, 400);
-    });
-
-    jQuery("#jgradyBtn").click(function () {
-        window.open("http://judah.cedarville.edu/~grady/cs3220.html", "_blank");
-    });
-    jQuery("#kdelsingBtn").click(function () {
-        window.open("http://judah.cedarville.edu/~delsing/cs3220.html", "_blank");
-    });
-    jQuery("#lmillerBtn").click(function () {
-        window.open("http://judah.cedarville.edu/~lmiller/cs3220.html", "_blank");
-    });
-    jQuery("#votingBtn").click(function () {
-        window.open("http://judah.cedarville.edu/index.php", "_blank");
-    });
-
-    jQuery("#car-year").on("input", updateKbbYear);
-    jQuery("#make").on("input", updateKbbMake);
-    jQuery("#model").on("input", updateKbbModel);
-
     async function initKbbYear() {
         document.getElementById("car-year").innerHTML = '<option selected="true" style="display: none"></option>';
         let model_years = await getYears();
         for (let yr of model_years) {
             document.getElementById("car-year").innerHTML += '<option>' + yr + '</option>';
-        }
-    }
-
-    async function updateKbbYear() {
-        let year = document.getElementById("car-year").value;
-        if (year) {
-            document.getElementById("make").innerHTML = '<option selected="true" style="display: none"></option>';
-            let makes = await getMakesByYear(year);
-            for (let make of makes) {
-                document.getElementById("make").innerHTML += "<option>" + make + "</option>";
-            }
-            document.getElementById("make").removeAttribute("disabled");
-        }
-        else {
-            document.getElementById("make").setAttribute("disabled");
-        }
-        document.getElementById("model").setAttribute("disabled", "true");
-        document.getElementById("model").innerHTML = '<option selected="true" style="display: none"></option>';
-    }
-
-    async function updateKbbMake() {
-        let make = document.getElementById("make").value;
-        if (make) {
-            document.getElementById("model").innerHTML = '<option selected="true" style="display: none"></option>';
-            let year = document.getElementById("car-year").value;
-            let models = await getModelsByMakeAndYear(await idFromMake(make, year), year);
-            for (let model of models) {
-                document.getElementById("model").innerHTML += "<option>" + model + "</option>";
-            }
-            document.getElementById("model").removeAttribute("disabled");
-        }
-        else {
-            document.getElementById("model").setAttribute("disabled", "true");
         }
     }
 
@@ -314,11 +283,6 @@ jQuery(document).ready(function () {
 
     }
 
-
-    function updateKbbModel() {
-        
-    }
-
     async function getYears() {
         let model_years = [];
         await fetch("http://judah.cedarville.edu/~gallaghd/ymm/ymmdb.php?fmt=xml")
@@ -347,21 +311,6 @@ jQuery(document).ready(function () {
                 }
             });
         return makes;
-    }
-
-    async function getMakeIdsByYear(year) {
-        ids = [];
-        await fetch("/~gallaghd/ymm/ymmdb.php?fmt=xml&year=" + year)
-            .then(response => response.text())
-            .then(text => {
-                let parser = new DOMParser();
-                let xml = parser.parseFromString(text, "text/xml");
-                let temp_ids = xml.getElementsByTagName("id");
-                for (let i = 0; i < temp_ids.length; i++) {
-                    ids.push(temp_ids[i].innerHTML);
-                }
-            });
-        return ids;
     }
     
     async function getModelsByMakeAndYear(id, year) {
@@ -392,8 +341,4 @@ jQuery(document).ready(function () {
             ]
         } );
     }
-
-    populateSearchTable();
-    initKbbYear();
-
 });

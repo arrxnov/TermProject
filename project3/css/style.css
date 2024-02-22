@@ -173,6 +173,7 @@ header h1 {
 
 #dropdown {
     display: flex;
+    flex-grow: 1;
     flex-flow: row;
 }
 /* Header ---------------------------------------------------------------------- */
@@ -239,12 +240,12 @@ main {
     flex-flow: column nowrap;
 }
 
-#miscBox div {
+/* #miscBox div {
     background-color: var(--transparency-light);
     border-radius: 4px;
     padding: 4px;
     box-shadow: 1px 1px 7px;
-}
+} */
 /* Left container -------------------------------------------------------------- */
 
 /* Right container ------------------------------------------------------------- */
