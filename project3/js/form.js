@@ -13,22 +13,6 @@
  *  Complete project part 2
  */
 
-/*
-Part 2:
-
-Solve the Kelley Blue Book (KBB) problem using basic AJAX techniques from scratch (no jQuery). 
-Data must be retrieved and processed using the XML format.  
-Three new form widgets will be added to the LL region (along with your course and home page links).
-
-The URI to call in this case is: /~gallaghd/ymm/ymmdb.php
-
-Fetch the year data by adding the name/value pair: “fmt=xml” after the page loads to populate the year dropdown list.
-Once a year is selected, that should automatically trigger another Ajax call, 
-this time adding the selected year as a second parameter: “year=yr” and populate the make field.
-Finally, selecting a make will also trigger an Ajax call, this time passing in a third parameter: “make=mk” and populating the model field.  
-So, the complete URL will be something like:  /~gallaghd/ymm/ymmdb.php?fmt=xml&year=2008&make=4
-*/
-
 jQuery(document).ready(function () {
 
     let years = {};
