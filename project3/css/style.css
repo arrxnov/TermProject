@@ -171,7 +171,7 @@ main {
 }
 
 #courseReqs {
-    flex-grow: 1;
+    flex-grow: 0;
     min-width: 10%;
     display: flex;
     flex-flow: column nowrap;
@@ -204,6 +204,38 @@ main {
     flex-flow: column nowrap;
     justify-content: space-around;
 }  
+
+#kbb {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+}
+
+#miscBox {
+    flex-grow: 0;
+    min-width: 10%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#miscBox h3 {
+    text-align: center;
+    background-color: var(--transparency-dark);
+    border-radius: 4px;
+    box-shadow: 1px 1px 7px;
+}
+
+#miscBox div {
+    background-color: var(--transparency-light);
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: 1px 1px 7px;
+}
+
+#miscBox h3:hover {
+    transition: all .4s ease-in-out;
+    background-color: var(--transparency-light);
+}
 /* Left container -------------------------------------------------------------- */
 
 /* Right container ------------------------------------------------------------- */

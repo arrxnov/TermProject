@@ -296,6 +296,7 @@ jQuery(document).ready(function() {
         updateCourses(plan);
         await updateReqs();
         jQuery("#courseReqs").accordion();
+        jQuery("#miscBox").accordion();
     }
     doThings();
 
@@ -327,9 +328,9 @@ jQuery(document).ready(function() {
 
     jQuery("#courseFinderForm").on("input", checkCourseFinderForm);
 
-    jQuery("#car-year").on("input", updateKBB);
-    jQuery("#make").on("input", updateKBB);
-    jQuery("#model").on("input", updateKBB);
+    jQuery("#car-year").on("input", updateKbbYear);
+    jQuery("#make").on("input", updateKbbMake);
+    jQuery("#model").on("input", updateKbbModel);
 
     jQuery("#courseFinderSubmit").click(async function(event) {
         event.preventDefault();
@@ -350,7 +351,7 @@ jQuery(document).ready(function() {
         const numRegex = /^$|^\d{1,4}$/;
         const titleRegex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
         const creditsRegex = /^([1-9]{1,2})(\.[05])?$/;
-    
+
         let courseDeptWidget = document.getElementById("courseDept");
         let courseNumWidget = document.getElementById("courseNum");
         let courseTitleWidget = document.getElementById("courseTitle");
@@ -393,7 +394,41 @@ jQuery(document).ready(function() {
         }
     }
 
-    function updateKBB() {
+    function updateKbbYear() {
+        year = document.getElementById("car-year").value;
+        if (year) {
+            document.getElementById("make").innerHTML = '<option selected="true" style="display: none"></option>';
+            for (let make in getMakesByYear(year)) {
+                document.getElementById("make").innerHTML += "<option>" + make + "</option>";
+            }
+            document.getElementById("make").removeAttribute("disabled");
+        }
+        else {
+            document.getElementById("make").setAttribute("disabled");
+            
+        }
+        document.getElementById("model").setAttribute("disabled");
+    }
+
+    function updateKbbMake() {
+        make = document.getElementById("make").value;
+        if (make) {
+            document.getElementById("model").innerHTML = '<option selected="true" style="display: none"></option>';
+            for (let model in getModelsByMakeAndYear(make, document.getElementById("car-year").value)) {
+                document.getElementById("model").innerHTML += "<option>" + make + "</option>";
+            }
+            document.getElementById("model").removeAttribute("disabled");
+        }
+        else {
+            document.getElementById("model").setAttribute("disabled");
+        }
+    }
+
+    function getMakesByYear(year) {
+        fetch("/~gallaghd/ymm/ymmdb.php?fmt=xml&year=")
+    }
+
+    function getModelsByMakeAndYear(make, year) {
 
     }
 
