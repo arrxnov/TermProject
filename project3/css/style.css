@@ -205,9 +205,19 @@ main {
     justify-content: space-around;
 }  
 
-#kbb {
+#kbb .drop {
     display: flex;
     flex-flow: column nowrap;
+    justify-content: space-around;
+    align-content: space-around;
+    background-color: var(--btn-mint);
+    min-width: 100%;
+    outline: none;
+    border: none;
+    margin-top: 4px;
+    padding: 4px;
+    border-radius: 4px;
+    color: var(--text-color); 
 }
 
 #miscBox {

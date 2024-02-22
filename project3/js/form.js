@@ -392,13 +392,11 @@ jQuery(document).ready(function () {
     }
 
     async function updateKbbYear() {
-        year = document.getElementById("car-year").value;
+        let year = document.getElementById("car-year").value;
         if (year) {
             document.getElementById("make").innerHTML = '<option selected="true" style="display: none"></option>';
-            let makes,ids = await getMakesByYear(year)
-            console.log(makes);
-            console.log(ids);
-            for (let make in makes) {
+            let makes = await getMakesByYear(year);
+            for (let make of makes) {
                 document.getElementById("make").innerHTML += "<option>" + make + "</option>";
             }
             document.getElementById("make").removeAttribute("disabled");
@@ -406,25 +404,58 @@ jQuery(document).ready(function () {
         else {
             document.getElementById("make").setAttribute("disabled");
         }
-        document.getElementById("model").setAttribute("disabled");
+        document.getElementById("model").setAttribute("disabled", "true");
+        document.getElementById("model").innerHTML = '<option selected="true" style="display: none"></option>';
     }
 
-    function updateKbbMake() {
-        make = document.getElementById("make").value;
+    async function updateKbbMake() {
+        let make = document.getElementById("make").value;
         if (make) {
             document.getElementById("model").innerHTML = '<option selected="true" style="display: none"></option>';
-            for (let model in getModelsByMakeAndYear(make, document.getElementById("car-year").value)) {
-                document.getElementById("model").innerHTML += "<option>" + make + "</option>";
+            let year = document.getElementById("car-year").value;
+            let models = await getModelsByMakeAndYear(await idFromMake(make, year), year);
+            for (let model of models) {
+                document.getElementById("model").innerHTML += "<option>" + model + "</option>";
             }
             document.getElementById("model").removeAttribute("disabled");
         }
         else {
-            document.getElementById("model").setAttribute("disabled");
+            document.getElementById("model").setAttribute("disabled", "true");
         }
     }
 
-    function updateKbbModel() {
+    async function idFromMake(make, year) {
+        let ids = [];
+        let makes = [];
 
+        await fetch("/~gallaghd/ymm/ymmdb.php?fmt=xml&year=" + year)
+            .then(response => response.text())
+            .then(text => {
+                let parser = new DOMParser();
+                let xml = parser.parseFromString(text, "text/xml");
+                let temp_ids = xml.getElementsByTagName("id");
+                for (let i = 0; i < temp_ids.length; i++) {
+                    ids.push(temp_ids[i].innerHTML);
+                }
+
+                let temp_makes = xml.getElementsByTagName("name");
+                for (let i = 0; i < temp_makes.length; i++) {
+                    makes.push(temp_makes[i].innerHTML);
+                }
+
+            });
+        
+        let relation = {};
+        for(let i=0; i<ids.length; i++) {
+            relation[makes[i]] = ids[i];
+        }
+        return relation[make];
+
+    }
+
+
+    function updateKbbModel() {
+        
     }
 
     async function getYears() {
@@ -449,20 +480,42 @@ jQuery(document).ready(function () {
             .then(text => {
                 let parser = new DOMParser();
                 let xml = parser.parseFromString(text, "text/xml");
-                let temp_makes = xml.getElementsByTagName("make");
+                let temp_makes = xml.getElementsByTagName("name");
                 for (let i = 0; i < temp_makes.length; i++) {
                     makes.push(temp_makes[i].innerHTML);
                 }
-                let temp_ids = xml.getElementsByTagName("names");
-                for (let i = 0; i < temp_ids.length; i++) {
-                    makes.push(temp_ids[i].innerHTML);
-                }
             });
-        return makes,ids;
+        return makes;
     }
 
-    function getModelsByMakeAndYear(make, year) {
-
+    async function getMakeIdsByYear(year) {
+        ids = [];
+        await fetch("/~gallaghd/ymm/ymmdb.php?fmt=xml&year=" + year)
+            .then(response => response.text())
+            .then(text => {
+                let parser = new DOMParser();
+                let xml = parser.parseFromString(text, "text/xml");
+                let temp_ids = xml.getElementsByTagName("id");
+                for (let i = 0; i < temp_ids.length; i++) {
+                    ids.push(temp_ids[i].innerHTML);
+                }
+            });
+        return ids;
+    }
+    
+    async function getModelsByMakeAndYear(id, year) {
+        models = [];
+        await fetch("/~gallaghd/ymm/ymmdb.php?fmt=xml&year=" + year + "&make=" + id)
+        .then(response => response.text())
+        .then(text => {
+            let parser = new DOMParser();
+            let xml = parser.parseFromString(text, "text/xml");
+            let temp_models = xml.getElementsByTagName("name");
+            for (let i = 0; i < temp_models.length; i++) {
+                models.push(temp_models[i].innerHTML);
+            }
+        });
+        return models;
     }
     
     async function populateSearchTable() {
