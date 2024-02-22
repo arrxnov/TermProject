@@ -442,15 +442,19 @@ jQuery(document).ready(function () {
     function getModelsByMakeAndYear(make, year) {
 
     }
-
-    // add code to create new dataTable
-    let table = jQuery('#searchTable').dataTable().api(); //dataTable() returns a jQuery object
-
-    // table.rows.add(getCombined()["catalog"]["courses"]);
-
+    
     async function populateSearchTable() {
         let response = await getCombined();
-        console.log(response.catalog.courses);
+
+        jQuery("#searchTable").DataTable( {
+            data: Object.values(response.catalog.courses),
+            columns: [
+                { data: 'id' },
+                { data: 'name' },
+                { data: 'credits' },
+                { data: 'description' }
+            ]
+        } );
     }
 
     populateSearchTable();
