@@ -130,6 +130,7 @@ jQuery(document).ready(function() {
                     SU: []
                 };
             }
+            console.log("Adding " + y + " " + t + " ");
             years[y][t].push(course);
         }
         return years;
@@ -137,7 +138,9 @@ jQuery(document).ready(function() {
 
     async function updateReqs() {
         reqs = await getRequirements();
-        // for (let req)        
+        for (let cognate in categories["Cognates"]) {
+            cognates.innerHTML += "<p>";
+        } 
     }
 
     function updateCourses(planJSON) {
@@ -236,10 +239,13 @@ jQuery(document).ready(function() {
 
     let years = {};
     async function doThings() {
-        let response = getCombined();
-
-        planToYear(response);
-        updateCourses(response);
+        let response = await getCombined();
+        let plan = response["plan"];
+        console.log("doThings:");
+        console.log(response)
+        console.log(plan);
+        planToYear(plan);
+        updateCourses(plan);
         updateReqs();
         jQuery("#courseReqs").accordion();
     }
