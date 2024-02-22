@@ -165,6 +165,7 @@ async function doThings() {
 doThings();
 
 // Course finder form validation and submission --------------------------------
+
 let courseDeptWidget = document.getElementById("courseDept");
 let courseNumWidget = document.getElementById("courseNum");
 let courseTitleWidget = document.getElementById("courseTitle");
