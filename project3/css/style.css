@@ -36,6 +36,7 @@ body {
     font-size: 11pt;
     color: var(--text-color);
     background-image: var(--bg-theme);
+    overflow-x: hidden;
 }
 
 /* Universal tag categories ---------------------------------------------------- */
@@ -183,13 +184,15 @@ main {
     box-shadow: 1px 1px 7px;
 }
 
-#courseReqs h3 {
-    transition: all .4s ease-in-out;
+#courseReqs div {
     background-color: var(--transparency-light);
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: 1px 1px 7px;
 }
 
-#courseReqs h3 div:hover {
-    text-align: center;
+#courseReqs h3:hover {
+    transition: all .4s ease-in-out;
     background-color: var(--transparency-light);
 }
 

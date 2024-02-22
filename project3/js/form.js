@@ -125,29 +125,54 @@ jQuery(document).ready(function() {
             let t = course["term"];
             if (!(y in years)) {
                 years[y] = {
-                    FA: [],
-                    SP: [],
-                    SU: []
+                    Fall: [],
+                    Spring: [],
+                    Summer: []
                 };
             }
-            console.log("Adding " + y + " " + t + " ");
             years[y][t].push(course);
         }
         return years;
     }
 
+    function getCourseName(courseId) {
+        return courseNames[courseId].name;
+    }
+
+    function getCourseCredits(courseId) {
+        return courseNames[courseId].credits;
+    }
+
     async function updateReqs() {
         reqs = await getRequirements();
-        for (let cognate in categories["Cognates"]) {
-            cognates.innerHTML += "<p>";
-        } 
+        console.log(reqs);
+        for (let course in reqs.categories.Cognates.courses) {
+            course = reqs.categories.Cognates.courses[course];
+            courseName = getCourseName(course);
+            document.getElementById("cognates").innerHTML += "<p>" + course + " " + courseName + "</p>";
+        }
+        for (let course in reqs.categories.Electives.courses) {
+            course = reqs.categories.Electives.courses[course];
+            courseName = getCourseName(course);
+            document.getElementById("electives").innerHTML += "<p>" + course + " " + courseName + "</p>";
+        }
+        for (let course in reqs.categories.Core.courses) {
+            course = reqs.categories.Core.courses[course];
+            courseName = getCourseName(course);
+            document.getElementById("core").innerHTML += "<p>" + course + " " + courseName + "</p>";
+        }
+        for (let course in reqs.categories.GenEds.courses) {
+            course = reqs.categories.GenEds.courses[course];
+            courseName = getCourseName(course);
+            document.getElementById("geneds").innerHTML += "<p>" + course + " " + courseName + "</p>";
+        }
     }
 
     function updateCourses(planJSON) {
         let header = document.getElementById("planHeader");
         // DONE: set header values (other than total hours)
-        header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student_name"] + "</p>\n";
-        header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["year"] + "</p>\n";
+        header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student"] + "</p>\n";
+        header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["currYear"] + "</p>\n";
         /*
         <div id="ur-header" class="labels">
             <p><strong>Student:</strong> loganmiller216</p>
@@ -159,10 +184,10 @@ jQuery(document).ready(function() {
         let header2 = document.getElementById("planSubheader");
         // DONE: set header values
         header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
-        header2.innerHTML += "<p><strong>Minor:</strong> " + planJSON["minor"] + "</p>\n";
-        header2.innerHTML += "<p><strong>Catalog:</strong> " + planJSON["catalog_year"] + "</p>\n";
-        header2.innerHTML += "<p><strong>GPA:</strong> " + planJSON["gpa"] + "</p>\n";
-        header2.innerHTML += "<p><strong>Major GPA:</strong> " + planJSON["major_gpa"] + "</p>\n";
+        header2.innerHTML += "<p><strong>Minor:</strong> " + "Your Mom" + "</p>\n";
+        header2.innerHTML += "<p><strong>Catalog:</strong> " + planJSON["catYear"] + "</p>\n";
+        header2.innerHTML += "<p><strong>GPA:</strong> " + "42.0" + "</p>\n";
+        header2.innerHTML += "<p><strong>Major GPA:</strong> " + "42.42" + "</p>\n";
         
         /*
         <div id="ur-header-2" class="labels">
@@ -177,41 +202,48 @@ jQuery(document).ready(function() {
 
         for (let i=1; i<=12; i++) {
             let semester = document.getElementById("semester"+i);
-            let base_y = planJSON["catalog_year"];
+            let base_y = planJSON["catYear"];
             let y = parseInt(base_y) + parseInt((i+1)/3);
             let t;
             let term;
+
+            // set term values
             switch(i%3) {
                 case 0: 
-                    t = "SU";
+                    t = "Summer";
                     term = "Summer";
                     break;
                 case 1:
-                    t = "FA";
+                    t = "Fall";
                     term = "Fall";
                     break;
                 case 2:
-                    t = "SP";
+                    t = "Spring";
                     term = "Spring";
                     break; 
             }
+
             term += " " + y;
             if (semester.getElementsByClassName("term")[0].innerHTML != term) {
                 semester.getElementsByClassName("term")[0].innerHTML = term;
             }
-            if ("" + t + y == planJSON["current_semester"]) {
+            if (t == planJSON["currTerm"] && y == planJSON["currYear"]) {
                 semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
+                semester.style.outline = "2px solid black";
+                
             }
             if (!(y in years)) {
                 continue;
             }
+
             let courses = years[y][t];
             let credits = 0;
+
             for (let key in courses) {
                 let course = courses[key];
-                credits += course["credits"];
+                credits += getCourseCredits(course["id"]);
                 // DONE: append course to semester div
-                semester.innerHTML += "<p draggable=\"true\">" + course["course_des"] + " " + course["course_name"] + "</p>\n";
+                semester.innerHTML += "<p draggable=\"true\">" + course["id"] + " " + getCourseName(course["id"]) + "</p>\n";
             }
             
             totalCreds += credits;
@@ -238,15 +270,32 @@ jQuery(document).ready(function() {
     }
 
     let years = {};
+    let courseNames = {};
     async function doThings() {
         let response = await getCombined();
-        let plan = response["plan"];
+
+        for (let course in response.catalog.courses) {
+            courseNames[course] = {
+                "name": response.catalog.courses[course].name,
+                "credits": response.catalog.courses[course].credits
+            };
+
+        }
+        console.log("courseNames:");
+        console.log(courseNames);
+
+        let plan = response.plan;
         console.log("doThings:");
-        console.log(response)
+
+        console.log("Plan:");
         console.log(plan);
+        // console.log(response)
+        // console.log(plan);
         planToYear(plan);
+        console.log("Years");
+        console.log(years);
         updateCourses(plan);
-        updateReqs();
+        await updateReqs();
         jQuery("#courseReqs").accordion();
     }
     doThings();
@@ -278,6 +327,10 @@ jQuery(document).ready(function() {
     });
 
     jQuery("#courseFinderForm").on("input", checkCourseFinderForm);
+
+    jQuery("#car-year").on("input", updateKBB);
+    jQuery("#make").on("input", updateKBB);
+    jQuery("#model").on("input", updateKBB);
 
     jQuery("#courseFinderSubmit").click(async function(event) {
         event.preventDefault();
@@ -339,6 +392,10 @@ jQuery(document).ready(function() {
             courseWidget.style.setProperty("outline", "solid red 1px");
             return false;
         }
+    }
+
+    function updateKBB() {
+
     }
 
     // add code to create new dataTable
