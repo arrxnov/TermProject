@@ -99,6 +99,7 @@ p {
     font-size: 12pt;
     font-weight: bold;
     flex-grow: 1;
+    cursor: pointer;
     border: none;
     border-radius: 4px;
     color: var(--text-color);
@@ -113,6 +114,24 @@ p {
 }
 
 .btn-clickable:active {
+    transition: all 0s;
+    box-shadow: none;
+}
+
+.btn-accordion {
+    cursor: pointer;
+    text-align: center;
+    background-color: var(--transparency-dark);
+    border-radius: 4px;
+    box-shadow: 1px 1px 7px;
+}
+
+.btn-accordion:hover {
+    transition: all .4s ease-in-out;
+    background-color: var(--transparency-light);
+}
+
+.btn-accordion:active {
     transition: all 0s;
     box-shadow: none;
 }
@@ -177,12 +196,13 @@ main {
     flex-flow: column nowrap;
 }
 
-#courseReqs h3 {
+/* #courseReqs h3 {
+    cursor: pointer;
     text-align: center;
     background-color: var(--transparency-dark);
     border-radius: 4px;
     box-shadow: 1px 1px 7px;
-}
+} */
 
 #courseReqs div {
     background-color: var(--transparency-light);
@@ -191,10 +211,10 @@ main {
     box-shadow: 1px 1px 7px;
 }
 
-#courseReqs h3:hover {
+/* #courseReqs h3:hover {
     transition: all .4s ease-in-out;
     background-color: var(--transparency-light);
-}
+} */
 
 #homePages {
     display: flex;
@@ -217,12 +237,12 @@ main {
     flex-flow: column nowrap;
 }
 
-#miscBox h3 {
+/* #miscBox h3 {
     text-align: center;
     background-color: var(--transparency-dark);
     border-radius: 4px;
     box-shadow: 1px 1px 7px;
-}
+} */
 
 #miscBox div {
     background-color: var(--transparency-light);
@@ -231,10 +251,10 @@ main {
     box-shadow: 1px 1px 7px;
 }
 
-#miscBox h3:hover {
+/* #miscBox h3:hover {
     transition: all .4s ease-in-out;
     background-color: var(--transparency-light);
-}
+} */
 /* Left container -------------------------------------------------------------- */
 
 /* Right container ------------------------------------------------------------- */

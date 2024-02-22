@@ -415,8 +415,6 @@ jQuery(document).ready(function () {
                 { data: 'description', orderable: false }
             ]
         } );
-        console.log("populateSearchTable");
-        console.log(response.catalog.courses);
     }
 
     populateSearchTable();
