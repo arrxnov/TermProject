@@ -170,6 +170,11 @@ header h1 {
     flex-grow: 1;
     border: none;
 }
+
+#dropdown {
+    display: flex;
+    flex-flow: row;
+}
 /* Header ---------------------------------------------------------------------- */
 
 /* Main ------------------------------------------------------------------------ */
@@ -246,6 +251,10 @@ main {
     flex-grow: 1;
     flex-flow: column nowrap;
     display: flex;
+}
+
+#plan div div p {
+    cursor: pointer;
 }
 
 #planHeader {

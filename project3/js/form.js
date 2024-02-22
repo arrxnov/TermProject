@@ -57,52 +57,6 @@ Feel free to add any other cool features you like!
 Regex fields from project 2 can be removed for this project.
 */
 
-/*
-Create a JavaScript Plan object containing the following fields:
-Plan name
-Catalog year
-Major
-Student name
-Current semester (all prior semesters considered “history.”)
-An array of Course objects, each with term, year, course designator, and course name.
-
-
-
-Replace the static HTML in the UR div with dynamic data stored in your Year objects.
-Appearance should remain the same, and still use the same CSS.
-*/
-
-// Course = {
-//     term: "",
-//     year: "",
-//     course_des: "",
-//     course_name: "",
-//     credits: 0
-// };
-// 
-// Plan = {
-//     plan_name: "",
-//     catalog_year: "",
-//     major: "",
-//     minor: "",
-//     gpa: "",
-//     student_name: "",
-//     current_semester: "",
-//     courses: {}
-// };
-//Plan = {
-//    year: {}
-//}
-//
-// Year = {
-//     terms: {}
-// }
-// 
-// Term = {
-//     courses: []
-// }
-
-// Delay code execution until html is loaded
 jQuery(document).ready(function () {
 
     async function getCombined() {
@@ -175,13 +129,6 @@ jQuery(document).ready(function () {
         // DONE: set header values (other than total hours)
         header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student"] + "</p>\n";
         header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["currYear"] + "</p>\n";
-        /*
-        <div id="ur-header" class="labels">
-            <p><strong>Student:</strong> loganmiller216</p>
-            <p><strong>Course Plan:</strong> CS/CY Double Major</p>
-            <p><strong>Total Hours:</strong> 137.5</p>
-        </div>
-        */
 
         let header2 = document.getElementById("planSubheader");
         // DONE: set header values
@@ -191,15 +138,6 @@ jQuery(document).ready(function () {
         header2.innerHTML += "<p><strong>GPA:</strong> " + "42.0" + "</p>\n";
         header2.innerHTML += "<p><strong>Major GPA:</strong> " + "42.42" + "</p>\n";
 
-        /*
-        <div id="ur-header-2" class="labels">
-            <p><strong>Major:</strong> Computer Science, Cyber Operations</p>
-            <p><strong>Minor:</strong> Bible</p>
-            <p><strong>Catalog:</strong> 2021</p>
-            <p><strong>GPA:</strong> 3.60</p>
-            <p><strong>Major GPA:</strong> 3.55</p>
-        </div>
-        */
         let totalCreds = 0;
 
         for (let i = 1; i <= 12; i++) {
@@ -209,7 +147,6 @@ jQuery(document).ready(function () {
             let t;
             let term;
 
-            // set term values
             switch (i % 3) {
                 case 0:
                     t = "Summer";
@@ -252,20 +189,6 @@ jQuery(document).ready(function () {
             // DONE: set credits div
             let year = semester.getElementsByClassName("credits")[0];
             year.innerHTML = "Credits: " + credits + "";
-
-            /*
-            <div id="semester1" class="semester fall">
-                <div class="semester-hdr">
-                    <div class="term">Fall 2021</div>
-                    <div class="credits">Credits: 16</div>
-                </div>
-                <p>MATH-1710 Calculus I</p>
-                <p>CS-1210 C++ Programming</p>
-                <p>EGCP-1010 Digital Logic Design</p>
-                <p>COM-1100 Fundamentals of Speech</p>
-                <p>BTGE-1725 Bible & the Gospel</p>
-            </div>
-            */
 
         }
         header.innerHTML += "<p><strong>Total Hours:</strong> " + totalCreds + "</p>\n";
