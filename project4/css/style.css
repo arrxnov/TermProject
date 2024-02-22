@@ -157,7 +157,7 @@ p {
 }
 
 .acc-div {
-    overflow: scroll;
+    overflow-y: auto;
     scrollbar-color: var(--transparency-dark);
     scrollbar-width: thin;
 }
@@ -224,7 +224,7 @@ main {
     flex-flow: column nowrap;
 
     resize: both;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 #courseReqs {
@@ -232,7 +232,7 @@ main {
     flex-flow: column nowrap;
     flex-grow: 0;
     min-width: 10%;
-    height: 100%;
+    height: 60vh;
 }
 
 #courseReqs div {
