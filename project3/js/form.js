@@ -338,3 +338,13 @@ jQuery(document).ready(function () {
         } );
     }
 });
+
+var setMint = function() {
+    jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-mint)");
+    jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-mint)");
+}
+
+var setAtlantis = function() {
+    jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-atlantis)");
+    jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-atlantis)");
+}
