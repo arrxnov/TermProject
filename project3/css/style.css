@@ -172,6 +172,25 @@ main {
 #courseReqs {
     flex-grow: 1;
     min-width: 10%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#courseReqs h3 {
+    text-align: center;
+    background-color: var(--transparency-dark);
+    border-radius: 4px;
+    box-shadow: 1px 1px 7px;
+}
+
+#courseReqs h3 {
+    transition: all .4s ease-in-out;
+    background-color: var(--transparency-light);
+}
+
+#courseReqs h3 div:hover {
+    text-align: center;
+    background-color: var(--transparency-light);
 }
 
 #homePages {

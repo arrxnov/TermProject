@@ -178,6 +178,7 @@ jQuery(document).ready(function() {
         const json = await response.json();
         planToYear(json);
         updateCourses(json);
+        $("#courseReqs").accordion();
     }
     doThings();
 
