@@ -37,7 +37,7 @@ jQuery(document).ready(function () {
     });
 
     jQuery("#commit-btn").click(function () {
-        window.open("https://github.com/arrxnov/TermProject/commit/a8764805b11a3f1b0a608a7c04baa3fcd88bd19b", "_blank");
+        window.open("https://github.com/arrxnov/TermProject/commit/6c48bad684b21b0be6cd02c1c9b5b55424312851", "_blank");
     });
 
     jQuery("#miner-btn").click(function () {
@@ -179,6 +179,17 @@ jQuery(document).ready(function () {
             if (t == planJSON["currTerm"] && y == planJSON["currYear"]) {
                 semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
                 semester.style.outline = "2px solid black";
+                jQuery("semester" + i).each(function () {
+                    let elem = jQuery(this);
+                    setInterval(function () {
+                        if (elem.css("color") == "rgb(255, 0, 0)") {
+                            elem.css("color", "var(--text-color-light)");
+                        } else {
+                            elem.css("color", "red");
+                        }
+                    }, 400);
+                });
+            
                 pastSemester = false;
 
             }
