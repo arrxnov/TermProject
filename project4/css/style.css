@@ -29,6 +29,8 @@ html {
 body {
     display: flex;
     flex-flow: column nowrap;
+    height: 100vh;
+    overflow: auto;
     margin: 0;
     padding: 0;
     font-family: Montserrat;
@@ -161,9 +163,6 @@ p {
     scrollbar-color: var(--transparency-dark);
     scrollbar-width: thin;
 }
-
-
-
 /* Generic Classes ------------------------------------------------------------- */
 
 /* Header ---------------------------------------------------------------------- */
@@ -232,7 +231,7 @@ main {
     flex-flow: column nowrap;
     flex-grow: 0;
     min-width: 10%;
-    height: 60vh;
+    height: 50vh;
 }
 
 #courseReqs div {
