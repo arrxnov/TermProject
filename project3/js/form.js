@@ -103,7 +103,7 @@ Appearance should remain the same, and still use the same CSS.
 // }
 
 // Delay code execution until html is loaded
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
 
     async function getCombined() {
         const response = await fetch("/~knoerr/cs3220/termProject/getCombined.php");
@@ -188,7 +188,7 @@ jQuery(document).ready(function() {
         header2.innerHTML += "<p><strong>Catalog:</strong> " + planJSON["catYear"] + "</p>\n";
         header2.innerHTML += "<p><strong>GPA:</strong> " + "42.0" + "</p>\n";
         header2.innerHTML += "<p><strong>Major GPA:</strong> " + "42.42" + "</p>\n";
-        
+
         /*
         <div id="ur-header-2" class="labels">
             <p><strong>Major:</strong> Computer Science, Cyber Operations</p>
@@ -200,16 +200,16 @@ jQuery(document).ready(function() {
         */
         let totalCreds = 0;
 
-        for (let i=1; i<=12; i++) {
-            let semester = document.getElementById("semester"+i);
+        for (let i = 1; i <= 12; i++) {
+            let semester = document.getElementById("semester" + i);
             let base_y = planJSON["catYear"];
-            let y = parseInt(base_y) + parseInt((i+1)/3);
+            let y = parseInt(base_y) + parseInt((i + 1) / 3);
             let t;
             let term;
 
             // set term values
-            switch(i%3) {
-                case 0: 
+            switch (i % 3) {
+                case 0:
                     t = "Summer";
                     term = "Summer";
                     break;
@@ -220,7 +220,7 @@ jQuery(document).ready(function() {
                 case 2:
                     t = "Spring";
                     term = "Spring";
-                    break; 
+                    break;
             }
 
             term += " " + y;
@@ -230,7 +230,7 @@ jQuery(document).ready(function() {
             if (t == planJSON["currTerm"] && y == planJSON["currYear"]) {
                 semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
                 semester.style.outline = "2px solid black";
-                
+
             }
             if (!(y in years)) {
                 continue;
@@ -245,7 +245,7 @@ jQuery(document).ready(function() {
                 // DONE: append course to semester div
                 semester.innerHTML += "<p draggable=\"true\">" + course["id"] + " " + getCourseName(course["id"]) + "</p>\n";
             }
-            
+
             totalCreds += credits;
             // DONE: set credits div
             let year = semester.getElementsByClassName("credits")[0];
@@ -264,7 +264,7 @@ jQuery(document).ready(function() {
                 <p>BTGE-1725 Bible & the Gospel</p>
             </div>
             */
-            
+
         }
         header.innerHTML += "<p><strong>Total Hours:</strong> " + totalCreds + "</p>\n";
     }
@@ -302,28 +302,28 @@ jQuery(document).ready(function() {
     doThings();
 
     // Function which blinks the vote button
-    jQuery(".blink").each(function() {
+    jQuery(".blink").each(function () {
         let elem = jQuery(this);
-        setInterval(function() {
+        setInterval(function () {
             if (elem.css("color") == "rgb(255, 0, 0)") {
                 elem.css("color", "var(--text-color-light)");
             } else {
                 elem.css("color", "red");
-            }    
+            }
         }, 400);
     });
 
     // Functions that handle button clicks
-    jQuery("#jgradyBtn").click(function() {
+    jQuery("#jgradyBtn").click(function () {
         window.open("http://judah.cedarville.edu/~grady/cs3220.html", "_blank");
     });
-    jQuery("#kdelsingBtn").click(function() {
+    jQuery("#kdelsingBtn").click(function () {
         window.open("http://judah.cedarville.edu/~delsing/cs3220.html", "_blank");
     });
-    jQuery("#lmillerBtn").click(function() {
+    jQuery("#lmillerBtn").click(function () {
         window.open("http://judah.cedarville.edu/~lmiller/cs3220.html", "_blank");
     });
-    jQuery("#votingBtn").click(function() {
+    jQuery("#votingBtn").click(function () {
         window.open("http://judah.cedarville.edu/index.php", "_blank");
     });
 
@@ -333,20 +333,20 @@ jQuery(document).ready(function() {
     jQuery("#make").on("input", updateKbbMake);
     jQuery("#model").on("input", updateKbbModel);
 
-    jQuery("#courseFinderSubmit").click(async function(event) {
+    jQuery("#courseFinderSubmit").click(async function (event) {
         event.preventDefault();
-    
+
         if (checkCourseFinderForm()) {
             let response = await fetch("http://judah.cedarville.edu/echo.php", {
                 method: "POST",
                 body: new FormData(document.getElementById("courseFinderForm"))
-             });
-             
-             let result = await response.text();
-             alert(result);
+            });
+
+            let result = await response.text();
+            alert(result);
         }
     });
-    
+
     function checkCourseFinderForm() {
         const deptRegex = /^$|^[a-zA-z]{1,5}$/;
         const numRegex = /^$|^\d{1,4}$/;
@@ -357,8 +357,8 @@ jQuery(document).ready(function() {
         let courseNumWidget = document.getElementById("courseNum");
         let courseTitleWidget = document.getElementById("courseTitle");
         let courseCreditsWidget = document.getElementById("courseCredits");
-        
-        
+
+
         let deptValid = checkWidget(courseDeptWidget, deptRegex);
         let numValid = checkWidget(courseNumWidget, numRegex);
         let titleValid = checkWidget(courseTitleWidget, titleRegex);
@@ -366,10 +366,10 @@ jQuery(document).ready(function() {
 
         let validValues = deptValid && numValid && titleValid && creditsValid;
 
-        let courseFinderFormEmpty = (!courseDeptWidget.value.trim() && 
-                                     !courseNumWidget.value.trim() && 
-                                     !courseTitleWidget.value.trim() && 
-                                     !courseCreditsWidget.value.trim());
+        let courseFinderFormEmpty = (!courseDeptWidget.value.trim() &&
+            !courseNumWidget.value.trim() &&
+            !courseTitleWidget.value.trim() &&
+            !courseCreditsWidget.value.trim());
 
         let valid = validValues && !courseFinderFormEmpty;
 
@@ -378,21 +378,25 @@ jQuery(document).ready(function() {
         } else {
             jQuery("#courseFinderSubmit").addClass("btn").removeClass("btn-clickable");
         }
-        
+
         return valid;
     }
-    
+
     function checkWidget(courseWidget, regex) {
         let courseValue = courseWidget.value.trim();
-    
+
         if (courseValue.match(regex) || (courseValue == "")) {
             courseWidget.style.setProperty("outline", "none");
             return true;
-            
+
         } else {
             courseWidget.style.setProperty("outline", "solid red 1px");
             return false;
         }
+    }
+
+    function initKbbYear() {
+        
     }
 
     function updateKbbYear() {
@@ -406,7 +410,7 @@ jQuery(document).ready(function() {
         }
         else {
             document.getElementById("make").setAttribute("disabled");
-            
+
         }
         document.getElementById("model").setAttribute("disabled");
     }
@@ -425,8 +429,15 @@ jQuery(document).ready(function() {
         }
     }
 
+    function updateKbbModel() {
+
+    }
+
     function getMakesByYear(year) {
-        fetch("/~gallaghd/ymm/ymmdb.php?fmt=xml&year=")
+        fetch("/~gallaghd/ymm/ymmdb.php?fmt=xml")
+            .then(response => response.text())
+            .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+            .then(data => console.log(data))
     }
 
     function getModelsByMakeAndYear(make, year) {
