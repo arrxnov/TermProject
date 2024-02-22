@@ -24,6 +24,16 @@
   --dt-html-background: rgb(33, 37, 41);
 }
 
+/* Added CSS */
+#dt-length-0 {
+  background-color: var(--btn-theme);
+}
+
+.dt-column-order {
+  color: var(--btn-theme);
+}
+/* Added CSS */
+
 table.dataTable td.dt-control {
   text-align: center;
   cursor: pointer;
@@ -559,7 +569,7 @@ div.dt-container .dt-search input {
   border: 1px solid #aaa;
   border-radius: 3px;
   padding: 5px;
-  background-color: transparent;
+  background-color: var(--btn-theme);
   color: inherit;
   margin-left: 3px;
 }
@@ -585,7 +595,7 @@ div.dt-container .dt-paging .dt-paging-button {
   color: inherit !important;
   border: 1px solid transparent;
   border-radius: 2px;
-  background: transparent;
+  background: var(--btn-theme);
 }
 div.dt-container .dt-paging .dt-paging-button.current, div.dt-container .dt-paging .dt-paging-button.current:hover {
   color: inherit !important;
@@ -606,26 +616,12 @@ div.dt-container .dt-paging .dt-paging-button.disabled, div.dt-container .dt-pag
   box-shadow: none;
 }
 div.dt-container .dt-paging .dt-paging-button:hover {
-  color: white !important;
-  border: 1px solid #111;
-  background-color: #111;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #585858), color-stop(100%, #111)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #585858 0%, #111 100%); /* Chrome10+,Safari5.1+ */
-  background: -moz-linear-gradient(top, #585858 0%, #111 100%); /* FF3.6+ */
-  background: -ms-linear-gradient(top, #585858 0%, #111 100%); /* IE10+ */
-  background: -o-linear-gradient(top, #585858 0%, #111 100%); /* Opera 11.10+ */
-  background: linear-gradient(to bottom, #585858 0%, #111 100%); /* W3C */
+  transition: all .2s ease-in-out;
+  background-color: var(--transparency-light);
 }
 div.dt-container .dt-paging .dt-paging-button:active {
-  outline: none;
-  background-color: #0c0c0c;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2b2b2b), color-stop(100%, #0c0c0c)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%); /* Chrome10+,Safari5.1+ */
-  background: -moz-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%); /* FF3.6+ */
-  background: -ms-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%); /* IE10+ */
-  background: -o-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%); /* Opera 11.10+ */
-  background: linear-gradient(to bottom, #2b2b2b 0%, #0c0c0c 100%); /* W3C */
-  box-shadow: inset 0 0 3px #111;
+  transition: all 0s;
+  box-shadow: none;
 }
 div.dt-container .dt-paging .ellipsis {
   padding: 0 1em;
