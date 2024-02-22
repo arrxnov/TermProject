@@ -147,21 +147,25 @@ jQuery(document).ready(function () {
         for (let course in reqs.categories.Cognates.courses) {
             course = reqs.categories.Cognates.courses[course];
             let courseName = getCourseName(course);
+            document.getElementById("cognatesHeader").innerHTML = "Cognates";
             document.getElementById("cognates").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
         for (let course in reqs.categories.Electives.courses) {
             course = reqs.categories.Electives.courses[course];
             let courseName = getCourseName(course);
+            document.getElementById("electivesHeader").innerHTML = "Electives";
             document.getElementById("electives").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
         for (let course in reqs.categories.Core.courses) {
             course = reqs.categories.Core.courses[course];
             let courseName = getCourseName(course);
+            document.getElementById("coreHeader").innerHTML = "Core";
             document.getElementById("core").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
         for (let course in reqs.categories.GenEds.courses) {
             course = reqs.categories.GenEds.courses[course];
             let courseName = getCourseName(course);
+            document.getElementById("genedsHeader").innerHTML = "Gen-Eds";
             document.getElementById("geneds").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
     }
@@ -289,7 +293,6 @@ jQuery(document).ready(function () {
     }
     doThings();
 
-    // Function which blinks the vote button
     jQuery(".blink").each(function () {
         let elem = jQuery(this);
         setInterval(function () {
@@ -301,7 +304,6 @@ jQuery(document).ready(function () {
         }, 400);
     });
 
-    // Functions that handle button clicks
     jQuery("#jgradyBtn").click(function () {
         window.open("http://judah.cedarville.edu/~grady/cs3220.html", "_blank");
     });
@@ -315,73 +317,9 @@ jQuery(document).ready(function () {
         window.open("http://judah.cedarville.edu/index.php", "_blank");
     });
 
-    jQuery("#courseFinderForm").on("input", checkCourseFinderForm);
-
     jQuery("#car-year").on("input", updateKbbYear);
     jQuery("#make").on("input", updateKbbMake);
     jQuery("#model").on("input", updateKbbModel);
-
-    jQuery("#courseFinderSubmit").click(async function (event) {
-        event.preventDefault();
-
-        if (checkCourseFinderForm()) {
-            let response = await fetch("http://judah.cedarville.edu/echo.php", {
-                method: "POST",
-                body: new FormData(document.getElementById("courseFinderForm"))
-            });
-
-            let result = await response.text();
-            alert(result);
-        }
-    });
-
-    function checkCourseFinderForm() {
-        const deptRegex = /^$|^[a-zA-z]{1,5}$/;
-        const numRegex = /^$|^\d{1,4}$/;
-        const titleRegex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
-        const creditsRegex = /^([0-9]{1,2})(\.[05])?$/;
-
-        let courseDeptWidget = document.getElementById("courseDept");
-        let courseNumWidget = document.getElementById("courseNum");
-        let courseTitleWidget = document.getElementById("courseTitle");
-        let courseCreditsWidget = document.getElementById("courseCredits");
-
-
-        let deptValid = checkWidget(courseDeptWidget, deptRegex);
-        let numValid = checkWidget(courseNumWidget, numRegex);
-        let titleValid = checkWidget(courseTitleWidget, titleRegex);
-        let creditsValid = checkWidget(courseCreditsWidget, creditsRegex);
-
-        let validValues = deptValid && numValid && titleValid && creditsValid;
-
-        let courseFinderFormEmpty = (!courseDeptWidget.value.trim() &&
-            !courseNumWidget.value.trim() &&
-            !courseTitleWidget.value.trim() &&
-            !courseCreditsWidget.value.trim());
-
-        let valid = validValues && !courseFinderFormEmpty;
-
-        if (valid) {
-            jQuery("#courseFinderSubmit").removeClass("btn").addClass("btn-clickable");
-        } else {
-            jQuery("#courseFinderSubmit").addClass("btn").removeClass("btn-clickable");
-        }
-
-        return valid;
-    }
-
-    function checkWidget(courseWidget, regex) {
-        let courseValue = courseWidget.value.trim();
-
-        if (courseValue.match(regex) || (courseValue == "")) {
-            courseWidget.style.setProperty("outline", "none");
-            return true;
-
-        } else {
-            courseWidget.style.setProperty("outline", "solid red 1px");
-            return false;
-        }
-    }
 
     async function initKbbYear() {
         document.getElementById("car-year").innerHTML = '<option selected="true" style="display: none"></option>';
@@ -530,8 +468,6 @@ jQuery(document).ready(function () {
                 { data: 'description', orderable: false }
             ]
         } );
-        console.log("populateSearchTable");
-        console.log(response.catalog.courses);
     }
 
     populateSearchTable();
