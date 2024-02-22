@@ -336,4 +336,5 @@ jQuery(document).ready(function() {
     }
 
     // add code to create new dataTable
+    
 });
