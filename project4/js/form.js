@@ -327,7 +327,15 @@ jQuery(document).ready(function () {
     async function populateSearchTable() {
         let response = await getCombined();
 
-        jQuery("#searchTable").DataTable( {
+        let table = jQuery("#searchTable").DataTable( {
+            paging: false,
+            scrollCollapse: true,
+            scrollY: '25vh',
+            layout: {
+                topStart: 'search',
+                topEnd: 'info',
+                bottomStart: null
+            },
             data: Object.values(response.catalog.courses),
             columns: [
                 { data: 'id' },
