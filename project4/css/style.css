@@ -282,7 +282,7 @@ main {
     flex-flow: column nowrap;
 
     resize: both;
-    overflow: sc;
+    overflow: scr;
 }
 
 
@@ -433,3 +433,10 @@ main {
 }
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
+
+.semester-current {
+    /* outline: solid var(--text-color-light) 4px; */
+    outline: dotted var(--btn-theme) 4px;
+    transition: all 400ms ease-in-out;
+    /* border-color: red; */
+}
