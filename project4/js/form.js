@@ -178,15 +178,20 @@ jQuery(document).ready(function () {
             }
             if (t == planJSON["currTerm"] && y == planJSON["currYear"]) {
                 semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
-                semester.style.outline = "2px solid black";
-                jQuery("semester" + i).each(function () {
+                // semester.style.outline = "2px solid black";
+                semester.classList.add("semester-current");
+                jQuery("#semester" + i).each(function () {
                     let elem = jQuery(this);
                     setInterval(function () {
-                        if (elem.css("color") == "rgb(255, 0, 0)") {
-                            elem.css("color", "var(--text-color-light)");
+                        if (elem.css("outline-style") == "dotted") {
+                            elem.css("outline-style", "solid");
                         } else {
-                            elem.css("color", "red");
+                            elem.css("outline-style", "dotted");
                         }
+                        elem.css({
+                            "transition": "all .4s ease-in-out"
+                        });
+                        
                     }, 400);
                 });
             
