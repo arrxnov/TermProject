@@ -236,17 +236,12 @@ jQuery(document).ready(function() {
 
     let years = {};
     async function doThings() {
-        // const response = await fetch("./plan.json");
-        // const json = await response.json();
-
         let response = getCombined();
-        console.log(response);
-        let json = response.json();
 
-        planToYear(json);
-        updateCourses(json);
+        planToYear(response);
+        updateCourses(response);
         updateReqs();
-        $("#courseReqs").accordion();
+        jQuery("#courseReqs").accordion();
     }
     doThings();
 
