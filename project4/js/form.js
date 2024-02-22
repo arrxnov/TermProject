@@ -247,7 +247,7 @@ jQuery(document).ready(function () {
         let table = jQuery("#searchTable").DataTable( {
             paging: false,
             scrollCollapse: true,
-            scrollY: '25vh',
+            // scrollY: '25vh',
             layout: {
                 topStart: 'search',
                 topEnd: 'info',

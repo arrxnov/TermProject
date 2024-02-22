@@ -51,7 +51,7 @@ p {
 /* Generic Classes ------------------------------------------------------------- */
 .basicContainer {
     display: flex;
-    flex-grow: 0;
+    flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
     margin: 4px;
@@ -60,6 +60,7 @@ p {
     border-radius: 4px;
     background-color: var(--transparency-light);
     box-shadow: 1px 1px 5px;
+    border: solid blue 2px;
     
 }
 
@@ -168,35 +169,37 @@ p {
 /* Header ---------------------------------------------------------------------- */
 header {
     display: flex;
+    flex-grow: 1;
     flex-flow: row nowrap;
+    border: solid red 2px;
 }
 
 header h1 {
-    flex: 1;
-    flex-grow: 3;
+    display: flex;
+    flex-grow: 1;
     justify-content: flex-start;
     align-self: center;
-    border: none;
     font-size: 3rem;
     margin: 10px;
     color: var(--text-color-dark);
+    border: solid orange 2px;
 }
 
 #icon {
     object-fit: cover;
-    min-width: 70px;
-    min-height: 70px;
-    max-height: 70px;
+    width: 70px;
+    height: 70px;
     margin: 4px;
+    border: solid orange 2px;
 }
 
 #headerBtns {
-    align-items: center;
     display: flex;
-    justify-content: flex-end;
-    flex: column nowrap;
     flex-grow: 1;
-    border: none;
+    flex: column nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    border: solid orange 2px;
 }
 
 #dropdown {
@@ -206,32 +209,100 @@ header h1 {
 }
 /* Header ---------------------------------------------------------------------- */
 
-/* Main ------------------------------------------------------------------------ */
+/* Basic Structure ------------------------------------------------------------- */
 main {
+    margin: 0px;
+    padding: 0px;
     display: flex;
     flex: 1;
     flex-flow: row nowrap;
     border: none;
-    
 }
 
-/* Left container -------------------------------------------------------------- */
 #leftContainer {
-    flex: 1;
-    flex-grow: 2;
+    margin: 0px;
+    padding: 0px;
+    /* flex: 1; */
+    width: 15vw;
     display: flex;
     flex-flow: column nowrap;
 
-    resize: both;
+    /* resize: both; */
     /* overflow: scroll; */
 }
 
+#UL {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    /* height: 55vh; */
+    /* overflow: auto; */
+    border: solid red 2px;
+}
+
+#LL {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    /* height: 35vh;
+    overflow: auto; */
+    border: solid red 2px;
+}
+
+#rightContainer {
+    margin: 0px;
+    padding: 0px;
+    width: 85vw;
+    /* flex: 1; */
+    /* flex-grow: 10; */
+    display: flex;
+    flex-flow: column nowrap;
+
+    /* resize: both;
+    overflow: scr; */
+}
+
+#UR {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    /* height: 55vh;
+    overflow: auto; */
+    border: solid red 2px;
+}
+
+#LR {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    /* height: 35vh;
+    overflow: auto; */
+    border: solid red 2px;
+}
+
+#resizer {
+    /* grid-area: resize; */
+    resize: both;
+    overflow: auto;
+    height: 5px;
+    width: 100%;
+    margin: 3px;
+    margin-top: 1px;
+    opacity: 0;
+    cursor: row-resize;
+    z-index: 1;
+}
+
+/* Left container -------------------------------------------------------------- */
 #courseReqs {
     display: flex;
     flex-flow: column nowrap;
-    flex-grow: 0;
-    min-width: 10%;
-    height: 50vh;
+    flex-grow: 1;
+    /* height: 47.5vh; */
 }
 
 #courseReqs div {
@@ -250,7 +321,7 @@ main {
     justify-content: space-around;
 }  
 
-#kbb .drop {
+/* #kbb .drop {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
@@ -263,41 +334,16 @@ main {
     padding: 4px;
     border-radius: 4px;
     color: var(--text-color); 
-}
+} */
 
 #miscBox {
-    flex-grow: 0;
-    min-width: 10%;
+    flex-grow: 1;
     display: flex;
     flex-flow: column nowrap;
 }
 /* Left container -------------------------------------------------------------- */
 
 /* Right container ------------------------------------------------------------- */
-#rightContainer {
-    flex: 1;
-    flex-grow: 10;
-    display: flex;
-    flex-flow: column nowrap;
-
-    resize: both;
-    overflow: scr;
-}
-
-
-#resizer {
-    /* grid-area: resize; */
-    resize: both;
-    overflow: auto;
-    height: 5px;
-    width: 100%;
-    margin: 3px;
-    margin-top: 1px;
-    opacity: 0;
-    cursor: row-resize;
-    z-index: 1;
-}
-
 /* Upper right container (plan) ------------------------------------------------ */
 #plan {
     flex: 1;
@@ -393,7 +439,7 @@ main {
 
 #courseSearch {
     display: flex;
-    flex-grow: 2;
+    flex-grow: 1;
     flex-flow: row;
     flex-wrap: nowrap;
     justify-content: space-between;
