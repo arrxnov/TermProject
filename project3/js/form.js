@@ -157,25 +157,21 @@ jQuery(document).ready(function () {
         for (let course in reqs.categories.Cognates.courses) {
             course = reqs.categories.Cognates.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("cognatesHeader").innerHTML = "Cognates";
             document.getElementById("cognates").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
         for (let course in reqs.categories.Electives.courses) {
             course = reqs.categories.Electives.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("electivesHeader").innerHTML = "Electives";
             document.getElementById("electives").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
         for (let course in reqs.categories.Core.courses) {
             course = reqs.categories.Core.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("coreHeader").innerHTML = "Core";
             document.getElementById("core").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
         for (let course in reqs.categories.GenEds.courses) {
             course = reqs.categories.GenEds.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("genedsHeader").innerHTML = "Gen-Eds";
             document.getElementById("geneds").innerHTML += "<p>" + course + " " + courseName + "</p>";
         }
     }
