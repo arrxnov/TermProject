@@ -336,5 +336,8 @@ jQuery(document).ready(function() {
     }
 
     // add code to create new dataTable
-    
+    let table = jQuery('#searchTable').dataTable().api(); //dataTable() returns a jQuery object
+
+    table.rows.add(getCombined())
+
 });
