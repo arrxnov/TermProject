@@ -350,7 +350,7 @@ jQuery(document).ready(function () {
         const deptRegex = /^$|^[a-zA-z]{1,5}$/;
         const numRegex = /^$|^\d{1,4}$/;
         const titleRegex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
-        const creditsRegex = /^([1-9]{1,2})(\.[05])?$/;
+        const creditsRegex = /^([0-9]{1,2})(\.[05])?$/;
 
         let courseDeptWidget = document.getElementById("courseDept");
         let courseNumWidget = document.getElementById("courseNum");
@@ -452,7 +452,7 @@ jQuery(document).ready(function () {
                 { data: 'id' },
                 { data: 'name' },
                 { data: 'credits' },
-                { data: 'description' }
+                { data: 'description', orderable: false }
             ]
         } );
     }
