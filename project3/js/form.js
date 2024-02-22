@@ -339,7 +339,7 @@ jQuery(document).ready(function () {
         const deptRegex = /^$|^[a-zA-z]{1,5}$/;
         const numRegex = /^$|^\d{1,4}$/;
         const titleRegex = /^[a-zA-Z0-9 ():\-\[\]]{1,50}$/;
-        const creditsRegex = /^([1-9]{1,2})(\.[05])?$/;
+        const creditsRegex = /^([0-9]{1,2})(\.[05])?$/;
 
         let courseDeptWidget = document.getElementById("courseDept");
         let courseNumWidget = document.getElementById("courseNum");
@@ -464,14 +464,19 @@ jQuery(document).ready(function () {
     function getModelsByMakeAndYear(make, year) {
 
     }
-
-    // add code to create new dataTable
-    let table = jQuery('#searchTable').dataTable().api(); //dataTable() returns a jQuery object
-
-    // table.rows.add(getCombined()["catalog"]["courses"]);
-
+    
     async function populateSearchTable() {
         let response = await getCombined();
+
+        jQuery("#searchTable").DataTable( {
+            data: Object.values(response.catalog.courses),
+            columns: [
+                { data: 'id' },
+                { data: 'name' },
+                { data: 'credits' },
+                { data: 'description', orderable: false }
+            ]
+        } );
         console.log("populateSearchTable");
         console.log(response.catalog.courses);
     }
