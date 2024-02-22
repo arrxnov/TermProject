@@ -108,6 +108,7 @@ jQuery(document).ready(function() {
     async function getCombined() {
         const response = await fetch("/~knoerr/cs3220/termProject/getCombined.php");
         const data = await response.json();
+        console.log(data);
         return data;
     }
 
@@ -134,6 +135,10 @@ jQuery(document).ready(function() {
         return years;
     }
 
+    async function updateReqs() {
+        reqs = await getRequirements();
+        // for (let req)        
+    }
 
     function updateCourses(planJSON) {
         let header = document.getElementById("planHeader");
@@ -231,10 +236,16 @@ jQuery(document).ready(function() {
 
     let years = {};
     async function doThings() {
-        const response = await fetch("./plan.json");
-        const json = await response.json();
+        // const response = await fetch("./plan.json");
+        // const json = await response.json();
+
+        let response = getCombined();
+        console.log(response);
+        let json = response.json();
+
         planToYear(json);
         updateCourses(json);
+        updateReqs();
         $("#courseReqs").accordion();
     }
     doThings();
