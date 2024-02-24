@@ -44,8 +44,6 @@ jQuery(document).ready(function () {
         window.open("", "_blank");
     });
 
-    
-
     jQuery(".blink").each(function () {
         let elem = jQuery(this);
         setInterval(function () {
@@ -178,22 +176,21 @@ jQuery(document).ready(function () {
             }
             if (t == planJSON["currTerm"] && y == planJSON["currYear"]) {
                 semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
-                // semester.style.outline = "2px solid black";
                 semester.classList.add("semester-current");
-                jQuery("#semester" + i).each(function () {
-                    let elem = jQuery(this);
-                    setInterval(function () {
-                        if (elem.css("outline-style") == "dotted") {
-                            elem.css("outline-style", "solid");
-                        } else {
-                            elem.css("outline-style", "dotted");
-                        }
-                        elem.css({
-                            "transition": "all .4s ease-in-out"
-                        });
+                // jQuery("#semester" + i).each(function () {
+                //     let elem = jQuery(this);
+                //     setInterval(function () {
+                //         if (elem.css("outline-style") == "dotted") {
+                //             elem.css("outline-style", "solid");
+                //         } else {
+                //             elem.css("outline-style", "dotted");
+                //         }
+                //         elem.css({
+                //             "transition": "all .4s ease-in-out"
+                //         });
                         
-                    }, 400);
-                });
+                //     }, 400);
+                // });
             
                 pastSemester = false;
 
@@ -244,17 +241,16 @@ jQuery(document).ready(function () {
     async function populateSearchTable() {
         let response = await getCombined();
 
-        let table = jQuery("#searchTable").DataTable( {
-            paging: true,
-            pageLength: 2,
-            lengthChange: false,
+        jQuery("#searchTable").DataTable( {
+            paging: false,
             scrollCollapse: true,
-            // scrollY: 'calc(100vh - 60vh - 78px - 34px)',
+            scrollY: 'calc(100vh - 60vh - 78px - 34px - 20px - 95px)',
+            scrollX: false,
             layout: {
                 topStart: 'search',
-                topEnd: null,
-                bottomStart: 'info',
-                bottomEnd: 'paging'
+                topEnd: 'info',
+                bottomStart: null,
+                bottomEnd: null
             },
             data: Object.values(response.catalog.courses),
             columns: [
