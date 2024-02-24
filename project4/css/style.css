@@ -30,7 +30,6 @@ body {
     display: flex;
     flex-flow: column nowrap;
     height: 100vh;
-    overflow: auto;
     margin: 0;
     padding: 0;
     font-family: Montserrat;
@@ -38,7 +37,6 @@ body {
     color: var(--text-color);
     background-image: var(--bg-theme);
     background-size: cover;
-    overflow-x: hidden;
 }
 
 /* Universal tag categories ---------------------------------------------------- */
@@ -60,23 +58,23 @@ p {
     border-radius: 4px;
     background-color: var(--transparency-light);
     box-shadow: 1px 1px 5px;
-    border: solid blue 2px;
-    
+    /* border: solid blue 2px; */
 }
 
 .labels {
+    /* total height is 34px */
     display: flex;
     flex-direction: row;
     justify-content: start;
-    flex: 1;
     flex-grow: 0;
     margin: 4px;
     padding: 4px;
+    height: 18px;
     font-size: 12pt;
     font-weight: bold;
     border: none;
     border-radius: 4px;
-    background-color: var(--transparency-dark); /* change to dark blue or dark gray?*/
+    background-color: var(--transparency-dark);
     box-shadow: 1px 1px 7px;
 }
 
@@ -169,9 +167,8 @@ p {
 /* Header ---------------------------------------------------------------------- */
 header {
     display: flex;
-    flex-grow: 1;
     flex-flow: row nowrap;
-    border: solid red 2px;
+    /* border: solid red 2px; */
 }
 
 header h1 {
@@ -182,15 +179,17 @@ header h1 {
     font-size: 3rem;
     margin: 10px;
     color: var(--text-color-dark);
-    border: solid orange 2px;
+    /* border: solid orange 2px; */
 }
 
 #icon {
+    /* total height is 78px */
     object-fit: cover;
     width: 70px;
     height: 70px;
     margin: 4px;
-    border: solid orange 2px;
+    padding: 0px;
+    /* border: solid orange 2px; */
 }
 
 #headerBtns {
@@ -199,7 +198,7 @@ header h1 {
     flex: column nowrap;
     align-items: center;
     justify-content: flex-end;
-    border: solid orange 2px;
+    /* border: solid orange 2px; */
 }
 
 #dropdown {
@@ -236,9 +235,8 @@ main {
     flex-flow: column nowrap;
     margin: 0px;
     padding: 0px;
-    /* height: 55vh; */
-    /* overflow: auto; */
-    border: solid red 2px;
+    height: 60vh;
+    /* border: solid red 2px; */
 }
 
 #LL {
@@ -246,9 +244,8 @@ main {
     flex-flow: column nowrap;
     margin: 0px;
     padding: 0px;
-    /* height: 35vh;
-    overflow: auto; */
-    border: solid red 2px;
+    height: calc(100vh - 60vh - 78px);
+    /* border: solid red 2px; */
 }
 
 #rightContainer {
@@ -269,9 +266,8 @@ main {
     flex-flow: column nowrap;
     margin: 0px;
     padding: 0px;
-    /* height: 55vh;
-    overflow: auto; */
-    border: solid red 2px;
+    height: 60vh;
+    /* border: solid red 2px; */
 }
 
 #LR {
@@ -279,9 +275,8 @@ main {
     flex-flow: column nowrap;
     margin: 0px;
     padding: 0px;
-    /* height: 35vh;
-    overflow: auto; */
-    border: solid red 2px;
+    height: calc(100vh - 60vh - 78px);
+    /* border: solid red 2px; */
 }
 
 #resizer {
@@ -302,7 +297,8 @@ main {
     display: flex;
     flex-flow: column nowrap;
     flex-grow: 1;
-    /* height: 47.5vh; */
+    max-height: 50vh;
+    overflow: auto;
 }
 
 #courseReqs div {
@@ -340,6 +336,8 @@ main {
     flex-grow: 1;
     display: flex;
     flex-flow: column nowrap;
+    height: calc(100vh - 60vh - 78px - 34px);
+    overflow: auto;
 }
 /* Left container -------------------------------------------------------------- */
 
@@ -350,6 +348,9 @@ main {
     flex-grow: 2;
     flex-flow: column nowrap;
     display: flex;
+    height: calc(60vh - 34px - 34px);
+    overflow: auto;
+    /* border: solid blue 2px; */
 }
 
 #plan div div p {
@@ -427,6 +428,8 @@ main {
     display: flex;
     flex-flow: column;
     flex-grow: 1;
+    height: calc(100vh - 60vh - 78px - 34px);
+    overflow: auto;
 }
 
 #courseFinderForm {
@@ -478,10 +481,7 @@ main {
 }
 /* Right container ------------------------------------------------------------- */
 /* Main ------------------------------------------------------------------------ */
-
 .semester-current {
-    /* outline: solid var(--text-color-light) 4px; */
     outline: dotted var(--btn-theme) 4px;
     transition: all 400ms ease-in-out;
-    /* border-color: red; */
 }

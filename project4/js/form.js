@@ -245,13 +245,16 @@ jQuery(document).ready(function () {
         let response = await getCombined();
 
         let table = jQuery("#searchTable").DataTable( {
-            paging: false,
+            paging: true,
+            pageLength: 2,
+            lengthChange: false,
             scrollCollapse: true,
-            // scrollY: '25vh',
+            // scrollY: 'calc(100vh - 60vh - 78px - 34px)',
             layout: {
                 topStart: 'search',
-                topEnd: 'info',
-                bottomStart: null
+                topEnd: null,
+                bottomStart: 'info',
+                bottomEnd: 'paging'
             },
             data: Object.values(response.catalog.courses),
             columns: [
