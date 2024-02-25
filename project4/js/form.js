@@ -140,10 +140,10 @@ jQuery(document).ready(function () {
 
         let header2 = document.getElementById("planSubheader");
         header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
-        header2.innerHTML += "<p><strong>Minor:</strong> " + "Your Mom" + "</p>\n";
+        header2.innerHTML += "<p><strong>Minor:</strong> " + "Photography" + "</p>\n";
         header2.innerHTML += "<p><strong>Catalog:</strong> " + planJSON["catYear"] + "</p>\n";
-        header2.innerHTML += "<p><strong>GPA:</strong> " + "42.0" + "</p>\n";
-        header2.innerHTML += "<p><strong>Major GPA:</strong> " + "42.42" + "</p>\n";
+        header2.innerHTML += "<p><strong>GPA:</strong> " + "4.00" + "</p>\n";
+        header2.innerHTML += "<p><strong>Major GPA:</strong> " + "4.00" + "</p>\n";
 
         let totalCreds = 0;
         let pastSemester = true;
