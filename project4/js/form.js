@@ -36,11 +36,11 @@ jQuery(document).ready(function () {
         window.open("http://judah.cedarville.edu/index.php", "_blank");
     });
 
-    jQuery("#commit-btn").click(function () {
+    jQuery("#commitBtn").click(function () {
         window.open("https://github.com/arrxnov/TermProject/commit/6c48bad684b21b0be6cd02c1c9b5b55424312851", "_blank");
     });
 
-    jQuery("#miner-btn").click(function () {
+    jQuery("#minerBtn").click(function () {
         window.open("", "_blank");
     });
 
