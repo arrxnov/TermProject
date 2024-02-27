@@ -176,6 +176,7 @@ jQuery(document).ready(function () {
             }
             if (t == planJSON["currTerm"] && y == planJSON["currYear"]) {
                 semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
+                currentSemester = true;
                 semester.classList.add("semester-current");
                 // jQuery("#semester" + i).each(function () {
                 //     let elem = jQuery(this);
@@ -212,8 +213,8 @@ jQuery(document).ready(function () {
                 let course = courses[key];
                 credits += getCourseCredits(course["id"]);
                 let c_str = getCourseCredits(course["id"]).toPrecision(2);
-                if (!pastSemester) {
-                    semester.innerHTML += "<p class=\"course\" draggable=\"true\"> <span class=\"course-id\">" + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
+                if (!pastSemester && !currentSemester) {
+                    semester.innerHTML += "<p class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler\"> <span class=\"course-id\">" + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
                 } else {
                     semester.innerHTML += "<p class=\"course\"> <span class=\"course-id\">" + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";   
                 }
@@ -271,4 +272,17 @@ var setMint = function() {
 var setAtlantis = function() {
     jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-atlantis)");
     jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-atlantis)");
+}
+
+function dragStartHandler(ev) {
+    ev.dataTransfer.dropEffect = "move";
+}
+
+function dropHandler(ev) {
+    const data = ev.dataTransfer.getData("text/html");
+    ev.target.appendChild(document.getElementById(data));
+}
+
+function dragOverHandler(ev) {
+    ev.dataTransfer.dropEffect = "move";
 }
