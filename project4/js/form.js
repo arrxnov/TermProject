@@ -36,11 +36,11 @@ jQuery(document).ready(function () {
         window.open("http://judah.cedarville.edu/index.php", "_blank");
     });
 
-    jQuery("#commit-btn").click(function () {
+    jQuery("#commitBtn").click(function () {
         window.open("https://github.com/arrxnov/TermProject/commit/6c48bad684b21b0be6cd02c1c9b5b55424312851", "_blank");
     });
 
-    jQuery("#miner-btn").click(function () {
+    jQuery("#minerBtn").click(function () {
         window.open("", "_blank");
     });
 
@@ -136,7 +136,7 @@ jQuery(document).ready(function () {
     function updateCourses(planJSON) {
         let header = document.getElementById("planHeader");
         header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student"] + "</p>\n";
-        header.innerHTML += "<p><strong>Course Plan:</strong> " + planJSON["currYear"] + "</p>\n";
+        header.innerHTML += "<p><strong>Academic Plan:</strong> " + planJSON["currYear"] + "</p>\n";
 
         let header2 = document.getElementById("planSubheader");
         header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
