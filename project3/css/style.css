@@ -197,10 +197,10 @@ main {
 }
 
 #courseReqs {
-    flex-grow: 0;
-    min-width: 10%;
     display: flex;
     flex-flow: column nowrap;
+    flex-grow: 2;
+    min-width: 10%;
 }
 
 #courseReqs div {
@@ -212,10 +212,10 @@ main {
 
 #homePages {
     display: flex;
+    flex-flow: column nowrap;
+    flex-basis: auto;
     flex-grow: 1;
     flex-shrink: 1;
-    flex-basis: auto;
-    flex-flow: column nowrap;
     justify-content: space-around;
 }  
 
@@ -253,7 +253,7 @@ main {
 /* Upper right container (plan) ------------------------------------------------ */
 #plan {
     flex: 1;
-    flex-grow: 1;
+    flex-grow: 2;
     flex-flow: column nowrap;
     display: flex;
 }
@@ -319,6 +319,7 @@ main {
 #courseFinder {
     display: flex;
     flex-flow: column;
+    flex-grow: 1;
 }
 
 #courseFinderForm {
