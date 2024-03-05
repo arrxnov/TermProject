@@ -1,0 +1,213 @@
+/*
+ * Academic Planning Environment
+ * by Alissa Johnson, Drew Hearle, Steve Dunlap, Steph Russell, and Zach Klink.
+ * Copyright (c) Cedarville University, its Computer Science faculty,
+ * and the authors. All rights reserved.
+ */
+
+/* 
+    Document   : waiver.css
+    Created on : Feb 3, 2012, 3:48:51 PM
+    Author     : zklink
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#waiverDialog{
+	/*min-width: 50em;*/
+}
+
+#waiverDialog td.throb
+{
+	background-image: url("../img/throb_sm.gif");
+	background-position: 3px 3px;
+	background-repeat: no-repeat;
+	/*min-height: 20px;*/
+	text-indent: 24px;
+	/*padding: 0;*/
+}
+
+#waiverbox p.throb
+{
+	background-image:url("../img/throb_md.gif");
+	background-position: top center;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 40px;
+}
+
+#waiverDialog table {
+	text-align: left;
+	/*white-space: nowrap;*/
+	width: 100%;
+	border-spacing: 0;
+	border-bottom: 1px solid #bbbbbb;
+
+}
+
+#waiverDialog td
+{
+	padding: 3px;
+	border-top: 1px solid #bbbbbb;
+	background-color: #fafcfd;
+}
+
+#waiverDialog tr:hover td
+{
+	background-color: #ffffdf;
+}
+
+#waiverDialog .red{
+	color:red;
+}
+
+#waiverDialog h3,#waiverDialog h4
+{
+	margin-bottom: 0.2em;
+}
+
+#waiverDialog fieldset
+{
+	display: none;
+	padding: .5em .5em 2em .5em;
+	margin: 1em 0;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	min-width: 50em;
+
+}
+
+#waiverDialog .waiverClass
+{
+	float: left;
+	width: 44%;
+}
+
+#waiverDialog .waiverClass #subClass,
+#waiverDialog .waiverClass #initClass,
+#waiverDialog .waiverClass #subClass2
+{
+	width: 99%;
+}
+
+#waiverDialog .waiverClass #subClass
+{
+	margin-top: 0;
+}
+#waiverDialog .waiverClass input
+{
+	margin-bottom: 2px;
+}
+
+#waiverDialog #noSub
+{
+	float: right;
+}
+
+#waiverDialog #replaceAlign
+{
+	width: 10%;
+	float: left;
+	margin: 12px 0px 0 0px;
+}
+
+#waiverDialog #replaceAlign span
+{
+	text-align: center;
+	display: block;
+}
+
+/*The placeholder plugin adds the placeholder class where needed*/
+#waiverDialog .placeholder { 
+	color: #aaa;
+}
+
+#waiverDialog .typeSelect
+{
+	margin-bottom: 5px;
+}
+
+#waiverDialog .typeSelect input
+{
+	margin: .5em 0 1em 1.5em;
+	width: 28em;
+}
+
+#waiverDialog #subClass2
+{
+	margin-top: -1px;
+	margin-bottom: 5px;
+}
+
+#waiverDialog #sub2
+{
+	margin-top: -2px;
+}
+
+#waiverDialog #sub2Close
+{
+	float: right;
+}
+
+#waiverDialog #sub2Close
+{
+	cursor: pointer;
+}
+
+#waiverDialog #addSubstitute
+{
+	margin-bottom: 1.7em;
+}
+#waiverDialog #minorSelect, #waiverDialog #sub2, #waiverDialog #curWaiversTitle
+{
+	display: none;
+}
+
+#waiverDialog #waiverList
+{
+	display: none;
+	margin-bottom: 2em;
+}
+
+#waiverDialog #errorDiv
+{
+	display: none;
+	text-align: center;
+	color: red;
+	font-size: 1.2em;
+	padding-bottom: 1em;
+}
+
+#waiverDialog #waiverCreate
+{
+	display: none;
+	margin: 1em 15% 0 0;
+}
+
+#waiverDialog #waiverClose
+{
+	float: right;
+	margin-right: 3em;
+}
+
+.ui-icon-empty
+{
+	background-position: 100px 100px;/*Off the image*/
+}
+
+#addSubstitute.ui-button-text-icon-primary .ui-button-text
+{
+	padding: 0em .3em 0em 1.4em;
+}
+
+#waiverYears .ui-button-text-icon-primary .ui-button-text
+{
+	padding: .2em .6em .2em 1.4em;
+}
+
+#waiverDialog .ui-button-text-icon-primary .ui-button-icon-primary
+{
+	left: .1em;
+}
+

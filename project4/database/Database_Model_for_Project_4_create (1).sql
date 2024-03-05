@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2024-03-03 01:40:22.684
+-- Last modification date: 2024-03-05 22:44:21.883
 
 -- tables
 -- Table: zeus_catalog
@@ -84,8 +84,8 @@ CREATE TABLE zeus_minor_course (
 CREATE TABLE zeus_plan (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
-    catalog_year numeric(4,0)  NOT NULL,
     user_id int  NOT NULL,
+    catalog_year numeric(4,0)  NOT NULL,
     CONSTRAINT zeus_plan_pk PRIMARY KEY (id)
 );
 
@@ -233,6 +233,10 @@ ALTER TABLE zeus_prereq ADD CONSTRAINT prereqs_course1 FOREIGN KEY prereqs_cours
 -- Reference: prereqs_course2 (table: zeus_prereq)
 ALTER TABLE zeus_prereq ADD CONSTRAINT prereqs_course2 FOREIGN KEY prereqs_course2 (prereq_id)
     REFERENCES zeus_course (id);
+
+-- Reference: zeus_plan_zeus_catalog (table: zeus_plan)
+ALTER TABLE zeus_plan ADD CONSTRAINT zeus_plan_zeus_catalog FOREIGN KEY zeus_plan_zeus_catalog (catalog_year)
+    REFERENCES zeus_catalog (year);
 
 -- End of file.
 
