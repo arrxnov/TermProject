@@ -166,6 +166,135 @@ CREATE TABLE zeus_planned_course (
 INSERT INTO zeus_user
     (username, phash, name, gpa, major_gpa)
 VALUES
-    ('loganmiller216','<hash go here>','Logan Miller', '3.55','3.60'),
-    ('jgrady','<hash go here>','Jacob Grady', '3.75','3.50'),
-    ('kaidelsing','<hash go here>','Kai Delsing', '3.50','3.65');
+    ('loganmiller216','000000000000000000000000000000000000000000000000000000000000','Logan Miller', '3.55','3.60'),
+    ('jgrady','000000000000000000000000000000000000000000000000000000000000','Jacob Grady', '3.75','3.50'),
+    ('kaidendelsing','000000000000000000000000000000000000000000000000000000000000','Kai Delsing', '3.50','3.65');
+
+INSERT INTO zeus_catalog
+    (year)
+VALUES
+    (2021),
+    (2022),
+    (2023);
+
+INSERT INTO zeus_major
+    (name, catalog_year)
+VALUES
+    ('Computer Science', 2021),
+    ('Cyber Operations', 2021),
+    ('Computer Engineering', 2021),
+    ('Math', 2021),
+    ('Bible', 2021);
+
+INSERT INTO zeus_minor
+    (name, catalog_year)
+VALUES
+    ('Computer Science', 2021),
+    ('Cyber Operations', 2021),
+    ('Computer Engineering', 2021),
+    ('Math', 2021),
+    ('Bible', 2021),
+    ('Creative Writing', 2021);
+
+INSERT INTO zeus_concentration
+    (name, major_id)
+VALUES
+    ('Cyber Operations', 1),
+    ('Graphic Design', 1),
+    ('Hardware', 1),
+    ('Video Game Engineering', 1);
+
+-- Populate with Python script
+INSERT INTO zeus_course
+    (name, credits, description)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+-- Populate with Python script from plan json
+INSERT INTO zeus_catalog_course
+    (catalog_year, course_id)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+-- Leave empty
+-- INSERT INTO zeus_prereq
+--     (course_id, prereq_id)
+-- VALUES
+--     ('','','',),
+--     ('','','',),
+--     ('','','',);
+
+-- Populate with Python script from requirements json
+INSERT INTO zeus_gened
+    (catalog_year, course_id, type)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+-- Populate with Python script from requirements json
+INSERT INTO zeus_major_course
+    (major_id, course_id, type)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+-- Populate with Python script from requirements json
+INSERT INTO zeus_minor_course
+    (minor_id, course_id, type)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+-- Populate with Python script from requirements json
+INSERT INTO zeus_concentration_course
+    (concentration_id, course_id, type)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+INSERT INTO zeus_plan
+    (name, user_id, catalog_year)
+VALUES
+    ('CS-CY Double Major',1,2021),
+    ('Too Late to Change Majors',1,2023)
+    ('My Cyber Ops Plan',2,2021),
+    ('Default Plan',3,2021);
+
+INSERT INTO zeus_planned_major
+    (major_id, plan_id)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+INSERT INTO zeus_planned_minor
+    (minor_id, plan_id)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+INSERT INTO zeus_planned_concentration
+    (concentration_id, plan_id)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+INSERT INTO zeus_planned_course
+    (plan_id, course_id, year, term)
+VALUES
+    ('','','',),
+    ('','','',),
+    ('','','',);
+
+-- https://ape.cedarville.edu/reply.php?action=getPlan&plan=14259
+-- https://ape.cedarville.edu/reply.php?action=getSessionPlan
