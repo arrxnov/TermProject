@@ -1,6 +1,23 @@
 -- Creation Order: user, catalog, major, minor, concentration, course, catalog_course, prereq, gened, major_course, minor_course, concentration_course, plan, planned_major, planned_minor, planned_concentration, planned_course
-
+-- Destruction Order needs to be opposite
+DROP TABLE IF EXISTS zeus_planned_course;
+DROP TABLE IF EXISTS zeus_planned_concentration;
+DROP TABLE IF EXISTS zeus_planned_minor;
+DROP TABLE IF EXISTS zeus_planned_major;
+DROP TABLE IF EXISTS zeus_plan;
+DROP TABLE IF EXISTS zeus_concentration_course;
+DROP TABLE IF EXISTS zeus_minor_course;
+DROP TABLE IF EXISTS zeus_major_course;
+DROP TABLE IF EXISTS zeus_gened;
+DROP TABLE IF EXISTS zeus_prereq;
+DROP TABLE IF EXISTS zeus_catalog_course;
+DROP TABLE IF EXISTS zeus_course;
+DROP TABLE IF EXISTS zeus_concentration;
+DROP TABLE IF EXISTS zeus_minor;
+DROP TABLE IF EXISTS zeus_major;
+DROP TABLE IF EXISTS zeus_catalog;
 DROP TABLE IF EXISTS zeus_user;
+
 CREATE TABLE zeus_user (
     id int  NOT NULL AUTO_INCREMENT,
     username varchar(32)  NOT NULL,
@@ -11,13 +28,11 @@ CREATE TABLE zeus_user (
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS zeus_catalog;
 CREATE TABLE zeus_catalog (
     year numeric(4,0)  NOT NULL,
     PRIMARY KEY (year)
 );
 
-DROP TABLE IF EXISTS zeus_major;
 CREATE TABLE zeus_major (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
@@ -26,7 +41,6 @@ CREATE TABLE zeus_major (
     FOREIGN KEY (catalog_year) REFERENCES zeus_catalog (year)
 );
 
-DROP TABLE IF EXISTS zeus_minor;
 CREATE TABLE zeus_minor (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
@@ -35,7 +49,6 @@ CREATE TABLE zeus_minor (
     FOREIGN KEY (catalog_year) REFERENCES zeus_catalog (year)
 );
 
-DROP TABLE IF EXISTS zeus_concentration;
 CREATE TABLE zeus_concentration (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
@@ -44,7 +57,6 @@ CREATE TABLE zeus_concentration (
     FOREIGN KEY (major_id) REFERENCES zeus_major (id)
 );
 
-DROP TABLE IF EXISTS zeus_course;
 CREATE TABLE zeus_course (
     id varchar(9)  NOT NULL,
     name varchar(32)  NOT NULL,
@@ -53,7 +65,6 @@ CREATE TABLE zeus_course (
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS zeus_catalog_course;
 CREATE TABLE zeus_catalog_course (
     catalog_year numeric(4,0)  NOT NULL,
     course_id varchar(9)  NOT NULL,
@@ -62,7 +73,6 @@ CREATE TABLE zeus_catalog_course (
     FOREIGN KEY (course_id) REFERENCES zeus_course (id)
 );
 
-DROP TABLE IF EXISTS zeus_prereq;
 CREATE TABLE zeus_prereq (
     course_id varchar(9)  NOT NULL,
     prereq_id varchar(9)  NOT NULL,
@@ -71,7 +81,6 @@ CREATE TABLE zeus_prereq (
     FOREIGN KEY (prereq_id) REFERENCES zeus_course (id)
 );
 
-DROP TABLE IF EXISTS zeus_gened;
 CREATE TABLE zeus_gened (
     catalog_year numeric(4,0)  NOT NULL,
     course_id varchar(9)  NOT NULL,
@@ -81,7 +90,6 @@ CREATE TABLE zeus_gened (
     FOREIGN KEY (course_id) REFERENCES zeus_course (id)
 );
 
-DROP TABLE IF EXISTS zeus_major_course;
 CREATE TABLE zeus_major_course (
     major_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
@@ -91,7 +99,6 @@ CREATE TABLE zeus_major_course (
     FOREIGN KEY (major_id) REFERENCES zeus_major (id)
 );
 
-DROP TABLE IF EXISTS zeus_minor_course;
 CREATE TABLE zeus_minor_course (
     minor_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
@@ -101,7 +108,6 @@ CREATE TABLE zeus_minor_course (
     FOREIGN KEY (course_id) REFERENCES zeus_course (id)
 );
 
-DROP TABLE IF EXISTS zeus_concentration_course;
 CREATE TABLE zeus_concentration_course (
     concentration_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
@@ -111,18 +117,16 @@ CREATE TABLE zeus_concentration_course (
     FOREIGN KEY (course_id) REFERENCES zeus_course (id)
 );
 
-DROP TABLE IF EXISTS zeus_plan;
 CREATE TABLE zeus_plan (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
     user_id int  NOT NULL,
     catalog_year numeric(4,0)  NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES zeus_user (id)
-    FOREIGN KEY (catalog_year) REFERENCES zeus_catalog(year)
+    FOREIGN KEY (user_id) REFERENCES zeus_user (id),
+    FOREIGN KEY (catalog_year) REFERENCES zeus_catalog (year)
 );
 
-DROP TABLE IF EXISTS zeus_planned_major;
 CREATE TABLE zeus_planned_major (
     major_id int  NOT NULL,
     plan_id int  NOT NULL,
@@ -131,7 +135,6 @@ CREATE TABLE zeus_planned_major (
     FOREIGN KEY (plan_id) REFERENCES zeus_plan (id)
 );
 
-DROP TABLE IF EXISTS zeus_planned_minor;
 CREATE TABLE zeus_planned_minor (
     minor_id int  NOT NULL,
     plan_id int  NOT NULL,
@@ -140,7 +143,6 @@ CREATE TABLE zeus_planned_minor (
     FOREIGN KEY (plan_id) REFERENCES zeus_plan (id)
 );
 
-DROP TABLE IF EXISTS zeus_planned_concentration;
 CREATE TABLE zeus_planned_concentration (
     concentration_id int  NOT NULL,
     plan_id int  NOT NULL,
@@ -149,7 +151,6 @@ CREATE TABLE zeus_planned_concentration (
     FOREIGN KEY (plan_id) REFERENCES zeus_plan (id)
 );
 
-DROP TABLE IF EXISTS zeus_planned_course;
 CREATE TABLE zeus_planned_course (
     plan_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
@@ -162,5 +163,9 @@ CREATE TABLE zeus_planned_course (
 
 -- End of table creation
 
---INSERT INTO zeus_course VALUES ();
-
+INSERT INTO zeus_user
+    (username, phash, name, gpa, major_gpa)
+VALUES
+    ('loganmiller216','<hash go here>','Logan Miller', '3.55','3.60'),
+    ('jgrady','<hash go here>','Jacob Grady', '3.75','3.50'),
+    ('kaidelsing','<hash go here>','Kai Delsing', '3.50','3.65');
