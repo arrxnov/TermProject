@@ -264,9 +264,9 @@ INSERT INTO zeus_plan
     (name, user_id, catalog_year)
 VALUES
     ('CS-CY Double Major',1,2021),
-    ('Too Late to Change Majors',1,2023)
     ('My Cyber Ops Plan',2,2021),
-    ('Default Plan',3,2021);
+    ('Default Plan',3,2021),
+    ('Too Late to Change Majors',1,2023);
 
 INSERT INTO zeus_planned_major
     (major_id, plan_id)
@@ -275,21 +275,24 @@ VALUES
     (2, 1),
     (2, 2),
     (1, 3),
-    (2, 3);
+    (2, 3),
+    (4, 4);
 
 INSERT INTO zeus_planned_minor
     (minor_id, plan_id)
 VALUES
-    ('','','',),
-    ('','','',),
-    ('','','',);
+    (5, 1),
+    (5, 2),
+    (5, 3),
+    (5, 4),
+    (1, 2),
+    (6, 4);
 
 INSERT INTO zeus_planned_concentration
     (concentration_id, plan_id)
 VALUES
-    ('','','',),
-    ('','','',),
-    ('','','',);
+    (1,1),
+    (1,3);
 
 -- Populate with Python script from plan json
 INSERT INTO zeus_planned_course
