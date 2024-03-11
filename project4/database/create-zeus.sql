@@ -271,9 +271,11 @@ VALUES
 INSERT INTO zeus_planned_major
     (major_id, plan_id)
 VALUES
-    ('','','',),
-    ('','','',),
-    ('','','',);
+    (1, 1),
+    (2, 1),
+    (2, 2),
+    (1, 3),
+    (2, 3);
 
 INSERT INTO zeus_planned_minor
     (minor_id, plan_id)
