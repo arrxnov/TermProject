@@ -289,6 +289,7 @@ VALUES
     ('','','',),
     ('','','',);
 
+-- Populate with Python script from plan json
 INSERT INTO zeus_planned_course
     (plan_id, course_id, year, term)
 VALUES
