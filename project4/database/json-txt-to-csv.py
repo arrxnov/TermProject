@@ -72,4 +72,22 @@ with open('planned-course.txt', 'a') as f:
         print('    ', output, ',', sep='', file=f)
         
 # Load data from requirements here (need 3: comp sci, cyber ops, math)
-
+# Get a distinct reqs json for each major: just need core, electives, cognates, geneds
+with open('cs-cy-reqs.json', 'r') as f:
+    reqs_dict = json.load(f)
+    
+with open('reqs.txt', 'w') as f:
+    for c in reqs_dict['data']['tree']:
+        if "Computer Science Core" in c['name']: # if core
+            for cc in c['children']:
+                output = (1, cc['name'], 'core')
+                print('    ', output, ',', sep='', file=f)
+                
+        # if core
+        
+        # if cognates
+        
+        # if geneds
+        
+        # repeat for each minus geneds
+            
