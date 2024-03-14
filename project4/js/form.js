@@ -14,7 +14,7 @@
  */
 
 jQuery(document).ready(function () {
-
+    let global_noncollision = "1";
     let years = {};
     let courseNames = {};
     doThings();
@@ -114,22 +114,22 @@ jQuery(document).ready(function () {
         for (let course in reqs.categories.Cognates.courses) {
             course = reqs.categories.Cognates.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("cognates").innerHTML += "<p class=\"course\" draggable=\"true\"> <span class=\"course-id\">" + course + "</span> " + courseName + "</p>";
+            document.getElementById("cognates").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
         for (let course in reqs.categories.Electives.courses) {
             course = reqs.categories.Electives.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("electives").innerHTML += "<p class=\"course\" draggable=\"true\"> <span class=\"course-id\">" + course + "</span> " + courseName + "</p>";
+            document.getElementById("electives").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
         for (let course in reqs.categories.Core.courses) {
             course = reqs.categories.Core.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("core").innerHTML += "<p class=\"course\" draggable=\"true\"> <span class=\"course-id\">" + course + "</span> " + courseName + "</p>";
+            document.getElementById("core").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
         for (let course in reqs.categories.GenEds.courses) {
             course = reqs.categories.GenEds.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("geneds").innerHTML += "<p class=\"course\" draggable=\"true\"> <span class=\"course-id\">" + course + "</span> " + courseName + "</p>";
+            document.getElementById("geneds").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
     }
 
@@ -196,6 +196,7 @@ jQuery(document).ready(function () {
                 pastSemester = false;
 
             }
+            else currentSemester = false;
 
             if (pastSemester) {
                 semester.classList.remove("semester");
@@ -214,9 +215,9 @@ jQuery(document).ready(function () {
                 credits += getCourseCredits(course["id"]);
                 let c_str = getCourseCredits(course["id"]).toPrecision(2);
                 if (!pastSemester && !currentSemester) {
-                    semester.innerHTML += "<p class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler\"> <span class=\"course-id\">" + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
+                    semester.innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler(event)\"> <span class=\"course-id\">` + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
                 } else {
-                    semester.innerHTML += "<p class=\"course\"> <span class=\"course-id\">" + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";   
+                    semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\">` + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";   
                 }
             }
 
@@ -275,14 +276,21 @@ var setAtlantis = function() {
 }
 
 function dragStartHandler(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
     ev.dataTransfer.dropEffect = "move";
 }
 
+function dragStartHandler2(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.dropEffect = "copy";
+}
+
 function dropHandler(ev) {
-    const data = ev.dataTransfer.getData("text/html");
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
 }
 
 function dragOverHandler(ev) {
-    ev.dataTransfer.dropEffect = "move";
+    ev.preventDefault();
 }
