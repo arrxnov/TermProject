@@ -19,8 +19,8 @@ jQuery(document).ready(function () {
     let courseNames = {};
 
     var dropdownOptions = {
-        val1 : 'text1',
-        val2 : 'text2'
+        themes : 'Themes',
+        plans : 'Plans'
     };
 
     initPage();
@@ -50,10 +50,10 @@ jQuery(document).ready(function () {
         window.open("", "_blank");
     });
 
-    let mySelect = jQuery('#optionsBtn');
+    let mySelect = jQuery('#optionsDropdown');
     jQuery.each(dropdownOptions, function(val, text) {
         mySelect.append(
-            jQuery('<option></option>').val(val).html(text)
+            jQuery('<div><p></p></div>').val(val).html(text) /* fix this later */
         );
     });
 
