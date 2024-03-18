@@ -17,7 +17,8 @@ jQuery(document).ready(function () {
     let global_noncollision = "1";
     let years = {};
     let courseNames = {};
-    doThings();
+
+    initPage();
     populateSearchTable();
 
     jQuery("#jgradyBtn").click(function () {
@@ -55,7 +56,7 @@ jQuery(document).ready(function () {
         }, 400);
     });
 
-    async function doThings() {
+    async function initPage() {
         let response = await getCombined();
 
         for (let course in response.catalog.courses) {
@@ -177,22 +178,7 @@ jQuery(document).ready(function () {
             if (t == planJSON["currTerm"] && y == planJSON["currYear"]) {
                 semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
                 currentSemester = true;
-                semester.classList.add("semester-current");
-                // jQuery("#semester" + i).each(function () {
-                //     let elem = jQuery(this);
-                //     setInterval(function () {
-                //         if (elem.css("outline-style") == "dotted") {
-                //             elem.css("outline-style", "solid");
-                //         } else {
-                //             elem.css("outline-style", "dotted");
-                //         }
-                //         elem.css({
-                //             "transition": "all .4s ease-in-out"
-                //         });
-                        
-                //     }, 400);
-                // });
-            
+                semester.classList.add("semester-current");            
                 pastSemester = false;
 
             }

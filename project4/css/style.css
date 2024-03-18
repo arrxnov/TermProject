@@ -19,7 +19,6 @@
     --transparency-disabled: rgba(0, 0, 0, 0.25);
     --transparency-dark: rgba(0, 0, 0, 0.6);
     --transparency-light: rgba(0, 0, 0, 0.35);
-    /* --transparency-ddark: rgba(0, 0, 0, 0.74);*/ /*0.74=(1-0.35)*0.6+0.35*/
 }
 
 html {
@@ -59,7 +58,6 @@ p {
     border-radius: 4px;
     background-color: var(--transparency-light);
     box-shadow: 1px 1px 5px;
-    /* border: solid blue 2px; */
 }
 
 .labels {
@@ -274,7 +272,6 @@ main {
 }
 
 #resizer {
-    /* grid-area: resize; */
     resize: both;
     overflow: auto;
     height: 5px;
@@ -357,7 +354,6 @@ main {
 }
 
 .semester {
-    /* transition: all .4s ease-in-out; */
     flex: 1;
     flex-grow: 1;
     margin: 4px;
@@ -383,11 +379,6 @@ main {
     color: var(--text-color);
 }
 
-/* .semester:hover {
-    transition: all .4s ease-in-out;
-    background-color: var(--transparency-light);
-} */
-
 .semester p {
     border-radius: 4px;
 }
@@ -409,8 +400,8 @@ main {
     flex-grow: 1;
 }
 /* Main ------------------------------------------------------------------------ */
-/* Login Form ------------------------------------------------------------------ */
 
+/* Login Form ------------------------------------------------------------------ */
 #login-form {
     display: flex;
     flex-flow: row wrap;
@@ -441,3 +432,4 @@ main {
     flex: auto;
     flex-grow: 0;
 }
+/* Login Form ------------------------------------------------------------------ */
