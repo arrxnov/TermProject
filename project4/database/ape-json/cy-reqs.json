@@ -1,0 +1,1338 @@
+{
+    "type": "reqtree",
+    "data": {
+      "tree": [
+        {
+          "name": "Cyber Operations Core",
+          "complete": false,
+          "type": "group",
+          "credits": "0",
+          "required": 20,
+          "numcomplete": 13,
+          "numcreditscomplete": 38,
+          "creditsneeded": 0,
+          "hidden": false,
+          "needed": true,
+          "status": "no",
+          "children": [
+            {
+              "name": "CS-1210",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CS-1220",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CS-2210",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CS-3310",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CS-3410",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CY-1000",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CY-2310",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": true,
+              "status": "no",
+              "sub": ""
+            },
+            {
+              "name": "CY-3320",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CY-3420",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CY-4310",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": true,
+              "status": "no",
+              "sub": ""
+            },
+            {
+              "name": "CY-4330",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CY-4810",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": true,
+              "status": "no",
+              "sub": ""
+            },
+            {
+              "name": "CY-4820",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": true,
+              "status": "no",
+              "sub": ""
+            },
+            {
+              "name": "EGCP-1010",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "EGCP-2120",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "EGCP-3210",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "EGCP-4310",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": true,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "EGGN-3110",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": true,
+              "status": "no",
+              "sub": ""
+            },
+            {
+              "name": "EGGN-4010",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": true,
+              "status": "no",
+              "sub": ""
+            },
+            {
+              "name": "ITM-3450",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": true,
+              "status": "no",
+              "sub": ""
+            }
+          ]
+        },
+        {
+          "name": "Cyber Electives",
+          "complete": true,
+          "type": "group",
+          "credits": "0",
+          "required": 2,
+          "numcomplete": 2,
+          "numcreditscomplete": 6,
+          "creditsneeded": 0,
+          "hidden": false,
+          "needed": true,
+          "status": "yes",
+          "children": [
+            {
+              "name": "CS-3220",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": false,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "CS-3510",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": false,
+              "status": "ino",
+              "sub": ""
+            },
+            {
+              "name": "CS-3610",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": false,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "EGCP-3010",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": false,
+              "status": "ino",
+              "sub": ""
+            },
+            {
+              "name": "EGCP-4210",
+              "complete": false,
+              "present": false,
+              "type": "course",
+              "needed": false,
+              "status": "ino",
+              "sub": ""
+            }
+          ]
+        },
+        {
+          "name": "Required Cognates",
+          "complete": true,
+          "type": "group",
+          "credits": "0",
+          "required": 4,
+          "numcomplete": 4,
+          "numcreditscomplete": 17,
+          "creditsneeded": 0,
+          "hidden": false,
+          "needed": true,
+          "status": "yes",
+          "children": [
+            {
+              "name": "MATH-1710",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": false,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "MATH-1720",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": false,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "MATH-2520",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": false,
+              "status": "yes",
+              "sub": ""
+            },
+            {
+              "name": "PHYS-2110",
+              "complete": true,
+              "present": true,
+              "type": "course",
+              "needed": false,
+              "status": "yes",
+              "sub": ""
+            }
+          ]
+        },
+        {
+          "name": "GenEds (BS)",
+          "complete": false,
+          "type": "group",
+          "credits": "0",
+          "required": 6,
+          "numcomplete": 4,
+          "numcreditscomplete": 54.5,
+          "creditsneeded": 0,
+          "hidden": false,
+          "needed": true,
+          "status": "no",
+          "children": [
+            {
+              "name": "Bible Minor",
+              "complete": false,
+              "type": "group",
+              "credits": "0",
+              "required": 5,
+              "numcomplete": 4,
+              "numcreditscomplete": 12,
+              "creditsneeded": 0,
+              "hidden": false,
+              "needed": true,
+              "status": "no",
+              "children": [
+                {
+                  "name": "BTGE-1725",
+                  "complete": true,
+                  "present": true,
+                  "type": "course",
+                  "needed": true,
+                  "status": "yes",
+                  "sub": ""
+                },
+                {
+                  "name": "BTGE-2730",
+                  "complete": true,
+                  "present": true,
+                  "type": "course",
+                  "needed": true,
+                  "status": "yes",
+                  "sub": ""
+                },
+                {
+                  "name": "BTGE-2740",
+                  "complete": true,
+                  "present": true,
+                  "type": "course",
+                  "needed": true,
+                  "status": "yes",
+                  "sub": ""
+                },
+                {
+                  "name": "BTGE-3755",
+                  "complete": true,
+                  "present": true,
+                  "type": "course",
+                  "needed": true,
+                  "status": "yes",
+                  "sub": ""
+                },
+                {
+                  "name": "BTGE-3765",
+                  "complete": false,
+                  "present": false,
+                  "type": "course",
+                  "needed": true,
+                  "status": "no",
+                  "sub": ""
+                }
+              ]
+            },
+            {
+              "name": "Communication",
+              "complete": true,
+              "type": "group",
+              "credits": "6",
+              "required": 2,
+              "numcomplete": 2,
+              "numcreditscomplete": 6,
+              "creditsneeded": 6,
+              "hidden": false,
+              "needed": true,
+              "status": "yes",
+              "children": [
+                {
+                  "name": "ENG-1400",
+                  "complete": true,
+                  "present": true,
+                  "type": "course",
+                  "needed": false,
+                  "status": "yes",
+                  "sub": ""
+                },
+                {
+                  "name": "",
+                  "complete": true,
+                  "type": "group",
+                  "credits": null,
+                  "required": 1,
+                  "numcomplete": 1,
+                  "numcreditscomplete": 3,
+                  "creditsneeded": 0,
+                  "hidden": false,
+                  "needed": false,
+                  "status": "yes",
+                  "children": [
+                    {
+                      "name": "COM-1100",
+                      "complete": true,
+                      "present": true,
+                      "type": "course",
+                      "needed": false,
+                      "status": "yes",
+                      "sub": ""
+                    },
+                    {
+                      "name": "COM-1120",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Humanities",
+              "complete": false,
+              "type": "group",
+              "credits": "9",
+              "required": 3,
+              "numcomplete": 2,
+              "numcreditscomplete": 6,
+              "creditsneeded": 9,
+              "hidden": false,
+              "needed": true,
+              "status": "no",
+              "children": [
+                {
+                  "name": "",
+                  "complete": true,
+                  "type": "group",
+                  "credits": "0",
+                  "required": 1,
+                  "numcomplete": 1,
+                  "numcreditscomplete": 3,
+                  "creditsneeded": 0,
+                  "hidden": false,
+                  "needed": true,
+                  "status": "yes",
+                  "children": [
+                    {
+                      "name": "HUM-1400",
+                      "complete": true,
+                      "present": true,
+                      "type": "course",
+                      "needed": false,
+                      "status": "yes",
+                      "sub": ""
+                    },
+                    {
+                      "name": "Honors Program Only",
+                      "complete": false,
+                      "type": "group",
+                      "credits": "0",
+                      "required": 1,
+                      "numcomplete": 0,
+                      "numcreditscomplete": 0,
+                      "creditsneeded": 0,
+                      "hidden": false,
+                      "needed": false,
+                      "status": "ino",
+                      "children": [
+                        {
+                          "name": "HON-1010",
+                          "complete": false,
+                          "present": false,
+                          "type": "course",
+                          "needed": false,
+                          "status": "ino",
+                          "sub": ""
+                        },
+                        {
+                          "name": "HON-1020",
+                          "complete": false,
+                          "present": false,
+                          "type": "course",
+                          "needed": false,
+                          "status": "ino",
+                          "sub": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "LIT-2000+ (LIT-2340)",
+                  "complete": true,
+                  "type": "wildcard",
+                  "prefix": "LIT",
+                  "min": 2000,
+                  "needed": true,
+                  "status": "yes",
+                  "sub": ""
+                },
+                {
+                  "name": "Humanities elective",
+                  "complete": false,
+                  "type": "group",
+                  "credits": "3",
+                  "required": 0,
+                  "numcomplete": 0,
+                  "numcreditscomplete": 0,
+                  "creditsneeded": 3,
+                  "hidden": false,
+                  "needed": true,
+                  "status": "no",
+                  "children": [
+                    {
+                      "name": "ART-1100",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "ANTH-1800",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "BTPA-2200",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "BTPA-2250",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "BTPA-2260",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "COM-2300",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "COM-2140",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "COM-4110",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "EDUC-2400",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "EDUC-3100",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "EGGN-3110",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "FILM-2350",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "HLMU-2310",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "HUM-2430",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "NSG-3050",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "PYCH-3720",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "THTR-1410",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "LIT-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "LIT",
+                      "min": 1000,
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "FREN-2000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "FREN",
+                      "min": 2000,
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GER-2000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "GER",
+                      "min": 2000,
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "SPAN-2000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "SPAN",
+                      "min": 2000,
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "SPAN-2000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "SPAN",
+                      "min": 2000,
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "HON-1010",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    },
+                    {
+                      "name": "HON-1020",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": true,
+                      "status": "no",
+                      "sub": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Physical Education",
+              "complete": true,
+              "type": "group",
+              "credits": "2",
+              "required": 1,
+              "numcomplete": 1,
+              "numcreditscomplete": 2,
+              "creditsneeded": 2,
+              "hidden": false,
+              "needed": true,
+              "status": "yes",
+              "children": [
+                {
+                  "name": "PEF-1990",
+                  "complete": true,
+                  "present": true,
+                  "type": "course",
+                  "needed": false,
+                  "status": "yes",
+                  "sub": ""
+                }
+              ]
+            },
+            {
+              "name": "Science and Math",
+              "complete": true,
+              "type": "group",
+              "credits": null,
+              "required": 4,
+              "numcomplete": 4,
+              "numcreditscomplete": 19.5,
+              "creditsneeded": 0,
+              "hidden": false,
+              "needed": true,
+              "status": "yes",
+              "children": [
+                {
+                  "name": "Biological science",
+                  "complete": true,
+                  "type": "group",
+                  "credits": "3.5",
+                  "required": 1,
+                  "numcomplete": 1,
+                  "numcreditscomplete": 3.5,
+                  "creditsneeded": 3,
+                  "hidden": false,
+                  "needed": false,
+                  "status": "yes",
+                  "children": [
+                    {
+                      "name": "BIO-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "BIO",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GBIO-1000+ (GBIO-1000)",
+                      "complete": true,
+                      "type": "wildcard",
+                      "prefix": "GBIO",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "yes",
+                      "sub": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "Physical science",
+                  "complete": true,
+                  "type": "group",
+                  "credits": "3.5",
+                  "required": 1,
+                  "numcomplete": 1,
+                  "numcreditscomplete": 4,
+                  "creditsneeded": 3,
+                  "hidden": false,
+                  "needed": false,
+                  "status": "yes",
+                  "children": [
+                    {
+                      "name": "GSCI-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "GSCI",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "ESCI-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "ESCI",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "CHEM-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "CHEM",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "PHYS-1000+ (PHYS-2110)",
+                      "complete": true,
+                      "type": "wildcard",
+                      "prefix": "PHYS",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "yes",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GEOL-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "GEOL",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "Quantitative Elective",
+                  "complete": true,
+                  "type": "group",
+                  "credits": "3",
+                  "required": 0,
+                  "numcomplete": 1,
+                  "numcreditscomplete": 4,
+                  "creditsneeded": 3,
+                  "hidden": false,
+                  "needed": false,
+                  "status": "yes",
+                  "children": [
+                    {
+                      "name": "BUS-2110",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "BUS-2120",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "EDUC-2800",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GMTH-1010",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GMTH-1020",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GMTH-1030",
+                      "complete": true,
+                      "present": true,
+                      "type": "course",
+                      "needed": false,
+                      "status": "yes",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GMTH-1040",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GSS-3630",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "SWK-3610",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "PYCH-2610",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "MATH-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "MATH",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "BS Electives",
+                  "complete": true,
+                  "type": "group",
+                  "credits": "6",
+                  "required": 0,
+                  "numcomplete": 2,
+                  "numcreditscomplete": 8,
+                  "creditsneeded": 6,
+                  "hidden": false,
+                  "needed": false,
+                  "status": "yes",
+                  "children": [
+                    {
+                      "name": "EGCP-1010",
+                      "complete": true,
+                      "present": true,
+                      "type": "course",
+                      "needed": false,
+                      "status": "yes",
+                      "sub": ""
+                    },
+                    {
+                      "name": "MIS-2300",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "BIO-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "BIO",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "CHEM-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "CHEM",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "ESCI-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "ESCI",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GBIO-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "GBIO",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GSCI-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "GSCI",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GMTH-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "GMTH",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "MATH-1000+ (MATH-1710)",
+                      "complete": true,
+                      "type": "wildcard",
+                      "prefix": "MATH",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "yes",
+                      "sub": ""
+                    },
+                    {
+                      "name": "PHYS-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "PHYS",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Social Sciences and History",
+              "complete": true,
+              "type": "group",
+              "credits": "9",
+              "required": 3,
+              "numcomplete": 3,
+              "numcreditscomplete": 9,
+              "creditsneeded": 9,
+              "hidden": false,
+              "needed": true,
+              "status": "yes",
+              "children": [
+                {
+                  "name": "GSS-1100",
+                  "complete": true,
+                  "present": true,
+                  "type": "course",
+                  "needed": false,
+                  "status": "yes",
+                  "sub": ""
+                },
+                {
+                  "name": "",
+                  "complete": true,
+                  "type": "group",
+                  "credits": null,
+                  "required": 1,
+                  "numcomplete": 1,
+                  "numcreditscomplete": 3,
+                  "creditsneeded": 0,
+                  "hidden": false,
+                  "needed": false,
+                  "status": "yes",
+                  "children": [
+                    {
+                      "name": "HIST-1000+ (HIST-1110)",
+                      "complete": true,
+                      "type": "wildcard",
+                      "prefix": "HIST",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "yes",
+                      "sub": ""
+                    },
+                    {
+                      "name": "Honors Program Only",
+                      "complete": false,
+                      "type": "group",
+                      "credits": "0",
+                      "required": 1,
+                      "numcomplete": 0,
+                      "numcreditscomplete": 0,
+                      "creditsneeded": 0,
+                      "hidden": false,
+                      "needed": false,
+                      "status": "ino",
+                      "children": [
+                        {
+                          "name": "HON-1010",
+                          "complete": false,
+                          "present": false,
+                          "type": "course",
+                          "needed": false,
+                          "status": "ino",
+                          "sub": ""
+                        },
+                        {
+                          "name": "HON-1020",
+                          "complete": false,
+                          "present": false,
+                          "type": "course",
+                          "needed": false,
+                          "status": "ino",
+                          "sub": ""
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Social Science elective",
+                  "complete": true,
+                  "type": "group",
+                  "credits": "3",
+                  "required": 1,
+                  "numcomplete": 1,
+                  "numcreditscomplete": 3,
+                  "creditsneeded": 3,
+                  "hidden": false,
+                  "needed": false,
+                  "status": "yes",
+                  "children": [
+                    {
+                      "name": "PYCH-1600",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "ECON-2110",
+                      "complete": false,
+                      "present": false,
+                      "type": "course",
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "HIST-1000+ (HIST-4500)",
+                      "complete": true,
+                      "type": "wildcard",
+                      "prefix": "HIST",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "yes",
+                      "sub": ""
+                    },
+                    {
+                      "name": "ANTH-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "ANTH",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "CRJU-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "CRJU",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "GEO-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "GEO",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "INTL-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "INTL",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "POLS-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "POLS",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "PUAD-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "PUAD",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "SOC-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "SOC",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    },
+                    {
+                      "name": "SWK-1000+",
+                      "complete": false,
+                      "type": "wildcard",
+                      "prefix": "SWK",
+                      "min": 1000,
+                      "needed": false,
+                      "status": "ino",
+                      "sub": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "planwarns": [],
+      "planerrors": [],
+      "majorGPA": 4
+    }
+  }
