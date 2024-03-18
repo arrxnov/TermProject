@@ -18,6 +18,11 @@ jQuery(document).ready(function () {
     let years = {};
     let courseNames = {};
 
+    var dropdownOptions = {
+        val1 : 'text1',
+        val2 : 'text2'
+    };
+
     initPage();
     populateSearchTable();
 
@@ -43,6 +48,13 @@ jQuery(document).ready(function () {
 
     jQuery("#minerBtn").click(function () {
         window.open("", "_blank");
+    });
+
+    let mySelect = jQuery('#optionsBtn');
+    jQuery.each(dropdownOptions, function(val, text) {
+        mySelect.append(
+            jQuery('<option></option>').val(val).html(text)
+        );
     });
 
     jQuery(".blink").each(function () {
