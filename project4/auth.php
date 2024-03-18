@@ -1,10 +1,10 @@
 <?php
    echo "<html>";
-   echo hash("sha256", "password");
+   echo $_REQUEST["user"];
    echo "<br>";
-   echo hash("sha256", "password");
+   echo $_REQUEST["pass"];
    echo "<br>"; 
-   echo hash("sha256", "password");
+   echo hash("sha256", $_REQUEST["pass"]);
    echo "<br>";
    echo "</html>";
 ?>
