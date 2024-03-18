@@ -1,0 +1,33 @@
+<!DOCTYPE html >
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>APE</title>
+        <link rel="icon" href="images/favicon/favicon-96x96.png">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/datatables.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script src="js/datatables.js"></script>
+        <!-- <script src="js/DataTables-2.0.0/js/dataTables.bootstrap5.js"></script> -->
+        <script src="js/form.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <img src="images/ape-no-bg.png" id="icon" alt="image of an ape reading">
+            <h1>APE</h1>
+        </header>
+        <div id="login-form">
+            <div class="spacer"></div>
+            <form action="auth.php" method="post">
+                <input type="text" placeholder="Username" name="user" class="semester" required>
+                <input type="text" placeholder="Password" name="pass" class="semester" required>
+                <button type="submit" class="btn btn-clickable">Login</button>
+            </form>
+            <div class="spacer"></div>
+        </div>
+    </body>
+</html>
