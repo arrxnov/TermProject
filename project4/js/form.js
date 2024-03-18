@@ -19,8 +19,8 @@ jQuery(document).ready(function () {
     let courseNames = {};
 
     var dropdownOptions = {
-        themes : 'Themes',
-        plans : 'Plans'
+        plans: {text: 'Plans', id: 'planOption'},
+        themes: {text: 'Themes', id: 'themeOption'}
     };
 
     initPage();
@@ -51,10 +51,18 @@ jQuery(document).ready(function () {
     });
 
     let mySelect = jQuery('#optionsDropdown');
-    jQuery.each(dropdownOptions, function(val, text) {
+    jQuery.each(dropdownOptions, function(val, attrs) {
         mySelect.append(
-            jQuery('<div><p></p></div>').val(val).html(text) /* fix this later */
+            jQuery("<div><p></p></div>").val(val).html(attrs.text).attr("id", attrs.id)
         );
+    });
+
+    jQuery("#" + "planOption").click(function () {
+        alert("plans");
+    });
+
+    jQuery("#" + "themeOption").click(function () {
+        alert("themes");
     });
 
     jQuery(".blink").each(function () {

@@ -4,7 +4,7 @@
     --btn-inferno: rgb(0, 0, 0);
     --btn-atlantis: rgb(3, 14, 58);
     --btn-avenue: rgb(24, 40, 54);
-    --btn-theme: var(--btn-avenue);
+    --btn-theme: var(--btn-mint);
 
     --bg-mint: url("../images/mint.jpg");
     --bg-fuscia: url("../images/fuscia.jpg");
@@ -12,7 +12,7 @@
     --bg-atlantis: url("../images/atlantis.jpg");
     --bg-sponsored: url("../images/china.gif");
     --bg-avenue: url("../images/creston-from-carson-ave.jpg");
-    --bg-theme: var(--bg-avenue);
+    --bg-theme: var(--bg-mint);
     
     --text-color: rgb(230, 230, 230);
     --text-color-dark: black;
@@ -192,9 +192,9 @@ p {
     display: block;
 }
 
-.dropdown:hover .dropdownBtn {
+/* .dropdown:hover .dropdownBtn {
     background-color: var(--transparency-dark);
-}
+} */
 
 .course {
     margin: 4px;
