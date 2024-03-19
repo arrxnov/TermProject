@@ -5,8 +5,6 @@ List of files included in submission:
     - favicon/favicon-96x96.png
     - ape-no-bg.png
     - mint.jpg
-    - fuscia.jpg
-    - inferno.jpg
     - atlantis.jpg
     - creston-from-carson-ave.jpg
     - china.gif
