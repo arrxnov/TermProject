@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS zeus_planned_course;
 DROP TABLE IF EXISTS zeus_planned_concentration;
 DROP TABLE IF EXISTS zeus_planned_minor;
 DROP TABLE IF EXISTS zeus_planned_major;
+ALTER TABLE IF EXISTS zeus_user DROP CONSTRAINT IF EXISTS circular;
 DROP TABLE IF EXISTS zeus_plan;
 DROP TABLE IF EXISTS zeus_concentration_course;
 DROP TABLE IF EXISTS zeus_minor_course;
@@ -25,6 +26,7 @@ CREATE TABLE zeus_user (
     name varchar(64)  NOT NULL,
     gpa numeric(3,2)  NOT NULL,
     major_gpa numeric(3,2)  NOT NULL,
+    default_plan_id int  NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -161,10 +163,12 @@ CREATE TABLE zeus_planned_course (
     FOREIGN KEY (plan_id) REFERENCES zeus_plan (id)
 );
 
+ALTER TABLE zeus_user ADD CONSTRAINT circular FOREIGN KEY (default_plan_id) REFERENCES zeus_plan (id);
+
 -- End of table creation
 
 INSERT INTO zeus_user
-    (username, phash, name, gpa, major_gpa)
+    (username, phash, name, gpa, major_gpa, default_plan_id)
 VALUES
     ('loganmiller216','000000000000000000000000000000000000000000000000000000000000','Logan Miller', '3.55','3.60'),
     ('jgrady','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Jacob Grady', '3.75','3.50'),
