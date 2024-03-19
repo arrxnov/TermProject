@@ -1,0 +1,26 @@
+List of files included in submission:
+ - css/
+ - database/create-zeus.sql
+ - images/
+    - favicon/favicon-96x96.png
+    - ape-no-bg.png
+    - mint.jpg
+    - fuscia.jpg
+    - inferno.jpg
+    - atlantis.jpg
+    - creston-from-carson-ave.jpg
+    - china.gif
+ - js/
+ - auth.php
+ - get-json.php
+ - get-plans.php
+ - get-requirements.php
+ - index.html
+ - index.php
+ - login.html
+ - login.php
+ - logout.php
+
+Usernames and passwords:
+ - loganmiller216 : ape_password!
+ - jgrady : ape_password!
