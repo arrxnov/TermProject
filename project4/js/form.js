@@ -133,7 +133,7 @@ jQuery(document).ready(function () {
     }
 
     async function getRequirements() {
-        const response = await fetch("/~knoerr/cs3220/termProject/getRequirements.php");
+        const response = await fetch("/~grady/TermProject/project4/get-requirements.php");
         const data = await response.json();
         return data;
     }
