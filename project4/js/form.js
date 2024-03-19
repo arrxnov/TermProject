@@ -62,6 +62,10 @@ jQuery(document).ready(function () {
         window.open("", "_blank");
     });
 
+    jQuery("#logout").click(function () {
+        window.open("http://judah.cedarville.edu/~grady/TermProject/project4/logout.php");
+    });
+
     jQuery(".blink").each(function () {
         let elem = jQuery(this);
         setInterval(function () {

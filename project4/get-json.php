@@ -1,10 +1,5 @@
 <?php
-
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
 session_start();
-
-
 function sqlQuery($link, $sql, $column, $constraint) {
     $statement = $link->prepare($sql);
     $statement->execute([$constraint]);
