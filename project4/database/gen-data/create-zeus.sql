@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS zeus_user;
 CREATE TABLE zeus_user (
     id int  NOT NULL AUTO_INCREMENT,
     username varchar(32)  NOT NULL,
-    phash char(60)  NOT NULL,
+    phash char(32)  NOT NULL,
     name varchar(64)  NOT NULL,
     gpa numeric(3,2)  NOT NULL,
     major_gpa numeric(3,2)  NOT NULL,
