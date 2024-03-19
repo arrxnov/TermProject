@@ -42,7 +42,7 @@ with open("course-catalog.txt", "w") as f:
         print('    ', output, ',', sep='', file=f)
 
 # Populate planned-course.txt
-with open('loganmiller216.json', 'r') as f:
+with open('json/loganmiller216.json', 'r') as f:
     plan_dict = json.load(f)
     
 with open('planned-course.txt', 'w') as f:
@@ -50,7 +50,7 @@ with open('planned-course.txt', 'w') as f:
         output = (1, c['name'], int(c['year']), c['sem'])
         print('    ', output, ',', sep='', file=f)
         
-with open('jgrady.json', 'r') as f:
+with open('json/jgrady.json', 'r') as f:
     plan_dict = json.load(f)
     
 with open('planned-course.txt', 'a') as f:
@@ -66,12 +66,14 @@ with open('planned-course.txt', 'a') as f:
 #         output = (3, c['name'], int(c['year']), c['sem'])
 #         print('    ', output, ',', sep='', file=f)
         
-with open('loganmiller216-alt.json', 'r') as f:
+with open('json/loganmiller216-alt.json', 'r') as f:
     plan_dict = json.load(f)
     
 with open('planned-course.txt', 'a') as f:
     for c in plan_dict['courses']:
         output = (4, c['name'], int(c['year']), c['sem'])
+        if c['sem'] == 'SP':
+            output = (4, c['name'], int(c['year']) + 1, c['sem'])
         print('    ', output, ',', sep='', file=f)
         
 
@@ -85,7 +87,7 @@ with open('planned-course.txt', 'a') as f:
 # 5    ('Bible', 2021);
 
 # Populate gened.txt
-with open('cs-reqs.json', 'r') as f:
+with open('json/cs-reqs.json', 'r') as f:
     reqs_dict = json.load(f)
     
 with open('gened.txt', 'w') as f:
@@ -97,7 +99,7 @@ with open('gened.txt', 'w') as f:
                     print('    ', output, ',', sep='', file=f)
                     
 # Populate major-course.txt
-with open('cs-reqs.json', 'r') as f:
+with open('json/cs-reqs.json', 'r') as f:
     reqs_dict = json.load(f)
     
 with open('major-course.txt', 'w') as f:
@@ -115,7 +117,7 @@ with open('major-course.txt', 'w') as f:
                 output = (1, cc['name'], 'cognate')
                 print('    ', output, ',', sep='', file=f)
                 
-with open('cy-reqs.json', 'r') as f:
+with open('json/cy-reqs.json', 'r') as f:
     reqs_dict = json.load(f)
     
 with open('major-course.txt', 'a') as f:
@@ -133,7 +135,7 @@ with open('major-course.txt', 'a') as f:
                 output = (2, cc['name'], 'cognate')
                 print('    ', output, ',', sep='', file=f)
                 
-with open('cy-reqs.json', 'r') as f:
+with open('json/cy-reqs.json', 'r') as f:
     reqs_dict = json.load(f)
     
 with open('major-course.txt', 'a') as f:
