@@ -1,9 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
-session_start();
-
 if (!isset($_SESSION["name"])) {
     header("Location: http://judah.cedarville.edu/~grady/TermProject/project4/login.php");
 }
