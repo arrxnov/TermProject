@@ -119,7 +119,6 @@ jQuery(document).ready(function () {
     async function getCombined() {
         if (!getUrlParameter("planId")) {
             fetch_string = "./get-json.php";
-            console.log("no planId");
         } else {
             fetch_string = "./get-json.php?" + new URLSearchParams({
                 planId: getUrlParameter("planId"),
