@@ -30,8 +30,10 @@ else {
         $plan_id = sqlQuery($link, $sql, "default_plan_id", $username);
     }
     else {
-        $sql = "SELECT id FROM zeus_plan WHERE name = ?";
-        $plan_id = sqlQuery($link, $sql, "id", $_REQUEST["plan-name"]);
+        $sql = "SELECT id FROM zeus_plan WHERE name = ? AND username = ?";
+        $statement = $link->prepare($sql);
+        $statement->execute(array($_REQUEST["plan-name"], $username));
+        $plan_id = $statement->fetch("id");
     }
 
     $sql = "SELECT major_id FROM zeus_planned_major WHERE plan_id = ?";
@@ -79,8 +81,10 @@ else {
     foreach ($ids as $id) {
         $myObj->plan->courses[$id] = new stdClass();
         
-        $sql = "SELECT term FROM zeus_planned_course WHERE course_id = ?";
-        $term = sqlQuery($link, $sql, "term", $id);
+        $sql = "SELECT term FROM zeus_planned_course WHERE course_id = ? AND plan_id = ?";
+        $statement = $link->prepare($sql);
+        $statement->execute(array($id, $plan_id));
+        $term = $statement->fetch()["term"];
         if ($term === "FA") $myObj->plan->courses[$id]->term = "Fall";
         else if ($term === "SP") $myObj->plan->courses[$id]->term = "Spring";
         else if ($term === "SU") $myObj->plan->courses[$id]->term = "Summer";
