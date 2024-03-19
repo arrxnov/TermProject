@@ -18,15 +18,15 @@ else {
     
     $link = new mysqli("localhost", "cs3220_sp24", "OqagokbAg9DzKZGb", "cs3220_sp24");    
     
-    if (!isset($_REQUEST["plan-name"])) {
-        $sql = "SELECT default_plan_id FROM zeus_user WHERE username = ?";
-        $myObj->plan_id = sqlQuery($link, $sql, $username);
-    } else {
-        $sql = "SELECT name FROM zeus_plan WHERE name = ?";
-        $statement = $link->prepare($sql);
-        $statement->execute([$_REQUEST["plan-name"]]);
-        $myObj->plan_id = $statement->fetch();
-    }
+    // if (!isset($_REQUEST["plan-name"])) {
+    $sql = "SELECT default_plan_id FROM zeus_user WHERE username = ?";
+    $myObj->plan_id = sqlQuery($link, $sql, $username);
+    // } else {
+    //     $sql = "SELECT name FROM zeus_plan WHERE default = ?";
+    //     $statement = $link->prepare($sql);
+    //     $statement->execute([$_REQUEST["plan-name"]]);
+    //     $myObj->plan_id = $statement->fetch();
+    // }
     
     $sql = "SELECT catalog_year FROM zeus_plan WHERE name = ?";
     $myObj->catalog_year = sqlQuery($link, $sql, $myObj->plan_id);
