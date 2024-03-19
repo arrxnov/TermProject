@@ -31,17 +31,13 @@ else {
     $myObj->categories->Cognates->courses = array();
     $myObj->categories->GenEds->courses = array();
 
-    if (!isset($_REQUEST["plan-name"])) {
+    if (!isset($_REQUEST["planId"])) {
         $sql = "SELECT default_plan_id FROM zeus_user WHERE username = ?";
         $plan_id = sqlQuery($link, $sql, "default_plan_id", $username);
     }
     else {
-        $sql = "SELECT id FROM zeus_plan WHERE name = ? AND username = ?";
-        $statement = $link->prepare($sql);
-        $statement->execute(array($_REQUEST["plan-name"], $username));
-        $plan_id = $statement->fetch("id");
+        $plan_id = $_REQUEST["planId"];
     }
-
     $sql = "SELECT major_id FROM zeus_planned_major WHERE plan_id = ?";
     $major_id = sqlQuery($link, $sql, "major_id", $plan_id);
 
@@ -109,22 +105,7 @@ else {
         return $v->course_id;
     }, $result);
     foreach ($ids as $id) {
-
-        $sql = "SELECT type FROM zeus_gened WHERE course_id = ?";
-        $type = sqlQuery($link, $sql, "type", $id);
-
-        if ($type == "core") { 
-            $myObj->categories->Core->courses[] = $id;
-        }
-        else if ($type == "elective") { 
-            $myObj->categories->Electives->courses[] = $id;
-        }
-        else if ($type == "gened") { 
-            $myObj->categories->GenEds->courses[] = $id;
-        }
-        else if ($type == "cognate") { 
-            $myObj->categories->Cognates->courses[] = $id;
-        }
+        $myObj->categories->GenEds->courses[] = $id;
     }
     echo json_encode($myObj);
 }
