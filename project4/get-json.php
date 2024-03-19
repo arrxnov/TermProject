@@ -22,30 +22,27 @@ else {
     $link = new PDO($dsn, $sql_username, $password);
     $username = $_SESSION["name"];
     
-    // if (!isset($_REQUEST["plan-name"])) {
     $sql = "SELECT default_plan_id FROM zeus_user WHERE username = ?";
     $myObj = new stdClass();
-    $myObj->plan_id = sqlQuery($link, $sql, "default_plan_id", $username);
-    // } else {
-    //     $sql = "SELECT name FROM zeus_plan WHERE default = ?";
-    //     $statement = $link->prepare($sql);
-    //     $statement->execute([$_REQUEST["plan-name"]]);
-    //     $myObj->plan_id = $statement->fetch();
-    // }
+    $plan_id = sqlQuery($link, $sql, "default_plan_id", $username);
     
-    $sql = "SELECT catalog_year FROM zeus_plan WHERE name = ?";
-    $myObj->catalog_year = sqlQuery($link, $sql, "catalog_year", $myObj->plan_id);
-    
-    $sql = "SELECT id FROM zeus_plan WHERE name = ?";
-    $id = sqlQuery($link, $sql, "id", $myObj->plan_id);
+    $sql = "SELECT catalog_year FROM zeus_plan WHERE id = ?";
+    $myObj->catalog_year = new stdClass();
+    $myObj->catalog_year = sqlQuery($link, $sql, "catalog_year", $plan_id);
 
     $sql = "SELECT major_id FROM zeus_planned_major WHERE plan_id = ?";
-    $major_id = sqlQuery($link, $sql, "major_id", $id);
+    $major_id = sqlQuery($link, $sql, "major_id", $plan_id);
     
-    var_dump($myObj->plan_i);
+    $sql = "SELECT name FROM zeus_plan WHERE id = ?";
+    $myObj->plan_name = sqlQuery($link, $sql, "name", $plan_id);
+
+    var_dump($plan_id);
+    var_dump($myObj->plan_name);
     var_dump($myObj->catalog_year);
-    var_dump($id);
     var_dump($major_id);
+
+    $sql = "SELECT name FROM zeus_plan WHERE id = ?";
+    $myObj->planName = sqlQuery($link, $sql, "name", $plan_id);
 
     $sql = "SELECT name FROM zeus_major WHERE id = ?";
     $major_name = sqlQuery($link, $sql, "name", $major_id);
@@ -53,7 +50,7 @@ else {
     $myObj->minor = "Bible";
     
     $sql = "SELECT catalog_year FROM zeus_plan WHERE id = ?";
-    $myObj->year = sqlQuery($link, $sql, "year", $id);
+    $myObj->year = sqlQuery($link, $sql, "year", $plan_id);
 
     $sql = "SELECT gpa FROM zeus_user WHERE username = ?";
     $myObj->gpa = sqlQuery($link, $sql, "gpa", $username);
@@ -79,12 +76,12 @@ else {
     
     $sql = "SELECT pc.term, pc.year, c.description as course_des, c.name as course_name, c.credits FROM zeus_planned_course as pc LEFT JOIN zeus_course as c ON pc.course_id = c.course_id";
     $myObj->courses = sqlQuery($link, $sql, "stuff", $plan_id); // might need to be changed to get everything since sqlQuery gets index 0
-    function sqlQuery($link, $sql, $column, $constraint) {
-        $statement = $link->prepare($sql);
-        $statement->execute([$constraint]);
-        $result = $statement->fetch();
-        return $result[$column];
-    }
+    // function sqlQuery($link, $sql, $column, $constraint) {
+    //     $statement = $link->prepare($sql);
+    //     $statement->execute([$constraint]);
+    //     $result = $statement->fetch();
+    //     return $result[$column];
+    // }
     echo json_encode($myObj);
 
 
