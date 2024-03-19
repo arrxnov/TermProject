@@ -139,7 +139,7 @@ with open('major-course.txt', 'a') as f:
                 output = (2, cc['name'], 'cognate')
                 print('    ', output, ',', sep='', file=f)
                 
-with open('json/cy-reqs.json', 'r') as f:
+with open('json/math-reqs.json', 'r') as f:
     reqs_dict = json.load(f)
     
 with open('major-course.txt', 'a') as f:
