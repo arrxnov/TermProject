@@ -90,13 +90,14 @@ jQuery(document).ready(function () {
             });
         });
         
-        // let dropdownPlans = await getPlans();
-        // let planDropdown = jQuery("#planSubMenu");
-        // jQuery.each(dropdownPlans, function(name, id) {
-        //     planDropdown.append(
-        //         jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
-        //     );
-        // });
+        let dropdownPlans = await getPlans();
+        console.log('done loading plans');
+        let planDropdown = jQuery("#planSubMenu");
+        jQuery.each(dropdownPlans, function(name, id) {
+            planDropdown.append(
+                jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
+            );
+        });
 
         let dropdownThemes = {
             Mint: 'themesMint',
@@ -129,7 +130,7 @@ jQuery(document).ready(function () {
     }
 
     async function getPlans() {
-        const response = await fetch("./getPlans.php");
+        const response = await fetch("./get-plans.php");
         const data = await response.json();
         return data;
     }
