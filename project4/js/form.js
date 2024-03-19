@@ -19,9 +19,27 @@ jQuery(document).ready(function () {
     let courseNames = {};
 
     var dropdownOptions = {
-        plans: {text: 'Plans', id: 'planOption'},
-        themes: {text: 'Themes', id: 'themeOption'}
+        plans: {text: 'Plans', id: 'plansOption'},
+        themes: {text: 'Themes', id: 'themesOption'},
+        print: {text: 'Print', id: 'printOption'},
+        grades: {text: 'Grades', id: 'gradesOption'},
+        waivers: {text: 'Waivers', id: 'waiversOption'},
+        about: {text: 'About', id: 'aboutOption'},
+        help: {text: 'Help', id: 'helpOption'},
+        reportBug: {text: 'Report Bug', id: 'reportBugOption'}
     };
+
+    // var dropdownPlans = {
+
+    // }
+
+    var dropdownThemes = {
+        mint: {text: 'Mint', id: 'themesMint'},
+        fuscia: {text: 'Fuscia', id: 'themesFuscia'},
+        inferno: {text: 'Inferno', id: 'themesInferno'},
+        atlantis: {text: 'Atlantis', id: 'themesAtlantis'},
+        avenue: {text: 'Avenue', id: 'themesAvenue'}
+    }
 
     initPage();
     populateSearchTable();
@@ -63,6 +81,38 @@ jQuery(document).ready(function () {
 
     jQuery("#" + "themeOption").click(function () {
         alert("themes");
+    });
+
+    mySelect = jQuery('#themesDropdown');
+    jQuery.each(dropdownThemes, function(val, attrs) {
+        mySelect.append(
+            jQuery("<div><p></p></div>").val(val).html(attrs.text).attr("id", attrs.id)
+        );
+    });
+
+    jQuery("#" + "themesMint").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-mint)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-mint)");
+    });
+
+    jQuery("#" + "themesFuscia").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-fuscia)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-fuscia)");
+    });
+
+    jQuery("#" + "themesInferno").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-inferno)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-inferno)");
+    });
+
+    jQuery("#" + "themesAtlantis").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-atlantis)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-atlantis)");
+    });
+
+    jQuery("#" + "themesAvenue").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-avenue)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-avenue)");
     });
 
     jQuery(".blink").each(function () {
@@ -270,16 +320,6 @@ jQuery(document).ready(function () {
         } );
     }
 });
-
-var setMint = function() {
-    jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-mint)");
-    jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-mint)");
-}
-
-var setAtlantis = function() {
-    jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-atlantis)");
-    jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-atlantis)");
-}
 
 function dragStartHandler(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
