@@ -33,7 +33,7 @@ else {
         $statement = $link->prepare($sql);
         $statement->execute([$plan]);
         $name = $statement->fetch()["name"];
-        $myObj->$plan = $name;
+        $myObj->$name = $plan;
     }
 }
 

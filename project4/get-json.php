@@ -27,9 +27,6 @@ else {
 
     $sql = "SELECT default_plan_id FROM zeus_user WHERE username = ?";
     $plan_id = sqlQuery($link, $sql, "default_plan_id", $username);
-    
-    // $sql = "SELECT catalog_year FROM zeus_plan WHERE id = ?";
-    // $myObj->catalog = sqlQuery($link, $sql, "catalog_year", $plan_id);
 
     $sql = "SELECT major_id FROM zeus_planned_major WHERE plan_id = ?";
     $major_id = sqlQuery($link, $sql, "major_id", $plan_id);
@@ -43,13 +40,13 @@ else {
     $myObj->plan->minor = "Bible";
     
     $sql = "SELECT catalog_year FROM zeus_plan WHERE id = ?";
-    $myObj->year = sqlQuery($link, $sql, "catalog_year", $plan_id);
+    $myObj->plan->catYear = sqlQuery($link, $sql, "catalog_year", $plan_id);
 
     $sql = "SELECT gpa FROM zeus_user WHERE username = ?";
-    $myObj->gpa = sqlQuery($link, $sql, "gpa", $username);
+    $myObj->plan->gpa = sqlQuery($link, $sql, "gpa", $username);
     
     $sql = "SELECT major_gpa FROM zeus_user WHERE username = ?";
-    $myObj->major_gpa = sqlQuery($link, $sql, "major_gpa", $username);
+    $myObj->plan->major_gpa = sqlQuery($link, $sql, "major_gpa", $username);
     
     $sql = "SELECT name FROM zeus_user WHERE username = ?";
     $myObj->plan->student = sqlQuery($link, $sql, "name", $username);
@@ -72,38 +69,43 @@ else {
     $ids = array_map(function($v){
         return $v->course_id;
     }, $result);
-    $myObj->courses = array();
+    $myObj->plan->courses = array();
     foreach ($ids as $id) {
-        $myObj->courses[$id] = new stdClass();
+        $myObj->plan->courses[$id] = new stdClass();
         
         $sql = "SELECT term FROM zeus_planned_course WHERE course_id = ?";
-        $myObj->courses[$id]->term = sqlQuery($link, $sql, "term", $id);
+        $myObj->plan->courses[$id]->term = sqlQuery($link, $sql, "term", $id);
 
         $sql = "SELECT year FROM zeus_planned_course WHERE course_id = ?";
-        $myObj->courses[$id]->year = sqlQuery($link, $sql, "year", $id);
+        $myObj->plan->courses[$id]->year = sqlQuery($link, $sql, "year", $id);
 
-        $myObj->courses[$id]->course_des = $id;
-
-        $sql = "SELECT name FROM zeus_course WHERE id = ?";
-        $myObj->courses[$id]->course_name = sqlQuery($link, $sql, "name", $id);
-
-        $sql = "SELECT credits FROM zeus_course WHERE id = ?";
-        $myObj->courses[$id]->credits = sqlQuery($link, $sql, "credits", $id);
+        $myObj->plan->courses[$id]->id = $id;
     }
 
-    // $sql = "SELECT pc.term, pc.year, c.description as course_des, c.name as course_name, c.credits FROM zeus_planned_course as pc LEFT JOIN zeus_course as c ON pc.course_id = c.course_id WHERE pc.plan_id = ?";
-    // $sql = "SELECT * FROM zeus_planned_course LEFT JOIN zeus_course ON zeus_planned_course.course_id = zeus_course.course_id WHERE zeus_planned_course.plan_id = ?";
-    // $statement = $link->prepare($sql);
-    // $statement->execute([$plan_id]);
-    // $result = $statement->fetch();
-    // var_dump($myObj->courses = $result[0]);
-    // // $myObj->courses = sqlQuery($link, $sql, "stuff", $plan_id); // might need to be changed to get everything since sqlQuery gets index 0
-    // // function sqlQuery($link, $sql, $column, $constraint) {
-    // //     $statement = $link->prepare($sql);
-    // //     $statement->execute([$constraint]);
-    // //     $result = $statement->fetch();
-    // //     return $result[$column];
-    // // }
+    $sql = "SELECT * FROM zeus_course";
+    $statement = $link->prepare($sql);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_OBJ);
+    $ids = array_map(function($v){
+        return $v->id;
+    }, $result);
+    $myObj->catalog = new stdClass();
+    $myObj->catalog->courses = array();
+    foreach ($ids as $id) {
+        $myObj->catalog->courses[$id] = new stdClass();
+        
+        $sql = "SELECT description FROM zeus_course WHERE id = ?";
+        $myObj->catalog->courses[$id]->description = sqlQuery($link, $sql, "description", $id);
+
+        $myObj->catalog->courses[$id]->id = $id;
+
+        $sql = "SELECT name FROM zeus_course WHERE id = ?";
+        $myObj->catalog->courses[$id]->course_name = sqlQuery($link, $sql, "name", $id);
+
+        $sql = "SELECT credits FROM zeus_course WHERE id = ?";
+        $myObj->catalog->courses[$id]->credits = sqlQuery($link, $sql, "credits", $id);
+    }
+
     echo json_encode($myObj);
 
 }
