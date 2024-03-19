@@ -18,29 +18,6 @@ jQuery(document).ready(function () {
     let years = {};
     let courseNames = {};
 
-    var dropdownOptions = {
-        plans: {text: 'Plans', id: 'plansOption'},
-        themes: {text: 'Themes', id: 'themesOption'},
-        print: {text: 'Print', id: 'printOption'},
-        grades: {text: 'Grades', id: 'gradesOption'},
-        waivers: {text: 'Waivers', id: 'waiversOption'},
-        about: {text: 'About', id: 'aboutOption'},
-        help: {text: 'Help', id: 'helpOption'},
-        reportBug: {text: 'Report Bug', id: 'reportBugOption'}
-    };
-
-    // var dropdownPlans = {
-
-    // }
-
-    var dropdownThemes = {
-        mint: {text: 'Mint', id: 'themesMint'},
-        fuscia: {text: 'Fuscia', id: 'themesFuscia'},
-        inferno: {text: 'Inferno', id: 'themesInferno'},
-        atlantis: {text: 'Atlantis', id: 'themesAtlantis'},
-        avenue: {text: 'Avenue', id: 'themesAvenue'}
-    }
-
     initPage();
     populateSearchTable();
 
@@ -66,28 +43,6 @@ jQuery(document).ready(function () {
 
     jQuery("#minerBtn").click(function () {
         window.open("", "_blank");
-    });
-
-    let mySelect = jQuery('#optionsDropdown');
-    jQuery.each(dropdownOptions, function(val, attrs) {
-        mySelect.append(
-            jQuery("<div><p></p></div>").val(val).html(attrs.text).attr("id", attrs.id)
-        );
-    });
-
-    jQuery("#" + "planOption").click(function () {
-        alert("plans");
-    });
-
-    jQuery("#" + "themeOption").click(function () {
-        alert("themes");
-    });
-
-    mySelect = jQuery('#themesDropdown');
-    jQuery.each(dropdownThemes, function(val, attrs) {
-        mySelect.append(
-            jQuery("<div><p></p></div>").val(val).html(attrs.text).attr("id", attrs.id)
-        );
     });
 
     jQuery("#" + "themesMint").click(function () {
@@ -127,6 +82,36 @@ jQuery(document).ready(function () {
     });
 
     async function initPage() {
+        jQuery(function () {
+            jQuery('ul#optionsDropdown li').hover(function () {
+                jQuery(this).children('ul').delay(10).slideDown(100);
+            }, function(){
+                jQuery(this).children('ul').delay(10).slideUp(100);
+            });
+        });
+        
+        // let dropdownPlans = await getPlans();
+        // let planDropdown = jQuery("#planSubMenu");
+        // jQuery.each(dropdownPlans, function(name, id) {
+        //     planDropdown.append(
+        //         jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
+        //     );
+        // });
+
+        let dropdownThemes = {
+            Mint: 'themesMint',
+            Fuscia: 'themesFuscia',
+            Inferno: 'themesInferno',
+            Atlantis: 'themesAtlantis',
+            Avenue: 'themesAvenue'
+        }
+        let themeDropdown = jQuery("#themeSubMenu");
+        jQuery.each(dropdownThemes, function(name, id) {
+            themeDropdown.append(
+                jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
+            );
+        });
+        
         let response = await getCombined();
 
         for (let course in response.catalog.courses) {
@@ -141,6 +126,12 @@ jQuery(document).ready(function () {
         updateCourses(plan);
         await updateReqs();
         jQuery("#courseReqs").accordion({ collapsible: true, });
+    }
+
+    async function getPlans() {
+        const response = await fetch("./getPlans.php");
+        const data = await response.json();
+        return data;
     }
 
     async function getCombined() {
