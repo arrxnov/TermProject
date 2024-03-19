@@ -63,7 +63,7 @@ jQuery(document).ready(function () {
     });
 
     jQuery("#logout").click(function () {
-        window.open("http://judah.cedarville.edu/~grady/TermProject/project4/logout.php");
+        window.open("http://judah.cedarville.edu/~grady/TermProject/project4/logout.php", "_self");
     });
 
     jQuery(".blink").each(function () {
@@ -123,17 +123,19 @@ jQuery(document).ready(function () {
 
     async function getCombined(plan_id) {
         if (!plan_id) {
-            fetchString = "./get-json.php";
+            fetch_string = "./get-json.php";
         } else {
-            fetchString = "./get-json.php?plan-id=" + plan_id; // FIXME: make sure is calling correctly
+            fetch_string = "./get-json.php?" + new URLSearchParams({
+                planId: plan_id,
+            });
         }
-        const response = await fetch("./get-json.php");
+        const response = await fetch(fetch_string);
         const data = await response.json();
         return data;
     }
 
     async function getRequirements() {
-        const response = await fetch("/~grady/TermProject/project4/get-requirements.php");
+        const response = await fetch("./get-requirements.php");
         const data = await response.json();
         return data;
     }
@@ -165,21 +167,25 @@ jQuery(document).ready(function () {
 
     async function updateReqs() {
         reqs = await getRequirements();
+        document.getElementById("cognates").innerHTML = "";
         for (let course in reqs.categories.Cognates.courses) {
             course = reqs.categories.Cognates.courses[course];
             let courseName = getCourseName(course);
             document.getElementById("cognates").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
+        document.getElementById("electives").innerHTML = "";
         for (let course in reqs.categories.Electives.courses) {
             course = reqs.categories.Electives.courses[course];
             let courseName = getCourseName(course);
             document.getElementById("electives").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
+        document.getElementById("core").innerHTML = "";
         for (let course in reqs.categories.Core.courses) {
             course = reqs.categories.Core.courses[course];
             let courseName = getCourseName(course);
             document.getElementById("core").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
+        document.getElementById("geneds").innerHTML = "";
         for (let course in reqs.categories.GenEds.courses) {
             course = reqs.categories.GenEds.courses[course];
             let courseName = getCourseName(course);
@@ -189,6 +195,7 @@ jQuery(document).ready(function () {
 
     function updateCourses(planJSON) {
         let header = document.getElementById("planHeader");
+        header.innerHTML = "";
         header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student"] + "</p>\n";
         header.innerHTML += "<p><strong>Academic Plan:</strong> " + planJSON["name"] + "</p>\n";
         let header2 = document.getElementById("planSubheader");
@@ -203,6 +210,8 @@ jQuery(document).ready(function () {
 
         for (let i = 1; i <= 12; i++) {
             let semester = document.getElementById("semester" + i);
+            semester.innerHTML = '<div class="term"></div>';
+            semester.innerHTML += '<div class="credits"></div>';
             let base_y = planJSON["catYear"];
             let y = parseInt(base_y) + parseInt((i + 1) / 3);
             let t;
@@ -224,9 +233,8 @@ jQuery(document).ready(function () {
             }
 
             term += " " + y;
-            if (semester.getElementsByClassName("term")[0].innerHTML != term) {
-                semester.getElementsByClassName("term")[0].innerHTML = term;
-            }
+            semester.getElementsByClassName("term")[0].innerHTML = term;
+
             if (t == planJSON["currTerm"] && y == planJSON["currYear"]) {
                 semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
                 currentSemester = true;

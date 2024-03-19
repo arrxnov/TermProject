@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 function sqlQuery($link, $sql, $column, $constraint) {
     $statement = $link->prepare($sql);
     $statement->execute([$constraint]);
@@ -84,6 +88,33 @@ else {
     foreach ($ids as $id) {
 
         $sql = "SELECT type FROM zeus_minor_course WHERE course_id = ?";
+        $type = sqlQuery($link, $sql, "type", $id);
+
+        if ($type == "core") { 
+            $myObj->categories->Core->courses[] = $id;
+        }
+        else if ($type == "elective") { 
+            $myObj->categories->Electives->courses[] = $id;
+        }
+        else if ($type == "gened") { 
+            $myObj->categories->GenEds->courses[] = $id;
+        }
+        else if ($type == "cognate") { 
+            $myObj->categories->Cognates->courses[] = $id;
+        }
+    }
+
+    $sql = "SELECT course_id FROM zeus_gened";
+    $statement = $link->prepare($sql);
+    $statement->execute();
+
+    $result = $statement->fetchAll(PDO::FETCH_OBJ);
+    $ids = array_map(function($v){
+        return $v->course_id;
+    }, $result);
+    foreach ($ids as $id) {
+
+        $sql = "SELECT type FROM zeus_gened WHERE course_id = ?";
         $type = sqlQuery($link, $sql, "type", $id);
 
         if ($type == "core") { 
