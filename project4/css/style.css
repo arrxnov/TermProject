@@ -4,15 +4,16 @@
     --btn-inferno: rgb(0, 0, 0);
     --btn-atlantis: rgb(3, 14, 58);
     --btn-avenue: rgb(24, 40, 54);
-    --btn-theme: var(--btn-avenue);
+    --btn-sponsored: red;
+    --btn-theme: var(--btn-mint);
 
     --bg-mint: url("../images/mint.jpg");
     --bg-fuscia: url("../images/fuscia.jpg");
     --bg-inferno: url("../images/inferno.jpg");
     --bg-atlantis: url("../images/atlantis.jpg");
-    --bg-sponsored: url("../images/china.gif");
     --bg-avenue: url("../images/creston-from-carson-ave.jpg");
-    --bg-theme: var(--bg-avenue);
+    --bg-sponsored: url("../images/china.gif");
+    --bg-theme: var(--bg-mint);
     
     --text-color: rgb(230, 230, 230);
     --text-color-dark: black;
@@ -44,6 +45,7 @@ p {
     margin: 0;
     padding: 0;
 }
+
 /* Universal tag categories ---------------------------------------------------- */
 
 /* Generic Classes ------------------------------------------------------------- */
@@ -138,6 +140,77 @@ p {
     box-shadow: none;
 }
 
+ul#optionsDropdown {
+    margin:0;
+    padding:0;
+    display: flex;
+}
+
+ul#optionsDropdown > li {
+    list-style:none;
+    float:left;
+    margin:0;
+    padding:0;
+    position:relative;
+}
+
+ul#optionsDropdown > p {
+    text-decoration: none;
+    margin: 4px, 4px, 0px, 4px;
+    padding: 4px;
+    min-height: 30px;
+    min-width: 100px;
+    font-size: 12pt;
+    font-weight: bold;
+    flex-grow: 1;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    color: var(--text-color);
+    background-color: var(--btn-theme);
+    transition: all .4s ease-in-out;
+    box-shadow: 1px 1px 5px;
+}
+
+ul#optionsDropdown p {
+    text-decoration: none;
+    margin: 0px, 4px;
+    padding: 4px;
+    min-height: 30px;
+    min-width: 100px;
+    font-size: 12pt;
+    font-weight: bold;
+    flex-grow: 1;
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: var(--btn-theme);
+}
+
+ul#optionsDropdown > li ul.dropdown {
+    margin:0;
+    padding:0;
+    width:100px;
+    position:absolute;
+    display:none;
+}
+
+ul#optionsDropdown > li ul.dropdown ul {
+    margin:0;
+    padding:0;
+    width:100px;
+    position:absolute;
+    display:none;
+    left:100px;
+    top:0;
+}
+
+ul#optionsDropdown > li ul li {
+    margin:0;
+    padding:0;
+    list-style:none;
+    position:relative;
+}
+
 .course {
     margin: 4px;
     padding: 4px;
@@ -197,17 +270,11 @@ header h1 {
 
 #headerBtns {
     display: flex;
-    flex-grow: 1;
     flex: column nowrap;
     align-items: center;
     justify-content: flex-end;
 }
 
-#dropdown {
-    display: flex;
-    flex-grow: 1;
-    flex-flow: row;
-}
 /* Header ---------------------------------------------------------------------- */
 
 /* Basic Structure ------------------------------------------------------------- */

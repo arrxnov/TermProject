@@ -1,5 +1,6 @@
 -- Creation Order: user, catalog, major, minor, concentration, course, catalog_course, prereq, gened, major_course, minor_course, concentration_course, plan, planned_major, planned_minor, planned_concentration, planned_course
 -- Destruction Order needs to be opposite
+-- TODO: create circular foreign key dependency of default_plan_id on plan (id)
 DROP TABLE IF EXISTS zeus_planned_course;
 DROP TABLE IF EXISTS zeus_planned_concentration;
 DROP TABLE IF EXISTS zeus_planned_minor;
@@ -21,10 +22,11 @@ DROP TABLE IF EXISTS zeus_user;
 CREATE TABLE zeus_user (
     id int  NOT NULL AUTO_INCREMENT,
     username varchar(32)  NOT NULL,
-    phash char(60)  NOT NULL,
+    phash char(64)  NOT NULL,
     name varchar(64)  NOT NULL,
     gpa numeric(3,2)  NOT NULL,
     major_gpa numeric(3,2)  NOT NULL,
+    default_plan_id int  NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -164,11 +166,11 @@ CREATE TABLE zeus_planned_course (
 -- End of table creation
 
 INSERT INTO zeus_user
-    (username, phash, name, gpa, major_gpa)
+    (username, phash, name, gpa, major_gpa, default_plan_id)
 VALUES
-    ('loganmiller216','000000000000000000000000000000000000000000000000000000000000','Logan Miller', '3.55','3.60'),
-    ('jgrady','000000000000000000000000000000000000000000000000000000000000','Jacob Grady', '3.75','3.50'),
-    ('kaidendelsing','000000000000000000000000000000000000000000000000000000000000','Kai Delsing', '3.50','3.65');
+    ('loganmiller216','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Logan Miller', '3.55','3.60', 1),
+    ('jgrady','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Jacob Grady', '3.75','3.50', 2),
+    ('kaidendelsing','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Kai Delsing', '3.50','3.65', 3);
 
 INSERT INTO zeus_catalog
     (year)

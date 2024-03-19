@@ -24,29 +24,40 @@
             <h1>APE</h1>
 
             <div id="headerBtns">
-                <select name="apeOptions" class="btn" id="optionsDropdown"></select>
-                <!-- <div class="dropdown">
-                    <button class="btn" id="options">Options</button>
-                    <div class="dropdownContent" id="optionsDropdown">
-                        <p>Create Plan</p>
-                        <p>Manage Plans</p>
-                        <p>Print</p>
-                        <p>Show Grades</p>
-                        <p>Waivers</p>
-                        <p>About</p>
-                        <p>Help</p>
-                        <p>Report Bug</p>
-                        <p>Themes</p>
-                    </div>
-                </div> -->
+                <ul id="optionsDropdown">
+                    <li><p>Options</p>
+                        <ul class="dropdown">
+                            <li>
+                                <p>Plans</p>
+                                <ul id="planSubMenu"></ul>
+                            </li>
+                            <li>
+                                <p>Themes</p>
+                                <ul id="themeSubMenu"></ul>
+                            </li>
+                            <li>
+                                <p>Print</p>
+                            </li>
+                            <li>
+                                <p>Grades</p>
+                            </li>
+                            <li>
+                                <p>Waivers</p>
+                            </li>
+                            <li>
+                                <p>About</p>
+                            </li>
+                            <li>
+                                <p>Help</p>
+                            </li>
+                            <li>
+                                <p>Report Bug</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
                 <button class="btn" id="save">Save</button>
-                <button class="btn" id="logout">Log Out</button>
-                <!-- <div class="dropdown">
-                    <button class="btn" id="save">Save</button>
-                </div>
-                <div class="dropdown">
-                    <button class="btn" id="logout">Log Out</button>
-                </div> -->
+                <button class="btn-clickable" id="logout">Log Out</button>
             </div> 
 
         </header>
@@ -184,8 +195,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div id="resizer"></div> -->
 
                 <div id="LR">
                     <div class="labels">

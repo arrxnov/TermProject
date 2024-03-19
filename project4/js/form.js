@@ -18,13 +18,23 @@ jQuery(document).ready(function () {
     let years = {};
     let courseNames = {};
 
-    var dropdownOptions = {
-        val1 : 'text1',
-        val2 : 'text2'
-    };
+    initPage(0);
 
-    initPage();
-    populateSearchTable();
+    let dropdownThemes = {
+        Mint: 'mint',
+        Atlantis: 'atlantis',
+        Avenue: 'avenue'
+    }
+    let themeDropdown = jQuery("#themeSubMenu");
+    jQuery.each(dropdownThemes, function(name, id) {
+        themeDropdown.append(
+            jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
+        );
+        jQuery("#" + id).click(function () {
+            jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-" + id + ")");
+            jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-" + id + ")");
+        });
+    });
 
     jQuery("#jgradyBtn").click(function () {
         window.open("http://judah.cedarville.edu/~grady/cs3220.html", "_blank");
@@ -44,17 +54,12 @@ jQuery(document).ready(function () {
 
     jQuery("#commitBtn").click(function () {
         window.open("https://github.com/arrxnov/TermProject/commit/6c48bad684b21b0be6cd02c1c9b5b55424312851", "_blank");
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-sponsored)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-sponsored)");
     });
 
     jQuery("#minerBtn").click(function () {
         window.open("", "_blank");
-    });
-
-    let mySelect = jQuery('#optionsBtn');
-    jQuery.each(dropdownOptions, function(val, text) {
-        mySelect.append(
-            jQuery('<option></option>').val(val).html(text)
-        );
     });
 
     jQuery(".blink").each(function () {
@@ -68,8 +73,27 @@ jQuery(document).ready(function () {
         }, 400);
     });
 
-    async function initPage() {
-        let response = await getCombined();
+    async function initPage(plan_id) {
+        jQuery(function () {
+            jQuery('ul#optionsDropdown li').hover(function () {
+                jQuery(this).children('ul').delay(10).slideDown(100);
+            }, function(){
+                jQuery(this).children('ul').delay(10).slideUp(100);
+            });
+        });
+        
+        let dropdownPlans = await getPlans();
+        let planDropdown = jQuery("#planSubMenu");
+        jQuery.each(dropdownPlans, function(name, id) {
+            planDropdown.append(
+                jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
+            );
+            jQuery("#" + id).click(function () {
+                initPage(id);
+            });
+        });
+        
+        let response = await getCombined(plan_id);
 
         for (let course in response.catalog.courses) {
             courseNames[course] = {
@@ -83,10 +107,22 @@ jQuery(document).ready(function () {
         updateCourses(plan);
         await updateReqs();
         jQuery("#courseReqs").accordion({ collapsible: true, });
+
+        populateSearchTable(response);
     }
 
-    async function getCombined() {
-        const response = await fetch("/~knoerr/cs3220/termProject/getCombined.php");
+    async function getPlans() {
+        const response = await fetch("./get-plans.php");
+        const data = await response.json();
+        return data;
+    }
+
+    async function getCombined(plan_id) {
+        if (!plan_id) {
+            const response = await fetch("./get-json.php");
+        } else {
+            const response = await fetch("./get-json.php?plan-name=" + plan_id);
+        }
         const data = await response.json();
         return data;
     }
@@ -153,10 +189,10 @@ jQuery(document).ready(function () {
 
         let header2 = document.getElementById("planSubheader");
         header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
-        header2.innerHTML += "<p><strong>Minor:</strong> " + "Photography" + "</p>\n";
+        header2.innerHTML += "<p><strong>Minor:</strong> " + planJSON["minor"] + "</p>\n";
         header2.innerHTML += "<p><strong>Catalog:</strong> " + planJSON["catYear"] + "</p>\n";
-        header2.innerHTML += "<p><strong>GPA:</strong> " + "4.00" + "</p>\n";
-        header2.innerHTML += "<p><strong>Major GPA:</strong> " + "4.00" + "</p>\n";
+        header2.innerHTML += "<p><strong>GPA:</strong> " + planJSON["gpa"] + "</p>\n";
+        header2.innerHTML += "<p><strong>Major GPA:</strong> " + planJSON["major_gpa"] + "</p>\n";
 
         let totalCreds = 0;
         let pastSemester = true;
@@ -210,8 +246,8 @@ jQuery(document).ready(function () {
 
             for (let key in courses) {
                 let course = courses[key];
-                credits += getCourseCredits(course["id"]);
-                let c_str = getCourseCredits(course["id"]).toPrecision(2);
+                credits += parseFloat(getCourseCredits(course["id"]));
+                let c_str = parseFloat(getCourseCredits(course["id"])).toPrecision(2);
                 if (!pastSemester && !currentSemester) {
                     semester.innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler(event)\"> <span class=\"course-id\">` + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
                 } else {
@@ -219,12 +255,12 @@ jQuery(document).ready(function () {
                 }
             }
 
-            totalCreds += credits;
+            totalCreds += parseFloat(credits);
             let year = semester.getElementsByClassName("credits")[0];
             if (credits >= 10) {
-                year.innerHTML = "Credits: " + credits.toPrecision(3) + "";
+                year.innerHTML = "Credits: " + parseFloat(credits).toPrecision(3) + "";
             } else {
-                year.innerHTML = "Credits: " + credits.toPrecision(2) + "";
+                year.innerHTML = "Credits: " + parseFloat(credits).toPrecision(2) + "";
             }
 
 
@@ -238,9 +274,7 @@ jQuery(document).ready(function () {
         header.innerHTML += "<p><strong>Total Hours:</strong> " + totalCreds.toPrecision(prec) + "</p>\n";
     }
 
-    async function populateSearchTable() {
-        let response = await getCombined();
-
+    async function populateSearchTable(init_data) {
         jQuery("#searchTable").DataTable( {
             paging: false,
             scrollCollapse: true,
@@ -252,7 +286,7 @@ jQuery(document).ready(function () {
                 bottomStart: null,
                 bottomEnd: null
             },
-            data: Object.values(response.catalog.courses),
+            data: Object.values(init_data.catalog.courses),
             columns: [
                 { data: 'id' },
                 { data: 'name' },
@@ -262,16 +296,6 @@ jQuery(document).ready(function () {
         } );
     }
 });
-
-var setMint = function() {
-    jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-mint)");
-    jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-mint)");
-}
-
-var setAtlantis = function() {
-    jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-atlantis)");
-    jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-atlantis)");
-}
 
 function dragStartHandler(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
