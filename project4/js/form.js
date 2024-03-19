@@ -123,11 +123,13 @@ jQuery(document).ready(function () {
 
     async function getCombined(plan_id) {
         if (!plan_id) {
-            fetchString = "./get-json.php";
+            fetch_string = "./get-json.php";
         } else {
-            fetchString = "./get-json.php?plan-name=" + plan_id; // FIXME: make sure is calling correctly
+            fetch_string = "./get-json.php?" + new URLSearchParams({
+                planId: plan_id,
+            });
         }
-        const response = await fetch("./get-json.php");
+        const response = await fetch(fetch_string);
         const data = await response.json();
         return data;
     }
@@ -208,8 +210,7 @@ jQuery(document).ready(function () {
 
         for (let i = 1; i <= 12; i++) {
             let semester = document.getElementById("semester" + i);
-            semester.innerHTML = "";
-            semester.innerHTML += '<div class="term"></div>';
+            semester.innerHTML = '<div class="term"></div>';
             semester.innerHTML += '<div class="credits"></div>';
             let base_y = planJSON["catYear"];
             let y = parseInt(base_y) + parseInt((i + 1) / 3);

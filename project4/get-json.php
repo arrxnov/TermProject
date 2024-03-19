@@ -20,12 +20,12 @@ else {
     $myObj = new stdClass();
     $myObj->plan = new stdClass();
 
-    if (!isset($_REQUEST["plan-id"])) {
+    if (!isset($_REQUEST["planId"])) {
         $sql = "SELECT default_plan_id FROM zeus_user WHERE username = ?";
         $plan_id = sqlQuery($link, $sql, "default_plan_id", $username);
     }
     else {
-        $plan_id = $_REQUEST["plan-id"];
+        $plan_id = $_REQUEST["planId"];
     }
 
     $sql = "SELECT major_id FROM zeus_planned_major WHERE plan_id = ?";
