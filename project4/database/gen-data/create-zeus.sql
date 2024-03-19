@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS zeus_planned_course;
 DROP TABLE IF EXISTS zeus_planned_concentration;
 DROP TABLE IF EXISTS zeus_planned_minor;
 DROP TABLE IF EXISTS zeus_planned_major;
-ALTER TABLE IF EXISTS zeus_user DROP CONSTRAINT IF EXISTS circular;
+ALTER TABLE zeus_user DROP CONSTRAINT circular;
 DROP TABLE IF EXISTS zeus_plan;
 DROP TABLE IF EXISTS zeus_concentration_course;
 DROP TABLE IF EXISTS zeus_minor_course;
