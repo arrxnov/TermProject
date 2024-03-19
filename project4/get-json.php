@@ -33,7 +33,7 @@ else {
         $sql = "SELECT id FROM zeus_plan WHERE name = ?";
         $plan_id = sqlQuery($link, $sql, "id", $_REQUEST["plan-name"]);
     }
-    
+
     $sql = "SELECT major_id FROM zeus_planned_major WHERE plan_id = ?";
     $major_id = sqlQuery($link, $sql, "major_id", $plan_id);
     
@@ -85,8 +85,10 @@ else {
         else if ($term === "SP") $myObj->plan->courses[$id]->term = "Spring";
         else if ($term === "SU") $myObj->plan->courses[$id]->term = "Summer";
         
-        $sql = "SELECT year FROM zeus_planned_course WHERE course_id = ?";
-        $myObj->plan->courses[$id]->year = sqlQuery($link, $sql, "year", $id);
+        $sql = "SELECT year FROM zeus_planned_course WHERE course_id = ? AND plan_id = ?";
+        $statement = $link->prepare($sql);
+        $statement->execute(array($id, $plan_id));
+        $myObj->plan->courses[$id]->year = $statement->fetch()["year"];
 
         $myObj->plan->courses[$id]->id = $id;
     }
@@ -109,7 +111,7 @@ else {
         $myObj->catalog->courses[$id]->id = $id;
 
         $sql = "SELECT name FROM zeus_course WHERE id = ?";
-        $myObj->catalog->courses[$id]->course_name = sqlQuery($link, $sql, "name", $id);
+        $myObj->catalog->courses[$id]->name = sqlQuery($link, $sql, "name", $id);
 
         $sql = "SELECT credits FROM zeus_course WHERE id = ?";
         $myObj->catalog->courses[$id]->credits = sqlQuery($link, $sql, "credits", $id);
