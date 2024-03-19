@@ -10,15 +10,11 @@
    $result = $statement->fetch();
    echo $result;
    if ($result != $hash) {
-      echo "<script>";
-      echo "   window.location.replace('./login.php');";
-      echo "</script>";
+      header('Location: ./login.php');
    }
    else {
       session_start();
       $_SESSION["name"] = $user;
-      echo "<script>";
-      echo "   window.location.replace('./index.php');";
-      echo "</script>";
+      header('Location: ./index.php');
    }
 ?>
