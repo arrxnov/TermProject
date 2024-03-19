@@ -21,6 +21,24 @@ jQuery(document).ready(function () {
     initPage();
     populateSearchTable();
 
+    let dropdownThemes = {
+        Mint: 'mint',
+        Fuscia: 'fuscia',
+        Inferno: 'inferno',
+        Atlantis: 'atlantis',
+        Avenue: 'avenue'
+    }
+    let themeDropdown = jQuery("#themeSubMenu");
+    jQuery.each(dropdownThemes, function(name, id) {
+        themeDropdown.append(
+            jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
+        );
+        jQuery("#" + id).click(function () {
+            jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-" + id + ")");
+            jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-" + id + ")");
+        });
+    });
+
     jQuery("#jgradyBtn").click(function () {
         window.open("http://judah.cedarville.edu/~grady/cs3220.html", "_blank");
     });
@@ -45,30 +63,7 @@ jQuery(document).ready(function () {
         window.open("", "_blank");
     });
 
-    jQuery("#" + "themesMint").click(function () {
-        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-mint)");
-        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-mint)");
-    });
-
-    jQuery("#" + "themesFuscia").click(function () {
-        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-fuscia)");
-        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-fuscia)");
-    });
-
-    jQuery("#" + "themesInferno").click(function () {
-        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-inferno)");
-        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-inferno)");
-    });
-
-    jQuery("#" + "themesAtlantis").click(function () {
-        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-atlantis)");
-        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-atlantis)");
-    });
-
-    jQuery("#" + "themesAvenue").click(function () {
-        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-avenue)");
-        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-avenue)");
-    });
+    
 
     jQuery(".blink").each(function () {
         let elem = jQuery(this);
@@ -91,24 +86,9 @@ jQuery(document).ready(function () {
         });
         
         let dropdownPlans = await getPlans();
-        console.log('done loading plans');
         let planDropdown = jQuery("#planSubMenu");
         jQuery.each(dropdownPlans, function(name, id) {
             planDropdown.append(
-                jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
-            );
-        });
-
-        let dropdownThemes = {
-            Mint: 'themesMint',
-            Fuscia: 'themesFuscia',
-            Inferno: 'themesInferno',
-            Atlantis: 'themesAtlantis',
-            Avenue: 'themesAvenue'
-        }
-        let themeDropdown = jQuery("#themeSubMenu");
-        jQuery.each(dropdownThemes, function(name, id) {
-            themeDropdown.append(
                 jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
             );
         });
