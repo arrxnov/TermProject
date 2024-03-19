@@ -48,7 +48,7 @@ with open('json/loganmiller216.json', 'r') as f:
 with open('planned-course.txt', 'w') as f:
     for c in plan_dict['courses']:
         output = (1, c['name'], int(c['year']), c['sem'])
-        if c['sem'] == 'SP':
+        if c['sem'] != 'FA':
             output = (1, c['name'], int(c['year']) + 1, c['sem'])
         print('    ', output, ',', sep='', file=f)
         
@@ -58,7 +58,7 @@ with open('json/jgrady.json', 'r') as f:
 with open('planned-course.txt', 'a') as f:
     for c in plan_dict['courses']:
         output = (2, c['name'], int(c['year']), c['sem'])
-        if c['sem'] == 'SP':
+        if c['sem'] != 'FA':
             output = (2, c['name'], int(c['year']) + 1, c['sem'])
         print('    ', output, ',', sep='', file=f)
         
@@ -76,7 +76,7 @@ with open('json/loganmiller216-alt.json', 'r') as f:
 with open('planned-course.txt', 'a') as f:
     for c in plan_dict['courses']:
         output = (4, c['name'], int(c['year']), c['sem'])
-        if c['sem'] == 'SP':
+        if c['sem'] != 'FA':
             output = (4, c['name'], int(c['year']) + 1, c['sem'])
         print('    ', output, ',', sep='', file=f)
         

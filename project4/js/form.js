@@ -79,7 +79,7 @@ jQuery(document).ready(function () {
 
     async function initPage(plan_id) {
         jQuery(function () {
-            jQuery('ul#optionsDropdown li').hover(function () {
+            jQuery('ul.menu li').hover(function () {
                 jQuery(this).children('ul').delay(10).slideDown(100);
             }, function(){
                 jQuery(this).children('ul').delay(10).slideUp(100);
