@@ -17,7 +17,13 @@ jQuery(document).ready(function () {
     let global_noncollision = "1";
     let years = {};
     let courseNames = {};
-    doThings();
+
+    var dropdownOptions = {
+        plans: {text: 'Plans', id: 'planOption'},
+        themes: {text: 'Themes', id: 'themeOption'}
+    };
+
+    initPage();
     populateSearchTable();
 
     jQuery("#jgradyBtn").click(function () {
@@ -44,6 +50,21 @@ jQuery(document).ready(function () {
         window.open("", "_blank");
     });
 
+    let mySelect = jQuery('#optionsDropdown');
+    jQuery.each(dropdownOptions, function(val, attrs) {
+        mySelect.append(
+            jQuery("<div><p></p></div>").val(val).html(attrs.text).attr("id", attrs.id)
+        );
+    });
+
+    jQuery("#" + "planOption").click(function () {
+        alert("plans");
+    });
+
+    jQuery("#" + "themeOption").click(function () {
+        alert("themes");
+    });
+
     jQuery(".blink").each(function () {
         let elem = jQuery(this);
         setInterval(function () {
@@ -55,7 +76,7 @@ jQuery(document).ready(function () {
         }, 400);
     });
 
-    async function doThings() {
+    async function initPage() {
         let response = await getCombined();
 
         for (let course in response.catalog.courses) {
@@ -177,22 +198,7 @@ jQuery(document).ready(function () {
             if (t == planJSON["currTerm"] && y == planJSON["currYear"]) {
                 semester.getElementsByClassName("term")[0].innerHTML += " (Current)";
                 currentSemester = true;
-                semester.classList.add("semester-current");
-                // jQuery("#semester" + i).each(function () {
-                //     let elem = jQuery(this);
-                //     setInterval(function () {
-                //         if (elem.css("outline-style") == "dotted") {
-                //             elem.css("outline-style", "solid");
-                //         } else {
-                //             elem.css("outline-style", "dotted");
-                //         }
-                //         elem.css({
-                //             "transition": "all .4s ease-in-out"
-                //         });
-                        
-                //     }, 400);
-                // });
-            
+                semester.classList.add("semester-current");            
                 pastSemester = false;
 
             }
