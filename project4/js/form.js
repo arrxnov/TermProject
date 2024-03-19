@@ -3,14 +3,9 @@
  * Authors: Logan Miller, Jacob Grady, Kai Delsing
  * 
  * To Do's:
- *  Add dropdown for options with an entry for theme (change background color)
- *  Add drag and drop
- *  Remove all comments on js code
- * Add monero miner to website code
- * Heavy watermark over the whole website.
- * Chinese flag bg and music
- * Link to git commit where we remove "We have not been required by the Chinese government to comply with intelligence collection requests."
- * Turn course ids into tags
+    * Add monero miner to website code
+    * Heavy watermark over the whole website.
+    * Chinese flag bg and music
  */
 
 jQuery(document).ready(function () {
