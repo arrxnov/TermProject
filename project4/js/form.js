@@ -18,8 +18,7 @@ jQuery(document).ready(function () {
     let years = {};
     let courseNames = {};
 
-    initPage();
-    populateSearchTable();
+    initPage(0);
 
     let dropdownThemes = {
         Mint: 'mint',
@@ -55,6 +54,8 @@ jQuery(document).ready(function () {
 
     jQuery("#commitBtn").click(function () {
         window.open("https://github.com/arrxnov/TermProject/commit/6c48bad684b21b0be6cd02c1c9b5b55424312851", "_blank");
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-sponsored)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-sponsored)");
     });
 
     jQuery("#minerBtn").click(function () {
@@ -76,7 +77,7 @@ jQuery(document).ready(function () {
         }, 400);
     });
 
-    async function initPage() {
+    async function initPage(plan_id) {
         jQuery(function () {
             jQuery('ul#optionsDropdown li').hover(function () {
                 jQuery(this).children('ul').delay(10).slideDown(100);
@@ -92,11 +93,11 @@ jQuery(document).ready(function () {
                 jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
             );
             jQuery("#" + id).click(function () {
-                // swap plans
+                initPage(id);
             });
         });
         
-        let response = await getCombined();
+        let response = await getCombined(plan_id);
 
         for (let course in response.catalog.courses) {
             courseNames[course] = {
@@ -110,6 +111,8 @@ jQuery(document).ready(function () {
         updateCourses(plan);
         await updateReqs();
         jQuery("#courseReqs").accordion({ collapsible: true, });
+
+        populateSearchTable(response);
     }
 
     async function getPlans() {
@@ -118,7 +121,12 @@ jQuery(document).ready(function () {
         return data;
     }
 
-    async function getCombined() {
+    async function getCombined(plan_id) {
+        if (!plan_id) {
+            fetchString = "./get-json.php";
+        } else {
+            fetchString = "./get-json.php?plan-id=" + plan_id; // FIXME: make sure is calling correctly
+        }
         const response = await fetch("./get-json.php");
         const data = await response.json();
         return data;
@@ -271,9 +279,7 @@ jQuery(document).ready(function () {
         header.innerHTML += "<p><strong>Total Hours:</strong> " + totalCreds.toPrecision(prec) + "</p>\n";
     }
 
-    async function populateSearchTable() {
-        let response = await getCombined();
-
+    async function populateSearchTable(init_data) {
         jQuery("#searchTable").DataTable( {
             paging: false,
             scrollCollapse: true,
@@ -285,7 +291,7 @@ jQuery(document).ready(function () {
                 bottomStart: null,
                 bottomEnd: null
             },
-            data: Object.values(response.catalog.courses),
+            data: Object.values(init_data.catalog.courses),
             columns: [
                 { data: 'id' },
                 { data: 'name' },

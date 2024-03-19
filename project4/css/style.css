@@ -4,14 +4,15 @@
     --btn-inferno: rgb(0, 0, 0);
     --btn-atlantis: rgb(3, 14, 58);
     --btn-avenue: rgb(24, 40, 54);
+    --btn-sponsored: red;
     --btn-theme: var(--btn-mint);
 
     --bg-mint: url("../images/mint.jpg");
     --bg-fuscia: url("../images/fuscia.jpg");
     --bg-inferno: url("../images/inferno.jpg");
     --bg-atlantis: url("../images/atlantis.jpg");
-    --bg-sponsored: url("../images/china.gif");
     --bg-avenue: url("../images/creston-from-carson-ave.jpg");
+    --bg-sponsored: url("../images/china.gif");
     --bg-theme: var(--bg-mint);
     
     --text-color: rgb(230, 230, 230);
