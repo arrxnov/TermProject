@@ -83,6 +83,7 @@ p {
     margin: 4px;
     min-height: 30px;
     min-width: 100px;
+    font-family: inherit;
     font-size: 12pt;
     font-weight: bold;
     flex-grow: 1;
@@ -98,6 +99,7 @@ p {
     margin: 4px;
     min-height: 30px;
     min-width: 100px;
+    font-family: inherit;
     font-size: 12pt;
     font-weight: bold;
     flex-grow: 1;
@@ -140,13 +142,13 @@ p {
     box-shadow: none;
 }
 
-ul#optionsDropdown {
-    margin:0;
-    padding:0;
+ul.menu {
+    margin: 0;
+    padding: 0;
     display: flex;
 }
 
-ul#optionsDropdown > li {
+ul.menu > li {
     list-style:none;
     float:left;
     margin:0;
@@ -154,61 +156,41 @@ ul#optionsDropdown > li {
     position:relative;
 }
 
-ul#optionsDropdown > p {
-    text-decoration: none;
-    margin: 4px, 4px, 0px, 4px;
-    padding: 4px;
+ul.menu p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
     min-height: 30px;
     min-width: 100px;
-    font-size: 12pt;
+    font-size: 11pt;
     font-weight: bold;
-    flex-grow: 1;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    color: var(--text-color);
-    background-color: var(--btn-theme);
-    transition: all .4s ease-in-out;
-    box-shadow: 1px 1px 5px;
-}
-
-ul#optionsDropdown p {
-    text-decoration: none;
-    margin: 0px, 4px;
-    padding: 4px;
-    min-height: 30px;
-    min-width: 100px;
-    font-size: 12pt;
-    font-weight: bold;
-    flex-grow: 1;
     cursor: pointer;
     color: var(--text-color);
     background-color: var(--btn-theme);
 }
 
-ul#optionsDropdown > li ul.dropdown {
-    margin:0;
-    padding:0;
-    width:100px;
-    position:absolute;
-    display:none;
+ul.menu > li ul.subMenu {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    display: none;
 }
 
-ul#optionsDropdown > li ul.dropdown ul {
-    margin:0;
-    padding:0;
-    width:100px;
-    position:absolute;
-    display:none;
-    left:100px;
-    top:0;
+ul.menu > li ul.subMenu ul {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    display: none;
+    left: 100px;
+    top: 0;
 }
 
-ul#optionsDropdown > li ul li {
-    margin:0;
-    padding:0;
-    list-style:none;
-    position:relative;
+ul.menu > li ul li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
 }
 
 .course {
@@ -273,6 +255,10 @@ header h1 {
     flex: column nowrap;
     align-items: center;
     justify-content: flex-end;
+}
+
+#optionsHeader {
+    font-size: 12pt;
 }
 
 /* Header ---------------------------------------------------------------------- */
