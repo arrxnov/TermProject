@@ -18,31 +18,6 @@ jQuery(document).ready(function () {
     let years = {};
     let courseNames = {};
 
-    // var dropdownOptions = {
-    //     plans: {text: 'Plans', id: 'plansOption'},
-    //     themes: {text: 'Themes', id: 'themesOption'},
-    //     print: {text: 'Print', id: 'printOption'},
-    //     grades: {text: 'Grades', id: 'gradesOption'},
-    //     waivers: {text: 'Waivers', id: 'waiversOption'},
-    //     about: {text: 'About', id: 'aboutOption'},
-    //     help: {text: 'Help', id: 'helpOption'},
-    //     reportBug: {text: 'Report Bug', id: 'reportBugOption'}
-    // };
-
-    // var dropdownPlans = {
-
-    // }
-
-    var dropdownThemes = {
-        Mint: 'themesMint',
-        Fuscia: 'themesFuscia',
-        Inferno: 'themesInferno',
-        Atlantis: 'themesAtlantis',
-        Avenue: 'themesAvenue'
-    }
-
-    var dropdownPlans = fetch(getPlans.php());
-
     initPage();
     populateSearchTable();
 
@@ -70,76 +45,30 @@ jQuery(document).ready(function () {
         window.open("", "_blank");
     });
 
-
-
-    jQuery(function () {
-        jQuery('ul#optionsDropdown li').hover(function () {
-            jQuery(this).children('ul').delay(10).slideDown(100);
-        }, function(){
-            jQuery(this).children('ul').delay(10).slideUp(100);
-        });
+    jQuery("#" + "themesMint").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-mint)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-mint)");
     });
 
-    let themeDropdown = jQuery("#themeSubMenu");
-    jQuery.each(dropdownThemes, function(name, id) {
-        themeDropdown.append(
-            jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
-        );
+    jQuery("#" + "themesFuscia").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-fuscia)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-fuscia)");
     });
 
+    jQuery("#" + "themesInferno").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-inferno)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-inferno)");
+    });
 
+    jQuery("#" + "themesAtlantis").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-atlantis)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-atlantis)");
+    });
 
-
-
-
-
-
-    // let mySelect = jQuery('#optionsDropdown');
-    // jQuery.each(dropdownOptions, function(val, attrs) {
-    //     mySelect.append(
-    //         jQuery("<div><p></p></div>").val(val).html(attrs.text).attr("id", attrs.id)
-    //     );
-    // });
-
-    // jQuery("#" + "plansOption").click(function () {
-    //     alert("plans");
-    // });
-
-    // jQuery("#" + "themesOption").click(function () {
-    //     alert("themes");
-    // });
-
-    // mySelect = jQuery('#themesDropdown');
-    // jQuery.each(dropdownThemes, function(val, attrs) {
-    //     mySelect.append(
-    //         jQuery("<div><p></p></div>").val(val).html(attrs.text).attr("id", attrs.id)
-    //     );
-    // });
-
-    // jQuery("#" + "themesMint").click(function () {
-    //     jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-mint)");
-    //     jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-mint)");
-    // });
-
-    // jQuery("#" + "themesFuscia").click(function () {
-    //     jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-fuscia)");
-    //     jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-fuscia)");
-    // });
-
-    // jQuery("#" + "themesInferno").click(function () {
-    //     jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-inferno)");
-    //     jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-inferno)");
-    // });
-
-    // jQuery("#" + "themesAtlantis").click(function () {
-    //     jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-atlantis)");
-    //     jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-atlantis)");
-    // });
-
-    // jQuery("#" + "themesAvenue").click(function () {
-    //     jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-avenue)");
-    //     jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-avenue)");
-    // });
+    jQuery("#" + "themesAvenue").click(function () {
+        jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-avenue)");
+        jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-avenue)");
+    });
 
     jQuery(".blink").each(function () {
         let elem = jQuery(this);
@@ -153,6 +82,36 @@ jQuery(document).ready(function () {
     });
 
     async function initPage() {
+        jQuery(function () {
+            jQuery('ul#optionsDropdown li').hover(function () {
+                jQuery(this).children('ul').delay(10).slideDown(100);
+            }, function(){
+                jQuery(this).children('ul').delay(10).slideUp(100);
+            });
+        });
+        
+        // let dropdownPlans = await getPlans();
+        // let planDropdown = jQuery("#planSubMenu");
+        // jQuery.each(dropdownPlans, function(name, id) {
+        //     planDropdown.append(
+        //         jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
+        //     );
+        // });
+
+        let dropdownThemes = {
+            Mint: 'themesMint',
+            Fuscia: 'themesFuscia',
+            Inferno: 'themesInferno',
+            Atlantis: 'themesAtlantis',
+            Avenue: 'themesAvenue'
+        }
+        let themeDropdown = jQuery("#themeSubMenu");
+        jQuery.each(dropdownThemes, function(name, id) {
+            themeDropdown.append(
+                jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
+            );
+        });
+        
         let response = await getCombined();
 
         for (let course in response.catalog.courses) {
@@ -167,6 +126,12 @@ jQuery(document).ready(function () {
         updateCourses(plan);
         await updateReqs();
         jQuery("#courseReqs").accordion({ collapsible: true, });
+    }
+
+    async function getPlans() {
+        const response = await fetch("./getPlans.php");
+        const data = await response.json();
+        return data;
     }
 
     async function getCombined() {
