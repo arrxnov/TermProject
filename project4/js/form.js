@@ -190,8 +190,7 @@ jQuery(document).ready(function () {
     function updateCourses(planJSON) {
         let header = document.getElementById("planHeader");
         header.innerHTML += "<p><strong>Student:</strong> " + planJSON["student"] + "</p>\n";
-        header.innerHTML += "<p><strong>Academic Plan:</strong> " + planJSON["currYear"] + "</p>\n";
-
+        header.innerHTML += "<p><strong>Academic Plan:</strong> " + planJSON["name"] + "</p>\n";
         let header2 = document.getElementById("planSubheader");
         header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
         header2.innerHTML += "<p><strong>Minor:</strong> " + planJSON["minor"] + "</p>\n";
