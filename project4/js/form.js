@@ -144,7 +144,7 @@ jQuery(document).ready(function () {
     }
 
     async function getCombined() {
-        const response = await fetch("/~knoerr/cs3220/termProject/getCombined.php");
+        const response = await fetch("./get-json.php");
         const data = await response.json();
         return data;
     }

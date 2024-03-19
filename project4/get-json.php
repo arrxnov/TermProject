@@ -20,19 +20,19 @@ else {
     
     if (!isset($_REQUEST["plan-name"])) {
         $sql = "SELECT default_plan_id FROM zeus_user WHERE username = ?";
-        $myObj->plan_name = sqlQuery($link, $sql, $username);
+        $myObj->plan_id = sqlQuery($link, $sql, $username);
     } else {
         $sql = "SELECT name FROM zeus_plan WHERE name = ?";
         $statement = $link->prepare($sql);
         $statement->execute([$_REQUEST["plan-name"]]);
-        $myObj->plan_name = $statement->fetch();
+        $myObj->plan_id = $statement->fetch();
     }
     
     $sql = "SELECT catalog_year FROM zeus_plan WHERE name = ?";
-    $myObj->catalog_year = sqlQuery($link, $sql, $myObj->plan_name);
+    $myObj->catalog_year = sqlQuery($link, $sql, $myObj->plan_id);
     
     $sql = "SELECT id FROM zeus_plan WHERE name = ?";
-    $id = sqlQuery($link, $sql, $myObj->plan_name);
+    $id = sqlQuery($link, $sql, $myObj->plan_id);
     
     $sql = "SELECT major_id FROM zeus_planned_major WHERE plan_id = ?";
     $major_id = sqlQuery($link, $sql, $id);
@@ -67,8 +67,8 @@ else {
     
     $myObj->current_semester = $currTerm.$currYear;
     
-    $myObj->courses = "SELECT term, year, course_des, course_name, credits FROM zeus_planned_course WHERE plan_id = ?";
-    
+    $sql = "SELECT pc.term, pc.year, c.description as course_des, c.name as course_name, c.credits FROM zeus_planned_course as pc LEFT JOIN zeus_course as c ON pc.course_id = c.course_id";
+    $myObj->courses = sqlQuery($link, $sql, $plan_id);
     
     echo json_encode($myObj);
 
