@@ -189,10 +189,10 @@ jQuery(document).ready(function () {
 
         let header2 = document.getElementById("planSubheader");
         header2.innerHTML += "<p><strong>Major:</strong> " + planJSON["major"] + "</p>\n";
-        header2.innerHTML += "<p><strong>Minor:</strong> " + "Photography" + "</p>\n";
+        header2.innerHTML += "<p><strong>Minor:</strong> " + planJSON["minor"] + "</p>\n";
         header2.innerHTML += "<p><strong>Catalog:</strong> " + planJSON["catYear"] + "</p>\n";
-        header2.innerHTML += "<p><strong>GPA:</strong> " + "4.00" + "</p>\n";
-        header2.innerHTML += "<p><strong>Major GPA:</strong> " + "4.00" + "</p>\n";
+        header2.innerHTML += "<p><strong>GPA:</strong> " + planJSON["gpa"] + "</p>\n";
+        header2.innerHTML += "<p><strong>Major GPA:</strong> " + planJSON["major_gpa"] + "</p>\n";
 
         let totalCreds = 0;
         let pastSemester = true;
@@ -246,7 +246,7 @@ jQuery(document).ready(function () {
 
             for (let key in courses) {
                 let course = courses[key];
-                credits += getCourseCredits(course["id"]);
+                credits += parseFloat(getCourseCredits(course["id"]));
                 let c_str = parseFloat(getCourseCredits(course["id"])).toPrecision(2);
                 if (!pastSemester && !currentSemester) {
                     semester.innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler(event)\"> <span class=\"course-id\">` + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
@@ -255,12 +255,12 @@ jQuery(document).ready(function () {
                 }
             }
 
-            totalCreds += credits;
+            totalCreds += parseFloat(credits);
             let year = semester.getElementsByClassName("credits")[0];
             if (credits >= 10) {
-                year.innerHTML = "Credits: " + credits.toPrecision(3) + "";
+                year.innerHTML = "Credits: " + parseFloat(credits).toPrecision(3) + "";
             } else {
-                year.innerHTML = "Credits: " + credits.toPrecision(2) + "";
+                year.innerHTML = "Credits: " + parseFloat(credits).toPrecision(2) + "";
             }
 
 
