@@ -356,6 +356,10 @@ main {
     scrollbar-color: var(--btn-theme);
     scrollbar-width: thin;
 }
+
+#minerBtn {
+    display: none;
+}
 /* Left container -------------------------------------------------------------- */
 
 /* Right container ------------------------------------------------------------- */
