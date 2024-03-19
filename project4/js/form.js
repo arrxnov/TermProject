@@ -130,7 +130,14 @@ jQuery(document).ready(function () {
     }
 
     async function getRequirements() {
-        const response = await fetch("./get-requirements.php");
+        if (!getUrlParameter("planId")) {
+            fetch_string = "./get-requirements.php";
+        } else {
+            fetch_string = "./get-requirements.php?" + new URLSearchParams({
+                planId: getUrlParameter("planId"),
+            });
+        }
+        const response = await fetch(fetch_string);
         const data = await response.json();
         return data;
     }
@@ -162,25 +169,21 @@ jQuery(document).ready(function () {
 
     async function updateReqs() {
         reqs = await getRequirements();
-        document.getElementById("cognates").innerHTML = "";
         for (let course in reqs.categories.Cognates.courses) {
             course = reqs.categories.Cognates.courses[course];
             let courseName = getCourseName(course);
             document.getElementById("cognates").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
-        document.getElementById("electives").innerHTML = "";
         for (let course in reqs.categories.Electives.courses) {
             course = reqs.categories.Electives.courses[course];
             let courseName = getCourseName(course);
             document.getElementById("electives").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
-        document.getElementById("core").innerHTML = "";
         for (let course in reqs.categories.Core.courses) {
             course = reqs.categories.Core.courses[course];
             let courseName = getCourseName(course);
             document.getElementById("core").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
-        document.getElementById("geneds").innerHTML = "";
         for (let course in reqs.categories.GenEds.courses) {
             course = reqs.categories.GenEds.courses[course];
             let courseName = getCourseName(course);
@@ -205,8 +208,6 @@ jQuery(document).ready(function () {
 
         for (let i = 1; i <= 12; i++) {
             let semester = document.getElementById("semester" + i);
-            semester.innerHTML = "<div class=\"term\"></div>";
-            semester.innerHTML += "<div class=\"credits\"></div>";
             let base_y = planJSON["catYear"];
             let y = parseInt(base_y) + parseInt((i + 1) / 3);
             let t;
