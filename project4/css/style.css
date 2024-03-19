@@ -269,7 +269,6 @@ header h1 {
 
 #headerBtns {
     display: flex;
-    /* flex-grow: 1; */
     flex: column nowrap;
     align-items: center;
     justify-content: flex-end;

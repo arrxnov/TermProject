@@ -23,8 +23,6 @@ jQuery(document).ready(function () {
 
     let dropdownThemes = {
         Mint: 'mint',
-        Fuscia: 'fuscia',
-        Inferno: 'inferno',
         Atlantis: 'atlantis',
         Avenue: 'avenue'
     }
@@ -63,8 +61,6 @@ jQuery(document).ready(function () {
         window.open("", "_blank");
     });
 
-    
-
     jQuery(".blink").each(function () {
         let elem = jQuery(this);
         setInterval(function () {
@@ -91,6 +87,9 @@ jQuery(document).ready(function () {
             planDropdown.append(
                 jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
             );
+            jQuery("#" + id).click(function () {
+                // swap plans
+            });
         });
         
         let response = await getCombined();
