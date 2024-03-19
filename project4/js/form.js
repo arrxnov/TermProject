@@ -117,11 +117,11 @@ jQuery(document).ready(function () {
     }
 
     async function getCombined(plan_id) {
-        if (!plan_id) {
+        if (!$_REQUEST["planId"]) {
             fetch_string = "./get-json.php";
         } else {
             fetch_string = "./get-json.php?" + new URLSearchParams({
-                planId: plan_id,
+                planId: $_REQUEST["planId"],
             });
         }
         const response = await fetch(fetch_string);
