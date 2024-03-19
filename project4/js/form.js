@@ -93,7 +93,7 @@ jQuery(document).ready(function () {
                 jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
             );
             jQuery("#" + id).click(function () {
-                initPage(id);
+                window.location.search = '?planId=' + id;
             });
         });
         
@@ -121,12 +121,13 @@ jQuery(document).ready(function () {
         return data;
     }
 
-    async function getCombined(plan_id) {
-        if (!$_REQUEST["planId"]) {
+    async function getCombined() {
+        if (!getUrlParameter("planId")) {
             fetch_string = "./get-json.php";
+            console.log("no planId");
         } else {
             fetch_string = "./get-json.php?" + new URLSearchParams({
-                planId: $_REQUEST["planId"],
+                planId: getUrlParameter("planId"),
             });
         }
         const response = await fetch(fetch_string);
@@ -210,8 +211,8 @@ jQuery(document).ready(function () {
 
         for (let i = 1; i <= 12; i++) {
             let semester = document.getElementById("semester" + i);
-            semester.innerHTML = '<div class="term"></div>';
-            semester.innerHTML += '<div class="credits"></div>';
+            semester.innerHTML = "<div class=\"term\"></div>";
+            semester.innerHTML += "<div class=\"credits\"></div>";
             let base_y = planJSON["catYear"];
             let y = parseInt(base_y) + parseInt((i + 1) / 3);
             let t;
@@ -328,3 +329,18 @@ function dropHandler(ev) {
 function dragOverHandler(ev) {
     ev.preventDefault();
 }
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
