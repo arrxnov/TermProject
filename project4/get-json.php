@@ -25,9 +25,15 @@ else {
     $myObj = new stdClass();
     $myObj->plan = new stdClass();
 
-    $sql = "SELECT default_plan_id FROM zeus_user WHERE username = ?";
-    $plan_id = sqlQuery($link, $sql, "default_plan_id", $username);
-
+    if (!isset($_REQUEST["plan-name"])) {
+        $sql = "SELECT default_plan_id FROM zeus_user WHERE username = ?";
+        $plan_id = sqlQuery($link, $sql, "default_plan_id", $username);
+    }
+    else {
+        $sql = "SELECT id FROM zeus_plan WHERE name = ?";
+        $plan_id = sqlQuery($link, $sql, "id", $_REQUEST["plan-name"]);
+    }
+    
     $sql = "SELECT major_id FROM zeus_planned_major WHERE plan_id = ?";
     $major_id = sqlQuery($link, $sql, "major_id", $plan_id);
     
@@ -55,7 +61,7 @@ else {
     
     $month = date('m');
     if ($month < 8 && $month > 5) {
-        $cmyObj->plan->urrTerm = "Summer";
+        $cmyObj->plan->currTerm = "Summer";
     } else if ($month < 8) {
         $myObj->plan->currTerm = "Spring";
     } else {
@@ -74,8 +80,11 @@ else {
         $myObj->plan->courses[$id] = new stdClass();
         
         $sql = "SELECT term FROM zeus_planned_course WHERE course_id = ?";
-        $myObj->plan->courses[$id]->term = sqlQuery($link, $sql, "term", $id);
-
+        $term = sqlQuery($link, $sql, "term", $id);
+        if ($term === "FA") $myObj->plan->courses[$id]->term = "Fall";
+        else if ($term === "SP") $myObj->plan->courses[$id]->term = "Spring";
+        else if ($term === "SU") $myObj->plan->courses[$id]->term = "Summer";
+        
         $sql = "SELECT year FROM zeus_planned_course WHERE course_id = ?";
         $myObj->plan->courses[$id]->year = sqlQuery($link, $sql, "year", $id);
 

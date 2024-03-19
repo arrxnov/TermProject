@@ -240,7 +240,7 @@ jQuery(document).ready(function () {
             for (let key in courses) {
                 let course = courses[key];
                 credits += getCourseCredits(course["id"]);
-                let c_str = getCourseCredits(course["id"]).toPrecision(2);
+                let c_str = parseFloat(getCourseCredits(course["id"])).toPrecision(2);
                 if (!pastSemester && !currentSemester) {
                     semester.innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler(event)\"> <span class=\"course-id\">` + course["id"] + "</span> " + getCourseName(course["id"]) + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
                 } else {
