@@ -119,12 +119,11 @@ jQuery(document).ready(function () {
 
     async function getCombined(plan_id) {
         if (!plan_id) {
-            const response = await fetch("./get-json.php");
-            console.log("normal plan"); // FIXME
+            fetchString = "./get-json.php";
         } else {
-            const response = await fetch("./get-json.php?plan-id=" + plan_id); // FIXME: make sure is calling correctly
-            console.log("new plan"); // FIXME
+            fetchString = "./get-json.php?plan-id=" + plan_id; // FIXME: make sure is calling correctly
         }
+        const response = await fetch("./get-json.php");
         const data = await response.json();
         return data;
     }
