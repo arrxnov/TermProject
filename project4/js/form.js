@@ -120,8 +120,10 @@ jQuery(document).ready(function () {
     async function getCombined(plan_id) {
         if (!plan_id) {
             const response = await fetch("./get-json.php");
+            console.log("normal plan"); // FIXME
         } else {
-            const response = await fetch("./get-json.php?plan-name=" + plan_id);
+            const response = await fetch("./get-json.php?plan-id=" + plan_id); // FIXME: make sure is calling correctly
+            console.log("new plan"); // FIXME
         }
         const data = await response.json();
         return data;
