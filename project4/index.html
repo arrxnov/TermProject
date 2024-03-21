@@ -1,5 +1,221 @@
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html lang="en">
-    <p>This project is not yet underway ;)</p>
-    <p>Check back in a few weeks.</p>
+    
+    <head>
+
+        <meta charset="utf-8">
+        <title>APE</title>
+        <link rel="icon" href="images/favicon/favicon-96x96.png">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/datatables.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script src="js/datatables.js"></script>
+        <script src="js/form.js" defer></script>
+        
+    </head>
+
+    <body>
+
+        <header>
+            <img src="images/ape-no-bg.png" id="icon" alt="image of an ape reading">
+            <h1>APE</h1>
+            <div id="headerBtns">
+                <ul class="menu">
+                    <li><p class="btn-clickable" id="optionsHeader">Options</p>
+                        <ul class="subMenu">
+                            <li>
+                                <p>Plans</p>
+                                <ul id="planSubMenu"></ul>
+                            </li>
+                            <li>
+                                <p>Themes</p>
+                                <ul id="themeSubMenu"></ul>
+                            </li>
+                            <li>
+                                <p>Print</p>
+                            </li>
+                            <li>
+                                <p>Grades</p>
+                            </li>
+                            <li>
+                                <p>Waivers</p>
+                            </li>
+                            <li>
+                                <p>About</p>
+                            </li>
+                            <li>
+                                <p>Help</p>
+                            </li>
+                            <li>
+                                <p>Report Bug</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <button class="btn" id="save">Save</button>
+                <button class="btn-clickable" id="logout">Log Out</button>
+            </div> 
+        </header>
+
+        <main>
+
+            <div id="leftContainer">
+                <div id="UL">
+                    <div class="labels">
+                        <p>Requirements</p>
+                    </div>
+                    <div class="basicContainer" id="courseReqs">
+                        <h3 class="btn-accordion" id="coreHeader">Core</h3>
+                        <div id="core" class="acc-div">
+                        </div>
+                        <h3 class="btn-accordion" id="electivesHeader">Electives</h3>
+                        <div id="electives" class="acc-div">
+                        </div>
+                        <h3 class="btn-accordion" id="cognatesHeader">Cognates</h3>
+                        <div id="cognates" class="acc-div"> 
+                        </div>
+                        <h3 class="btn-accordion" id="genedsHeader">Gen-Eds</h3>
+                        <div id="geneds" class="acc-div">
+                        </div>
+                    </div>
+                </div>
+                <div id="LL">
+                    <div class="labels">
+                        <p>Homepages</p>
+                    </div>
+                    <div class="basicContainer" id="miscBox">
+                        <div id="homePages">
+                            <button class="btn-clickable" id="jgradyBtn">Jacob Grady</button>
+                            <button class="btn-clickable" id="kdelsingBtn">Kai Delsing</button>
+                            <button class="btn-clickable" id="lmillerBtn">Logan Miller</button>
+                            <button class="btn-clickable" id="commitBtn">Privacy Policy</button>
+                            <button class="btn-clickable" id="minerBtn">View Funds</button>
+                            <button class="btn-clickable blink" id="votingBtn">VOTE FOR US HERE!!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="rightContainer">
+                <div id="UR">
+                    <div id="planHeader" class="labels"></div>
+                    <div id="planSubheader" class="labels"></div>
+                    <div id="plan">
+                        <div id="year1" class="year">
+                            <div id="semester1" class="semester fall" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Fall 2021</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                            </div>
+                            <div id="semester2" class="semester spring" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Spring 2022</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                            </div>
+                            <div id="semester3" class="semester summer" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Summer 2022</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                                <p></p>
+                            </div>
+                        </div>
+                        
+                        <div id="year2" class="year">
+                            <div id="semester4" class="semester fall" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Fall 2022</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                            </div>
+                            <div id="semester5" class="semester spring" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Spring 2023</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                            </div>
+                            <div id="semester6" class="semester summer" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Summer 2023</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                                <p></p>
+                            </div>
+                        </div>
+                        
+                        <div id="year3" class="year">
+                            <div id="semester7" class="semester fall" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Fall 2023</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                            </div>
+                            <div id="semester8" class="semester spring" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Spring 2024</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                            </div>
+                            <div id="semester9" class="semester summer" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Summer 2024</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                                <p></p>
+                            </div>
+                        </div>
+                        
+                        <div id="year4" class="year">
+                            <div id="semester10" class="semester fall" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Fall 2024</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                            </div>
+                            <div id="semester11" class="semester spring" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Spring 2025</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                            </div>
+                            <div id="semester12" class="semester summer" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
+                                <div class="semesterHeader">
+                                    <div class="term">Summer 2025</div>
+                                    <div class="credits">Credits:</div>
+                                </div>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="LR">
+                    <div class="labels">
+                        <p>Course Finder</p>
+                    </div>
+                    <div class="basicContainer" id="courseFinder">
+                        <table id="searchTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Credits</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </body>
 </html>
