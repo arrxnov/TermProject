@@ -1,25 +1,25 @@
 -- Creation Order: user, catalog, major, minor, concentration, course, catalog_course, prereq, gened, major_course, minor_course, concentration_course, plan, planned_major, planned_minor, planned_concentration, planned_course
 -- Destruction Order needs to be opposite
 -- TODO: create circular foreign key dependency of default_plan_id on plan (id)
-DROP TABLE IF EXISTS zeus_planned_course;
-DROP TABLE IF EXISTS zeus_planned_concentration;
-DROP TABLE IF EXISTS zeus_planned_minor;
-DROP TABLE IF EXISTS zeus_planned_major;
-DROP TABLE IF EXISTS zeus_plan;
-DROP TABLE IF EXISTS zeus_concentration_course;
-DROP TABLE IF EXISTS zeus_minor_course;
-DROP TABLE IF EXISTS zeus_major_course;
-DROP TABLE IF EXISTS zeus_gened;
-DROP TABLE IF EXISTS zeus_prereq;
-DROP TABLE IF EXISTS zeus_catalog_course;
-DROP TABLE IF EXISTS zeus_course;
-DROP TABLE IF EXISTS zeus_concentration;
-DROP TABLE IF EXISTS zeus_minor;
-DROP TABLE IF EXISTS zeus_major;
-DROP TABLE IF EXISTS zeus_catalog;
-DROP TABLE IF EXISTS zeus_user;
+DROP TABLE IF EXISTS planned_course;
+DROP TABLE IF EXISTS planned_concentration;
+DROP TABLE IF EXISTS planned_minor;
+DROP TABLE IF EXISTS planned_major;
+DROP TABLE IF EXISTS plan;
+DROP TABLE IF EXISTS concentration_course;
+DROP TABLE IF EXISTS minor_course;
+DROP TABLE IF EXISTS major_course;
+DROP TABLE IF EXISTS gened;
+DROP TABLE IF EXISTS prereq;
+DROP TABLE IF EXISTS catalog_course;
+DROP TABLE IF EXISTS course;
+DROP TABLE IF EXISTS concentration;
+DROP TABLE IF EXISTS minor;
+DROP TABLE IF EXISTS major;
+DROP TABLE IF EXISTS catalog;
+DROP TABLE IF EXISTS user;
 
-CREATE TABLE zeus_user (
+CREATE TABLE user (
     id int  NOT NULL AUTO_INCREMENT,
     username varchar(32)  NOT NULL,
     phash char(64)  NOT NULL,
@@ -30,36 +30,36 @@ CREATE TABLE zeus_user (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE zeus_catalog (
+CREATE TABLE catalog (
     year numeric(4,0)  NOT NULL,
     PRIMARY KEY (year)
 );
 
-CREATE TABLE zeus_major (
+CREATE TABLE major (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
     catalog_year numeric(4,0)  NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (catalog_year) REFERENCES zeus_catalog (year)
+    FOREIGN KEY (catalog_year) REFERENCES catalog (year)
 );
 
-CREATE TABLE zeus_minor (
+CREATE TABLE minor (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
     catalog_year numeric(4,0)  NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (catalog_year) REFERENCES zeus_catalog (year)
+    FOREIGN KEY (catalog_year) REFERENCES catalog (year)
 );
 
-CREATE TABLE zeus_concentration (
+CREATE TABLE concentration (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
     major_id int  NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (major_id) REFERENCES zeus_major (id)
+    FOREIGN KEY (major_id) REFERENCES major (id)
 );
 
-CREATE TABLE zeus_course (
+CREATE TABLE course (
     id varchar(9)  NOT NULL,
     name varchar(64)  NOT NULL,
     credits varchar(9)  NOT NULL,
@@ -67,119 +67,119 @@ CREATE TABLE zeus_course (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE zeus_catalog_course (
+CREATE TABLE catalog_course (
     catalog_year numeric(4,0)  NOT NULL,
     course_id varchar(9)  NOT NULL,
     PRIMARY KEY (course_id,catalog_year),
-    FOREIGN KEY (catalog_year) REFERENCES zeus_catalog (year),
-    FOREIGN KEY (course_id) REFERENCES zeus_course (id)
+    FOREIGN KEY (catalog_year) REFERENCES catalog (year),
+    FOREIGN KEY (course_id) REFERENCES course (id)
 );
 
-CREATE TABLE zeus_prereq (
+CREATE TABLE prereq (
     course_id varchar(9)  NOT NULL,
     prereq_id varchar(9)  NOT NULL,
     PRIMARY KEY (course_id,prereq_id),
-    FOREIGN KEY (course_id) REFERENCES zeus_course (id),
-    FOREIGN KEY (prereq_id) REFERENCES zeus_course (id)
+    FOREIGN KEY (course_id) REFERENCES course (id),
+    FOREIGN KEY (prereq_id) REFERENCES course (id)
 );
 
-CREATE TABLE zeus_gened (
+CREATE TABLE gened (
     catalog_year numeric(4,0)  NOT NULL,
     course_id varchar(9)  NOT NULL,
     type varchar(9)  NOT NULL CHECK (type in ('core', 'elective')),
     PRIMARY KEY (course_id,catalog_year),
-    FOREIGN KEY (catalog_year) REFERENCES zeus_catalog (year),
-    FOREIGN KEY (course_id) REFERENCES zeus_course (id)
+    FOREIGN KEY (catalog_year) REFERENCES catalog (year),
+    FOREIGN KEY (course_id) REFERENCES course (id)
 );
 
-CREATE TABLE zeus_major_course (
+CREATE TABLE major_course (
     major_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
     type varchar(9)  NOT NULL CHECK (type in ('core', 'cognate', 'elective')),
     PRIMARY KEY (course_id,major_id),
-    FOREIGN KEY (course_id) REFERENCES zeus_course (id),
-    FOREIGN KEY (major_id) REFERENCES zeus_major (id)
+    FOREIGN KEY (course_id) REFERENCES course (id),
+    FOREIGN KEY (major_id) REFERENCES major (id)
 );
 
-CREATE TABLE zeus_minor_course (
+CREATE TABLE minor_course (
     minor_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
     type varchar(9)  NOT NULL CHECK (type in ('core', 'cognate', 'elective')),
     PRIMARY KEY (course_id,minor_id),
-    FOREIGN KEY (minor_id) REFERENCES zeus_minor (id),
-    FOREIGN KEY (course_id) REFERENCES zeus_course (id)
+    FOREIGN KEY (minor_id) REFERENCES minor (id),
+    FOREIGN KEY (course_id) REFERENCES course (id)
 );
 
-CREATE TABLE zeus_concentration_course (
+CREATE TABLE concentration_course (
     concentration_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
     type varchar(9)  NOT NULL CHECK (type in ('core', 'cognate', 'elective')),
     PRIMARY KEY (course_id,concentration_id),
-    FOREIGN KEY (concentration_id) REFERENCES zeus_concentration (id),
-    FOREIGN KEY (course_id) REFERENCES zeus_course (id)
+    FOREIGN KEY (concentration_id) REFERENCES concentration (id),
+    FOREIGN KEY (course_id) REFERENCES course (id)
 );
 
-CREATE TABLE zeus_plan (
+CREATE TABLE plan (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
     user_id int  NOT NULL,
     catalog_year numeric(4,0)  NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES zeus_user (id),
-    FOREIGN KEY (catalog_year) REFERENCES zeus_catalog (year)
+    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (catalog_year) REFERENCES catalog (year)
 );
 
-CREATE TABLE zeus_planned_major (
+CREATE TABLE planned_major (
     major_id int  NOT NULL,
     plan_id int  NOT NULL,
     PRIMARY KEY (major_id,plan_id),
-    FOREIGN KEY (major_id) REFERENCES zeus_major (id),
-    FOREIGN KEY (plan_id) REFERENCES zeus_plan (id)
+    FOREIGN KEY (major_id) REFERENCES major (id),
+    FOREIGN KEY (plan_id) REFERENCES plan (id)
 );
 
-CREATE TABLE zeus_planned_minor (
+CREATE TABLE planned_minor (
     minor_id int  NOT NULL,
     plan_id int  NOT NULL,
     PRIMARY KEY (minor_id,plan_id),
-    FOREIGN KEY (minor_id) REFERENCES zeus_minor (id),
-    FOREIGN KEY (plan_id) REFERENCES zeus_plan (id)
+    FOREIGN KEY (minor_id) REFERENCES minor (id),
+    FOREIGN KEY (plan_id) REFERENCES plan (id)
 );
 
-CREATE TABLE zeus_planned_concentration (
+CREATE TABLE planned_concentration (
     concentration_id int  NOT NULL,
     plan_id int  NOT NULL,
     PRIMARY KEY (concentration_id,plan_id),
-    FOREIGN KEY (concentration_id) REFERENCES zeus_concentration (id),
-    FOREIGN KEY (plan_id) REFERENCES zeus_plan (id)
+    FOREIGN KEY (concentration_id) REFERENCES concentration (id),
+    FOREIGN KEY (plan_id) REFERENCES plan (id)
 );
 
-CREATE TABLE zeus_planned_course (
+CREATE TABLE planned_course (
     plan_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
     year numeric(4,0)  NOT NULL,
     term varchar(6)  NOT NULL CHECK (term in ('FA', 'SP', 'SU')),
     PRIMARY KEY (plan_id,course_id,year,term),
-    FOREIGN KEY (course_id) REFERENCES zeus_course (id),
-    FOREIGN KEY (plan_id) REFERENCES zeus_plan (id)
+    FOREIGN KEY (course_id) REFERENCES course (id),
+    FOREIGN KEY (plan_id) REFERENCES plan (id)
 );
 
 -- End of table creation
 
-INSERT INTO zeus_user
+INSERT INTO user
     (username, phash, name, gpa, major_gpa, default_plan_id)
 VALUES
     ('loganmiller216','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Logan Miller', '3.55','3.60', 1),
     ('jgrady','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Jacob Grady', '3.75','3.50', 2),
     ('kaidendelsing','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Kai Delsing', '3.50','3.65', 3);
 
-INSERT INTO zeus_catalog
+INSERT INTO catalog
     (year)
 VALUES
     (2021),
     (2022),
     (2023);
 
-INSERT INTO zeus_major
+INSERT INTO major
     (name, catalog_year)
 VALUES
     ('Computer Science', 2021),
@@ -188,7 +188,7 @@ VALUES
     ('Math', 2021),
     ('Bible', 2021);
 
-INSERT INTO zeus_minor
+INSERT INTO minor
     (name, catalog_year)
 VALUES
     ('Computer Science', 2021),
@@ -198,7 +198,7 @@ VALUES
     ('Bible', 2021),
     ('Creative Writing', 2021);
 
-INSERT INTO zeus_concentration
+INSERT INTO concentration
     (name, major_id)
 VALUES
     ('Cyber Operations', 1),
@@ -207,7 +207,7 @@ VALUES
     ('Video Game Engineering', 1);
 
 -- Populate with Python script from plan json
-INSERT INTO zeus_course
+INSERT INTO course
     (id, name, credits, description)
 VALUES
     ('COLL-0900', 'Foundations', '1.0', 'Foundations is designed to orient students to the Cedarville University learning community, explore academic and life goals, and develop strenghts to enhance academic success. May not be applied toward the hours needed for graduation.'),
@@ -2183,7 +2183,7 @@ VALUES
     ('SOC-4990', 'Sociology Internship', '3.0-12.0', 'Sociology majors who participate in government  service, human services, research, social service, or other approved activities related to the social sciences may earn up to 12 hours of credit.');
 
 -- Populate with Python script from plan json
-INSERT INTO zeus_catalog_course
+INSERT INTO catalog_course
     (catalog_year, course_id)
 VALUES
     (2021, 'COLL-0900'),
@@ -4159,7 +4159,7 @@ VALUES
     (2021, 'SOC-4990');
 
 -- Leave empty
--- INSERT INTO zeus_prereq
+-- INSERT INTO prereq
 --     (course_id, prereq_id)
 -- VALUES
 --     ('','','',),
@@ -4167,7 +4167,7 @@ VALUES
 --     ('','','',);
 
 -- Populate with Python script from requirements json
-INSERT INTO zeus_gened
+INSERT INTO gened
     (catalog_year, course_id, type)
 VALUES
     (2021, 'BTGE-1725', 'core'),
@@ -4177,7 +4177,7 @@ VALUES
     (2021, 'BTGE-3765', 'core');
 
 -- Populate with Python script from requirements json
-INSERT INTO zeus_major_course
+INSERT INTO major_course
     (major_id, course_id, type)
 VALUES
     (1, 'CS-1210', 'core'),
@@ -4252,7 +4252,7 @@ VALUES
 
 -- Leave empty
 -- Populate with Python script from requirements json
--- INSERT INTO zeus_minor_course
+-- INSERT INTO minor_course
 --     (minor_id, course_id, type)
 -- VALUES
 --     ('','','',),
@@ -4261,14 +4261,14 @@ VALUES
 
 -- Leave empty
 -- Populate with Python script from requirements json
--- INSERT INTO zeus_concentration_course
+-- INSERT INTO concentration_course
 --     (concentration_id, course_id, type)
 -- VALUES
 --     ('','','',),
 --     ('','','',),
 --     ('','','',);
 
-INSERT INTO zeus_plan
+INSERT INTO plan
     (name, user_id, catalog_year)
 VALUES
     ('CS-CY Double Major',1,2021),
@@ -4276,7 +4276,7 @@ VALUES
     ('Default Plan',3,2021),
     ('Too Late to Change Majors',1,2023);
 
-INSERT INTO zeus_planned_major
+INSERT INTO planned_major
     (major_id, plan_id)
 VALUES
     (1, 1),
@@ -4286,7 +4286,7 @@ VALUES
     (2, 3),
     (4, 4);
 
-INSERT INTO zeus_planned_minor
+INSERT INTO planned_minor
     (minor_id, plan_id)
 VALUES
     (5, 1),
@@ -4296,14 +4296,14 @@ VALUES
     (1, 2),
     (6, 4);
 
-INSERT INTO zeus_planned_concentration
+INSERT INTO planned_concentration
     (concentration_id, plan_id)
 VALUES
     (1,1),
     (1,3);
 
 -- Populate with Python script from plan json
-INSERT INTO zeus_planned_course
+INSERT INTO planned_course
     (plan_id, course_id, year, term)
 VALUES
     (1, 'CY-4310', 2025, 'SP'),
