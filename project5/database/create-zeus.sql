@@ -1,17 +1,17 @@
--- Creation Order: user, catalog, major, minor, concentration, course, catalog_course, prereq, gened, major_course, minor_course, concentration_course, plan, planned_major, planned_minor, planned_concentration, planned_course
+-- Creation Order: user, catalog, major, minor, concentration, course, catalogcourse, prereq, gened, majorcourse, minorcourse, concentrationcourse, plan, plannedmajor, plannedminor, plannedconcentration, plannedcourse
 -- Destruction Order needs to be opposite
 -- TODO: create circular foreign key dependency of default_plan_id on plan (id)
-DROP TABLE IF EXISTS planned_course;
-DROP TABLE IF EXISTS planned_concentration;
-DROP TABLE IF EXISTS planned_minor;
-DROP TABLE IF EXISTS planned_major;
+DROP TABLE IF EXISTS plannedcourse;
+DROP TABLE IF EXISTS plannedconcentration;
+DROP TABLE IF EXISTS plannedminor;
+DROP TABLE IF EXISTS plannedmajor;
 DROP TABLE IF EXISTS plan;
-DROP TABLE IF EXISTS concentration_course;
-DROP TABLE IF EXISTS minor_course;
-DROP TABLE IF EXISTS major_course;
+DROP TABLE IF EXISTS concentrationcourse;
+DROP TABLE IF EXISTS minorcourse;
+DROP TABLE IF EXISTS majorcourse;
 DROP TABLE IF EXISTS gened;
 DROP TABLE IF EXISTS prereq;
-DROP TABLE IF EXISTS catalog_course;
+DROP TABLE IF EXISTS catalogcourse;
 DROP TABLE IF EXISTS course;
 DROP TABLE IF EXISTS concentration;
 DROP TABLE IF EXISTS minor;
@@ -67,7 +67,7 @@ CREATE TABLE course (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE catalog_course (
+CREATE TABLE catalogcourse (
     catalog_year numeric(4,0)  NOT NULL,
     course_id varchar(9)  NOT NULL,
     PRIMARY KEY (course_id,catalog_year),
@@ -92,7 +92,7 @@ CREATE TABLE gened (
     FOREIGN KEY (course_id) REFERENCES course (id)
 );
 
-CREATE TABLE major_course (
+CREATE TABLE majorcourse (
     major_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
     type varchar(9)  NOT NULL CHECK (type in ('core', 'cognate', 'elective')),
@@ -101,7 +101,7 @@ CREATE TABLE major_course (
     FOREIGN KEY (major_id) REFERENCES major (id)
 );
 
-CREATE TABLE minor_course (
+CREATE TABLE minorcourse (
     minor_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
     type varchar(9)  NOT NULL CHECK (type in ('core', 'cognate', 'elective')),
@@ -110,7 +110,7 @@ CREATE TABLE minor_course (
     FOREIGN KEY (course_id) REFERENCES course (id)
 );
 
-CREATE TABLE concentration_course (
+CREATE TABLE concentrationcourse (
     concentration_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
     type varchar(9)  NOT NULL CHECK (type in ('core', 'cognate', 'elective')),
@@ -129,7 +129,7 @@ CREATE TABLE plan (
     FOREIGN KEY (catalog_year) REFERENCES catalog (year)
 );
 
-CREATE TABLE planned_major (
+CREATE TABLE plannedmajor (
     major_id int  NOT NULL,
     plan_id int  NOT NULL,
     PRIMARY KEY (major_id,plan_id),
@@ -137,7 +137,7 @@ CREATE TABLE planned_major (
     FOREIGN KEY (plan_id) REFERENCES plan (id)
 );
 
-CREATE TABLE planned_minor (
+CREATE TABLE plannedminor (
     minor_id int  NOT NULL,
     plan_id int  NOT NULL,
     PRIMARY KEY (minor_id,plan_id),
@@ -145,7 +145,7 @@ CREATE TABLE planned_minor (
     FOREIGN KEY (plan_id) REFERENCES plan (id)
 );
 
-CREATE TABLE planned_concentration (
+CREATE TABLE plannedconcentration (
     concentration_id int  NOT NULL,
     plan_id int  NOT NULL,
     PRIMARY KEY (concentration_id,plan_id),
@@ -153,7 +153,7 @@ CREATE TABLE planned_concentration (
     FOREIGN KEY (plan_id) REFERENCES plan (id)
 );
 
-CREATE TABLE planned_course (
+CREATE TABLE plannedcourse (
     plan_id int  NOT NULL,
     course_id varchar(9)  NOT NULL,
     year numeric(4,0)  NOT NULL,
@@ -2183,7 +2183,7 @@ VALUES
     ('SOC-4990', 'Sociology Internship', '3.0-12.0', 'Sociology majors who participate in government  service, human services, research, social service, or other approved activities related to the social sciences may earn up to 12 hours of credit.');
 
 -- Populate with Python script from plan json
-INSERT INTO catalog_course
+INSERT INTO catalogcourse
     (catalog_year, course_id)
 VALUES
     (2021, 'COLL-0900'),
@@ -4177,7 +4177,7 @@ VALUES
     (2021, 'BTGE-3765', 'core');
 
 -- Populate with Python script from requirements json
-INSERT INTO major_course
+INSERT INTO majorcourse
     (major_id, course_id, type)
 VALUES
     (1, 'CS-1210', 'core'),
@@ -4252,7 +4252,7 @@ VALUES
 
 -- Leave empty
 -- Populate with Python script from requirements json
--- INSERT INTO minor_course
+-- INSERT INTO minorcourse
 --     (minor_id, course_id, type)
 -- VALUES
 --     ('','','',),
@@ -4261,7 +4261,7 @@ VALUES
 
 -- Leave empty
 -- Populate with Python script from requirements json
--- INSERT INTO concentration_course
+-- INSERT INTO concentrationcourse
 --     (concentration_id, course_id, type)
 -- VALUES
 --     ('','','',),
@@ -4276,7 +4276,7 @@ VALUES
     ('Default Plan',3,2021),
     ('Too Late to Change Majors',1,2023);
 
-INSERT INTO planned_major
+INSERT INTO plannedmajor
     (major_id, plan_id)
 VALUES
     (1, 1),
@@ -4286,7 +4286,7 @@ VALUES
     (2, 3),
     (4, 4);
 
-INSERT INTO planned_minor
+INSERT INTO plannedminor
     (minor_id, plan_id)
 VALUES
     (5, 1),
@@ -4296,14 +4296,14 @@ VALUES
     (1, 2),
     (6, 4);
 
-INSERT INTO planned_concentration
+INSERT INTO plannedconcentration
     (concentration_id, plan_id)
 VALUES
     (1,1),
     (1,3);
 
 -- Populate with Python script from plan json
-INSERT INTO planned_course
+INSERT INTO plannedcourse
     (plan_id, course_id, year, term)
 VALUES
     (1, 'CY-4310', 2025, 'SP'),
