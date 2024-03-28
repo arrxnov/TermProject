@@ -243,6 +243,9 @@ jQuery(document).ready(function () {
             if (pastSemester) {
                 semester.classList.remove("semester");
                 semester.classList.add("semester-past");
+            } else if (!currentSemester) {
+                semester.setAttribute("ondrop", "dropHandler(event, this)");
+                semester.setAttribute("ondragover", "dragOverHandler(event)");
             }
 
             if (!(y in years)) {
@@ -315,14 +318,15 @@ function dragStartHandler2(ev) {
     ev.dataTransfer.dropEffect = "copy";
 }
 
-function dropHandler(ev) {
+function dropHandler(ev, el) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+    el.appendChild(document.getElementById(data));
 }
 
 function dragOverHandler(ev) {
     ev.preventDefault();
+    ev.dataTransfer.dropEffect = "copy";
 }
 
 var getUrlParameter = function getUrlParameter(sParam) {
