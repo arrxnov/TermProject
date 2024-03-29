@@ -1,6 +1,14 @@
 To add an MVC:
-1. Scaffold-DBContext "server=localhost;database=project5db;username=root;password=" -Provider Pomelo.EntityFrameworkCore.MySql -OutputDir Models -Context <Name> -t <tablename> -f
+1. Scaffold-DBContext "server=localhost;database=zeus;username=root;password=" -Provider Pomelo.EntityFrameworkCore.MySql -OutputDir Models -Context <Name> -t <tablename> -f
 2. Controllers > Add > New Scaffolded Item > MVC Controller with views, using Entity Framework
+    if there is an error saying no primary key,
+    then add:
+        using System.ComponentModel.DataAnnotations;
+        [Key] (goes above the primary key)
+    if there is an issue with composite keys,
+    then add:
+        using Microsoft.EntityFrameworkCore;
+        [PrimaryKey(nameof(key1), nameof(key2))]
 3. Select correct object name and hit enter
 
 Important video info:
