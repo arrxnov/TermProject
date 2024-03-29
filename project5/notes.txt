@@ -5,7 +5,7 @@ To add an MVC:
 
 Important video info:
 1. First video
-2. Second video (0:00 - 19:50)
+2. Second video (14:00 - 19:50)
 
 Key Names:
 1. Olympus -- The main project name (project 5)
