@@ -8,5 +8,5 @@ Important video info:
 2. Second video (0:00 - 19:50)
 
 Key Names:
-1. olympus -- The main project name (project 5)
-2. zeus -- The database
+1. Olympus -- The main project name (project 5)
+2. Zeus -- The database
