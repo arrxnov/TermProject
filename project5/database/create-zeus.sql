@@ -20,14 +20,13 @@ DROP TABLE IF EXISTS catalog;
 DROP TABLE IF EXISTS user;
 
 CREATE TABLE user (
-    id int  NOT NULL AUTO_INCREMENT,
-    username varchar(32)  NOT NULL,
-    phash char(64)  NOT NULL,
+    id varchar(255),
     name varchar(64)  NOT NULL,
     gpa numeric(3,2)  NOT NULL,
     major_gpa numeric(3,2)  NOT NULL,
     default_plan_id int  NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES aspnetusers (id)
 );
 
 CREATE TABLE catalog (
@@ -122,7 +121,7 @@ CREATE TABLE concentrationcourse (
 CREATE TABLE plan (
     id int  NOT NULL AUTO_INCREMENT,
     name varchar(32)  NOT NULL,
-    user_id int  NOT NULL,
+    user_id varchar(255)  NOT NULL,
     catalog_year numeric(4,0)  NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user (id),
@@ -166,11 +165,10 @@ CREATE TABLE plannedcourse (
 -- End of table creation
 
 INSERT INTO user
-    (username, phash, name, gpa, major_gpa, default_plan_id)
+    (id, name, gpa, major_gpa, default_plan_id)
 VALUES
-    ('loganmiller216','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Logan Miller', '3.55','3.60', 1),
-    ('jgrady','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Jacob Grady', '3.75','3.50', 2),
-    ('kaidendelsing','82e1071bdcb5a6442a00b1072873f98fb886a161790ed04b1ad46650dc2bed24','Kai Delsing', '3.50','3.65', 3);
+    ('foobash','Logan Miller', '3.55','3.60', 1),
+    ('foobash','Jacob Grady', '3.75','3.50', 2);
 
 INSERT INTO catalog
     (year)
@@ -4271,10 +4269,9 @@ VALUES
 INSERT INTO plan
     (name, user_id, catalog_year)
 VALUES
-    ('CS-CY Double Major',1,2021),
-    ('My Cyber Ops Plan',2,2021),
-    ('Default Plan',3,2021),
-    ('Too Late to Change Majors',1,2023);
+    ('CS-CY Double Major','foobash',2021), --lmiller
+    ('My Cyber Ops Plan','foobash',2021), --jgrady
+    ('Too Late to Change Majors','foobash',2023); --lmiller
 
 INSERT INTO plannedmajor
     (major_id, plan_id)
