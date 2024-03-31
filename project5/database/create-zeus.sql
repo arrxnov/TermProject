@@ -167,8 +167,8 @@ CREATE TABLE plannedcourse (
 INSERT INTO user
     (id, name, gpa, major_gpa, default_plan_id)
 VALUES
-    ('foobash','Logan Miller', '3.55','3.60', 1),
-    ('foobash','Jacob Grady', '3.75','3.50', 2);
+    ('d1eae408-2a14-4740-ba90-d2caedacee76','Logan Miller', '3.55','3.60', 1),
+    ('ad39124a-9168-4541-b286-beb21cba6bca','Jacob Grady', '3.75','3.50', 2);
 
 INSERT INTO catalog
     (year)
@@ -4269,9 +4269,9 @@ VALUES
 INSERT INTO plan
     (name, user_id, catalog_year)
 VALUES
-    ('CS-CY Double Major','foobash',2021), --lmiller
-    ('My Cyber Ops Plan','foobash',2021), --jgrady
-    ('Too Late to Change Majors','foobash',2023); --lmiller
+    ('CS-CY Double Major','d1eae408-2a14-4740-ba90-d2caedacee76',2021), --lmiller
+    ('My Cyber Ops Plan','ad39124a-9168-4541-b286-beb21cba6bca',2021), --jgrady
+    ('Too Late to Change Majors','d1eae408-2a14-4740-ba90-d2caedacee76',2023); --lmiller
 
 INSERT INTO plannedmajor
     (major_id, plan_id)
