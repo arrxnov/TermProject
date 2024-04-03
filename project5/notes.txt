@@ -19,4 +19,4 @@ Key Names:
 1. Olympus -- The main project name (project 5)
 2. Zeus -- The database
 
-IMPORTANT: due to updates in the database, both user and plan models and controllers need to be updated!!
+IMPORTANT: always stop the preview from Visual Studio itself, never exit the tab (bad things happen with caching)!!
