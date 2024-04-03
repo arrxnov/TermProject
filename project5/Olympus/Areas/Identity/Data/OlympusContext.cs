@@ -21,7 +21,7 @@ public class OlympusContext : IdentityDbContext<OlympusUser>
         // Add your customizations after calling base.OnModelCreating(builder);
     }
 
-public DbSet<Olympus.Models.User> User { get; set; } = default!;
+public DbSet<Olympus.Models.User1> User { get; set; } = default!;
 
 public DbSet<Olympus.Models.Catalog> Catalog { get; set; } = default!;
 
@@ -45,7 +45,7 @@ public DbSet<Olympus.Models.Minorcourse> Minorcourse { get; set; } = default!;
 
 public DbSet<Olympus.Models.Concentrationcourse> Concentrationcourse { get; set; } = default!;
 
-public DbSet<Olympus.Models.Plan> Plan { get; set; } = default!;
+public DbSet<Olympus.Models.Plan1> Plan { get; set; } = default!;
 
 public DbSet<Olympus.Models.Plannedmajor> Plannedmajor { get; set; } = default!;
 

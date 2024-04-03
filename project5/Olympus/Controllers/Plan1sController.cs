@@ -10,22 +10,22 @@ using Olympus.Models;
 
 namespace Olympus.Controllers
 {
-    public class UsersController : Controller
+    public class Plan1sController : Controller
     {
         private readonly OlympusContext _context;
 
-        public UsersController(OlympusContext context)
+        public Plan1sController(OlympusContext context)
         {
             _context = context;
         }
 
-        // GET: Users
+        // GET: Plans
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.Plan.ToListAsync());
         }
 
-        // GET: Users/Details/5
+        // GET: Plans/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Olympus.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var plan = await _context.Plan
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (plan == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(plan);
         }
 
-        // GET: Users/Create
+        // GET: Plans/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Plans/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,Phash,Name,Gpa,MajorGpa,DefaultPlanId")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Name,UserId,CatalogYear")] Plan1 plan)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(plan);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(plan);
         }
 
-        // GET: Users/Edit/5
+        // GET: Plans/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Olympus.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var plan = await _context.Plan.FindAsync(id);
+            if (plan == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(plan);
         }
 
-        // POST: Users/Edit/5
+        // POST: Plans/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Phash,Name,Gpa,MajorGpa,DefaultPlanId")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserId,CatalogYear")] Plan1 plan)
         {
-            if (id != user.Id)
+            if (id != plan.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Olympus.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(plan);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!PlanExists(plan.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Olympus.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(plan);
         }
 
-        // GET: Users/Delete/5
+        // GET: Plans/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace Olympus.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var plan = await _context.Plan
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (plan == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(plan);
         }
 
-        // POST: Users/Delete/5
+        // POST: Plans/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user != null)
+            var plan = await _context.Plan.FindAsync(id);
+            if (plan != null)
             {
-                _context.User.Remove(user);
+                _context.Plan.Remove(plan);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool PlanExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Plan.Any(e => e.Id == id);
         }
     }
 }
