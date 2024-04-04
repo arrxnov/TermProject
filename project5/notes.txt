@@ -20,3 +20,12 @@ Key Names:
 2. Zeus -- The database
 
 IMPORTANT: always stop the preview from Visual Studio itself, never exit the tab (bad things happen with caching)!!
+
+TODO:
+1. Finish Admin and Faculty views
+2. Set Options to display more or less depending on the view
+3. CSS Login/Register page
+4. Update database to contain advisees
+5. Update database to hold theme selection for user
+6. Remove unnecessary views and Controllers
+7. Remove commented out code
