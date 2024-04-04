@@ -140,7 +140,7 @@ p {
 }
 
 ul.menu {
-    margin: 0;
+    margin: 4px;
     padding: 0;
     display: flex;
 }

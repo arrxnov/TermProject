@@ -54,4 +54,8 @@ public DbSet<Olympus.Models.Plannedminor> Plannedminor { get; set; } = default!;
 public DbSet<Olympus.Models.Plannedconcentration> Plannedconcentration { get; set; } = default!;
 
 public DbSet<Olympus.Models.Plannedcourse> Plannedcourse { get; set; } = default!;
+
+public DbSet<Olympus.Models.Plan> Plan_1 { get; set; } = default!;
+
+public DbSet<Olympus.Models.User> User_1 { get; set; } = default!;
 }

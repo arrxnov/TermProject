@@ -14,12 +14,13 @@ namespace Olympus.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = "Admin,Faculty,Student")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Privacy()
         {
             return View();
