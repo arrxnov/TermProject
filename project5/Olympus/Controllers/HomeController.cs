@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Olympus.Models;
 using System.Diagnostics;
 
@@ -14,13 +15,37 @@ namespace Olympus.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = "Admin,Faculty,Student")]
         public IActionResult Index()
+        {
+            if (HttpContext.User.IsInRole("Admin"))
+            {
+                return View("Admin");
+            } 
+            else if (HttpContext.User.IsInRole("Faculty"))
+            {
+                return View("Faculty");
+            } 
+            else
+            {
+                return View("Student");
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult Admin()
         {
             return View();
         }
 
-        [Authorize]
-        public IActionResult Privacy()
+        [Authorize(Roles = "Admin,Faculty")]
+        public IActionResult Faculty()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin,Faculty,Student")]
+        public IActionResult Student()
         {
             return View();
         }
@@ -30,5 +55,6 @@ namespace Olympus.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

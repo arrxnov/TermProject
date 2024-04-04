@@ -10,11 +10,11 @@ using Olympus.Models;
 
 namespace Olympus.Controllers
 {
-    public class User1sController : Controller
+    public class UsersController : Controller
     {
         private readonly OlympusContext _context;
 
-        public User1sController(OlympusContext context)
+        public UsersController(OlympusContext context)
         {
             _context = context;
         }
@@ -22,18 +22,18 @@ namespace Olympus.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.User_1.ToListAsync());
         }
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.User
+            var user = await _context.User_1
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -54,7 +54,7 @@ namespace Olympus.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,Phash,Name,Gpa,MajorGpa,DefaultPlanId")] User1 user)
+        public async Task<IActionResult> Create([Bind("Id,Name,Gpa,MajorGpa,DefaultPlanId")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -66,14 +66,14 @@ namespace Olympus.Controllers
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.User_1.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace Olympus.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Phash,Name,Gpa,MajorGpa,DefaultPlanId")] User1 user)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Gpa,MajorGpa,DefaultPlanId")] User user)
         {
             if (id != user.Id)
             {
@@ -117,14 +117,14 @@ namespace Olympus.Controllers
         }
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.User
+            var user = await _context.User_1
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -137,21 +137,21 @@ namespace Olympus.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.User_1.FindAsync(id);
             if (user != null)
             {
-                _context.User.Remove(user);
+                _context.User_1.Remove(user);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(string id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.User_1.Any(e => e.Id == id);
         }
     }
 }

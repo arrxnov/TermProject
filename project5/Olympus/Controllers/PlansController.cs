@@ -10,11 +10,11 @@ using Olympus.Models;
 
 namespace Olympus.Controllers
 {
-    public class Plan1sController : Controller
+    public class PlansController : Controller
     {
         private readonly OlympusContext _context;
 
-        public Plan1sController(OlympusContext context)
+        public PlansController(OlympusContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace Olympus.Controllers
         // GET: Plans
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Plan.ToListAsync());
+            return View(await _context.Plan_1.ToListAsync());
         }
 
         // GET: Plans/Details/5
@@ -33,7 +33,7 @@ namespace Olympus.Controllers
                 return NotFound();
             }
 
-            var plan = await _context.Plan
+            var plan = await _context.Plan_1
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (plan == null)
             {
@@ -54,7 +54,7 @@ namespace Olympus.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,UserId,CatalogYear")] Plan1 plan)
+        public async Task<IActionResult> Create([Bind("Id,Name,UserId,CatalogYear")] Plan plan)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace Olympus.Controllers
                 return NotFound();
             }
 
-            var plan = await _context.Plan.FindAsync(id);
+            var plan = await _context.Plan_1.FindAsync(id);
             if (plan == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace Olympus.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserId,CatalogYear")] Plan1 plan)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserId,CatalogYear")] Plan plan)
         {
             if (id != plan.Id)
             {
@@ -124,7 +124,7 @@ namespace Olympus.Controllers
                 return NotFound();
             }
 
-            var plan = await _context.Plan
+            var plan = await _context.Plan_1
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (plan == null)
             {
@@ -139,10 +139,10 @@ namespace Olympus.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var plan = await _context.Plan.FindAsync(id);
+            var plan = await _context.Plan_1.FindAsync(id);
             if (plan != null)
             {
-                _context.Plan.Remove(plan);
+                _context.Plan_1.Remove(plan);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace Olympus.Controllers
 
         private bool PlanExists(int id)
         {
-            return _context.Plan.Any(e => e.Id == id);
+            return _context.Plan_1.Any(e => e.Id == id);
         }
     }
 }

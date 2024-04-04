@@ -7,10 +7,14 @@ var connectionString = builder.Configuration.GetConnectionString("OlympusContext
 
 builder.Services.AddDbContext<OlympusContext>(options => options.UseMySql(connectionString, new MySqlServerVersion(new Version(10,4,32))));
 
-builder.Services.AddDefaultIdentity<OlympusUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<OlympusContext>();
+builder.Services.AddIdentity<OlympusUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddDefaultUI()
+    .AddEntityFrameworkStores<OlympusContext>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 

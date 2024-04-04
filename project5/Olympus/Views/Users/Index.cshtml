@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Olympus.Models.User1>
+﻿@model IEnumerable<Olympus.Models.User>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,12 +12,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phash)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -36,12 +30,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phash)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
