@@ -1,8 +1,29 @@
 ﻿@*
-    Header comments here
+    This view renders the student's ape page.
 *@
 @{
     ViewData["Title"] = "Student";
+    Layout = "_Layout";
+}
+
+@section Options {
+    <li>
+        <p>Plans</p>
+        <ul id="planSubMenu"></ul>
+    </li>
+    <li>
+        <p>Print</p>
+    </li>
+    <li>
+        <p>Grades</p>
+    </li>
+    <li>
+        <p>Waivers</p>
+    </li>
+}
+
+@section Scripts {
+    
 }
 
 <div id="leftContainer">

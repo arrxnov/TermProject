@@ -57,8 +57,12 @@ jQuery(document).ready(function () {
         window.open("", "_blank");
     });
 
-    jQuery("#logout").click(function () {
-        window.open("http://judah.cedarville.edu/~grady/TermProject/project4/logout.php", "_self");
+    jQuery("#login").click(function () {
+        window.open("/Identity/Account/Login", "_self");
+    });
+
+    jQuery("#register").click(function () {
+        window.open("/Identity/Account/Register", "_self");
     });
 
     jQuery(".blink").each(function () {
