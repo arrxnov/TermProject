@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Olympus.Areas.Identity.Data;
 using Olympus.Data;
+using Olympus.Models;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("OlympusContextConnection") ?? throw new InvalidOperationException("Connection string 'OlympusContextConnection' not found.");
 
 builder.Services.AddDbContext<OlympusContext>(options => options.UseMySql(connectionString, new MySqlServerVersion(new Version(10,4,32))));
+builder.Services.AddDbContext<zeusContext>(options => options.UseMySql(connectionString, new MySqlServerVersion(new Version(10, 4, 32))));
 
 builder.Services.AddIdentity<OlympusUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddDefaultUI()
@@ -28,15 +30,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 app.MapRazorPages();
-
 app.Run();

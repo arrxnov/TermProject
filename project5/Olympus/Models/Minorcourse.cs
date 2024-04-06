@@ -1,15 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Olympus.Models;
 
-[PrimaryKey(nameof(CourseId), nameof(MinorId))]
-public partial class Minorcourse
+public partial class minorcourse
 {
-    public int MinorId { get; set; }
+    public int minor_id { get; set; }
 
-    public string CourseId { get; set; } = null!;
+    public string course_id { get; set; } = null!;
 
-    public string Type { get; set; } = null!;
+    public string type { get; set; } = null!;
+
+    public virtual course course { get; set; } = null!;
+
+    public virtual minor minor { get; set; } = null!;
 }

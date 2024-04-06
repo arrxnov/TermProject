@@ -3,13 +3,25 @@ using System.Collections.Generic;
 
 namespace Olympus.Models;
 
-public partial class Plan
+public partial class plan
 {
-    public int Id { get; set; }
+    public int id { get; set; }
 
-    public string Name { get; set; } = null!;
+    public string name { get; set; } = null!;
 
-    public string UserId { get; set; } = null!;
+    public string user_id { get; set; } = null!;
 
-    public decimal CatalogYear { get; set; }
+    public decimal catalog_year { get; set; }
+
+    public virtual catalog catalog_yearNavigation { get; set; } = null!;
+
+    public virtual ICollection<plannedcourse> plannedcourses { get; set; } = new List<plannedcourse>();
+
+    public virtual user user { get; set; } = null!;
+
+    public virtual ICollection<concentration> concentrations { get; set; } = new List<concentration>();
+
+    public virtual ICollection<major> majors { get; set; } = new List<major>();
+
+    public virtual ICollection<minor> minors { get; set; } = new List<minor>();
 }

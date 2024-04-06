@@ -1,17 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Olympus.Models;
 
-[PrimaryKey(nameof(PlanId), nameof(CourseId), nameof(Year), nameof(Term))]
-public partial class Plannedcourse
+public partial class plannedcourse
 {
-    public int PlanId { get; set; }
+    public int plan_id { get; set; }
 
-    public string CourseId { get; set; } = null!;
+    public string course_id { get; set; } = null!;
 
-    public decimal Year { get; set; }
+    public decimal year { get; set; }
 
-    public string Term { get; set; } = null!;
+    public string term { get; set; } = null!;
+
+    public virtual course course { get; set; } = null!;
+
+    public virtual plan plan { get; set; } = null!;
 }

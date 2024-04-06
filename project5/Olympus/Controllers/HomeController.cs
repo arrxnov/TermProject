@@ -20,34 +20,16 @@ namespace Olympus.Controllers
         {
             if (HttpContext.User.IsInRole("Admin"))
             {
-                return View("Admin");
+                return RedirectToAction("Index", "Admin");
             } 
             else if (HttpContext.User.IsInRole("Faculty"))
             {
-                return View("Faculty");
+                return RedirectToAction("Index", "Faculty");
             } 
             else
             {
-                return View("Student");
+                return RedirectToAction("Index", "Student");
             }
-        }
-
-        [Authorize(Roles = "Admin")]
-        public IActionResult Admin()
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "Admin,Faculty")]
-        public IActionResult Faculty()
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "Admin,Faculty,Student")]
-        public IActionResult Student()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
