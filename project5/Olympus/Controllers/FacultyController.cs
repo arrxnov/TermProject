@@ -23,8 +23,12 @@ namespace Olympus.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            return View(await _context.aspnetusers.Where(stu => stu.advisors.ToList().Contains((IdentityUser)user)).ToListAsync());
-            //return View(await _context.aspnetusers.ToListAsync());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(await _context.aspnetusers.Where(stu => (stu.advisors.Select(t => t.Id).ToList().Contains(user.Id)) || false).ToListAsync());
         }
     }
 }
