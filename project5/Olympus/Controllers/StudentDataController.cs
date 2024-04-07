@@ -41,6 +41,8 @@ namespace Olympus.Controllers
                 return Forbid();
             }
 
+            // TODO add database query here
+
             var JsonData = new { };
 
             return Ok(JsonData);
@@ -55,6 +57,8 @@ namespace Olympus.Controllers
             {
                 return Forbid();
             }
+
+            // TODO add database query here
 
             var JsonData = new { };
 
@@ -71,6 +75,8 @@ namespace Olympus.Controllers
                 return Forbid();
             }
 
+            // TODO add database query here
+
             var JsonData = new { };
 
             return Ok(JsonData);
@@ -85,6 +91,8 @@ namespace Olympus.Controllers
             {
                 return Forbid();
             }
+
+            // TODO add database query here
 
             var JsonData = new { };
 
