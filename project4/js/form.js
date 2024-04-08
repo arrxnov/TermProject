@@ -134,7 +134,7 @@ jQuery(document).ready(function () {
             fetch_string = "./get-requirements.php";
         } else {
             fetch_string = "./get-requirements.php?" + new URLSearchParams({
-                planId: getUrlParameter("planId"),
+                planId: getUrlParamePLter("planId"),
             });
         }
         const response = await fetch(fetch_string);
@@ -172,22 +172,22 @@ jQuery(document).ready(function () {
         for (let course in reqs.categories.Cognates.courses) {
             course = reqs.categories.Cognates.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("cognates").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
+            document.getElementById("cognates").innerHTML += `<p id=${global_noncollision++} class=\"course req\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
         for (let course in reqs.categories.Electives.courses) {
             course = reqs.categories.Electives.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("electives").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
+            document.getElementById("electives").innerHTML += `<p id=${global_noncollision++} class=\"course req\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
         for (let course in reqs.categories.Core.courses) {
             course = reqs.categories.Core.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("core").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
+            document.getElementById("core").innerHTML += `<p id=${global_noncollision++} class=\"course req\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
         for (let course in reqs.categories.GenEds.courses) {
             course = reqs.categories.GenEds.courses[course];
             let courseName = getCourseName(course);
-            document.getElementById("geneds").innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
+            document.getElementById("geneds").innerHTML += `<p id=${global_noncollision++} class=\"course req\" draggable=\"true\" ondragstart=\"dragStartHandler2(event)\"> <span class=\"course-id\">` + course + "</span> " + courseName + "</p>";
         }
     }
 
@@ -321,12 +321,25 @@ function dragStartHandler2(ev) {
 function dropHandler(ev, el) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
-    el.appendChild(document.getElementById(data));
+    if (ev.target.classList.contains("req")) {
+        var nodeCopy = document.getElementById(data).cloneNode(true)
+        nodeCopy.id = global_noncollision++;
+        el.appendChild(document.getElementById(nodeCopy));
+    } else {
+        ev.dataTransfer.dropEffect = "move";
+        el.appendChild(document.getElementById(data));
+    }
+}
+
+function dropHandler2(ev, el) {
+    ev.preventDefault();
+    ev.dataTransfer.dropEffect = "move";
+    var thing = document.getElementById(e.dataTransfer.getData('Text'));
+    thing.parentNode.removeChild(el);
 }
 
 function dragOverHandler(ev) {
     ev.preventDefault();
-    ev.dataTransfer.dropEffect = "copy";
 }
 
 var getUrlParameter = function getUrlParameter(sParam) {
