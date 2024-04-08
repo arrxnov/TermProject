@@ -41,6 +41,20 @@ namespace Olympus.Controllers
                 return Forbid();
             }
 
+            else if (HttpContext.User.IsInRole("Faculty"))
+            {
+                
+                var isAdvisee = new zeusContext().aspnetuser
+                    .Where(u => u.id == user.Id)
+                    .Select(u => u.advisees)
+                    .Contains(studentId);
+                
+                if (!isAdvisee) 
+                {
+                    return Forbid();
+                }
+            }
+
             var JsonData = new zeusContext().users
                 .Where(u =>  u.id == studentId)
                 .Select(u => new { u.name, u.gpa, u.major_gpa, u.default_plan_id });
