@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Olympus.Areas.Identity.Data;
 using Olympus.Models;
 
@@ -43,13 +44,11 @@ namespace Olympus.Controllers
 
             else if (HttpContext.User.IsInRole("Faculty"))
             {
-                
-                var isAdvisee = new zeusContext().aspnetuser
-                    .Where(u => u.id == user.Id)
-                    .Select(u => u.advisees)
-                    .Contains(studentId);
-                
-                if (!isAdvisee) 
+                var isNotAdvisee = new zeusContext().aspnetusers
+                    .Where(u => u.Id == user.Id)
+                    .Select(u => u.advisees.Where(a => a.Id == studentId)).ToList()[0].IsNullOrEmpty();
+
+                if (isNotAdvisee)
                 {
                     return Forbid();
                 }
@@ -72,6 +71,18 @@ namespace Olympus.Controllers
                 return Forbid();
             }
 
+            else if (HttpContext.User.IsInRole("Faculty"))
+            {
+                var isNotAdvisee = new zeusContext().aspnetusers
+                    .Where(u => u.Id == user.Id)
+                    .Select(u => u.advisees.Where(a => a.Id == studentId)).ToList()[0].IsNullOrEmpty();
+
+                if (isNotAdvisee)
+                {
+                    return Forbid();
+                }
+            }
+
             var JsonData = new zeusContext().plans
                 .Where(p => p.user_id == studentId)
                 .Select(p => new { p.id });
@@ -89,6 +100,18 @@ namespace Olympus.Controllers
                 return Forbid();
             }
 
+            else if (HttpContext.User.IsInRole("Faculty"))
+            {
+                var isNotAdvisee = new zeusContext().aspnetusers
+                    .Where(u => u.Id == user.Id)
+                    .Select(u => u.advisees.Where(a => a.Id == studentId)).ToList()[0].IsNullOrEmpty();
+
+                if (isNotAdvisee)
+                {
+                    return Forbid();
+                }
+            }
+
             // TODO add database query here
 
             var JsonData = new { };
@@ -104,6 +127,18 @@ namespace Olympus.Controllers
             if ((HttpContext.User.IsInRole("Student")) && (user.Id != studentId))
             {
                 return Forbid();
+            }
+
+            else if (HttpContext.User.IsInRole("Faculty"))
+            {
+                var isNotAdvisee = new zeusContext().aspnetusers
+                    .Where(u => u.Id == user.Id)
+                    .Select(u => u.advisees.Where(a => a.Id == studentId)).ToList()[0].IsNullOrEmpty();
+
+                if (isNotAdvisee)
+                {
+                    return Forbid();
+                }
             }
 
             // TODO add database query here

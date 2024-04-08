@@ -296,37 +296,66 @@ async function populatePlanDropdown(userId) {
     });
 }
 
-//function dragStartHandler(ev) {
-//    ev.dataTransfer.setData("text", ev.target.id);
-//    ev.dataTransfer.dropEffect = "move";
-//}
+async function populateRequirements(userId, planId) {
+    const response = await fetch("api/studentdata/getrequirements/" + userId + "/" + planId);
+    const requirements = await response.json();
 
-//function dragStartHandler2(ev) {
-//    ev.dataTransfer.setData("text", ev.target.id);
-//    ev.dataTransfer.dropEffect = "copy";
-//}
+}
 
-//function dropHandler(ev) {
-//    ev.preventDefault();
-//    const data = ev.dataTransfer.getData("text");
-//    ev.target.appendChild(document.getElementById(data));
-//}
+async function populateCourses(userId, planId) {
+    const response = await fetch("api/studentdata/getplannedcourses/" + userId + "/" + planId);
+    const courses = await response.json();
 
-//function dragOverHandler(ev) {
-//    ev.preventDefault();
-//}
+}
 
-//var getUrlParameter = function getUrlParameter(sParam) {
-//    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-//        sURLVariables = sPageURL.split('&'),
-//        sParameterName,
-//        i;
+function dragAndDropifyDatatable() {
+    let rows = document.getElementById("searchtable").getElementsByTagName("tr");
+    rows.forEach(function (item) {
+        item.setAttribute("draggable", True);
+        item.setAttribute("ondragstart", "dragStartHandler2");
+        item.classList.add("table-member");
+    });
 
-//    for (i = 0; i < sURLVariables.length; i++) {
-//        sParameterName = sURLVariables[i].split('=');
+}
 
-//        if (sParameterName[0] === sParam) {
-//            return sParameterName[1] === undefined ? true : sParameterName[1];
-//        }
-//    }
-//};
+function dragStartHandler(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.dropEffect = "move";
+}
+
+function dragStartHandler2(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+    ev.dataTransfer.dropEffect = "copy";
+}
+
+function dropHandler(ev) {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
+
+function dropHandler2(ev, el) {
+    ev.preventDefault();
+    ev.dataTransfer.dropEffect = "move";
+    var thing = document.getElementById(evs.dataTransfer.getData('Text'));
+    thing.parentNode.removeChild(el);
+}
+
+function dragOverHandler(ev) {
+    ev.preventDefault();
+}
+
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
