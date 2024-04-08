@@ -46,7 +46,10 @@ namespace Olympus.Controllers
             {
                 var isNotAdvisee = new zeusContext().aspnetusers
                     .Where(u => u.Id == user.Id)
-                    .Select(u => u.advisees.Where(a => a.Id == studentId)).ToList()[0].IsNullOrEmpty();
+                    .Select(u => u.advisees
+                        .Where(a => a.Id == studentId))
+                    .ToList()[0]
+                    .IsNullOrEmpty();
 
                 if (isNotAdvisee)
                 {
@@ -75,7 +78,10 @@ namespace Olympus.Controllers
             {
                 var isNotAdvisee = new zeusContext().aspnetusers
                     .Where(u => u.Id == user.Id)
-                    .Select(u => u.advisees.Where(a => a.Id == studentId)).ToList()[0].IsNullOrEmpty();
+                    .Select(u => u.advisees
+                        .Where(a => a.Id == studentId))
+                    .ToList()[0]
+                    .IsNullOrEmpty();
 
                 if (isNotAdvisee)
                 {
@@ -86,6 +92,38 @@ namespace Olympus.Controllers
             var JsonData = new zeusContext().plans
                 .Where(p => p.user_id == studentId)
                 .Select(p => new { p.id });
+
+            return Ok(JsonData);
+        }
+
+        [HttpGet("{studentId}/{planId}")]
+        public async Task<IActionResult> GetPlanMetadata(string studentId, int planId)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if ((HttpContext.User.IsInRole("Student")) && (user.Id != studentId))
+            {
+                return Forbid();
+            }
+
+            else if (HttpContext.User.IsInRole("Faculty"))
+            {
+                var isNotAdvisee = new zeusContext().aspnetusers
+                    .Where(u => u.Id == user.Id)
+                    .Select(u => u.advisees
+                        .Where(a => a.Id == studentId))
+                    .ToList()[0] 
+                    .IsNullOrEmpty();
+
+                if (isNotAdvisee)
+                {
+                    return Forbid();
+                }
+            }
+
+            var JsonData = new zeusContext().plans
+                .Where(p => p.id == planId)
+                .Select(p => new { p.name, p.catalog_year, majors = p.majors.Select(m => m.name), minors = p.minors.Select(m => m.name) });
 
             return Ok(JsonData);
         }
@@ -104,7 +142,10 @@ namespace Olympus.Controllers
             {
                 var isNotAdvisee = new zeusContext().aspnetusers
                     .Where(u => u.Id == user.Id)
-                    .Select(u => u.advisees.Where(a => a.Id == studentId)).ToList()[0].IsNullOrEmpty();
+                    .Select(u => u.advisees
+                        .Where(a => a.Id == studentId))
+                    .ToList()[0]
+                    .IsNullOrEmpty();
 
                 if (isNotAdvisee)
                 {
@@ -112,9 +153,9 @@ namespace Olympus.Controllers
                 }
             }
 
-            // TODO add database query here
-
-            var JsonData = new { };
+            var JsonData = new zeusContext().plannedcourses
+                .Where(c => c.plan_id == planId)
+                .Select(c => new { c.course_id, c.year, c.term});
 
             return Ok(JsonData);
         }
@@ -122,30 +163,65 @@ namespace Olympus.Controllers
         [HttpGet("{studentId}/{planId}")]
         public async Task<IActionResult> GetRequirements(string studentId, int planId)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
+           var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            if ((HttpContext.User.IsInRole("Student")) && (user.Id != studentId))
-            {
-                return Forbid();
-            }
+           if ((HttpContext.User.IsInRole("Student")) && (user.Id != studentId))
+           {
+               return Forbid();
+           }
 
-            else if (HttpContext.User.IsInRole("Faculty"))
-            {
-                var isNotAdvisee = new zeusContext().aspnetusers
-                    .Where(u => u.Id == user.Id)
-                    .Select(u => u.advisees.Where(a => a.Id == studentId)).ToList()[0].IsNullOrEmpty();
+           else if (HttpContext.User.IsInRole("Faculty"))
+           {
+               var isNotAdvisee = new zeusContext().aspnetusers
+                   .Where(u => u.Id == user.Id)
+                   .Select(u => u.advisees
+                       .Where(a => a.Id == studentId))
+                   .ToList()[0]
+                   .IsNullOrEmpty();
 
-                if (isNotAdvisee)
-                {
-                    return Forbid();
-                }
-            }
+               if (isNotAdvisee)
+               {
+                   return Forbid();
+               }
+           }
 
-            // TODO add database query here
+           var context = new zeusContext();
 
-            var JsonData = new { };
+           var catYear = context.plans
+               .Where(p => p.id == planId)
+               .Select(p => p.catalog_year)
+               .ToList()[0];
 
-            return Ok(JsonData);
+           var genedData = context.geneds
+               .Where(g => g.catalog_year == catYear)
+               .Select(g => new { g.course_id, g.type });
+
+           var majorData = context.plans
+               .Select(p => p.majors
+                   .Select(m => m.majorcourses
+                       .Select(mc => new { mc.course_id, mc.type })));
+            
+           var minorData = context.plans
+               .Select(p => p.minors
+                   .Select(m => m.minorcourses
+                       .Select(mc => new { mc.course_id, mc.type })));
+
+           var concentrationData = context.plans
+               .Select(p => p.concentrations
+                   .Select(m => m.concentrationcourses
+                       .Select(mc => new { mc.course_id, mc.type })));
+
+           var JsonData = genedData.Union(majorData);
+
+
+           // TODO add database query here
+           // union the following:
+           // geneds {course_id, type} (select by plan.catalog_year)
+           // plan.majors.majorcourses {course_id, type} (select by plan.catalog_year)
+           // plan.minors.minorcourses {course_id, type} (select by plan.catalog_year)
+           // plan.concentration.concentrationcourses {course_id, type} (select by plan.catalog_year)
+
+           return Ok(JsonData);
         }
     }
 }

@@ -2,9 +2,9 @@
  * Filename: student.js
  * Authors: Logan Miller, Jacob Grady, Kai Delsing
  */
-
+let global_noncollision = "1";
 jQuery(document).ready(function () {
-    let global_noncollision = "1";
+    
     let years = {};
     let courseNames = {};
 
@@ -15,10 +15,12 @@ jQuery(document).ready(function () {
 async function initPage(plan_id) {
     populateSearchTable();
     populatePlanDropdown("d1eae408-2a14-4740-ba90-d2caedacee76"); // make id dynamic, just for POC purposes
+    
     // use default parm in controller that defaults to logged in user's id
     // otherwise, pass the student id along from the faculty controller
 
-
+    if (plan_id == 0) plan_id++; // default behavior
+    populateHeader("d1eae408-2a14-4740-ba90-d2caedacee76", plan_id);
 
     //jQuery(function () {
     //    jQuery('ul.menu li').hover(function () {
@@ -278,11 +280,19 @@ async function populateSearchTable() {
             { data: 'description', orderable: false }
         ]
     });
+    rows = document.getElementById("searchTable").getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+    for (row of rows) {
+        console.log(row);
+        row.setAttribute("id", global_noncollision++);
+        row.setAttribute("draggable", true);
+        row.setAttribute("ondragstart", "dragStartHandler(event)");
+        row.classList.add("table-member");
+    }
 }
 
 async function populatePlanDropdown(userId) {
 
-    const response = await fetch("api/studentdata/getplans/" + userId);
+    const response = await fetch("/api/studentdata/getplans/" + userId);
     const dropdownPlans = await response.json();
     let planDropdown = jQuery("#planSubMenu");
 
@@ -297,48 +307,79 @@ async function populatePlanDropdown(userId) {
 }
 
 async function populateRequirements(userId, planId) {
-    const response = await fetch("api/studentdata/getrequirements/" + userId + "/" + planId);
+    const response = await fetch("/api/studentdata/getrequirements/" + userId + "/" + planId);
     const requirements = await response.json();
 
 }
 
 async function populateCourses(userId, planId) {
-    const response = await fetch("api/studentdata/getplannedcourses/" + userId + "/" + planId);
-    const courses = await response.json();
+    let response = await fetch("/api/studentdata/getplannedcourses/" + userId + "/" + planId);
+    const plannedcourses = await response.json();
 
+
+
+    let course_desc = "";
+    response = await fetch("/api/studentdata/getallcourses");
+    const allcourses = await response.json();
+    for (plancourse of plannedcourses) {
+        let course_id = plancourse["course_id"];
+        for (course of courses) {
+            if (course_id == course["id"]) {
+                course_desc = course["description"];
+                break;
+            }
+        }
+        let year = plancourse["year"];
+        let term = plancourse["term"];
+    }
 }
 
-function dragAndDropifyDatatable() {
-    let rows = document.getElementById("searchtable").getElementsByTagName("tr");
-    rows.forEach(function (item) {
-        item.setAttribute("draggable", True);
-        item.setAttribute("ondragstart", "dragStartHandler2");
-        item.classList.add("table-member");
-    });
-
+async function populateHeader(userId, planId) {
+    const response = await fetch("/api/studentdata/getusermetadata/" + userId);
+    const userdata = await response.json();
+    let header = document.getElementById("planHeader");
+    const planResponse = await fetch("/api/studentdata/getplanmetadata/" + userId + "/" + planId);
+    const plandata = await planResponse.json();
+    console.log(plandata);
+    header.innerHTML += "<p><strong>Student:</strong> " + userdata[0]["name"] + "</p>";
+    header.innerHTML += "<p><strong>Plan:</strong> " + plandata[0]["name"] + "</p>";
+    header.innerHTML += "<p><strong>Total Hours:</strong> " + "</p>"; // TODO: FIXME
+    let subheader = document.getElementById("planSubheader");
+    subheader.innerHTML += "<p><strong>Major:</strong> " + plandata[0]["majors"][0] + "</p>";
+    subheader.innerHTML += "<p><strong>Minor:</strong> " + plandata[0]["minors"][0] + "</p>";
+    subheader.innerHTML += "<p><strong>Catalog:</strong> " + plandata[0]["catalog_year"] + "</p>";
+    subheader.innerHTML += "<p><strong>GPA:</strong> " + userdata[0]["gpa"] + "</p>";
+    subheader.innerHTML += "<p><strong>Major GPA</strong> " + userdata[0]["major_gpa"] + "</p>";
 }
 
 function dragStartHandler(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
-    ev.dataTransfer.dropEffect = "move";
+    ev.dataTransfer.effectAllowed = "move";
 }
 
-function dragStartHandler2(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-    ev.dataTransfer.dropEffect = "copy";
-}
-
-function dropHandler(ev) {
+function dropHandler(ev, el) {
     ev.preventDefault();
-    const data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+    const data = ev.dataTransfer.getData("Text");
+    console.log(data);
+    ev.dataTransfer.dropEffect = "copyMove";
+    if (document.getElementById(data).classList.contains("table-member")) {
+        let classDescriptor = document.getElementById(data).getElementsByTagName("td")[0].innerHTML;
+        let className = document.getElementById(data).getElementsByTagName("td")[1].innerHTML;
+        let classCredits = document.getElementById(data).getElementsByTagName("td")[2].innerHTML;
+        el.innerHTML += "<p class=\"course\" id=" + global_noncollision++ + " draggable=true ondragstart=dragStartHandler(event)><span class=\"course-id\">" + classDescriptor + "</span>\n" + className + "<span class=\"course-credits\">" + classCredits + "</span>\n<\p>";
+    } else if (document.getElementById(data).classList.contains("req")) {
+        let classDescriptor = document.getElementById(data).getElementsByTagName("span")[0].innerHTML;
+        let className = document.getElementById(data).childNodes[2].nodeValue;
+        let classCredits = 3.0; // TODO: FIX
+        el.innerHTML += "<p class=\"course\" id=" + global_noncollision++ + " draggable=true ondragstart=dragStartHandler(event)><span class=\"course-id\">" + classDescriptor + "</span>\n" + className + "<span class=\"course-credits\">" + classCredits + "</span>\n<\p>";
+    } else {
+        el.appendChild(document.getElementById(data));
+    }
 }
 
 function dropHandler2(ev, el) {
     ev.preventDefault();
-    ev.dataTransfer.dropEffect = "move";
-    var thing = document.getElementById(evs.dataTransfer.getData('Text'));
-    thing.parentNode.removeChild(el);
+    document.getElementById(ev.dataTransfer.getData("Text")).parentElement.remove(document.getElementById(ev.dataTransfer.getData("Text")));
 }
 
 function dragOverHandler(ev) {
