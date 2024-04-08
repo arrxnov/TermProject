@@ -41,9 +41,23 @@ namespace Olympus.Controllers
                 return Forbid();
             }
 
-            // TODO add database query here
+            else if (HttpContext.User.IsInRole("Faculty"))
+            {
+                
+                var isAdvisee = new zeusContext().aspnetuser
+                    .Where(u => u.id == user.Id)
+                    .Select(u => u.advisees)
+                    .Contains(studentId);
+                
+                if (!isAdvisee) 
+                {
+                    return Forbid();
+                }
+            }
 
-            var JsonData = new { };
+            var JsonData = new zeusContext().users
+                .Where(u =>  u.id == studentId)
+                .Select(u => new { u.name, u.gpa, u.major_gpa, u.default_plan_id });
 
             return Ok(JsonData);
         }
@@ -58,9 +72,9 @@ namespace Olympus.Controllers
                 return Forbid();
             }
 
-            // TODO add database query here
-
-            var JsonData = new { };
+            var JsonData = new zeusContext().plans
+                .Where(p => p.user_id == studentId)
+                .Select(p => new { p.id });
 
             return Ok(JsonData);
         }
