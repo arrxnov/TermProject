@@ -32,11 +32,12 @@
                     <th></th>
                 </tr>
             </thead>
+
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td onclick="location.href = '@Url.Action("Index", "Faculty", new { id = item.Id })'">
                             @Html.DisplayFor(modelItem => item.UserName) | 
                         </td>
                         <td>
