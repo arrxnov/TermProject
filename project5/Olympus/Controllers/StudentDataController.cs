@@ -14,11 +14,16 @@ namespace Olympus.Controllers
     {
         private readonly zeusContext _context;
         private readonly UserManager<OlympusUser> _userManager;
+        private string _studentId;
 
         public StudentDataController(zeusContext context, UserManager<OlympusUser> userManager)
         {
             _context = context;
             _userManager = userManager;
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            _studentId = ViewData["studentId"];
+            System.Diagnostics.Debug.WriteLine(_studentId); // FIXME
         }
 
         [HttpGet]
