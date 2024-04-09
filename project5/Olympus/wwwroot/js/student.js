@@ -54,8 +54,6 @@ async function initPage() {
     let plannedCourses = data2[1];
     let requirements = data2[2];
 
-    console.log(requirements);
-
     populateSearchTable(allCourseData);
     populatePlanDropdown(plans)
     populateHeader(userMetadata, planMetadata);
@@ -266,7 +264,7 @@ function populateCourses(plannedcourses, allcourses) {
         if (term == "FA") term = "Fall";
         else if (term == "SP") term = "Spring";
         else if (term == "SU") term = "Summer";
-        else console.log("How did we get here");
+
         let future_semesters = document.getElementsByClassName("semester");
         for (let semester of future_semesters) {
             if (semester.getElementsByClassName("term")[0].innerHTML.indexOf(term) !== -1 && (semester.getElementsByClassName("term"))[0].innerHTML.indexOf(year) !== -1) {
@@ -277,13 +275,12 @@ function populateCourses(plannedcourses, allcourses) {
         }
         if (found) continue;
         for (let semester of document.getElementsByClassName("semester-past")) {
-            console.log(semester);
+            
             if (semester.getElementsByClassName("term")[0].innerHTML.indexOf(term) !== -1 && (semester.getElementsByClassName("term")[0]).innerHTML.indexOf(year) !== -1) {
                 semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\">` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
                 found = true;
                 break;
             }
-            else console.log("Evaling false");
         }
         if (found) continue;
         let semester = document.getElementsByClassName("semester-current")[0];
@@ -291,7 +288,6 @@ function populateCourses(plannedcourses, allcourses) {
         if (semester.getElementsByClassName("term")[0].innerHTML.indexOf(term) !== -1 && (semester.getElementsByClassName("term")[0]).innerHTML.indexOf(year) !== -1) {
             semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\\` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
         }
-        else console.log("Evaling false");
     }
 }
 
@@ -325,7 +321,7 @@ function dropHandler(ev, el) {
     } else if (document.getElementById(data).classList.contains("req")) {
         let classDescriptor = document.getElementById(data).getElementsByTagName("span")[0].innerHTML;
         let className = document.getElementById(data).childNodes[2].nodeValue;
-        let classCredits = 3.0; // TODO: FIX
+        let classCredits = 3.0; // TODO: FIXME
         el.innerHTML += "<p class=\"course\" id=" + global_noncollision++ + " draggable=true ondragstart=dragStartHandler(event)><span class=\"course-id\">" + classDescriptor + "</span>\n" + className + "<span class=\"course-credits\">" + classCredits + "</span>\n<\p>";
     } else {
         el.appendChild(document.getElementById(data));
