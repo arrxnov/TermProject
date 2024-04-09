@@ -196,18 +196,14 @@ namespace Olympus.Controllers
 
             var context = new zeusContext();
 
-            // var query = context.plans
-            //     .Where(p => p.id == planId && p.user_id == studentId)
-            //     .Select(p => new { p.})
+            var catYear = context.plans
+                .Where(p => p.id == planId && p.user_id == studentId)
+                .Select(p => p.catalog_year)
+                .ToList()[0];
 
-            //var catYear = context.plans
-            //    .Where(p => p.id == planId && p.user_id == studentId)
-            //    .Select(p => p.catalog_year)
-            //    .ToList()[0];
-
-            //var genedData = context.geneds
-            //    .Where(g => g.catalog_year == catYear)
-            //    .Select(g => new { g.course_id, g.type });
+            var genedDataND = context.geneds
+                .Where(g => g.catalog_year == catYear)
+                .Select(g => new { g.course_id, g.type });
 
             var majorData = context.majorcourses
                 .Where(mc => context.plans
@@ -221,28 +217,53 @@ namespace Olympus.Controllers
 
             var majorDataND = majorData.GroupBy(md => md.course_id).Select(g => g.First());
 
-            // .Select(p => p.majors
-            //     .Select(m => m.majorcourses
-            //         .Select(mc => new { mc.course_id, mc.type })));
+            var minorData = context.minorcourses
+                .Where(mc => context.plans
+                    .Where(p => p.id == planId && p.user_id == studentId)
+                    .Select(p => p.minors
+                        .Select(m => m.id)
+                        .ToList()
+                        .Contains(mc.minor_id))
+                    .Single())
+                .Select(mc => new { mc.course_id, mc.type });
 
-            //var minorData = context.plans
-            //    .Select(p => p.minors
-            //        .Select(m => m.minorcourses
-            //            .Select(mc => new { mc.course_id, mc.type })));
+            var minorDataND = minorData.GroupBy(md => md.course_id).Select(g => g.First());
 
-            //var concentrationData = context.plans
-            //    .Select(p => p.concentrations
-            //        .Select(m => m.concentrationcourses
-            //            .Select(mc => new { mc.course_id, mc.type })));
+            var concentrationData = context.concentrationcourses
+                .Where(mc => context.plans
+                    .Where(p => p.id == planId && p.user_id == studentId)
+                    .Select(p => p.concentrations
+                        .Select(m => m.id)
+                        .ToList()
+                        .Contains(mc.concentration_id))
+                    .Single())
+                .Select(mc => new { mc.course_id, mc.type });
 
-            //var fMajorData = majorData.SelectMany(item => item).Distinct().ToArray();
-            //var fMinorData = minorData.SelectMany(item => item).Distinct().ToArray();
-            //var fConcentrationData = concentrationData.SelectMany(item => item).Distinct().ToArray();
+            var concentrationDataND = concentrationData.GroupBy(md => md.course_id).Select(g => g.First());
 
-            //var combined = [genedData, fMajorData, fMinorData, fConcentrationData]
+            var JsonData = new List<Object>();
 
-            // List<Object> combined = [..genedData, ..majorData, ..minorData, ..concentrationData];
-            return Ok(majorDataND);
+            foreach (var crs in genedDataND)
+            {
+                JsonData.Add(crs);
+            }
+
+            foreach (var crs in majorDataND)
+            {
+                JsonData.Add(crs);
+            }
+
+            foreach (var crs in minorDataND)
+            {
+                JsonData.Add(crs);
+            }
+
+            foreach (var crs in concentrationDataND)
+            {
+                JsonData.Add(crs);
+            }
+
+            return Ok(JsonData);
         }
     }
 }
