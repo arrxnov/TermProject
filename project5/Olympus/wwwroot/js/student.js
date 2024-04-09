@@ -312,6 +312,14 @@ async function populateRequirements(userId, planId) {
 
 }
 
+function checkRequirements() {
+    for (course in document.getElementsByClassName("req")) {
+        for (semester in document.getElementsByClassName("semester")) {
+            for (course in semester.getElementsByClassName("course"))
+        }
+    }
+}
+
 async function populateCourses(userId, planId) {
     let response = await fetch("/api/studentdata/getplannedcourses/" + userId + "/" + planId);
     const plannedcourses = await response.json();
