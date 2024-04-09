@@ -21,6 +21,7 @@ async function initPage(plan_id) {
 
     if (plan_id == 0) plan_id++; // default behavior
     populateHeader("d1eae408-2a14-4740-ba90-d2caedacee76", plan_id);
+    populateCourses("d1eae408-2a14-4740-ba90-d2caedacee76", plan_id);
 
     //jQuery(function () {
     //    jQuery('ul.menu li').hover(function () {
@@ -282,7 +283,6 @@ async function populateSearchTable() {
     });
     rows = document.getElementById("searchTable").getElementsByTagName("tbody")[0].getElementsByTagName("tr");
     for (row of rows) {
-        console.log(row);
         row.setAttribute("id", global_noncollision++);
         row.setAttribute("draggable", true);
         row.setAttribute("ondragstart", "dragStartHandler(event)");
@@ -318,19 +318,52 @@ async function populateCourses(userId, planId) {
 
 
 
-    let course_desc = "";
+    
     response = await fetch("/api/studentdata/getallcourses");
     const allcourses = await response.json();
     for (plancourse of plannedcourses) {
         let course_id = plancourse["course_id"];
-        for (course of courses) {
+        let course_desc = "";
+        let c_str = "";
+        let found = false;
+        for (course of allcourses) {
             if (course_id == course["id"]) {
                 course_desc = course["description"];
+                c_str = course["credits"];
                 break;
             }
         }
         let year = plancourse["year"];
+        console.log(year);
         let term = plancourse["term"];
+        if (term == "FA") term = "Fall";
+        else if (term == "SP") term = "Spring";
+        else if (term == "SU") term = "Summer";
+        else console.log("How did we get here");
+        let future_semesters = document.getElementsByClassName("semester");
+        for (let semester of future_semesters) {
+            if (term in semester.getElementsByClassName("term")[0] && to_string(year) in semester.getElementsByClassName("term")[0]) {
+                semester.innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler(event)\"> <span class=\"course-id\">` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
+                found = true;
+                break;
+            }
+            else console.log("Evalled false");
+        }
+        if (found) continue;
+        for (let semester of document.getElementsByClassName("semester-past")) {
+            if (term in semester.getElementsByClassName("term")[0] && to_string(year) in semester.getElementsByClassName("term")[0]) {
+                semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\">` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
+                found = true;
+                break;
+            }
+            else console.log("Evalled false");
+        }
+        if (found) continue;
+        let semester = document.getElementsByClassName("semester-current")[0];
+        if (semester && term in semester.getElementsByClassName("term")[0] && to_string(year) in semester.getElementsByClassName("term")[0]) {
+            semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\">` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
+        }
+        else console.log("Evalled false");
     }
 }
 
@@ -340,7 +373,6 @@ async function populateHeader(userId, planId) {
     let header = document.getElementById("planHeader");
     const planResponse = await fetch("/api/studentdata/getplanmetadata/" + userId + "/" + planId);
     const plandata = await planResponse.json();
-    console.log(plandata);
     header.innerHTML += "<p><strong>Student:</strong> " + userdata[0]["name"] + "</p>";
     header.innerHTML += "<p><strong>Plan:</strong> " + plandata[0]["name"] + "</p>";
     header.innerHTML += "<p><strong>Total Hours:</strong> " + "</p>"; // TODO: FIXME
@@ -360,7 +392,6 @@ function dragStartHandler(ev) {
 function dropHandler(ev, el) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("Text");
-    console.log(data);
     ev.dataTransfer.dropEffect = "copyMove";
     if (document.getElementById(data).classList.contains("table-member")) {
         let classDescriptor = document.getElementById(data).getElementsByTagName("td")[0].innerHTML;
