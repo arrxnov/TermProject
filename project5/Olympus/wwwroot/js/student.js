@@ -311,13 +311,21 @@ async function populateYears(userId, planId) {
     const courses = await response.json()
     let minYear = 0;
     let maxYear = 0;
-    for (course of courses[0]) {
+    for (let course of courses[0]) {
         if (minYear == 0 || course["year"] < minYear) minYear = course["year"];
         if (maxYear == 0 || course["year"] > maxYear) maxYear = course["year"];
     }
 
-    for (let i = minYear; i <= maxYear; i += 1) {
+    for (let i = minYear; i < maxYear; i += 1) {
         document.getElementById("plan").innerHTML += "<div id=\"year" + i + "\" class=\"year\"></div>";
+    }
+    let currentYear = minYear;
+    let calyear = 2024;
+    let calTerm = "SP";
+    for (let year of document.getElementsByClassName("year")) {
+        year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\"><div class=\"semesterHeader\"><<div> class=\"term\">Fall " + currentYear + "</div>";
+        year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\"><div class=\"semesterHeader\"><<div> class=\"term\">Spring " + currentYear++ + "</div>";
+        year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\"><div class=\"semesterHeader\"><<div> class=\"term\">Summer " + currentYear + "</div>";
     }
 }
 
