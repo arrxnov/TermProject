@@ -19,15 +19,15 @@ namespace Olympus.Controllers
         {
             _context = context;
             _userManager = userManager;
-            _studentId = ViewData["studentId"];
+            //_studentId = ViewData["studentId"];
 
-            if (_studentId = "")
-            {
-                var user = await _userManager.GetUserAsync(HttpContext.User);
-                _studentId = user.Id;
-            }
+            //if (_studentId = "")
+            //{
+            //    var user = await _userManager.GetUserAsync(HttpContext.User);
+            //    _studentId = user.Id;
+            //}
 
-            System.Diagnostics.Debug.WriteLine(_studentId); // FIXME
+            //System.Diagnostics.Debug.WriteLine(_studentId); // FIXME
         }
 
         [HttpGet]
@@ -100,7 +100,7 @@ namespace Olympus.Controllers
 
             var JsonData = new zeusContext().plans
                 .Where(p => p.user_id == studentId)
-                .Select(p => new { p.id });
+                .Select(p => new { p.id, p.name });
 
             return Ok(JsonData);
         }
