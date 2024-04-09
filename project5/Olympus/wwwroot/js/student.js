@@ -54,7 +54,7 @@ async function initPage() {
     let plannedCourses = data2[1];
     let requirements = data2[2];
 
-    //console.log(requirements);
+    console.log(requirements);
 
     populateSearchTable(allCourseData);
     populatePlanDropdown(plans)
