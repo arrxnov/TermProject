@@ -31,7 +31,7 @@ async function getData1() {
 }
 
 async function getData2(planId) {
-    response = await fetch("/api/studentdata/getplanmetadata/" + getUid() + "/" + planId);
+    let response = await fetch("/api/studentdata/getplanmetadata/" + getUid() + "/" + planId);
     const planMetadata = await response.json();
 
     response = await fetch("/api/studentdata/getplannedcourses/" + getUid() + "/" + planId);
@@ -44,21 +44,16 @@ async function getData2(planId) {
 }
 
 async function initPage() {
-    data1 = await getData1();
-    data2 = await getData2(data1[1][0]["default_plan_id"])
+    let data1 = await getData1();
+    let data2 = await getData2(data1[1][0]["default_plan_id"])
 
-    var allCourseData = data1[0];
-    var userMetadata = data1[1][0];
-    var plans = data1[2];
-    var planMetadata = data2[0][0];
-    var plannedCourses = data2[1];
-    var requirements = data2[2];
+    let allCourseData = data1[0];
+    let userMetadata = data1[1][0];
+    let plans = data1[2];
+    let planMetadata = data2[0][0];
+    let plannedCourses = data2[1];
+    let requirements = data2[2];
 
-    //console.log(allCourseData);
-    //console.log(userMetadata);
-    //console.log(plans);
-    //console.log(planMetadata);
-    //console.log(plannedCourses);
     //console.log(requirements);
 
     populateSearchTable(allCourseData);
@@ -67,8 +62,6 @@ async function initPage() {
     populateYears(plannedCourses);
     populateCourses(plannedCourses, allCourseData);
     populateRequirements(requirements, allCourseData);
-
-    console.log("Page loading complete")
 }
 
 function setupHandlers() {
@@ -132,13 +125,31 @@ function populatePlanDropdown(plans) {
     let planDropdown = jQuery("#planSubMenu");
 
     jQuery.each(plans, function (id, plan) {
-        var name = plan["name"]
+        var name = plan["name"];
+        var id = plan["id"];
         planDropdown.append(
             jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
         );
-        //jQuery("#" + id).click(function () {
-        //    window.location.search = '?planId=' + id; //fix search path, maybe just call js to reload requirements and planned courses, may need another api for plan metadata
-        //});
+        jQuery("#" + id).click(async function () {
+            // need to add plan parameter to studentcontroller and call link here
+
+            //console.log("I got clicked");
+            //console.log(id);
+            //let userMetadata = await getData1();
+            //console.log(userMetadata);
+            //let data2 = await getData2(id)
+            //let planMetadata = data2[0][0];
+            //console.log(planMetadata);
+            //let plannedCourses = data2[1];
+            //console.log(plannedCourses);
+            //let requirements = data2[2];
+            //console.log(requirements);
+
+            //populateHeader(userMetadata, planMetadata);
+            //populateYears(plannedCourses);
+            //populateCourses(plannedCourses, allCourseData);
+            //populateRequirements(requirements, allCourseData);
+        });
     });
 }
 
@@ -276,9 +287,7 @@ function populateCourses(plannedcourses, allcourses) {
         }
         if (found) continue;
         let semester = document.getElementsByClassName("semester-current")[0];
-        //console.log(semester);
-        //console.log((year));
-        //console.log(term);
+        
         if (semester.getElementsByClassName("term")[0].innerHTML.indexOf(term) !== -1 && (semester.getElementsByClassName("term")[0]).innerHTML.indexOf(year) !== -1) {
             semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\\` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
         }
