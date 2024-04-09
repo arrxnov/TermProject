@@ -3,9 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Olympus.Controllers
 {
+    [Authorize]
     public class StudentController : Controller
     {
-        [Authorize(Roles = "Admin,Faculty,Student")]
+        private readonly UserManager<OlympusUser> _userManager;
+
+        public StudentController(UserManager<OlympusUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult Index(string id = "")
         {
             if ((id != "") && HttpContext.User.IsInRole("Student"))

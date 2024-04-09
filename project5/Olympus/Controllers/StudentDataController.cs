@@ -197,73 +197,27 @@ namespace Olympus.Controllers
                .Select(p => p.catalog_year)
                .ToList()[0];
 
-           // geneds {course_id, type} (select by plan.catalog_year)
            var genedData = context.geneds
                .Where(g => g.catalog_year == catYear)
                .Select(g => new { g.course_id, g.type });
 
-
-           //var tgenedData = genedData.AsEnumerable(); 
-           
-           // plan.majors.majorcourses {course_id, type} (select by plan.catalog_year)
            var majorData = context.plans
                .Select(p => p.majors
                    .Select(m => m.majorcourses
                        .Select(mc => new { mc.course_id, mc.type })));
 
-
-            //var genmajor = tgenedData.Union(majorData.AsEnumerable());
-            
-           // plan.minors.minorcourses {course_id, type} (select by plan.catalog_year)
            var minorData = context.plans
                .Select(p => p.minors
                    .Select(m => m.minorcourses
                        .Select(mc => new { mc.course_id, mc.type })));
 
-           // plan.concentration.concentrationcourses {course_id, type} (select by plan.catalog_year)
            var concentrationData = context.plans
                .Select(p => p.concentrations
                    .Select(m => m.concentrationcourses
                        .Select(mc => new { mc.course_id, mc.type })));
 
             List<Object> combined = [..genedData, ..majorData, ..minorData, ..concentrationData];
-            Console.WriteLine(combined);
             return Ok(combined);
-
-            /*
-           //var testing = true;
-           //if (testing) {
-           //   var JsonData = majorData.Union(minorData);
-           //   JsonData = JsonData.Union(concentrationData);
-           //} else {
-               var JsonData = tgenedData.Union(majorData);
-               JsonData = JsonData.Union(minorData);
-               JsonData = JsonData.Union(concentrationData);
-
-           //}
-
-            // Kai: Basically the genedData query, since it's not doing two additional selects, 
-            // ends up not wrapped in additional IEnumerable types, so it thinks it's trying
-            // to union stuff that's not the same type
-
-
-           // TODO add database query here
-           // union the following:
-           /
-            'IEnumerable<<anonymous type: string course_id, string type>>' 
-            does not contain a definition for 'Union' and the best extension method overload 
-            'ParallelEnumerable.Union<IEnumerable<IEnumerable<<anonymous type: string course_id, string type>>>>(
-                ParallelQuery<IEnumerable<IEnumerable<<anonymous type: string course_id, string type>>>>, 
-                IEnumerable<IEnumerable<IEnumerable<<anonymous type: string course_id, string type>>>>)'
-            requires a receiver of type
-            'System.Linq.ParallelQuery<System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<<anonymous type: string course_id, string type>>>>'
-            'ParallelQuery<IEnumerable<IEnumerable<<anonymous type: string course_id, string type>>>>'
-
-
-           */
-
-          // return Ok(JsonData);
-            
         }
     }
 }
