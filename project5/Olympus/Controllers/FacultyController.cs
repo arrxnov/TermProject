@@ -19,16 +19,21 @@ namespace Olympus.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id = "")
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-
-            if (user == null)
+            if ((HttpContext.User.IsInRole("Faculty")) && (id != ""))
             {
-                return NotFound();
+                return Forbid();
+            }
+            
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var uid = user.Id;
+            
+            if (id != "") {
+                uid = id;
             }
 
-            return View(await _context.aspnetusers.Where(stu => (stu.advisors.Select(t => t.Id).ToList().Contains(user.Id)) || false).ToListAsync());
+            return View(await _context.aspnetusers.Where(stu => (stu.advisors.Select(t => t.Id).ToList().Contains(uid)) || false).ToListAsync());
         }
     }
 }
