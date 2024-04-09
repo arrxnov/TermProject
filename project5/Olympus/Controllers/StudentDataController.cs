@@ -14,16 +14,11 @@ namespace Olympus.Controllers
     {
         private readonly zeusContext _context;
         private readonly UserManager<OlympusUser> _userManager;
-        private string _studentId;
 
         public StudentDataController(zeusContext context, UserManager<OlympusUser> userManager)
         {
             _context = context;
             _userManager = userManager;
-
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            _studentId = ViewData["studentId"];
-            System.Diagnostics.Debug.WriteLine(_studentId); // FIXME
         }
 
         [HttpGet]
@@ -127,7 +122,7 @@ namespace Olympus.Controllers
             }
 
             var JsonData = new zeusContext().plans
-                .Where(p => p.id == planId)
+                .Where(p => p.id == planId && p.user_id == studentId)
                 .Select(p => new { p.name, p.catalog_year, majors = p.majors.Select(m => m.name), minors = p.minors.Select(m => m.name) });
 
             return Ok(JsonData);
@@ -193,7 +188,7 @@ namespace Olympus.Controllers
            var context = new zeusContext();
 
            var catYear = context.plans
-               .Where(p => p.id == planId)
+               .Where(p => p.id == planId && p.user_id == studentId)
                .Select(p => p.catalog_year)
                .ToList()[0];
 

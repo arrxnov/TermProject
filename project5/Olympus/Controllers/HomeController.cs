@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Olympus.Areas.Identity.Data;
 using Olympus.Models;
 using System.Diagnostics;
 
@@ -9,14 +10,18 @@ namespace Olympus.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly zeusContext _context;
+        private readonly UserManager<OlympusUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, zeusContext context, UserManager<OlympusUser> userManager)
         {
             _logger = logger;
+            _context = context;
+            _userManager = userManager;
         }
 
-        [Authorize(Roles = "Admin,Faculty,Student")]
-        public IActionResult Index()
+        [Authorize]
+        async public Task<IActionResult> Index()
         {
             if (HttpContext.User.IsInRole("Admin"))
             {
@@ -28,7 +33,8 @@ namespace Olympus.Controllers
             } 
             else
             {
-                return RedirectToAction("Index", "Student");
+                var user = await _userManager.GetUserAsync(HttpContext.User);
+                return RedirectToAction("Index", "Student", new { id = user.Id });
             }
         }
 

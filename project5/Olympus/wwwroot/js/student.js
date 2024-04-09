@@ -306,6 +306,21 @@ async function populatePlanDropdown(userId) {
     });
 }
 
+async function populateYears(userId, planId) {
+    const response = await fetch("/api/studentdata/getplannedcourses/" + userId + "/" + planId);
+    const courses = await response.json()
+    let minYear = 0;
+    let maxYear = 0;
+    for (course of courses[0]) {
+        if (minYear == 0 || course["year"] < minYear) minYear = course["year"];
+        if (maxYear == 0 || course["year"] > maxYear) maxYear = course["year"];
+    }
+
+    for (let i = minYear; i <= maxYear; i += 1) {
+        document.getElementById("plan").innerHTML += "<div id=\"year" + i + "\" class=\"year\"></div>";
+    }
+}
+
 async function populateRequirements(userId, planId) {
     const response = await fetch("/api/studentdata/getrequirements/" + userId + "/" + planId);
     const requirements = await response.json();
@@ -313,28 +328,33 @@ async function populateRequirements(userId, planId) {
 }
 
 function checkRequirements() {
-    for (course in document.getElementsByClassName("req")) {
-        for (semester in document.getElementsByClassName("semester")) {
-            for (course in semester.getElementsByClassName("course"))
+    for (coursereq of document.getElementsByClassName("req")) {
+        let satisfied = false;
+        for (semester of document.getElementsByClassName("semester")) {
+            for (course of semester.getElementsByClassName("course")) {
+                if (course.getElementsByClassName("course-id")[0].innerHTML == coursereq.getElementsByClassName("course-id")[0].innerHTML) {
+                    satisfied = true;
+                    break;
+                }
+            }
+            if (satisfied) break;
         }
+        if (!satisfied) coursereq.style.color = red;
+        else coursereq.style.color = white;
     }
 }
 
 async function populateCourses(userId, planId) {
     let response = await fetch("/api/studentdata/getplannedcourses/" + userId + "/" + planId);
     const plannedcourses = await response.json();
-
-
-
-    
     response = await fetch("/api/studentdata/getallcourses");
     const allcourses = await response.json();
-    for (plancourse of plannedcourses) {
+    for (plancourse of plannedcourses[0]) {
         let course_id = plancourse["course_id"];
         let course_desc = "";
         let c_str = "";
         let found = false;
-        for (course of allcourses) {
+        for (course of allcourses[0]) {
             if (course_id == course["id"]) {
                 course_desc = course["description"];
                 c_str = course["credits"];
@@ -414,6 +434,7 @@ function dropHandler(ev, el) {
     } else {
         el.appendChild(document.getElementById(data));
     }
+    checkRequirments();
 }
 
 function dropHandler2(ev, el) {

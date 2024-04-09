@@ -24,9 +24,6 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.UserName)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.Email)
                     </th>
                     <th></th>
@@ -38,9 +35,6 @@
                 {
                     <tr>
                         <td onclick="location.href = '@Url.Action("Index", "Faculty", new { id = item.Id })'">
-                            @Html.DisplayFor(modelItem => item.UserName) | 
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.Email) | 
                         </td>
                         <td>
