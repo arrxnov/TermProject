@@ -19,15 +19,6 @@ namespace Olympus.Controllers
         {
             _context = context;
             _userManager = userManager;
-            //_studentId = ViewData["studentId"];
-
-            //if (_studentId = "")
-            //{
-            //    var user = await _userManager.GetUserAsync(HttpContext.User);
-            //    _studentId = user.Id;
-            //}
-
-            //System.Diagnostics.Debug.WriteLine(_studentId); // FIXME
         }
 
         [HttpGet]

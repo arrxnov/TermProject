@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Olympus.Areas.Identity.Data;
 using Olympus.Data;
@@ -18,14 +17,6 @@ builder.Services.AddIdentity<OlympusUser, IdentityRole>(options => options.SignI
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.Services.AddDistributedMemoryCache();
-
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
 
 var app = builder.Build();
 
@@ -41,11 +32,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
-app.UseSession();
-//app.MapControllerRoute(
-//    name: "student",
-//    pattern: "Student/Index/{id}",
-//    defaults: new { controller = "Student", action = "Index" });
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
