@@ -6,7 +6,7 @@ namespace Olympus.Controllers
     [Authorize]
     public class StudentController : Controller
     {
-        public IActionResult Index(string id)
+        public IActionResult Index(string id, string planId = "")
         {
             return View();
         }

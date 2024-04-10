@@ -4,6 +4,7 @@
  */
 
 let global_noncollision = "1";
+let uid_length = 36;
 jQuery(document).ready(function () {
 
     let years = {};
@@ -14,7 +15,25 @@ jQuery(document).ready(function () {
 });
 
 function getUid() {
-    return window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+    let likelyUid = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+
+    if (likelyUid.length != uid_length) {
+        let minusPlanId = likelyUid.slice(0, window.location.href.lastIndexOf('/'));
+
+        return minusPlanId.substring(minusPlanId.lastIndexOf('/') + 1);
+    }
+
+    return likelyUid;
+}
+
+function getPlanId() {
+    let likelyPlanId = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+
+    if (likelyPlanId.length != uid_length) {
+        return likelyPlanId;
+    }
+
+    return "";
 }
 
 async function getData1() {
@@ -45,7 +64,13 @@ async function getData2(planId) {
 
 async function initPage() {
     let data1 = await getData1();
-    let data2 = await getData2(data1[1][0]["default_plan_id"])
+
+    let planId = getPlanId();
+    if (!planId) {
+        planId = data1[1][0]["default_plan_id"];
+    }
+
+    let data2 = await getData2(planId)
 
     let allCourseData = data1[0];
     let userMetadata = data1[1][0];
@@ -129,6 +154,8 @@ function populatePlanDropdown(plans) {
             jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
         );
         jQuery("#" + id).click(async function () {
+            window.open(getUid() + "/" + id);
+
             // need to add plan parameter to studentcontroller and call link here
 
             //console.log("I got clicked");
