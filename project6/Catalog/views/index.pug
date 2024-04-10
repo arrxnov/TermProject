@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  -var h1Title = "Available Catalog Years"
+  #main 
+    h1Title
+    #mainTable 
+      table   
+        thead 
+          th Catalog 
+          th Edit?
+          th Delete?
+        //thead
+        tbody 
+          each catalog in catalogs 
+            tr 
+              td=catalog.year 
+              td
+                - var url = "/catalog/edit/" + catalog.Id 
+                form(action=url method="GET")
+                  .form
+                    input(type="hidden" name=catID value=catalog.id)
+                    input(type="submit" value="Edit Catalog")
+                //form
+              td
+                - var url = "/catalog/delete/" + catalog.Id
+                form(action=url method="POST")
+                  .form
+                    input(type="submit" value="Delete")
+                //form
+              //td
+            //tr
+          //each
+        //tbody
+      //table
+  //main
