@@ -42,12 +42,12 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.UseSession();
-app.MapControllerRoute(
-    name: "student",
-    pattern: "Student/Index/{id}/{planId?}",
-    defaults: new { controller = "Student", action = "Index" });
+//app.MapControllerRoute(
+//    name: "student",
+//    pattern: "Student/Index/{id}",
+//    defaults: new { controller = "Student", action = "Index" });
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.Run();
