@@ -85,7 +85,7 @@ CREATE TABLE prereq (
 CREATE TABLE gened (
     catalog_year numeric(4,0)  NOT NULL,
     course_id varchar(9)  NOT NULL,
-    type varchar(9)  NOT NULL CHECK (type in ('gened-bible', 'gened-core', 'gened-elective')),
+    type varchar(32)  NOT NULL CHECK (type in ('gened-bible', 'gened-core', 'gened-elective')),
     PRIMARY KEY (course_id,catalog_year),
     FOREIGN KEY (catalog_year) REFERENCES catalog (year),
     FOREIGN KEY (course_id) REFERENCES course (id)
