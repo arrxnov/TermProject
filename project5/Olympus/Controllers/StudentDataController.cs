@@ -19,15 +19,6 @@ namespace Olympus.Controllers
         {
             _context = context;
             _userManager = userManager;
-            //_studentId = ViewData["studentId"];
-
-            //if (_studentId = "")
-            //{
-            //    var user = await _userManager.GetUserAsync(HttpContext.User);
-            //    _studentId = user.Id;
-            //}
-
-            //System.Diagnostics.Debug.WriteLine(_studentId); // FIXME
         }
 
         [HttpGet]
@@ -67,7 +58,7 @@ namespace Olympus.Controllers
             }
 
             var JsonData = new zeusContext().users
-                .Where(u =>  u.id == studentId)
+                .Where(u => u.id == studentId)
                 .Select(u => new { u.name, u.gpa, u.major_gpa, u.default_plan_id });
 
             return Ok(JsonData);
@@ -121,7 +112,7 @@ namespace Olympus.Controllers
                     .Where(u => u.Id == user.Id)
                     .Select(u => u.advisees
                         .Where(a => a.Id == studentId))
-                    .ToList()[0] 
+                    .ToList()[0]
                     .IsNullOrEmpty();
 
                 if (isNotAdvisee)
@@ -164,7 +155,7 @@ namespace Olympus.Controllers
 
             var JsonData = new zeusContext().plannedcourses
                 .Where(c => c.plan_id == planId)
-                .Select(c => new { c.course_id, c.year, c.term});
+                .Select(c => new { c.course_id, c.year, c.term });
 
             return Ok(JsonData);
         }
@@ -172,56 +163,98 @@ namespace Olympus.Controllers
         [HttpGet("{studentId}/{planId}")]
         public async Task<IActionResult> GetRequirements(string studentId, int planId)
         {
-           var user = await _userManager.GetUserAsync(HttpContext.User);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
 
-           if ((HttpContext.User.IsInRole("Student")) && (user.Id != studentId))
-           {
-               return Forbid();
-           }
+            if ((HttpContext.User.IsInRole("Student")) && (user.Id != studentId))
+            {
+                return Forbid();
+            }
 
-           else if (HttpContext.User.IsInRole("Faculty"))
-           {
-               var isNotAdvisee = new zeusContext().aspnetusers
-                   .Where(u => u.Id == user.Id)
-                   .Select(u => u.advisees
-                       .Where(a => a.Id == studentId))
-                   .ToList()[0]
-                   .IsNullOrEmpty();
+            else if (HttpContext.User.IsInRole("Faculty"))
+            {
+                var isNotAdvisee = new zeusContext().aspnetusers
+                    .Where(u => u.Id == user.Id)
+                    .Select(u => u.advisees
+                        .Where(a => a.Id == studentId))
+                    .ToList()[0]
+                    .IsNullOrEmpty();
 
-               if (isNotAdvisee)
-               {
-                   return Forbid();
-               }
-           }
+                if (isNotAdvisee)
+                {
+                    return Forbid();
+                }
+            }
 
-           var context = new zeusContext();
+            var context = new zeusContext();
 
-           var catYear = context.plans
-               .Where(p => p.id == planId && p.user_id == studentId)
-               .Select(p => p.catalog_year)
-               .ToList()[0];
+            var catYear = context.plans
+                .Where(p => p.id == planId && p.user_id == studentId)
+                .Select(p => p.catalog_year)
+                .ToList()[0];
 
-           var genedData = context.geneds
-               .Where(g => g.catalog_year == catYear)
-               .Select(g => new { g.course_id, g.type });
+            var genedDataND = context.geneds
+                .Where(g => g.catalog_year == catYear)
+                .Select(g => new { g.course_id, g.type });
 
-           var majorData = context.plans
-               .Select(p => p.majors
-                   .Select(m => m.majorcourses
-                       .Select(mc => new { mc.course_id, mc.type })));
+            var majorData = context.majorcourses
+                .Where(mc => context.plans
+                    .Where(p => p.id == planId && p.user_id == studentId)
+                    .Select(p => p.majors
+                        .Select(m => m.id)
+                        .ToList()
+                        .Contains(mc.major_id))
+                    .Single())
+                .Select(mc => new { mc.course_id, mc.type });
 
-           var minorData = context.plans
-               .Select(p => p.minors
-                   .Select(m => m.minorcourses
-                       .Select(mc => new { mc.course_id, mc.type })));
+            var majorDataND = majorData.GroupBy(md => md.course_id).Select(g => g.First());
 
-           var concentrationData = context.plans
-               .Select(p => p.concentrations
-                   .Select(m => m.concentrationcourses
-                       .Select(mc => new { mc.course_id, mc.type })));
+            var minorData = context.minorcourses
+                .Where(mc => context.plans
+                    .Where(p => p.id == planId && p.user_id == studentId)
+                    .Select(p => p.minors
+                        .Select(m => m.id)
+                        .ToList()
+                        .Contains(mc.minor_id))
+                    .Single())
+                .Select(mc => new { mc.course_id, mc.type });
 
-            List<Object> combined = [..genedData, ..majorData, ..minorData, ..concentrationData];
-            return Ok(combined);
+            var minorDataND = minorData.GroupBy(md => md.course_id).Select(g => g.First());
+
+            var concentrationData = context.concentrationcourses
+                .Where(mc => context.plans
+                    .Where(p => p.id == planId && p.user_id == studentId)
+                    .Select(p => p.concentrations
+                        .Select(m => m.id)
+                        .ToList()
+                        .Contains(mc.concentration_id))
+                    .Single())
+                .Select(mc => new { mc.course_id, mc.type });
+
+            var concentrationDataND = concentrationData.GroupBy(md => md.course_id).Select(g => g.First());
+
+            var JsonData = new List<Object>();
+
+            foreach (var crs in genedDataND)
+            {
+                JsonData.Add(crs);
+            }
+
+            foreach (var crs in majorDataND)
+            {
+                JsonData.Add(crs);
+            }
+
+            foreach (var crs in minorDataND)
+            {
+                JsonData.Add(crs);
+            }
+
+            foreach (var crs in concentrationDataND)
+            {
+                JsonData.Add(crs);
+            }
+
+            return Ok(JsonData);
         }
     }
 }
