@@ -2,26 +2,71 @@
  * Filename: student.js
  * Authors: Logan Miller, Jacob Grady, Kai Delsing
  */
+
 let global_noncollision = "1";
 jQuery(document).ready(function () {
-    
+
     let years = {};
     let courseNames = {};
 
     setupHandlers();
-    initPage(0);
+    initPage();
 });
 
-async function initPage(plan_id) {
-    populateSearchTable();
-    populatePlanDropdown("d1eae408-2a14-4740-ba90-d2caedacee76"); // make id dynamic, just for POC purposes
-    
-    // use default parm in controller that defaults to logged in user's id
-    // otherwise, pass the student id along from the faculty controller
+function getUid() {
+    return window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+}
 
-    if (plan_id == 0) plan_id++; // default behavior
-    populateHeader("d1eae408-2a14-4740-ba90-d2caedacee76", plan_id);
-    populateCourses("d1eae408-2a14-4740-ba90-d2caedacee76", plan_id);
+async function getData1() {
+    let response = await fetch("/api/studentdata/getallcourses");
+    const allCourseData = await response.json();
+
+    response = await fetch("/api/studentdata/getusermetadata/" + getUid());
+    const userMetadata = await response.json();
+
+    response = await fetch("/api/studentdata/getplans/" + getUid());
+    const plans = await response.json();
+
+    return [allCourseData, userMetadata, plans];
+}
+
+async function getData2(planId) {
+    response = await fetch("/api/studentdata/getplanmetadata/" + getUid() + "/" + planId);
+    const planMetadata = await response.json();
+
+    response = await fetch("/api/studentdata/getplannedcourses/" + getUid() + "/" + planId);
+    const plannedCourses = await response.json();
+
+    response = await fetch("/api/studentdata/getrequirements/" + getUid() + "/" + planId);
+    const requirements = await response.json();
+
+    return [planMetadata, plannedCourses, requirements];
+}
+
+async function initPage() {
+    data1 = await getData1();
+    data2 = await getData2(data1[1][0]["default_plan_id"])
+
+    var allCourseData = data1[0];
+    var userMetadata = data1[1][0];
+    var plans = data1[2];
+    var planMetadata = data2[0][0];
+    var plannedCourses = data2[1];
+    var requirements = data2[2];
+
+    console.log(allCourseData);
+    console.log(userMetadata);
+    console.log(plans);
+    console.log(planMetadata);
+    console.log(plannedCourses);
+    console.log(requirements);
+
+    populateSearchTable(allCourseData);
+    populatePlanDropdown(plans)
+    populateHeader(userMetadata, planMetadata);
+    populateYears(plannedCourses);
+    populateCourses(plannedCourses, allCourseData);
+    populateRequirements(requirements, allCourseData);
 
     //jQuery(function () {
     //    jQuery('ul.menu li').hover(function () {
@@ -258,10 +303,7 @@ function setupHandlers() {
     });
 }
 
-async function populateSearchTable() {
-    const response = await fetch("/api/studentdata/getallcourses");
-    const data = await response.json();
-
+function populateSearchTable(data) {
     jQuery("#searchTable").DataTable({
         paging: false,
         scrollCollapse: true,
@@ -290,13 +332,11 @@ async function populateSearchTable() {
     }
 }
 
-async function populatePlanDropdown(userId) {
-
-    const response = await fetch("/api/studentdata/getplans/" + userId);
-    const dropdownPlans = await response.json();
+function populatePlanDropdown(plans) {
     let planDropdown = jQuery("#planSubMenu");
 
-    jQuery.each(dropdownPlans, function (id, name) {
+    jQuery.each(plans, function (id, plan) {
+        var name = plan["name"]
         planDropdown.append(
             jQuery("<li></li>").html("<p>" + name + "</p>").attr("id", id)
         );
@@ -306,12 +346,10 @@ async function populatePlanDropdown(userId) {
     });
 }
 
-async function populateYears(userId, planId) {
-    const response = await fetch("/api/studentdata/getplannedcourses/" + userId + "/" + planId);
-    const courses = await response.json()
+function populateYears(plannedcourses) {
     let minYear = 0;
     let maxYear = 0;
-    for (let course of courses[0]) {
+    for (let course of plannedcourses) {
         if (minYear == 0 || course["year"] < minYear) minYear = course["year"];
         if (maxYear == 0 || course["year"] > maxYear) maxYear = course["year"];
     }
@@ -323,16 +361,57 @@ async function populateYears(userId, planId) {
     let calyear = 2024;
     let calTerm = "SP";
     for (let year of document.getElementsByClassName("year")) {
-        year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\"><div class=\"semesterHeader\"><<div> class=\"term\">Fall " + currentYear + "</div>";
-        year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\"><div class=\"semesterHeader\"><<div> class=\"term\">Spring " + currentYear++ + "</div>";
-        year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\"><div class=\"semesterHeader\"><<div> class=\"term\">Summer " + currentYear + "</div>";
+        year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\"><div class=\"semesterHeader\"><div class=\"term\">Fall " + (currentYear) + "<span class=\"semesterCredits\"></span></div>";
+        year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\"><div class=\"semesterHeader\"><div class=\"term\">Spring " + (currentYear+1) + "<span class=\"semesterCredits\"></span></div>";
+        year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\"><div class=\"semesterHeader\"><div class=\"term\">Summer " + (currentYear+1) + "<span class=\"semesterCredits\"></span></div>";
     }
 }
 
-async function populateRequirements(userId, planId) {
-    const response = await fetch("/api/studentdata/getrequirements/" + userId + "/" + planId);
-    const requirements = await response.json();
+function populateRequirements(requirements, allcourses) {
+    let course_desc = "";
+    /*
+    let allcoursesAry = [];
+    console.log(allcourses);
+    console.log(typeof (allcourses));
+    console.log(allcourses.length);
 
+    console.log(allcourses[0].length);
+    
+    for (let i = 0; i < allcourses.length; i++) {
+        var temp = [...allcourses[0]];
+        console.log(temp);
+        temp.push(allcourses[i][0]);
+        temp.Add(allcourses[i][1]);
+        temp.Add(allcourses[i][2]);
+        allcoursesList.Add(temp);
+    }
+    
+    console.log(allcoursesAry);
+    console.log(typeof (allcoursesAry));
+    console.log(allcoursesAry[0]);
+    console.log(typeof (allcoursesAry[0]));
+    //[allcoursesList[0]];
+    //console.log(allcoursesList);
+    */
+    for (let req of requirements) {
+        for (let course of allcourses) {
+            if (course["id"] == req["course_id"]) {
+                course_desc = course["description"];
+                break;
+            }
+        }
+        if (req["type"] == "core") {
+            document.getElementsByClassName("core").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span>" + course_desc + "</p>\n";
+        } else if (req["type"] == "gened") {
+            document.getElementsByClassName("geneds").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span>" + course_desc + "</p>\n";
+        } else if (req["type"] == "elective") {
+            document.getElementsByClassName("electives").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span>" + course_desc + "</p>\n";
+        } else if (req["type"] == "cognate") {
+            document.getElementsByClassName("cognates").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span>" + course_desc + "</p>\n";
+        }
+    }
+
+    checkRequirements();
 }
 
 function checkRequirements() {
@@ -352,17 +431,13 @@ function checkRequirements() {
     }
 }
 
-async function populateCourses(userId, planId) {
-    let response = await fetch("/api/studentdata/getplannedcourses/" + userId + "/" + planId);
-    const plannedcourses = await response.json();
-    response = await fetch("/api/studentdata/getallcourses");
-    const allcourses = await response.json();
-    for (plancourse of plannedcourses[0]) {
+function populateCourses(plannedcourses, allcourses) {
+    for (plancourse of plannedcourses) {
         let course_id = plancourse["course_id"];
         let course_desc = "";
         let c_str = "";
         let found = false;
-        for (course of allcourses[0]) {
+        for (let course of allcourses) {
             if (course_id == course["id"]) {
                 course_desc = course["description"];
                 c_str = course["credits"];
@@ -378,46 +453,49 @@ async function populateCourses(userId, planId) {
         else console.log("How did we get here");
         let future_semesters = document.getElementsByClassName("semester");
         for (let semester of future_semesters) {
-            if (term in semester.getElementsByClassName("term")[0] && to_string(year) in semester.getElementsByClassName("term")[0]) {
+            console.log(semester);
+            if (term in semester.getElementsByClassName("term") && (year) in semester.getElementsByClassName("term")) {
                 semester.innerHTML += `<p id=${global_noncollision++} class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler(event)\"> <span class=\"course-id\">` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
                 found = true;
                 break;
             }
-            else console.log("Evalled false");
+            else console.log("Evaling false");
         }
         if (found) continue;
         for (let semester of document.getElementsByClassName("semester-past")) {
-            if (term in semester.getElementsByClassName("term")[0] && to_string(year) in semester.getElementsByClassName("term")[0]) {
-                semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\">` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
+            console.log(semester);
+            if (term in semester.getElementsByClassName("term") && (year) in semester.getElementsByClassName("term")) {
+                semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\">` + course_id + "<span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
                 found = true;
                 break;
             }
-            else console.log("Evalled false");
+            else console.log("Evaling false");
         }
         if (found) continue;
         let semester = document.getElementsByClassName("semester-current")[0];
-        if (semester && term in semester.getElementsByClassName("term")[0] && to_string(year) in semester.getElementsByClassName("term")[0]) {
-            semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\">` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
+        console.log(semester);
+        console.log((year));
+        console.log(term);
+        if (semester && term in semester.getElementsByClassName("term")[0] && (year) in semester.getElementsByClassName("term")[0]) {
+            semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\\` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
         }
-        else console.log("Evalled false");
+        else console.log("Evaling false");
     }
 }
 
-async function populateHeader(userId, planId) {
-    const response = await fetch("/api/studentdata/getusermetadata/" + userId);
-    const userdata = await response.json();
+function populateHeader(userdata, plandata) {
+    console.log(userdata);
+    console.log(plandata);
     let header = document.getElementById("planHeader");
-    const planResponse = await fetch("/api/studentdata/getplanmetadata/" + userId + "/" + planId);
-    const plandata = await planResponse.json();
-    header.innerHTML += "<p><strong>Student:</strong> " + userdata[0]["name"] + "</p>";
-    header.innerHTML += "<p><strong>Plan:</strong> " + plandata[0]["name"] + "</p>";
+    header.innerHTML += "<p><strong>Student:</strong> " + userdata["name"] + "</p>";
+    header.innerHTML += "<p><strong>Plan:</strong> " + plandata["name"] + "</p>";
     header.innerHTML += "<p><strong>Total Hours:</strong> " + "</p>"; // TODO: FIXME
     let subheader = document.getElementById("planSubheader");
-    subheader.innerHTML += "<p><strong>Major:</strong> " + plandata[0]["majors"][0] + "</p>";
-    subheader.innerHTML += "<p><strong>Minor:</strong> " + plandata[0]["minors"][0] + "</p>";
-    subheader.innerHTML += "<p><strong>Catalog:</strong> " + plandata[0]["catalog_year"] + "</p>";
-    subheader.innerHTML += "<p><strong>GPA:</strong> " + userdata[0]["gpa"] + "</p>";
-    subheader.innerHTML += "<p><strong>Major GPA</strong> " + userdata[0]["major_gpa"] + "</p>";
+    subheader.innerHTML += "<p><strong>Major:</strong> " + plandata["majors"][0] + "</p>";
+    subheader.innerHTML += "<p><strong>Minor:</strong> " + plandata["minors"][0] + "</p>";
+    subheader.innerHTML += "<p><strong>Catalog:</strong> " + plandata["catalog_year"] + "</p>";
+    subheader.innerHTML += "<p><strong>GPA:</strong> " + userdata["gpa"] + "</p>";
+    subheader.innerHTML += "<p><strong>Major GPA</strong> " + userdata["major_gpa"] + "</p>";
 }
 
 function dragStartHandler(ev) {
@@ -452,6 +530,15 @@ function dropHandler2(ev, el) {
 
 function dragOverHandler(ev) {
     ev.preventDefault();
+}
+
+for (let course in document.getElementsByClassName("course")) {
+    course.onmouseup = function(event) {
+        if (event.which == 3) {
+            removeElement(event.target);
+            checkRequirements();
+        }
+    }
 }
 
 var getUrlParameter = function getUrlParameter(sParam) {
