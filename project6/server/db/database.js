@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var md5 = require('md5');
 
 var db = mysql.createConnection({
-    host: "ip_address_here",
+    host: "localhost",
     database: "zeus",
     user: "root" ,
     password: ""
