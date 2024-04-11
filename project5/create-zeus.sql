@@ -85,7 +85,7 @@ CREATE TABLE prereq (
 CREATE TABLE gened (
     catalog_year numeric(4,0)  NOT NULL,
     course_id varchar(9)  NOT NULL,
-    type varchar(9)  NOT NULL CHECK (type in ('core', 'elective')),
+    type varchar(32)  NOT NULL CHECK (type in ('gened-bible', 'gened-core', 'gened-elective')),
     PRIMARY KEY (course_id,catalog_year),
     FOREIGN KEY (catalog_year) REFERENCES catalog (year),
     FOREIGN KEY (course_id) REFERENCES course (id)
@@ -4169,11 +4169,11 @@ VALUES
 INSERT INTO gened
     (catalog_year, course_id, type)
 VALUES
-    (2021, 'BTGE-1725', 'core'),
-    (2021, 'BTGE-2730', 'core'),
-    (2021, 'BTGE-2740', 'core'),
-    (2021, 'BTGE-3755', 'core'),
-    (2021, 'BTGE-3765', 'core');
+    (2021, 'BTGE-1725', 'gened-core'),
+    (2021, 'BTGE-2730', 'gened-core'),
+    (2021, 'BTGE-2740', 'gened-core'),
+    (2021, 'BTGE-3755', 'gened-core'),
+    (2021, 'BTGE-3765', 'gened-core');
 
 -- Populate with Python script from requirements json
 INSERT INTO majorcourse
