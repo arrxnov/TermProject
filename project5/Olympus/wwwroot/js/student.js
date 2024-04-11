@@ -76,6 +76,27 @@ async function initPage() {
     populateYears(plannedCourses);
     populateCourses(plannedCourses, allCourseData);
     populateRequirements(requirements, allCourseData);
+
+    jQuery("#courseReqs").accordion({ collapsible: true, });
+
+    document.getElementById("cognates").setAttribute("ondragover", "dragOverHandler(event)");
+    document.getElementById("core").setAttribute("ondragover", "dragOverHandler(event)");
+    document.getElementById("electives").setAttribute("ondragover", "dragOverHandler(event)");
+    document.getElementById("geneds").setAttribute("ondragover", "dragOverHandler(event)");
+
+    document.getElementById("cognates").setAttribute("ondrop", "dropTrash(event, this)");
+    document.getElementById("core").setAttribute("ondrop", "dropTrash(event, this)");
+    document.getElementById("electives").setAttribute("ondrop", "dropTrash(event, this)");
+    document.getElementById("geneds").setAttribute("ondrop", "dropTrash(event, this)");
+
+    for (let course in document.getElementsByClassName("course")) {
+        course.onmouseup = function (event) {
+            if (event.which == 3) {
+                remove(event.target);
+                checkRequirements();
+            }
+        }
+    }
 }
 
 function setupHandlers() {
@@ -184,45 +205,21 @@ function populateYears(plannedcourses) {
 
 function populateRequirements(requirements, allcourses) {
     let course_desc = "";
-    /*
-    let allcoursesAry = [];
-    console.log(allcourses);
-    console.log(typeof (allcourses));
-    console.log(allcourses.length);
-
-    console.log(allcourses[0].length);
-    
-    for (let i = 0; i < allcourses.length; i++) {
-        var temp = [...allcourses[0]];
-        console.log(temp);
-        temp.push(allcourses[i][0]);
-        temp.Add(allcourses[i][1]);
-        temp.Add(allcourses[i][2]);
-        allcoursesList.Add(temp);
-    }
-    
-    console.log(allcoursesAry);
-    console.log(typeof (allcoursesAry));
-    console.log(allcoursesAry[0]);
-    console.log(typeof (allcoursesAry[0]));
-    //[allcoursesList[0]];
-    //console.log(allcoursesList);
-    */
     for (let req of requirements) {
         for (let course of allcourses) {
             if (course["id"] == req["course_id"]) {
-                course_desc = course["description"];
+                course_desc = course["name"];
                 break;
             }
         }
         if (req["type"] == "core") {
-            document.getElementsByClassName("core").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span>" + course_desc + "</p>\n";
+            document.getElementById("core").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span> " + course_desc + "</p>\n";
         } else if (req["type"] == "gened") {
-            document.getElementsByClassName("geneds").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span>" + course_desc + "</p>\n";
+            document.getElementById("geneds").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span> " + course_desc + "</p>\n";
         } else if (req["type"] == "elective") {
-            document.getElementsByClassName("electives").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span>" + course_desc + "</p>\n";
+            document.getElementById("electives").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span> " + course_desc + "</p>\n";
         } else if (req["type"] == "cognate") {
-            document.getElementsByClassName("cognates").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span>" + course_desc + "</p>\n";
+            document.getElementById("cognates").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span> " + course_desc + "</p>\n";
         }
     }
 
@@ -230,19 +227,29 @@ function populateRequirements(requirements, allcourses) {
 }
 
 function checkRequirements() {
-    for (coursereq of document.getElementsByClassName("req")) {
+    for (let coursereq of document.getElementsByClassName("req")) {
         let satisfied = false;
-        for (semester of document.getElementsByClassName("semester")) {
-            for (course of semester.getElementsByClassName("course")) {
-                if (course.getElementsByClassName("course-id")[0].innerHTML == coursereq.getElementsByClassName("course-id")[0].innerHTML) {
+        for (let semester of document.getElementsByClassName("semester")) {
+            for (let course of semester.getElementsByClassName("course")) {
+                if (course.getElementsByClassName("course-id")[0].innerHTML === coursereq.getElementsByClassName("course-id")[0].innerHTML) {
                     satisfied = true;
                     break;
                 }
             }
             if (satisfied) break;
         }
-        if (!satisfied) coursereq.style.color = red;
-        else coursereq.style.color = white;
+
+        for (let semester of document.getElementsByClassName("semester-past")) {
+            for (let course of semester.getElementsByClassName("course")) {
+                if (course.getElementsByClassName("course-id")[0].innerHTML === coursereq.getElementsByClassName("course-id")[0].innerHTML) {
+                    satisfied = true;
+                    break;
+                }
+            }
+            if (satisfied) break;
+        }
+        if (!satisfied) coursereq.style.color = "red";
+        else coursereq.style.color = "white";
     }
 }
 
@@ -289,6 +296,7 @@ function populateCourses(plannedcourses, allcourses) {
             semester.innerHTML += `<p id=${global_noncollision++} class=\"course\"> <span class=\"course-id\\` + course_id + "</span> " + course_desc + "<span class=\"course-credits\">" + c_str + "</span>" + "</p>\n";
         }
     }
+    checkRequirements();
 }
 
 function populateHeader(userdata, plandata) {
@@ -320,7 +328,7 @@ function dropHandler(ev, el) {
         el.innerHTML += "<p class=\"course\" id=" + global_noncollision++ + " draggable=true ondragstart=dragStartHandler(event)><span class=\"course-id\">" + classDescriptor + "</span>\n" + className + "<span class=\"course-credits\">" + classCredits + "</span>\n<\p>";
     } else if (document.getElementById(data).classList.contains("req")) {
         let classDescriptor = document.getElementById(data).getElementsByTagName("span")[0].innerHTML;
-        let className = document.getElementById(data).childNodes[2].nodeValue;
+        let className = document.getElementById(data).childNodes[1].nodeValue;
         let classCredits = 3.0; // TODO: FIXME
         el.innerHTML += "<p class=\"course\" id=" + global_noncollision++ + " draggable=true ondragstart=dragStartHandler(event)><span class=\"course-id\">" + classDescriptor + "</span>\n" + className + "<span class=\"course-credits\">" + classCredits + "</span>\n<\p>";
     } else {
@@ -329,17 +337,15 @@ function dropHandler(ev, el) {
     checkRequirements();
 }
 
-function dragOverHandler(ev) {
+function dropTrash(ev, el) {
     ev.preventDefault();
+    const data = ev.dataTransfer.getData("Text");
+    document.getElementById(data).remove();
+    checkRequirements();
 }
 
-for (let course in document.getElementsByClassName("course")) {
-    course.onmouseup = function (event) {
-        if (event.which == 3) {
-            removeElement(event.target);
-            checkRequirements();
-        }
-    }
+function dragOverHandler(ev) {
+    ev.preventDefault();
 }
 
 var getUrlParameter = function getUrlParameter(sParam) {
