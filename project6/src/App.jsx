@@ -3,6 +3,25 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+// const express = require('express');
+
+// const app = express ();
+// app.use(express.json());
+
+// const PORT = process.env.PORT || 3000;
+
+// app.listen(PORT, () => {
+//   console.log("Server Listening on PORT:", port);
+// });
+
+// app.get("/test", (request, response) => {
+//   const status = {
+//     "Status": "Running"
+//  };
+ 
+//  response.send(status);
+// });
+
 function App() {
   const [count, setCount] = useState(0)
 
