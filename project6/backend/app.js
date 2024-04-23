@@ -1,10 +1,16 @@
 var express = require('express');
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var studentdataRouter = require('./routes/studentdata');
+var plansRouter = require('./routes/plans');
+var coursesRouter = require('./routes/courses');
+var plandataRouter = require('./routes/plandata');
+var plancoursesRouter = require('./routes/plancourses');
+var coursereqsRouter = require('./routes/coursereqs');
+var adviseesRouter = require('./routes/advisees');
 
 var app = express();
 
@@ -15,9 +21,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/studentdata', studentdataRouter);
+app.use('/plans', plansRouter);
+app.use('/courses', coursesRouter);
+app.use('/plandata', plandataRouter);
+app.use('/plancourses', plancoursesRouter);
+app.use('/coursereqs', coursereqsRouter);
+app.use('/advisees', adviseesRouter);
 
 module.exports = app;
-
-app.listen(3000, () => console.log('Example app is listening on port 3000.'));
