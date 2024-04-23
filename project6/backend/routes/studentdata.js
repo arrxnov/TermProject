@@ -11,4 +11,4 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.send({"name": "Logan Miller", "gpa": 3.00, "major_gpa": 3.05, "default_plan_id" : 1});
 });
-module.exports = router;s
+module.exports = router;
