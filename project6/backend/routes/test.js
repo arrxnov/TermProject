@@ -1,9 +1,10 @@
 var express = require('express');
+var zeus = require('../db/database');
 var router = express.Router();
 
-/* GET home page. */
+/* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.send({"message": "test api"});
 });
 
 module.exports = router;
