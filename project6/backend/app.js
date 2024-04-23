@@ -15,9 +15,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-module.exports = app;
+app.use('/test', textRouter);
 
 app.listen(3000, () => console.log('Example app is listening on port 3000.'));
+
+module.exports = app;
