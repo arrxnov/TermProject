@@ -4,13 +4,13 @@ var md5 = require('md5');
 var db = mysql.createConnection({
     host: "163.11.237.170",
     database: "zeus",
-    user: "root",
-    password: ""
+    user: "lmiller",
+    password: "password"
 });
 
 db.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
+    console.log("Database Connected!");
 });
 
 module.exports = db;
