@@ -1,25 +1,12 @@
+function logOutHandler(ev) {
+    
+}
+
 function Header(studentId) {
     return (
-        <>
-            <head>
-
-                <meta charset="utf-8" />
-                <title>APE</title>
-                <link rel="icon" href="images/favicon/favicon-96x96.png" />
-                <link rel="stylesheet" href="css/style.css" />
-                <link rel="stylesheet" href="css/datatables.css" />
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" />
-                <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-                <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-                <script src="js/datatables.js"></script>
-                <script src="js/form.js" defer></script>
-
-            </head>
-            
+        <>  
             <header>
-                <img src="images/ape-no-bg.png" id="icon" alt="image of an ape reading" />
+                <img src="src/images/ape-no-bg.png" id="icon" alt="image of an ape reading" />
                 <h1>APE</h1>
                 <div id="headerBtns">
                     <ul className="menu">
