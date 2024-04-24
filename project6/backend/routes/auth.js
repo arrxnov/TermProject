@@ -11,7 +11,7 @@ router.get('/validate_student/:session_id/:student_id?', function(req, res, next
     res.send({"valid": true, "role": "student"});
 });
 
-router.get('/validate_student/:session_id/:plan_id/:student_id?', function(req, res, next) {
+router.get('/validate_plan/:session_id/:plan_id/:student_id?', function(req, res, next) {
     var sessionId = req.params.session_id;
     var planId = req.params.plan_id;
     var studentId = req.params.student_id; // may be undef
