@@ -1,17 +1,17 @@
+// TODO: add post apis to update notes, planned courses
+// Notes:
+// * Kai responsible for auth.js
+// * Logan responsible for student.js, faculty.js
+
 var express = require('express');
 var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var studentdataRouter = require('./routes/studentdata');
-var plansRouter = require('./routes/plans');
-var coursesRouter = require('./routes/courses');
-var plandataRouter = require('./routes/plandata');
-var plancoursesRouter = require('./routes/plancourses');
-var coursereqsRouter = require('./routes/coursereqs');
-var adviseesRouter = require('./routes/advisees');
-var authpermsRouter = require('./routes/authperms');
+var authRouter = require('./routes/auth');
+var facultyRouter = require('./routes/faculty');
+var studentRouter = require('./routes/student'); 
 
 var app = express();
 
@@ -22,13 +22,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/studentdata', studentdataRouter);
-app.use('/plans', plansRouter);
-app.use('/courses', coursesRouter);
-app.use('/plandata', plandataRouter);
-app.use('/plancourses', plancoursesRouter);
-app.use('/coursereqs', coursereqsRouter);
-app.use('/advisees', adviseesRouter);
-app.use('/authperms', authpermsRouter);
+app.use('/auth', authRouter);
+app.use('/faculty', facultyRouter);
+app.use('/student', studentRouter);
 
 module.exports = app;

@@ -2,13 +2,21 @@ var express = require('express');
 var zeus = require('../db/database');
 var router = express.Router();
 
-// call Kai's api and pass session id, user id, plan -d (default user and plan ids)
-// have him return valid or not
+router.get('/session/:session_id/:student_id?', function(req, res, next) {
+  let validSession = validateSession(req.params.session_id, req.params.student_id);
 
-// if not Kai's api
-//     abort
-
-router.get('/', function(req, res, next) {
-  res.send({"name": "Logan Miller", "gpa": 3.00, "major_gpa": 3.05, "default_plan_id" : 1});
+  if (!validSession) {
+    res.status(400);
+    res.send('Invalid credentials for requested resource');
+  }
+  else {
+    res.send({"name": "Logan Miller", "gpa": 3.00, "major_gpa": 3.05, "default_plan_id" : 1});
+  }
 });
+
 module.exports = router;
+
+async function validateSession(sessionId, studentId) {
+  let response = await fetch("/authperms/session/" + sessionId + "/" + studentId);
+  return await response.json();
+}
