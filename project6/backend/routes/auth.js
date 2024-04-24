@@ -30,6 +30,14 @@ router.get('/', function(req, res, next) {
 
 // I decided that these particular apis would be better done as function exports than url apis
 
+function validateFaculty(sessionId) {
+    // check that a faculty member is currently signed in
+
+    const validSession = {"valid": true, "facultyId": 1}; // FIXME make dynamic
+    
+    return validSession;
+}
+
 function validateStudent(sessionId, studentId=null) {
     if (studentId) {
         // check that studentId belongs to the logged-in faculty's advisee list
@@ -59,5 +67,6 @@ function validatePlan(sessionId, planId, studentId=null) {
 }
 
 module.exports = router;
-module.exports.validateStudent = validateStudent
+module.exports.validateFaculty = validateFaculty;
+module.exports.validateStudent = validateStudent;
 module.exports.validatePlan = validatePlan;
