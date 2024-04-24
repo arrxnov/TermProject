@@ -2,75 +2,29 @@ var express = require('express');
 var zeus = require('../db/database');
 var router = express.Router();
 
-// router.get('/plandata/:session_id/:student_id?', function(req, res, next) {
-//     let role = validateSession(res, req.params.session_id, studentId=req.params.student_id);
+router.get('/plandata/:session_id/:plan_id/:student_id?', function(req, res, next) {
+    let role = validateSession(res, req.params.session_id, req.params.plan_id, studentId=req.params.student_id);
 
-//     if (role) {
-//         res.send({"name": "Logan Miller", "gpa": 3.00, "major_gpa": 3.05, "default_plan_id" : 1});
-//     }
-// });
+    if (role) {
+        res.send({"name": "CS-Default", "minors": ["Bible"], "majors": ["CS", "CY"], "catalog_year" : 2021});
+    }
+});
 
-// router.get('/studentdata/:session_id/:student_id?', function(req, res, next) {
-//     let role = validateSession(res, req.params.session_id, studentId=req.params.student_id);
+router.get('/plancourses/:session_id/:plan_id/:student_id?', function(req, res, next) {
+    let role = validateSession(res, req.params.session_id, req.params.plan_id, studentId=req.params.student_id);
 
-//     if (role) {
-//         res.send({"name": "Logan Miller", "gpa": 3.00, "major_gpa": 3.05, "default_plan_id" : 1});
-//     }
-// });
+    if (role) {
+        res.send({"id": "CS-1220", "name": "Obj-Orient", "credits": 3.0, "description" : "You'll hate your life"});
+    }
+});
 
-// router.get('/studentdata/:session_id/:student_id?', function(req, res, next) {
-//     let role = validateSession(res, req.params.session_id, studentId=req.params.student_id);
+router.get('/planreqs/:session_id/:plan_id/:student_id?', function(req, res, next) {
+    let role = validateSession(res, req.params.session_id, req.params.plan_id, studentId=req.params.student_id);
 
-//     if (role) {
-//         res.send({"name": "Logan Miller", "gpa": 3.00, "major_gpa": 3.05, "default_plan_id" : 1});
-//     }
-// });
-
-// other routes: plandata, plancourses, coursereqs
-
-// var express = require('express');
-// var zeus = require('../db/database');
-// var router = express.Router();
-
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send({"name": "CS-Default", "minors": ["Bible"], "majors": ["CS", "CY"], "catalog_year" : 2021});
-// });
-
-// module.exports = router;
-
-// var express = require('express');
-// var zeus = require('../db/database');
-// var router = express.Router();
-
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send({"id": "CS-1220", "name": "Obj-Orient", "credits": 3.0, "description" : "You'll hate your life"});
-// });
-
-// module.exports = router;
-
-// var express = require('express');
-// var zeus = require('../db/database');
-// var router = express.Router();
-
-// /* GET course requirememts */
-// router.get('/', function(req, res, next) {
-//   res.send({"course_id": "CS-1220", "type": "core"});
-// });
-
-// module.exports = router;
-
-// var express = require('express');
-// var zeus = require('../db/database');
-// var router = express.Router();
-
-// /* GET course requirememts */
-// router.get('/', function(req, res, next) {
-//   res.send({"course_id": "CS-1220", "type": "core"});
-// });
-
-// module.exports = router;
+    if (role) {
+        res.send({"course_id": "CS-1220", "type": "core"});
+    }
+});
 
 module.exports = router;
 

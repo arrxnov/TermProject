@@ -1,7 +1,7 @@
 // TODO: add post apis to update notes, planned courses
 // Notes:
 // * Kai responsible for auth.js
-// * Logan responsible for student.js, faculty.js
+// * Logan responsible for student.js, plans.js, faculty.js
 
 var express = require('express');
 var cors = require('cors');
