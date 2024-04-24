@@ -12,7 +12,8 @@ var logger = require('morgan');
 var authRouter = require('./routes/auth');
 var facultyRouter = require('./routes/faculty');
 var studentRouter = require('./routes/student');
-var planRouter = require('./routes/plan')
+var planRouter = require('./routes/plan');
+var saveRouter = require('./routes/save');
 
 var app = express();
 
@@ -27,5 +28,6 @@ app.use('/auth', authRouter);
 app.use('/faculty', facultyRouter);
 app.use('/student', studentRouter);
 app.use('/plan', planRouter);
+app.use('/save', saveRouter);
 
 module.exports = app;
