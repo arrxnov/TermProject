@@ -11,6 +11,7 @@ var plandataRouter = require('./routes/plandata');
 var plancoursesRouter = require('./routes/plancourses');
 var coursereqsRouter = require('./routes/coursereqs');
 var adviseesRouter = require('./routes/advisees');
+var authpermsRouter = require('./routes/authperms');
 
 var app = express();
 
@@ -28,5 +29,6 @@ app.use('/plandata', plandataRouter);
 app.use('/plancourses', plancoursesRouter);
 app.use('/coursereqs', coursereqsRouter);
 app.use('/advisees', adviseesRouter);
+app.use('/authperms', authpermsRouter);
 
 module.exports = app;
