@@ -3,6 +3,7 @@ var zeus = require('../db/database');
 var auth = require('./auth');
 var router = express.Router();
 
+// Path: /plan/plandata/<session_id>/<plan_id>/<student_id (optional if student signed in)>
 router.get('/plandata/:session_id/:plan_id/:student_id?', function(req, res, next) {
     let validSession = auth.validatePlan(req.params.session_id, req.params.plan_id, req.params.student_id);
 
@@ -40,10 +41,11 @@ router.get('/plandata/:session_id/:plan_id/:student_id?', function(req, res, nex
     }
     else {
         res.status(400);
-        res.send('Invalid credentials for requested resource');
+        res.send('Invalid credentials for requested resource\n');
     }
 });
 
+// Path: /plan/plancourses/<session_id>/<plan_id>/<student_id (optional if student signed in)>
 router.get('/plancourses/:session_id/:plan_id/:student_id?', function(req, res, next) {
     let validSession = auth.validatePlan(req.params.session_id, req.params.plan_id, req.params.student_id);
 
@@ -64,10 +66,11 @@ router.get('/plancourses/:session_id/:plan_id/:student_id?', function(req, res, 
     }
     else {
         res.status(400);
-        res.send('Invalid credentials for requested resource');
+        res.send('Invalid credentials for requested resource\n');
     }
 });
 
+// Path: /plan/planreqs/<session_id>/<plan_id>/<student_id (optional if student signed in)>
 router.get('/planreqs/:session_id/:plan_id/:student_id?', function(req, res, next) {
     let validSession = auth.validatePlan(req.params.session_id, req.params.plan_id, req.params.student_id);
 
@@ -98,7 +101,7 @@ router.get('/planreqs/:session_id/:plan_id/:student_id?', function(req, res, nex
     }
     else {
         res.status(400);
-        res.send('Invalid credentials for requested resource');
+        res.send('Invalid credentials for requested resource\n');
     }
 });
 

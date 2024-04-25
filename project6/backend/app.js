@@ -1,10 +1,10 @@
 // TODO: add post apis to update notes, planned courses
 // Notes:
 // * Kai responsible for auth.js
-// * Logan responsible for student.js, plans.js, faculty.js
+// * Logan responsible for student.js, plans.js, faculty.js, save.js
 
 var express = require('express');
-var cors = require('cors');
+var cors = require('cors'); // TODO: lock down cors
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');

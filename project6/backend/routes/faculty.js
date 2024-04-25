@@ -3,6 +3,7 @@ var zeus = require('../db/database');
 var auth = require('./auth');
 var router = express.Router();
 
+// Path: /faculty/advisees
 router.get('/advisees', function(req, res, next) {
     let validSession = auth.validateFaculty(req.params.session_id);
 
@@ -23,7 +24,7 @@ router.get('/advisees', function(req, res, next) {
     }
     else {
         res.status(400);
-        res.send('Invalid credentials for requested resource');
+        res.send('Invalid credentials for requested resource\n');
     }
 });
 
