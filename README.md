@@ -27,3 +27,12 @@ SELECT (
 SELECT plannedcourse.course_id, course.credits, plannedcourse.year, plannedcourse.term
 FROM plannedcourse INNER JOIN course ON plannedcourse.course_id=course.id
 WHERE plannedcourse.plan_id = 1;
+
+
+SELECT majorcourse.course_id, majorcourse.type
+FROM plannedmajor INNER JOIN majorcourse ON plannedmajor.major_id=majorcourse.major_id
+WHERE plannedmajor.plan_id = 1
+UNION
+SELECT minorcourse.course_id, minorcourse.type
+FROM plannedminor INNER JOIN minorcourse ON plannedminor.minor_id=minorcourse.minor_id
+WHERE plannedminor.plan_id = 1;
