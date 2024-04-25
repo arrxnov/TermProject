@@ -4,13 +4,22 @@ var auth = require('./auth');
 var router = express.Router();
 
 router.get('/advisees', function(req, res, next) {
-    let validSession = auth.validateStudent(req.params.session_id);
+    let validSession = auth.validateFaculty(req.params.session_id);
 
     if (validSession["valid"]) {
         let facultyId = validSession["facultyId"];
-        
-        // TODO: add query to get this from the database
-        res.send([{"id": "12345678", "name": "Jeve Stobs"}]);
+
+        let sql = "SELECT user.id, user.name " +
+            "FROM user INNER JOIN advisee ON user.id=advisee.advisee_id " +
+            "WHERE advisee.advisor_id = ?";
+        zeus.query(sql, [facultyId], (error, results) => {
+            if (error) {
+                console.log(sql + " failed");
+                return console.error(error.message);
+            }
+
+            res.send(results.map(v => Object.assign({}, v)));
+        });
     }
     else {
         res.status(400);

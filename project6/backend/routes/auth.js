@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
 function validateFaculty(sessionId) {
     // check that a faculty member is currently signed in
 
-    const validSession = {"valid": true, "facultyId": 1}; // FIXME make dynamic
+    const validSession = {"valid": true, "facultyId": "683321ca-8c34-469e-9240-37a53252d93a"}; // FIXME make dynamic
     
     return validSession;
 }
