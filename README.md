@@ -22,3 +22,8 @@ SELECT (
     FROM plan
     WHERE id = 1
 ) AS catalog_year;
+
+
+SELECT plannedcourse.course_id, course.credits, plannedcourse.year, plannedcourse.term
+FROM plannedcourse INNER JOIN course ON plannedcourse.course_id=course.id
+WHERE plannedcourse.plan_id = 1;
