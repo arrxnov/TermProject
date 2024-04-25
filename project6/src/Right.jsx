@@ -5,6 +5,7 @@ function Right(studentId) {
     return (
         <>
             <Plan />
+            <Table />
         </>
     )
 }
