@@ -2,33 +2,40 @@ var express = require('express');
 var zeus = require('../db/database');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
+router.get('/login', function(req, res, next) {
+    // add url parameters above
+
+    // query db if necessary and res.send(json) or ok messsage
     res.send({"something": "else", "about": "me"});
-    next();
+
+    // if error, send appropriate error code and message
 });
 
-// router.get('/validate_student/:session_id/:student_id?', function(req, res, next) {
-//     var sessionId = req.params.session_id;
-//     var studentId = req.params.student_id; // may be undef
+router.get('/logout', function(req, res, next) {
+    // add session parameter above
     
-//     // This needs to be made dynamic
+    // query db if necessary and res.send(json) or ok messsage
+    res.send({"something": "else", "about": "me"});
 
-//     res.send({"valid": true, "role": "student"});
-//     next();
+    // if error, send appropriate error code and message
+});
+
+router.get('/role', function(req, res, next) {
+    // query db if necessary and res.send(json) or ok messsage
+    res.send({"something": "else", "about": "me"});
+
+    // if error, send appropriate error code and message
+});
+
+// let sql = "SELECT name, gpa, major_gpa, default_plan_id FROM user WHERE id = ?";
+// zeus.query(sql, [studentId], (error, results) => {
+//     if (error) {
+//         console.log(sql + " failed");
+//         return console.error(error.message);
+//     }
+
+//     res.send(results.map(v => Object.assign({}, v)));
 // });
-
-// router.get('/validate_plan/:session_id/:plan_id/:student_id?', function(req, res, next) {
-//     var sessionId = req.params.session_id;
-//     var planId = req.params.plan_id;
-//     var studentId = req.params.student_id; // may be undef
-    
-//     // This needs to be made dynamic
-
-//     res.send({"valid": true, "role": "student"});
-//     next();
-// });
-
-// I decided that these particular apis would be better done as function exports than url apis
 
 function validateFaculty(sessionId) {
     // check that a faculty member is currently signed in
