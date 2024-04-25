@@ -1,10 +1,9 @@
-// TODO: add post apis to update notes, planned courses
 // Notes:
 // * Kai responsible for auth.js
 // * Logan responsible for student.js, plans.js, faculty.js, save.js
 
 var express = require('express');
-var cors = require('cors'); // TODO: lock down cors
+var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -17,7 +16,13 @@ var saveRouter = require('./routes/save');
 
 var app = express();
 
-app.use(cors())
+var corsOptions = {
+    origin: 'http://localhost:8000', // NOTE: make sure client is running on port 8000
+    optionsSuccessStatus: 200,
+    methods: "GET, POST"
+}
+
+app.use(cors(corsOptions))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
