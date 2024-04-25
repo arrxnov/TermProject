@@ -1,5 +1,8 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+
 function logOutHandler(ev) {
-    
+    ev.preventDefault();
 }
 
 function Header(studentId) {
@@ -42,7 +45,7 @@ function Header(studentId) {
                         </li>
                     </ul>
                     <button className="btn" id="save">Save</button>
-                    <button className="btn-clickable" id="logout">Log Out</button>
+                    <button className="btn-clickable" id="logout" onClick={logOutHandler}>Log Out</button>
                 </div> 
             </header>
         </>
