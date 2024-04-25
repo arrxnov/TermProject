@@ -51,7 +51,6 @@ router.get('/courses/:session_id/:student_id?', function(req, res, next) {
     let validSession = auth.validateStudent(req.params.session_id, req.params.student_id);
 
     if (validSession["valid"]) {
-        let studentId = validSession["studentId"];
         
         let sql = "SELECT * FROM course";
         zeus.query(sql, [], (error, results) => {
