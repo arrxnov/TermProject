@@ -6,9 +6,13 @@ import Right from './Right.jsx'
 import './css/style.css'
 import './css/datatables.css'
 
+function getStudentInfo() {
+  
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Header />
+    <Header studentId={1} planId/>
     <Left />
     <Right />
   </React.StrictMode>,

@@ -1,8 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
 
 function logOutHandler(ev) {
-    ev.preventDefault();
+    console.log("You tried to log out!");
 }
 
 function Header(studentId) {

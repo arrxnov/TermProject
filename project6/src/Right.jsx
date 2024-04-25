@@ -3,10 +3,10 @@ import Table from './Table'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-function Right(studentId) {
+function Right(studentId, planId) {
     return (
         <>
-            <Plan />
+            <Plan studentId={studentId} planId={planId} />
             <Table />
         </>
     )
