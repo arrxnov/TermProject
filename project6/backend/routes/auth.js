@@ -61,7 +61,7 @@ function validatePlan(sessionId, planId, studentId=null) {
 
     // check that plan belongs to studentId
 
-    const validSession = {"valid": true, "role": "student", "planId": 1, "studentId": "d1eae408-2a14-4740-ba90-d2caedacee76"}; // FIXME make dynamic
+    const validSession = {"valid": true, "role": "faculty", "planId": 1, "studentId": "d1eae408-2a14-4740-ba90-d2caedacee76"}; // FIXME make dynamic
     
     return validSession;
 }
