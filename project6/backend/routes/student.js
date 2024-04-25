@@ -7,18 +7,22 @@ router.get('/studentdata/:session_id/:student_id?', function(req, res, next) {
     let validSession = auth.validateStudent(req.params.session_id, req.params.student_id);
 
     if (validSession["valid"]) {
-        let role = validSession["role"];
         let studentId = validSession["studentId"];
-        
-        // TODO: add query to get this from the database
-        res.send({"name": "Logan Miller", "gpa": 3.00, "major_gpa": 3.05, "default_plan_id" : 1});
+
+        let sql = "SELECT name, gpa, major_gpa, default_plan_id FROM user WHERE id = ?";
+        zeus.query(sql, [studentId], (error, results) => {
+            if (error) {
+                console.log(sql + " failed");
+                return console.error(error.message);
+            }
+
+            res.send(results.map(v => Object.assign({}, v))[0]);
+        });
     }
     else {
         res.status(400);
         res.send('Invalid credentials for requested resource');
     }
-
-    next();
 });
 
 router.get('/plans/:session_id/:student_id?', function(req, res, next) {
@@ -26,16 +30,21 @@ router.get('/plans/:session_id/:student_id?', function(req, res, next) {
 
     if (validSession["valid"]) {
         let studentId = validSession["studentId"];
-        
-        // TODO: add query to get this from the database
-        res.send([{"id": 1, "name": "My Cool Plan"}]);
+
+        let sql = "SELECT id, name FROM plan WHERE user_id = ?";
+        zeus.query(sql, [studentId], (error, results) => {
+            if (error) {
+                console.log(sql + " failed");
+                return console.error(error.message);
+            }
+
+            res.send(results.map(v => Object.assign({}, v)));
+        });
     }
     else {
         res.status(400);
         res.send('Invalid credentials for requested resource');
     }
-    
-    next();
 });
 
 router.get('/courses/:session_id/:student_id?', function(req, res, next) {
@@ -44,15 +53,20 @@ router.get('/courses/:session_id/:student_id?', function(req, res, next) {
     if (validSession["valid"]) {
         let studentId = validSession["studentId"];
         
-        // TODO: add query to get this from the database
-        res.send([{"id": "CS-1220", "name": "Obj-Orient", "credits": 3.0, "description" : "You'll hate your life"}]);
+        let sql = "SELECT * FROM course";
+        zeus.query(sql, [], (error, results) => {
+            if (error) {
+                console.log(sql + " failed");
+                return console.error(error.message);
+            }
+
+            res.send(results.map(v => Object.assign({}, v)));
+        });
     }
     else {
         res.status(400);
         res.send('Invalid credentials for requested resource');
     }
-
-    next();
 });
 
 module.exports = router;

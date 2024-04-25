@@ -16,8 +16,6 @@ router.get('/advisees', function(req, res, next) {
         res.status(400);
         res.send('Invalid credentials for requested resource');
     }
-
-    next();
 });
 
 module.exports = router;

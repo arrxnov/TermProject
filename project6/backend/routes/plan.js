@@ -17,8 +17,6 @@ router.get('/plandata/:session_id/:plan_id/:student_id?', function(req, res, nex
         res.status(400);
         res.send('Invalid credentials for requested resource');
     }
-
-    next();
 });
 
 router.get('/plancourses/:session_id/:plan_id/:student_id?', function(req, res, next) {
@@ -35,8 +33,6 @@ router.get('/plancourses/:session_id/:plan_id/:student_id?', function(req, res, 
         res.status(400);
         res.send('Invalid credentials for requested resource');
     }
-
-    next();
 });
 
 router.get('/planreqs/:session_id/:plan_id/:student_id?', function(req, res, next) {
@@ -53,8 +49,6 @@ router.get('/planreqs/:session_id/:plan_id/:student_id?', function(req, res, nex
         res.status(400);
         res.send('Invalid credentials for requested resource');
     }
-
-    next();
 });
 
 module.exports = router;
