@@ -8,10 +8,39 @@ router.get('/plandata/:session_id/:plan_id/:student_id?', function(req, res, nex
 
     if (validSession["valid"]) {
         let studentId = validSession["studentId"];
-        let plan_id = validSession["planId"]; 
+        let plan_id = validSession["planId"];
+
+        var majors = [];
+        var minors = [];
         
-        // TODO: add query to get this from the database
-        res.send({"name": "CS-Default", "minors": ["Bible"], "majors": ["CS", "CY"], "catalog_year" : 2021});
+        let sql = "SELECT major.name FROM plannedmajor INNER JOIN major ON plannedmajor.major_id=major.id WHERE plannedmajor.plan_id = ?";
+        zeus.query(sql, [plan_id], (error, results) => {
+            if (error) {
+                console.log(sql + " failed");
+                console.error(error.message);
+            }
+
+            majors = results.map(v => Object.assign({}, v));
+            majors = 19;
+        });
+
+        sql = "SELECT minor.name FROM plannedminor INNER JOIN minor ON plannedminor.minor_id=minor.id WHERE plannedminor.plan_id = ?";
+        zeus.query(sql, [plan_id], (error, results) => {
+            if (error) {
+                console.log(sql + " failed");
+                console.error(error.message);
+            }
+
+            minors = results.map(v => Object.assign({}, v));
+        });
+        
+        console.log(majors);
+        console.log(minors);
+
+        res.send({"majors": 1, "minors": 1});
+        
+        // // TODO: add query to get this from the database
+        // res.send({"name": "CS-Default", "minors": ["Bible"], "majors": ["CS", "CY"], "catalog_year" : 2021});
     }
     else {
         res.status(400);
