@@ -36,3 +36,6 @@ UNION
 SELECT minorcourse.course_id, minorcourse.type
 FROM plannedminor INNER JOIN minorcourse ON plannedminor.minor_id=minorcourse.minor_id
 WHERE plannedminor.plan_id = 1;
+
+
+683321ca-8c34-469e-9240-37a53252d93a
