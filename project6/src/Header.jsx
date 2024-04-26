@@ -4,7 +4,15 @@ function logOutHandler(ev) {
     console.log("You tried to log out!");
 }
 
-function Header(studentId) {
+function saveHandler() {
+    console.log("You tried to save!");
+}
+
+function optionsDropDown() {
+    console.log("Opening options!");
+}
+
+function Header(infoJSON) {
     return (
         <>  
             <header>
@@ -12,7 +20,7 @@ function Header(studentId) {
                 <h1>APE</h1>
                 <div id="headerBtns">
                     <ul className="menu">
-                        <li><p className="btn-clickable" id="optionsHeader">Options</p>
+                        <li><p className="btn-clickable" id="optionsHeader" onClick={optionsDropDown}>Options</p>
                             <ul className="subMenu">
                                 <li>
                                     <p>Plans</p>
@@ -43,7 +51,7 @@ function Header(studentId) {
                             </ul>
                         </li>
                     </ul>
-                    <button className="btn" id="save">Save</button>
+                    <button className="btn" id="save" onClick={saveHandler}>Save</button>
                     <button className="btn-clickable" id="logout" onClick={logOutHandler}>Log Out</button>
                 </div> 
             </header>

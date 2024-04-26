@@ -6,20 +6,30 @@ import Right from './Right.jsx'
 import './css/style.css'
 import './css/datatables.css'
 
-function getUserInfo() {
-  
+async function getUserInfo() {
+  return {};
+}
+
+async function getRequirements() {
+  let response = await fetch("http://localhost:3000/plan/planreqs/1/1");
+  await console.log(response);
+  let reqs = await response.json();
+  return reqs;
 }
 
 function renderStudent() {
 
 }
 
-infoJSON = getUserInfo();
+let infoJSON = await getUserInfo();
+let reqs = await getRequirements();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Header info={info}/>
-    <Left />
-    <Right />
+    <Header info={infoJSON}/>
+    <Left reqs={reqs}/>
+    {/*<Right /> */}
   </React.StrictMode>,
 )
+
+
