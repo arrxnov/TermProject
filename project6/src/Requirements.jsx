@@ -1,29 +1,79 @@
 import React from 'react'
-import Drag from './Drag'
+
+function onDragStart(ev) {
+    ev.preventDefault();
+    ev.dataTransfer.effectAllowed = "move";
+}
+
+async function getRequirements() {
+    let response = await fetch("http://localhost:3000/plan/planreqs/1/1");
+    await console.log(response);
+    let reqs = await response.json();
+    return reqs;
+}
 
 function popCore(reqs) {
-    let ret = <></>;
     reqs = reqs.reqs.reqs;
+    let core_courses = [];
     for (let course of reqs) {
         if (course.type === "core") {
-            ret += <p className="course req" draggable="true" onDragStart={Drag.onDragStart(this)}><span className="course-id">course.course_id</span>course.name</p>;
+            core_courses.append(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">course.course_id</span>course.name</p>);
         }
     }
+    return (
+        <>
+            {core_courses.map(course => <>{course}</>)}
+        </>
+    )
 }
 
 function popElectives(reqs) {
-
+    reqs = reqs.reqs.reqs;
+    let elec_courses = [];
+    for (let course of reqs) {
+        if (course.type === "core") {
+            elec_courses.append(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">course.course_id</span>course.name</p>);
+        }
+    }
+    return (
+        <>
+            {core_courses.map(course => <>{course}</>)}
+        </>
+    )
 }
 
 function popCognates(reqs) {
-
+    reqs = reqs.reqs.reqs;
+    let elec_courses = [];
+    for (let course of reqs) {
+        if (course.type === "core") {
+            elec_courses.append(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">course.course_id</span>course.name</p>);
+        }
+    }
+    return (
+        <>
+            {elec_courses.map(course => <>{course}</>)}
+        </>
+    )
 }
 
 function popGeneds(reqs) {
-
+    reqs = reqs.reqs.reqs;
+    let gened_courses = [];
+    for (let course of reqs) {
+        if (course.type === "core") {
+            gened_courses.append(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">course.course_id</span>course.name</p>);
+        }
+    }
+    return (
+        <>
+            {gened_courses.map(course => <>{course}</>)}
+        </>
+    )
 }
 
-function Requirements(reqs) {
+async function Requirements() {
+    let reqs = await getRequirements();
     return (
         <>
             <div id="UL">

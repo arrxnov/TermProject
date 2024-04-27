@@ -10,25 +10,36 @@ async function getUserInfo() {
   return {};
 }
 
-async function getRequirements() {
-  let response = await fetch("http://localhost:3000/plan/planreqs/1/1");
-  await console.log(response);
-  let reqs = await response.json();
-  return reqs;
+// async function getPlanJSON() {
+//   let response = await fetch("http://localhost:3000/plans/1/:1");
+//   return await response.json();
+// }
+
+function isFaculty() {
+  return false;
 }
 
-function renderStudent() {
+function renderChoose() {
+  if (isFaculty()) {
 
+  } else {
+    return (
+      <>
+        <Left />
+        <Right />
+      </>
+    )
+  }
 }
 
 let infoJSON = await getUserInfo();
-let reqs = await getRequirements();
+// let planJSON = await getPlanJSON();
+let planJSON = {};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Header info={infoJSON}/>
-    <Left reqs={reqs}/>
-    {/*<Right /> */}
+    <Header info={infoJSON} planJSON={planJSON} />
+    {renderChoose()}
   </React.StrictMode>,
 )
 

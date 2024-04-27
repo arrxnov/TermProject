@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom/client'
 import Requirements from './Requirements'
 import Special from './Special'
 
-function Left(reqs) {
+function Left() {
     return (
         <>
-            <Requirements reqs={reqs}/>
+            <Requirements />
             <Special />
         </>
     )
