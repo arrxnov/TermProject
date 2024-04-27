@@ -29,7 +29,6 @@ function printMinors(plandata) {
 
 function Right({info, plans, plandata, plancourses, allcourses}) {
     const [totalCredits, setTotalCredits] = React.useState(0);
-    console.log(plandata.majors);
     let default_plan = {};
     for (let plan of plans) {
         if (plan.id === info.default_plan_id) {
