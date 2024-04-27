@@ -1,17 +1,26 @@
 import React from 'react'
-import Accordion from 'react-bootstrap/Accordion'
-import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
 
 function onDragStart(ev) {
     ev.preventDefault();
     ev.dataTransfer.effectAllowed = "move";
 }
 
+function dropTrash(ev) {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("Text");
+    document.getElementById(data).remove();
+    checkRequirements();
+}
+
+function dragOver(ev) {
+    ev.preventDefault();
+}
+
 function popCore(reqs) {
     let core_courses = [];
     for (let course of reqs) {
         if (course.type === "core") {
-            core_courses.push(<p className="course req"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+            core_courses.push(<p className="course req" draggable="true" dragstarthandler={onDragStart}><span className="course-id">{course.course_id}</span> {course.name}</p>);
         }
     }
     return (
@@ -25,7 +34,7 @@ function popElectives(reqs) {
     let elec_courses = [];
     for (let course of reqs) {
         if (course.type === "elective") {
-            elec_courses.push(<p className="course req"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+            elec_courses.push(<p className="course req" draggable="true" dragstarthandler={onDragStart}><span className="course-id">{course.course_id}</span> {course.name}</p>);
         }
     }
     return (
@@ -39,7 +48,7 @@ function popCognates(reqs) {
     let elec_courses = [];
     for (let course of reqs) {
         if (course.type === "cognate") {
-            elec_courses.push(<p className="course req"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+            elec_courses.push(<p className="course req" draggable="true" dragstarthandler={onDragStart}><span className="course-id">{course.course_id}</span> {course.name}</p>);
         }
     }
     return (
@@ -53,7 +62,7 @@ function popGeneds(reqs) {
     let gened_courses = [];
     for (let course of reqs) {
         if (course.type === "gened") {
-            gened_courses.push(<p className="course req"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+            gened_courses.push(<p className="course req" draggable="true" dragstarthandler={onDragStart}><span className="course-id">{course.course_id}</span> {course.name}</p>);
         }
     }
     return (
@@ -71,19 +80,19 @@ function Requirements({reqs}) {
             </div>
             <div className="basicContainer" id="courseReqs">
                 <h3 className="btn-accordion" id="coreHeader">Core</h3>
-                <div id="core" className="acc-div">
+                <div id="core" className="acc-div" onDragOver={dragOver} onDrop={dropTrash}>
                     {popCore(reqs)}
                 </div>
                 <h3 className="btn-accordion" id="electivesHeader">Electives</h3>
-                <div id="electives" className="acc-div">
+                <div id="electives" className="acc-div" onDragOver={dragOver} onDrop={dropTrash}>
                     {popElectives(reqs)}
                 </div>
                 <h3 className="btn-accordion" id="cognatesHeader">Cognates</h3>
-                <div id="cognates" className="acc-div">
+                <div id="cognates" className="acc-div" onDragOver={dragOver} onDrop={dropTrash}>
                     {popCognates(reqs)} 
                 </div>
                 <h3 className="btn-accordion" id="genedsHeader">Gen-Eds</h3>
-                <div id="geneds" className="acc-div">
+                <div id="geneds" className="acc-div" onDragOver={dragOver} onDrop={dropTrash}>
                     {popGeneds(reqs)}
                 </div>
             </div>

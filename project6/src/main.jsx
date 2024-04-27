@@ -8,8 +8,6 @@ import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
-import './js/form.js'
-import './js/datatables.js'
 
 async function getUserInfo() {
   let response = await fetch("http://localhost:3000/student/studentdata/1/1");

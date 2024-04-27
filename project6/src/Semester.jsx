@@ -4,6 +4,7 @@ import Course from './Course.jsx'
 function printCourses(term, year, courses, semesterCredits, setSemesterCredits, totalCredits, setTotalCredits) {
     let retcourses = [];
     let credits = 0.0;
+    let noncoll = 0;
     for (let course of courses) {
         if ((course.term === "FA" && term !== "Fall")
             || (course.term === "SP" && term !== "Spring")
@@ -12,7 +13,7 @@ function printCourses(term, year, courses, semesterCredits, setSemesterCredits, 
             continue;
         }  
         if (course.year === year) {
-            retcourses.push(<Course course={course} />);
+            retcourses.push(<Course id={noncoll} course={course} />);
             credits += course.credits;
         }
     }
