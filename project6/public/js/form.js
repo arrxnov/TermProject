@@ -7,85 +7,31 @@ let global_noncollision = "1";
 let uid_length = 36;
 let plan_id = "";
 jQuery(document).ready(function () {
-
-    // let years = {};
-    // let courseNames = {};
-
-    // plan_id = sessionStorage.getItem("planId");
-    // sessionStorage.setItem("planId", "");
-
     setupHandlers();
     initPage();
 });
 
-// function getUid() {
-//     return window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-// }
-
-// function getPlanId() {
-//     return plan_id;
-// }
-
-async function getData1() {
-    let response = await fetch("/api/studentdata/getallcourses");
-    const allCourseData = await response.json();
-
-    response = await fetch("/api/studentdata/getusermetadata/" + getUid());
-    const userMetadata = await response.json();
-
-    response = await fetch("/api/studentdata/getplans/" + getUid());
-    const plans = await response.json();
-
-    return [allCourseData, userMetadata, plans];
-}
-
-// async function getData2(planId) {
-//     let response = await fetch("/api/studentdata/getplanmetadata/" + getUid() + "/" + planId);
-//     const planMetadata = await response.json();
-
-//     response = await fetch("/api/studentdata/getplannedcourses/" + getUid() + "/" + planId);
-//     const plannedCourses = await response.json();
-
-//     response = await fetch("/api/studentdata/getrequirements/" + getUid() + "/" + planId);
-//     const requirements = await response.json();
-
-//     return [planMetadata, plannedCourses, requirements];
-// }
-
 async function initPage() {
-    // let data1 = await getData1();
-
-    // let planId = getPlanId();
-
-    // if (!planId) {
-    //     planId = data1[1][0]["default_plan_id"];
-    // }
-
-    // let data2 = await getData2(planId)
-
-    //let allCourseData = data1[0];
-//
-    //populateSearchTable(allCourseData);
     jQuery("#courseReqs").accordion({ collapsible: true, });
 
-    document.getElementById("cognates").setAttribute("ondragover", "dragOverHandler(event)");
-    document.getElementById("core").setAttribute("ondragover", "dragOverHandler(event)");
-    document.getElementById("electives").setAttribute("ondragover", "dragOverHandler(event)");
-    document.getElementById("geneds").setAttribute("ondragover", "dragOverHandler(event)");
+    // document.getElementById("cognates").setAttribute("ondragover", "dragOverHandler(event)");
+    // document.getElementById("core").setAttribute("ondragover", "dragOverHandler(event)");
+    // document.getElementById("electives").setAttribute("ondragover", "dragOverHandler(event)");
+    // document.getElementById("geneds").setAttribute("ondragover", "dragOverHandler(event)");
 
-    document.getElementById("cognates").setAttribute("ondrop", "dropTrash(event, this)");
-    document.getElementById("core").setAttribute("ondrop", "dropTrash(event, this)");
-    document.getElementById("electives").setAttribute("ondrop", "dropTrash(event, this)");
-    document.getElementById("geneds").setAttribute("ondrop", "dropTrash(event, this)");
+    // document.getElementById("cognates").setAttribute("ondrop", "dropTrash(event, this)");
+    // document.getElementById("core").setAttribute("ondrop", "dropTrash(event, this)");
+    // document.getElementById("electives").setAttribute("ondrop", "dropTrash(event, this)");
+    // document.getElementById("geneds").setAttribute("ondrop", "dropTrash(event, this)");
 
-    for (let course in document.getElementsByClassName("course")) {
-        course.onmouseup = function (event) {
-            if (event.which == 3) {
-                remove(event.target);
-                checkRequirements();
-            }
-        }
-    }
+    // for (let course in document.getElementsByClassName("course")) {
+    //     course.onmouseup = function (event) {
+    //         if (event.which == 3) {
+    //             remove(event.target);
+    //             checkRequirements();
+    //         }
+    //     }
+    // }
 }
 
 function setupHandlers() {
