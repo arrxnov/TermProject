@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Course from './Course'
 
-function printCourses(courses) {
+function printCourses(term, year, courses) {
     
 }
 
@@ -14,7 +14,7 @@ function Semester({term, year, courses}) {
                     <div className="term">{term} {year}</div>
                     <div className="credits">Credits: </div>
                 </div>
-                {printCourses(courses)}
+                {printCourses(term, year, courses)}
             </div>
             <Course />
         </>

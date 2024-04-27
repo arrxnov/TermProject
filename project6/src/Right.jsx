@@ -18,7 +18,7 @@ function printMajors(plandata) {
 function printMinors(plandata) {
     let minorstring = "";
     let minors = plandata.minors;
-    for (let major of minors) {
+    for (let minor of minors) {
         minorstring += minor;
         if (minor !== minors[minors.length - 1]) {
             minorstring += ", "
@@ -48,12 +48,12 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
                 </div>
                 <div id="planSubheader" className="labels-ape">
                     <p><strong>Major:</strong> {printMajors(plandata)}</p>
-                    <p><strong>Minor:</strong></p>
+                    <p><strong>Minor:</strong> {printMinors(plandata)}</p>
                     <p><strong>Catalog:</strong> {plandata.catalog_year}</p>
                     <p><strong>GPA:</strong> {info.gpa}</p>
                     <p><strong>Major GPA:</strong> {info.major_gpa}</p>
                 </div>
-                <Plan info={info} plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />
+                <Plan plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />
             </div>
             <Table allcourses={allcourses} />
         </div>
