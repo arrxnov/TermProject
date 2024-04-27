@@ -432,10 +432,9 @@ function Header(infoJSON, planJSON) {
 }
 
 function populatePlans(planJSON) {
-  const retval = planJSON.map(plan => <Dropdown.Item key={"plan" + plan.id}>{plan.name}</Dropdown.Item>);
   return (
       <>
-          {retval}
+          {planJSON.map(plan => <Dropdown.Item key={"plan" + plan.id}>{plan.name}</Dropdown.Item>)}
       </>
   )
 }
