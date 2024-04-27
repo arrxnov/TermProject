@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import Header from './Header'
 import Left from './Left.jsx'
 // import Right from './Right.jsx'
-import 'bootstrap/dist/css/bootstrap.css'; 
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
 

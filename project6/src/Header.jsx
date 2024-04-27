@@ -73,7 +73,8 @@ function Header({infoJSON, planJSON}) {
                         <Dropdown.Menu>
                             <Dropdown.Item>Print</Dropdown.Item>
                             <Dropdown.Item>Report a Bug</Dropdown.Item>
-                            <Dropdown.Item>Avenue</Dropdown.Item>
+                            <Dropdown.Item>Sign a Waiver</Dropdown.Item>
+                            <Dropdown.Item>Speak With a Manager</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                     <Button className="btn-clickable" onClick={saveHandler}>Save</Button>{' '}
