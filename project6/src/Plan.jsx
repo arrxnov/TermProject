@@ -13,7 +13,7 @@ function Plan({studentinfo, plancourses}) {
     
     return (
         <div id="plan">
-            {years.map(year => <><Year year={year} plancourses={plancourses} /></>)}
+            {years.map(year => <><Year key={"year" + year} year={year} plancourses={plancourses} /></>)}
         </div>
     )
 }
