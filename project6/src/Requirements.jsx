@@ -1,23 +1,17 @@
 import React from 'react'
+import Accordion from 'react-bootstrap/Accordion'
+import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
 
 function onDragStart(ev) {
     ev.preventDefault();
     ev.dataTransfer.effectAllowed = "move";
 }
 
-async function getRequirements() {
-    let response = await fetch("http://localhost:3000/plan/planreqs/1/1");
-    await console.log(response);
-    let reqs = await response.json();
-    return reqs;
-}
-
 function popCore(reqs) {
-    reqs = reqs.reqs.reqs;
     let core_courses = [];
     for (let course of reqs) {
         if (course.type === "core") {
-            core_courses.append(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">course.course_id</span>course.name</p>);
+            core_courses.push(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">{course.course_id}</span>{course.name}</p>);
         }
     }
     return (
@@ -28,26 +22,24 @@ function popCore(reqs) {
 }
 
 function popElectives(reqs) {
-    reqs = reqs.reqs.reqs;
     let elec_courses = [];
     for (let course of reqs) {
-        if (course.type === "core") {
-            elec_courses.append(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">course.course_id</span>course.name</p>);
+        if (course.type === "elective") {
+            elec_courses.push(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">{course.course_id}</span>{course.name}</p>);
         }
     }
     return (
         <>
-            {core_courses.map(course => <>{course}</>)}
+            {elec_courses.map(course => <>{course}</>)}
         </>
     )
 }
 
 function popCognates(reqs) {
-    reqs = reqs.reqs.reqs;
     let elec_courses = [];
     for (let course of reqs) {
-        if (course.type === "core") {
-            elec_courses.append(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">course.course_id</span>course.name</p>);
+        if (course.type === "cognate") {
+            elec_courses.push(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">{course.course_id}</span>{course.name}</p>);
         }
     }
     return (
@@ -58,11 +50,10 @@ function popCognates(reqs) {
 }
 
 function popGeneds(reqs) {
-    reqs = reqs.reqs.reqs;
     let gened_courses = [];
     for (let course of reqs) {
-        if (course.type === "core") {
-            gened_courses.append(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">course.course_id</span>course.name</p>);
+        if (course.type === "gened") {
+            gened_courses.push(<p className="course req" draggable="true" onDragStart={onDragStart}><span className="course-id">{course.course_id}</span>{course.name}</p>);
         }
     }
     return (
@@ -72,9 +63,53 @@ function popGeneds(reqs) {
     )
 }
 
-async function Requirements() {
-    let reqs = await getRequirements();
+function Requirements({reqs}) {
     return (
+        // <>
+        //     <div id="UL">
+        //         <div className="labels">
+        //             <p>Requirements</p>
+        //         </div>
+        //         <div className="basic-container" id="course-reqs">
+        //             <Accordion defaultActiveKey="core">
+        //                 <Accordion.Item eventKey="core">
+        //                     <Accordion.Header>
+        //                         Core
+        //                     </Accordion.Header>
+        //                     <Accordion.Body>
+        //                         {popCore(reqs)}
+        //                     </Accordion.Body>
+        //                 </Accordion.Item>
+        //                 <Accordion.Item eventKey="cognates">
+        //                     <Accordion.Header>
+        //                         Cognates
+        //                     </Accordion.Header>
+        //                     <Accordion.Body>
+        //                         {popCognates(reqs)}
+        //                     </Accordion.Body>
+        //                 </Accordion.Item>
+        //                 <Accordion.Item eventKey="electives">
+        //                     <Accordion.Header>
+        //                         Electives
+        //                     </Accordion.Header>
+        //                     <Accordion.Body>
+        //                         {popElectives(reqs)}
+        //                     </Accordion.Body>
+        //                 </Accordion.Item>
+        //                 <Accordion.Item eventKey="geneds">
+        //                     <Accordion.Header>
+        //                         Geneds
+        //                     </Accordion.Header>
+        //                     <Accordion.Body>
+        //                         {popGeneds(reqs)}
+        //                     </Accordion.Body>
+        //                 </Accordion.Item>
+        //             </Accordion>
+        //         </div>
+        //     </div>
+        // </>
+        
+        
         <>
             <div id="UL">
                 <div className="labels">
