@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 
 function Special() {
     return (
-        <>
-            <div className="labels">
+        <div id="LL">
+            <div className="labels-ape">
                 <p>Homepages</p>
             </div>
             <div className="basicContainer" id="miscBox">
@@ -16,7 +16,7 @@ function Special() {
                     <button className="btn-clickable blink" id="votingBtn">VOTE FOR US HERE!!</button>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 export default Special

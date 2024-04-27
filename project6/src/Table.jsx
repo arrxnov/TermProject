@@ -5,10 +5,10 @@ function Table() {
     return (
         <>
             <div id="LR">
-                <div class="labels">
+                <div className="labels-ape">
                     <p>Course Finder</p>
                 </div>
-                <div class="basicContainer" id="courseFinder">
+                <div className="basicContainer" id="courseFinder">
                     <table id="searchTable">
                         <thead>
                             <tr>

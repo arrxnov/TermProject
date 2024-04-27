@@ -6,13 +6,13 @@ function printCourses(courses) {
     
 }
 
-function Semester(courses) {
+function Semester({term, year, courses}) {
     return (
         <>
-            <div id="semester1" class="semester fall" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
-                <div class="semesterHeader">
-                    <div class="term">Fall 2021</div>
-                    <div class="credits">Credits:</div>
+            <div className="semester fall">
+                <div className="semesterHeader">
+                    <div className="term">{term} {year}</div>
+                    <div className="credits">Credits: </div>
                 </div>
                 {printCourses(courses)}
             </div>

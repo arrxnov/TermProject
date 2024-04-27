@@ -61,15 +61,16 @@ p {
     box-shadow: 1px 1px 5px;
 }
 
-.labels {
+.labels-ape {
     /* total height is 34px */
+    font-family: Montserrat;
     display: flex;
     flex-direction: row;
     justify-content: start;
     flex-grow: 0;
     margin: 4px;
     padding: 4px;
-    height: 18px;
+    height: 34px;
     font-size: 12pt;
     font-weight: bold;
     border: none;

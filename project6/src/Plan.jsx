@@ -2,12 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Year from './Year'
 
-function Plan(plan) {
+function Plan({studentinfo, plancourses}) {
     // build years
+    let years = [
+        "2021",
+        "2022",
+        "2023",
+        "2024"
+    ];
+    
     return (
-        <>
-            {plan.years.map(year => <><Year year={year} plan={plan} /></>)}
-        </>
+        <div id="plan">
+            {years.map(year => <><Year year={year} plancourses={plancourses} /></>)}
+        </div>
     )
 }
 

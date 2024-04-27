@@ -18,7 +18,7 @@ function optionsDropDown() {
 }
 
 function populatePlans(planJSON) {
-    const retval = planJSON.map(plan => <Dropdown.Item>{plan}</Dropdown.Item>);
+    const retval = planJSON.map(plan => <Dropdown.Item>{plan.name}</Dropdown.Item>);
     return (
         <>
             {retval}
