@@ -7,11 +7,13 @@ let global_noncollision = "1";
 let uid_length = 36;
 let plan_id = "";
 jQuery(document).ready(function () {
+    console.log("Form.js running");
     setupHandlers();
     initPage();
 });
 
 async function initPage() {
+    console.log("initPage running");
     jQuery("#courseReqs").accordion({ collapsible: true, });
 
     // document.getElementById("cognates").setAttribute("ondragover", "dragOverHandler(event)");

@@ -6,6 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
+import ReactDndProvider from 'react-dnd'
 // import Faculty from './Faculty.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
@@ -322,30 +323,33 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
 //=============================================================================================//
 async function getUserInfo() {
   let response = await fetch("http://localhost:3000/student/studentdata/1/1");
-  return await response.json();
+  console.log(response.status);
+  if (response.status < 400) return await response.json();
 }
 
 async function getRequirements() {
   let response = await fetch("http://localhost:3000/plan/planreqs/1/1");
-  return await response.json();
+  console.log(response.status);
+  if (response.status < 400) return await response.json();
 }
 
 async function getPlanCourses() {
   let response = await fetch("http://localhost:3000/plan/plancourses/1/1");
-  return await response.json();
+  console.log(response.status);
+  if (response.status < 400) return await response.json();
 }
 
 async function getPlanJSON() {
   let response = await fetch("http://localhost:3000/student/plans/1/1");
-  return await response.json();
+  console.log(response.status);
+  if (response.status < 400) return await response.json();
 }
 
 async function getPlanDataJSON() {
   let response = await fetch ("http://localhost:3000/plan/plandata/1/1");
-  return await response.json();
+  console.log(response.status);
+  if (response.status < 400) return await response.json();
 }
-
-
 
 //=============================================================================================//
 //=================================MAIN RENDER CODE HELPERS====================================//
@@ -370,6 +374,7 @@ function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, totalCred
     )
   }
 }
+
 //=============================================================================================//
 //=======================================HEADER CODE===========================================//
 //=============================================================================================//
