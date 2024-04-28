@@ -385,7 +385,8 @@ function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, totalCred
 //=============================================================================================//
 function logOutHandler(ev) {
   // Log out user
-  // redirect to /logout/:sessionId probably?
+  // TODO check if this actually works
+  window.location.href = '/logout'
   console.log("You tried to log out!");
 }
 

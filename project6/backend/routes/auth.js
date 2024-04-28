@@ -9,6 +9,7 @@ router.get('/login/:uname/:phash', function(req, res, next) {
     - UserName (string)
     - PasswordHash (hash)
     */
+    let userId = null;
     sql = "SELECT Id FROM aspnetusers WHERE UserName = ? and PasswordHash = ?";
     queryResult = null;
     zeus.query(sql, [req.params.uname, req.params.phash], (error, results) => {
@@ -23,15 +24,26 @@ router.get('/login/:uname/:phash', function(req, res, next) {
         res.status(400);
         res.send("Invalid login credentials\n");
     } else {
-        res.send({"valid": true, "id": queryResult['id']});
+        userId = queryResult["Id"];
     }
+
+    sql = "INSERT INTO aspnetusertokens (UserId, Name, Value) VALUES (?, ?, ?)";
+    queryResult = null;
+    zeus.query(sql, [userId, req.params.uname, req.sessionID], (error, results) => {
+        if (error) {
+            console.log(sql + " failed");
+            return console.error(error.message);
+        }
+        queryResult = results.map(v => Object.assign({}, v));
+    });
+    res.send({"valid": true, "id": userId, "sessionId": req.sessionID});
 });
 
-router.get('/logout/:sessionId', function(req, res, next) {
+router.get('/logout', function(req, res, next) {
     // add session parameter above
     sql = "DELETE FROM aspnetusertokens WHERE Value = ? RETURNING UserId";
     queryResult = null;
-    zeus.query(sql, [req.params.sessionId], (error, results) => {
+    zeus.query(sql, [req.sessionID], (error, results) => {
         if (error) {
             console.log(sql + " failed");
             return console.error(error.message);
@@ -46,11 +58,10 @@ router.get('/logout/:sessionId', function(req, res, next) {
     }
 });
 
-router.get('/role/:sessionId', function(req, res, next) {
-    let queryResult = getUserIdFromSession(req.params.sessionId);
+router.get('/role', function(req, res, next) {
+    let queryResult = getUserIdFromSession(req.sessionID);
     let userId = null; 
     let role = null;
-
 
     if (Object.keys(queryResult).length == 0 || !queryResult["valid"]) {
         res.send(queryResult);
@@ -182,7 +193,7 @@ function validateStudent(sessionId, studentId=null) {
         role = "student";
         studentId = userId;
     }
-        
+
     return {"valid": true, "role": role, "studentId": studentId};
 }
 
