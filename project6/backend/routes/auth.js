@@ -4,20 +4,42 @@ var router = express.Router();
 
 router.get('/login/:uname/:phash', function(req, res, next) {
     // add url parameters above
+    /*
+    aspnetusers
+- Id (hash)
+- UserName (string)
+- PasswordHash (hash)
+    */
+    sql = "SELECT Id FROM aspnetusers WHERE UserName = ? and PasswordHash = ?";
+    queryResult = null;
+    zeus.query(sql, [req.params.uname, req.params.phash], (error, results) => {
+        if (error) {
+            console.log(sql + " failed");
+            return console.error(error.message);
+        }
+        queryResult = results.map(v => Object.assign({}, v));
+    });
+
+    if (Object.keys(queryResult).length == 0) {
+        res.send({"valid": false});
+    }
 
     // query db if necessary and res.send(json) or ok messsage
-    res.send({"something": "else", "about": "me"});
-
+    res.send({"valid": true, "id": queryResult['id']});
     // if error, send appropriate error code and message
 });
 
-router.get('/logout/:sessionID', function(req, res, next) {
+router.get('/logout/:sessionId', function(req, res, next) {
     // add session parameter above
-    
-    // query db if necessary and res.send(json) or ok messsage
-    res.send({"something": "else", "about": "me"});
-
-    // if error, send appropriate error code and message
+    sql = "DELETE * FROM aspnetusersFROM aspnetusertokens WHERE Value = ?";
+    queryResult = null;
+    zeus.query(sql, [req.params.sessionId], (error, results) => {
+        if (error) {
+            console.log(sql + " failed");
+            return console.error(error.message);
+        }
+        queryResult = results.map(v => Object.assign({}, v));
+    });
 });
 
 router.get('/role/:', function(req, res, next) {
