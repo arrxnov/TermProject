@@ -11,6 +11,7 @@ import ReactDndProvider from 'react-dnd'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
+var auth = require('/auth');
 
 //=============================================================================================//
 //=======================================LEFT SIDE FUNCTIONS===================================//
@@ -355,7 +356,11 @@ async function getPlanDataJSON() {
 //=================================MAIN RENDER CODE HELPERS====================================//
 //=============================================================================================//
 function isFaculty() {
-  return false;
+    // FIXME: access current session ID
+    let sessionId = false;
+    let res = auth.validateFaculty(sessionId);
+    // return res["valid"];
+    return false;
 }
 
 function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, totalCredits, setTotalCredits) {
@@ -380,7 +385,7 @@ function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, totalCred
 //=============================================================================================//
 function logOutHandler(ev) {
   // Log out user
-  
+  // redirect to /logout/:sessionId probably?
   console.log("You tried to log out!");
 }
 
