@@ -83,7 +83,7 @@ function validatePlan(session, planId, studentId=null) {
     }
 
     let role = queryResult["role"];
-    let studentId = queryResult["studentId"];
+    studentId = queryResult["studentId"];
 
     let sql = "SELECT user_id FROM plan WHERE id = ?";
     zeus.query(sql, [planId], (error, results) => {

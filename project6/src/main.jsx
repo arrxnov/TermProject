@@ -4,6 +4,11 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+} from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import Helmet from 'react-helmet'
@@ -305,25 +310,21 @@ async function getUserInfo() {
 
 async function getRequirements() {
   let response = await fetch("http://localhost:3000/plan/planreqs/1/1");
-  console.log(response.status);
   if (response.status < 400) return await response.json();
 }
 
 async function getPlanCourses() {
   let response = await fetch("http://localhost:3000/plan/plancourses/1/1");
-  console.log(response.status);
   if (response.status < 400) return await response.json();
 }
 
 async function getPlanJSON() {
   let response = await fetch("http://localhost:3000/student/plans/1/1");
-  console.log(response.status);
   if (response.status < 400) return await response.json();
 }
 
 async function getPlanDataJSON() {
   let response = await fetch ("http://localhost:3000/plan/plandata/1/1");
-  console.log(response.status);
   if (response.status < 400) return await response.json();
 }
 
@@ -339,7 +340,7 @@ function isFaculty() {
 }
 
 function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, totalCredits, setTotalCredits) {
-  if (isFaculty()) {
+    if (isFaculty()) {
     return (
       <main>
         <Faculty />
@@ -429,6 +430,13 @@ function populatePlans(planJSON) {
 //=============================GLOBAL AND RENDER ROUTINE=======================================//
 //=============================================================================================//
 
+async function checkUser() {
+    let response = await fetch("http://localhost:3000/auth/login");
+    let value = response.json();
+    return value.valid;
+}
+
+if (!checkUser()) window.href = "/login";
 let infoJSON = await getUserInfo();
 let plan = await getPlanJSON();
 let planDataJSON = await getPlanDataJSON();
@@ -441,13 +449,37 @@ let reqsJSON = await getRequirements();
 // let plancourses = {};
 // let reqsJSON = {};
 
+function Main() {
+    return (
+        <>
+            <Helmet>
+                <script src="js/datatables.js"></script>
+                <script src="js/form.js" defer></script>
+            </Helmet>
+            {Header(infoJSON, plan)}
+            {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses)}
+        </>
+    )
+}
+
+function Login() {
+    return (
+        <>
+
+        </>
+    )
+}
+
+//=============================================================================================//
+//=======================================ROUTER STUFF==========================================//
+//=============================================================================================//
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <>
-        <Helmet>
-            <script src="js/datatables.js"></script>
-            <script src="js/form.js" defer></script>
-        </Helmet>
-        {Header(infoJSON, plan)}
-        {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses)}
-    </>
+    <Router>
+        <Navbar />
+        <Routes>
+            <Route exact path="/" element={<Main />} />
+            <Route path="/login" element={<Login />} />
+        </Routes>
+    </Router>
 )
