@@ -3,6 +3,10 @@ var zeus = require('../db/database');
 var router = express.Router();
 
 router.post('/login', function(req, res, next) {
+    if (req.session.authenticated) {
+        res.send({"authenticated": req.session.authenticated, "sessionId": req.session.id, "role": req.session.role});
+    }
+    
     let sql = "SELECT * FROM aspnetusers WHERE UserName = ?";
     zeus.query(sql, [req.body.username], async (error, results) => {
         if (error) {
