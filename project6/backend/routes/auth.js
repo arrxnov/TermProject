@@ -41,64 +41,62 @@ router.get('/logout', function(req, res, next) {
 });
 
 
-function validateFaculty(req) {
-    if (req.session.authenticated && req.session.role == "Faculty") {
-        return {"valid": true};
-    } else {
-        return {"valid": false};
-    }
+function validateFaculty(session) {
+    return {"valid": session.authenticated && session.role == "Faculty"};
 }
 
 
-function validateStudent(req, studentId=null) {
-    if (req.session.authenticated) {
-        if (req.session.role == "Student") {
-            return {"valid": true, "role": "student", "studentId": req.session.userId};
-        } else {
-            sql = "SELECT * FROM advisee WHERE advisor_id = ? and advisee_id = ?";
-            zeus.query(sql, [req.session.userId, studentId], async (error, results) => {
+function validateStudent(session, studentId=null) {
+    if (session.authenticated) {
+        if (session.role == "Student") {
+            return {"valid": true, "role": "student", "studentId": session.userId};
+        } 
+        
+        else {
+            let sql = "SELECT advisor_id FROM advisee WHERE advisee_id = ?";
+            zeus.query(sql, [studentId], async (error, results) => {
                 if (error) {
                     console.log(sql + " failed");
                     return console.error(error.message);
                 }
 
-                var id = results.map(v => Object.assign({}, v))[0]["advisee_id"];
-                if (id != null) {
-                    return {"valid": true, "role": "faculty", "facultyId": req.session.userId, "studentId": studentId};
-                } else {
+                if (results.map(v => Object.assign({}, v))[0]["advisor_id"] == session.userId) {
+                    return {"valid": true, "role": "faculty", "facultyId": session.userId, "studentId": studentId};
+                }
+
+                else {
                     return {"valid": false};
                 }
 
             });
         }
+
     } else {
         return {"valid": false};
     }
-    return "I broke";
 }
 
-function validatePlan(req, planId, studentId=null) {
-    queryResult = validateStudent(req, studentId);
+function validatePlan(session, planId, studentId=null) {
+    let queryResult = validateStudent(session, studentId);
     if (!queryResult["valid"]) {
         return queryResult;
-    } else {
-        role = queryResult["role"];
-        studentId = queryResult["studentId"];
     }
 
-    // check that plan belongs to studentId
-    sql = "SELECT * FROM plan WHERE user_id = ? and id = ?";
-    queryResult = null;
-    zeus.query(sql, [studentId, planId], (error, results) => {
+    let role = queryResult["role"];
+    let studentId = queryResult["studentId"];
+
+    let sql = "SELECT user_id FROM plan WHERE id = ?";
+    zeus.query(sql, [planId], (error, results) => {
         if (error) {
             console.log(sql + " failed");
             return console.error(error.message);
         }
 
-        year = results.map(v => Object.assign({}, v))["catalog_year"];
-        if (year != null) {
+        if (results.map(v => Object.assign({}, v))[0]["user_id"] == studentId) {
             return {"valid": true, "role": role, "planId": planId, "studentId": studentId};
-        } else {
+        }
+        
+        else {
             return {"valid": false};
         }   
     });

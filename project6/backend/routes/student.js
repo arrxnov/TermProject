@@ -5,7 +5,7 @@ var router = express.Router();
 
 // Path: /student/studentdata/<session_id>/<student_id (optional if student signed in)>
 router.get('/studentdata/:session_id/:student_id?', function(req, res, next) {
-    let validSession = auth.validateStudent(req.params.session_id, req.params.student_id);
+    let validSession = auth.validateStudent(req.session, req.params.student_id);
 
     if (validSession["valid"]) {
         let studentId = validSession["studentId"];
@@ -28,7 +28,7 @@ router.get('/studentdata/:session_id/:student_id?', function(req, res, next) {
 
 // Path: /student/plans/<session_id>/<student_id (optional if student signed in)>
 router.get('/plans/:session_id/:student_id?', function(req, res, next) {
-    let validSession = auth.validateStudent(req.params.session_id, req.params.student_id);
+    let validSession = auth.validateStudent(req.session, req.params.student_id);
 
     if (validSession["valid"]) {
         let studentId = validSession["studentId"];
@@ -51,7 +51,7 @@ router.get('/plans/:session_id/:student_id?', function(req, res, next) {
 
 // Path: /student/courses/<session_id>/<student_id (optional if student signed in)>
 router.get('/courses/:session_id/:student_id?', function(req, res, next) {
-    let validSession = auth.validateStudent(req.params.session_id, req.params.student_id);
+    let validSession = auth.validateStudent(req.session, req.params.student_id);
 
     if (validSession["valid"]) {
         
