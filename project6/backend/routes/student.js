@@ -3,8 +3,8 @@ var zeus = require('../db/database');
 var auth = require('./auth');
 var router = express.Router();
 
-// Path: /student/studentdata/<session_id>/<student_id (optional if student signed in)>
-router.get('/studentdata/:session_id/:student_id?', function(req, res, next) {
+// Path: /student/studentdata/<student_id (optional if student signed in)>
+router.get('/studentdata/:student_id?', function(req, res, next) {
     let validSession = auth.validateStudent(req.session, req.params.student_id);
 
     if (validSession["valid"]) {
@@ -26,8 +26,8 @@ router.get('/studentdata/:session_id/:student_id?', function(req, res, next) {
     }
 });
 
-// Path: /student/plans/<session_id>/<student_id (optional if student signed in)>
-router.get('/plans/:session_id/:student_id?', function(req, res, next) {
+// Path: /student/plans/<student_id (optional if student signed in)>
+router.get('/plans/:student_id?', function(req, res, next) {
     let validSession = auth.validateStudent(req.session, req.params.student_id);
 
     if (validSession["valid"]) {
@@ -49,8 +49,8 @@ router.get('/plans/:session_id/:student_id?', function(req, res, next) {
     }
 });
 
-// Path: /student/courses/<session_id>/<student_id (optional if student signed in)>
-router.get('/courses/:session_id/:student_id?', function(req, res, next) {
+// Path: /student/courses/<student_id (optional if student signed in)>
+router.get('/courses/:student_id?', function(req, res, next) {
     let validSession = auth.validateStudent(req.session, req.params.student_id);
 
     if (validSession["valid"]) {

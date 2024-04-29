@@ -4,7 +4,7 @@ var auth = require('./auth');
 var router = express.Router();
 
 // PATH: /save/plandata
-// POST request needs to have the following parameters: session_id, plan_id, student_id (optional if student is signed in), and note.
+// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), and note.
 router.post('/plandata', function(req, res, next) {
     let validSession = auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
 

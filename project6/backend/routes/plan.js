@@ -3,8 +3,8 @@ var zeus = require('../db/database');
 var auth = require('./auth');
 var router = express.Router();
 
-// Path: /plan/plandata/<session_id>/<plan_id>/<student_id (optional if student signed in)>
-router.get('/plandata/:session_id/:plan_id/:student_id?', function(req, res, next) {
+// Path: /plan/plandata/<plan_id>/<student_id (optional if student signed in)>
+router.get('/plandata/:plan_id/:student_id?', function(req, res, next) {
     let validSession = auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
 
     if (validSession["valid"]) {
@@ -45,8 +45,8 @@ router.get('/plandata/:session_id/:plan_id/:student_id?', function(req, res, nex
     }
 });
 
-// Path: /plan/plancourses/<session_id>/<plan_id>/<student_id (optional if student signed in)>
-router.get('/plancourses/:session_id/:plan_id/:student_id?', function(req, res, next) {
+// Path: /plan/plancourses/<plan_id>/<student_id (optional if student signed in)>
+router.get('/plancourses/:plan_id/:student_id?', function(req, res, next) {
     let validSession = auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
 
     if (validSession["valid"]) {
@@ -70,8 +70,8 @@ router.get('/plancourses/:session_id/:plan_id/:student_id?', function(req, res, 
     }
 });
 
-// Path: /plan/planreqs/<session_id>/<plan_id>/<student_id (optional if student signed in)>
-router.get('/planreqs/:session_id/:plan_id/:student_id?', function(req, res, next) {
+// Path: /plan/planreqs/<plan_id>/<student_id (optional if student signed in)>
+router.get('/planreqs/:plan_id/:student_id?', function(req, res, next) {
     let validSession = auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
 
     if (validSession["valid"]) {
