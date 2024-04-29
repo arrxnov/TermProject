@@ -396,14 +396,14 @@ function populatePlans(planJSON) {
 //=========================================LOGIN STUFF=========================================//
 //=============================================================================================//
 
-async function submitHandler(username, password, setValid) {    
+async function submitHandler(username, password, setValid, ev) {  
     let response = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"username": username, "phash": password})
+        body: JSON.stringify({"username": username, "phash": password});
     });
     let ret = await response.json();
     if (ret.authenticated) setValid(true);
@@ -420,10 +420,10 @@ function Login(setValid) {
                 <h1>APE</h1>
             </header>
             <main>
-                <form id="login-form" onSubmit={() => { submitHandler(username, password, setValid); }}>
+                <form id="login-form" onSubmit={(ev) => { submitHandler(username, password, setValid, ev); }}>
                     <input onChange={(ev) => {setUsername(ev.target.value)}} type="text" id="user" name="user" placeholder="Username" />
                     <input onChange={(ev) => {setPassword(ev.target.value)}} type="password" id="pw" name="pw" placeholder="Password" />
-                    <button type="submit" >Submit</button>
+                    <button type="submit" default="disable">Submit</button>
                 </form>
             </main>
         </>
@@ -432,7 +432,7 @@ function Login(setValid) {
 
 function Ape({validated, infoJSON, plan, planDataJSON, reqsJSON, plancourses}) {
     let [valid, setValid] = useState(validated);
-    if (validated) {
+    if (valid) {
         return (
             <>
                 <Helmet>
