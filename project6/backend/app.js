@@ -5,8 +5,10 @@
 var express = require('express');
 var cors = require('cors');
 var path = require('path');
-var cookieParser = require('cookie-parser');
+// var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var logger = require('morgan');
+var crypto = require("crypto");
 
 var authRouter = require('./routes/auth');
 var facultyRouter = require('./routes/faculty');
@@ -26,7 +28,12 @@ app.use(cors(corsOptions))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
+app.use(session({
+    secret: crypto.randomBytes(20).toString('hex'),
+    resave: false,
+    saveUninitialized: true
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', authRouter);
