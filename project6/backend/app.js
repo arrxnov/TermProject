@@ -14,7 +14,7 @@ var saveRouter = require('./routes/save');
 var app = express();
 
 var corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost',
     optionsSuccessStatus: 200,
     methods: "GET, POST"
 }
