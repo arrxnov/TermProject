@@ -6,7 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
-import ReactDndProvider from 'react-dnd'
+import Helmet from 'react-helmet'
 // import Faculty from './Faculty.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
@@ -448,15 +448,25 @@ function populatePlans(planJSON) {
 //=============================GLOBAL AND RENDER ROUTINE=======================================//
 //=============================================================================================//
 
-let infoJSON = await getUserInfo();
-let planJSON = await getPlanJSON();
-let planDataJSON = await getPlanDataJSON();
-let plancourses = await getPlanCourses();
-let reqsJSON = await getRequirements();
+// let infoJSON = await getUserInfo();
+// let plan = await getPlanJSON();
+// let planDataJSON = await getPlanDataJSON();
+// let plancourses = await getPlanCourses();
+// let reqsJSON = await getRequirements();
+
+let infoJSON = {};
+let plan = {};
+let planDataJSON = {};
+let plancourses = {};
+let reqsJSON = {};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <>
-      {Header(infoJSON, planJSON)}
-      {renderChoose(infoJSON, planJSON, planDataJSON, reqsJSON, plancourses)}
+    <Helmet>
+        <script src="js/datatables.js"></script>
+        <script src="js/form.js" defer></script>
+    </Helmet>
+    {Header(infoJSON, plan)}
+    {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses)}
     </>
 )

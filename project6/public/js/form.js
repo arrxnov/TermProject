@@ -14,6 +14,7 @@ jQuery(document).ready(function () {
 
 async function initPage() {
     console.log("initPage running");
+    console.log(document.getElementById("course-reqs"));
     jQuery("#courseReqs").accordion({ collapsible: true, });
 
     // document.getElementById("cognates").setAttribute("ondragover", "dragOverHandler(event)");
