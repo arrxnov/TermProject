@@ -44,7 +44,7 @@ router.get('/checklogin', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res, next) {
-    req.session = null;
+    req.session.authenticated = false; // req.session = null
     res.send("Session terminated");
 });
 
