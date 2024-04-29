@@ -5,7 +5,7 @@ var router = express.Router();
 
 // Path: /faculty/advisees
 router.get('/advisees', function(req, res, next) {
-    let validSession = auth.validateFaculty(req.params.session_id);
+    let validSession = auth.validateFaculty(req);
 
     if (validSession["valid"]) {
         let facultyId = validSession["facultyId"];

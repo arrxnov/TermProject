@@ -5,7 +5,7 @@ var router = express.Router();
 router.post('/login', function(req, res, next) {
 
     let sql = "SELECT * FROM aspnetusers WHERE UserName = ?";
-    zeus.query(sql, [req.body.username], (error, results) => {
+    zeus.query(sql, [req.body.username], async (error, results) => {
         if (error) {
             console.log(sql + " failed");
             return console.error(error.message);
@@ -19,9 +19,18 @@ router.post('/login', function(req, res, next) {
         if (results && results["PasswordHash"] == req.body.phash) {
             req.session.userId = results["Id"];
             req.session.authenticated = true;
+            
+            sql = "SELECT Name FROM aspnetroles INNER JOIN aspnetuserroles ON aspnetroles.Id=aspnetuserroles.RoleId WHERE UserId = ?";
+            zeus.query(sql, [req.session.userId], async (error, results) => {
+                if (error) {
+                    console.log(sql + " failed");
+                    return console.error(error.message);
+                }
 
-            res.send({"authenticated": req.session.authenticated, "sessionId": req.session.id});
+                req.session.role = results.map(v => Object.assign({}, v))[0]["Name"];
 
+                res.send({"authenticated": req.session.authenticated, "sessionId": req.session.id, "role": req.session.role});
+            });
         }
 
         else {
@@ -35,23 +44,9 @@ router.get('/logout', function(req, res, next) {
     req.send("Session terminated");
 });
 
-router.get('/role', function(req, res, next) {
-
-    if (req.session.authenticated) {
-        sql = "SELECT Name FROM aspnetroles INNER JOIN aspnetuserroles ON aspnetroles.Id=aspnetuserroles.RoleId WHERE UserId = ?";
-        zeus.query(sql, [req.session.userId], (error, results) => {
-            if (error) {
-                console.log(sql + " failed");
-                return console.error(error.message);
-            }
-
-            res.send({"valid": true, "role": results.map(v => Object.assign({}, v))[0]["Name"]});
-        });
-    }
-
-    else {
-        res.send({"valid": false});
-    }
+// router.get('/role', function(req, res, next) {
+//     res.send(getRole(req));
+// });
 
     // let queryResult = getUserIdFromSession(req.sessionID);
     // let userId = null;
@@ -92,63 +87,67 @@ router.get('/role', function(req, res, next) {
     //         res.send(validSession);
     //     }        
     // }
-});
+
+// function getUserIdFromSession(sessionId) {
+//     let sql = "SELECT UserId FROM aspnetusertokens WHERE Value = ?";
+//     let queryResult = null;
+//     zeus.query(sql, [sessionId], (error, results) => {
+//         if (error) {
+//             console.log(sql + " failed");
+//             return console.error(error.message);
+//         }
+
+//         queryResult = results.map(v => Object.assign({}, v));
+//     });
+
+//     if (Object.keys(queryResult).length == 0) {
+//         return {"valid": false};
+//     } else {
+//         userId = queryResult["UserId"];
+//     } 
+
+//     userId = queryResult['UserId'];
+//     if (userId == null || userId.length == 0) {
+//         return {"valid": false};
+//     }
+//     return {"valid": true, "userId": userId};
+// }
 
 
+function validateFaculty(req) {
+    if (req.session.authenticated && req.session.role == "Faculty") {
+        return {"valid": true};
+    }
 
-
-function getUserIdFromSession(sessionId) {
-    let sql = "SELECT UserId FROM aspnetusertokens WHERE Value = ?";
-    let queryResult = null;
-    zeus.query(sql, [sessionId], (error, results) => {
-        if (error) {
-            console.log(sql + " failed");
-            return console.error(error.message);
-        }
-
-        queryResult = results.map(v => Object.assign({}, v));
-    });
-
-    if (Object.keys(queryResult).length == 0) {
-        return {"valid": false};
-    } else {
-        userId = queryResult["UserId"];
-    } 
-
-    userId = queryResult['UserId'];
-    if (userId == null || userId.length == 0) {
+    else {
         return {"valid": false};
     }
-    return {"valid": true, "userId": userId};
-}
-
-
-function validateFaculty(sessionId) {
-    let userId = null; 
     
-    let queryResult = getUserIdFromSession(sessionId);
-    if (Object.keys(queryResult).length != 0 && queryResult["valid"]) {
-        userId = queryResult["UserId"];
-    } else {
-        res.send(queryResult);
-    }
+    // let userId = null; 
+    
+    // let queryResult = getUserIdFromSession(sessionId);
+    // if (Object.keys(queryResult).length != 0 && queryResult["valid"]) {
+    //     userId = queryResult["UserId"];
+    // } else {
+    //     res.send(queryResult);
+    // }
 
-    // check user has faculty role
-    sql = "SELECT * FROM aspnetuserroles WHERE user_id = ? and role = 2";
-    queryResult = null;
-    zeus.query(sql, [userId], (error, results) => {
-        if (error) {
-            console.log(sql + " failed");
-            return console.error(error.message);
-        }
-        queryResult = results.map(v => Object.assign({}, v));
-    });
+    // // check user has faculty role
+    // sql = "SELECT * FROM aspnetuserroles WHERE user_id = ? and role = 2";
+    // queryResult = null;
+    // zeus.query(sql, [userId], (error, results) => {
+    //     if (error) {
+    //         console.log(sql + " failed");
+    //         return console.error(error.message);
+    //     }
+    //     queryResult = results.map(v => Object.assign({}, v));
+    // });
 
-    if (Object.keys(queryResult).length == 0) {
-        return {"valid": false};
-    } else {
-        return {"valid": true, "facultyId": userId};
-    }
+    // if (Object.keys(queryResult).length == 0) {
+    //     return {"valid": false};
+    // } else {
+    //     return {"valid": true, "facultyId": userId};
+    // }
 }
 
 
