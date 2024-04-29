@@ -5,6 +5,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
+    useNavigate,
     BrowserRouter as Router,
     Routes,
     Route,
@@ -431,12 +432,14 @@ function populatePlans(planJSON) {
 //=============================================================================================//
 
 async function checkUser() {
+    let navigate = useNavigate();
     let response = await fetch("http://localhost:3000/auth/login");
     let value = response.json();
-    return value.valid;
+    if (value.valid) return
+    else navigate("/login");
 }
 
-if (!checkUser()) window.href = "/login";
+checkUser();
 let infoJSON = await getUserInfo();
 let plan = await getPlanJSON();
 let planDataJSON = await getPlanDataJSON();
