@@ -36,7 +36,11 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/checklogin', function(req, res, next) {
-    return {"valid": req.session.authenticated};
+    if (req.session.authenticated) {
+        res.send({"valid": true})
+    }
+    
+    res.send({"valid": false});
 });
 
 router.get('/logout', function(req, res, next) {
