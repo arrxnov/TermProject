@@ -11,7 +11,7 @@ import Helmet from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
-var auth = require('/auth');
+// var auth = require('/auth');
 
 //=============================================================================================//
 //=======================================LEFT SIDE FUNCTIONS===================================//
@@ -34,23 +34,6 @@ function Special() {
           </div>
       </div>
   )
-}
-
-function onDragStart(ev) {
-  ev.preventDefault();
-  ev.dataTransfer.effectAllowed = "move";
-}
-
-function dropTrash(ev) {
-  ev.preventDefault();
-  const data = ev.dataTransfer.getData("Text");
-  console.log(data);
-  document.getElementById(data).remove();
-  checkRequirements();
-}
-
-function dragOver(ev) {
-  ev.preventDefault();
 }
 
 function popCore(reqs) {
@@ -150,14 +133,6 @@ function Left({reqs}) {
 //=============================================================================================//
 //=====================================RIGHT SIDE FUNCTIONS====================================//
 //=============================================================================================//
-
-function onDrop(ev) {
-  ev.preventDefault();
-  const data = ev.dataTransfer.getData("Text");
-  console.log(data);
-  document.getElementById(data).remove();
-  checkRequirements();
-}
 
 function Course({id, course}) {
   return (
@@ -357,8 +332,8 @@ async function getPlanDataJSON() {
 //=============================================================================================//
 function isFaculty() {
     // FIXME: access current session ID
-    let sessionId = false;
-    let res = auth.validateFaculty(sessionId);
+    // let sessionId = false;
+    // let res = auth.validateFaculty(sessionId);
     // return res["valid"];
     return false;
 }
@@ -454,25 +429,25 @@ function populatePlans(planJSON) {
 //=============================GLOBAL AND RENDER ROUTINE=======================================//
 //=============================================================================================//
 
-// let infoJSON = await getUserInfo();
-// let plan = await getPlanJSON();
-// let planDataJSON = await getPlanDataJSON();
-// let plancourses = await getPlanCourses();
-// let reqsJSON = await getRequirements();
+let infoJSON = await getUserInfo();
+let plan = await getPlanJSON();
+let planDataJSON = await getPlanDataJSON();
+let plancourses = await getPlanCourses();
+let reqsJSON = await getRequirements();
 
-let infoJSON = {};
-let plan = {};
-let planDataJSON = {};
-let plancourses = {};
-let reqsJSON = {};
+// let infoJSON = {};
+// let plan = {};
+// let planDataJSON = {};
+// let plancourses = {};
+// let reqsJSON = {};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <>
-    <Helmet>
-        <script src="js/datatables.js"></script>
-        <script src="js/form.js" defer></script>
-    </Helmet>
-    {Header(infoJSON, plan)}
-    {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses)}
+        <Helmet>
+            <script src="js/datatables.js"></script>
+            <script src="js/form.js" defer></script>
+        </Helmet>
+        {Header(infoJSON, plan)}
+        {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses)}
     </>
 )
