@@ -2,102 +2,96 @@ var express = require('express');
 var zeus = require('../db/database');
 var router = express.Router();
 
-router.get('/login/:uname/:phash', function(req, res, next) {
-    /*
-    aspnetusers
-    - Id (hash)
-    - UserName (string)
-    - PasswordHash (hash)
-    */
-    let userId = null;
-    sql = "SELECT Id FROM aspnetusers WHERE UserName = ? and PasswordHash = ?";
-    queryResult = null;
-    zeus.query(sql, [req.params.uname, req.params.phash], (error, results) => {
+router.post('/login', function(req, res, next) {
+
+    let sql = "SELECT * FROM aspnetusers WHERE UserName = ?";
+    zeus.query(sql, [req.body.username], (error, results) => {
         if (error) {
             console.log(sql + " failed");
             return console.error(error.message);
         }
-        queryResult = results.map(v => Object.assign({}, v));
-    });
 
-    if (Object.keys(queryResult).length == 0) {
-        res.status(400);
-        res.send("Invalid login credentials\n");
-    } else {
-        userId = queryResult["Id"];
-    }
+        results = results.map(v => Object.assign({}, v))[0];
 
-    sql = "INSERT INTO aspnetusertokens (UserId, Name, Value) VALUES (?, ?, ?)";
-    queryResult = null;
-    zeus.query(sql, [userId, req.params.uname, req.sessionID], (error, results) => {
-        if (error) {
-            console.log(sql + " failed");
-            return console.error(error.message);
+        console.log(results["PasswordHash"]);
+        console.log(req.body.phash);
+
+        if (results && results["PasswordHash"] == req.body.phash) {
+            req.session.userId = results["Id"];
+            req.session.authenticated = true;
+
+            res.send({"authenticated": req.session.authenticated, "sessionId": req.session.id});
+
         }
-        queryResult = results.map(v => Object.assign({}, v));
+
+        else {
+            res.send({"valid": false});
+        }
     });
-    res.send({"valid": true, "id": userId, "sessionId": req.sessionID});
 });
 
 router.get('/logout', function(req, res, next) {
-    // add session parameter above
-    sql = "DELETE FROM aspnetusertokens WHERE Value = ? RETURNING UserId";
-    queryResult = null;
-    zeus.query(sql, [req.sessionID], (error, results) => {
-        if (error) {
-            console.log(sql + " failed");
-            return console.error(error.message);
-        }
-        queryResult = results.map(v => Object.assign({}, v));
-    });
-    if (Object.keys(queryResult).length == 0) {
-        res.status(400);
-        res.send("Logout failed\n");
-    } else {
-        res.send(queryResult["UserId"]);
-    }
+    req.session = null;
+    req.send("Session terminated");
 });
 
 router.get('/role', function(req, res, next) {
-    let queryResult = getUserIdFromSession(req.sessionID);
-    let userId = null; 
-    let role = null;
 
-    if (Object.keys(queryResult).length == 0 || !queryResult["valid"]) {
-        res.send(queryResult);
-    } else {
-        userId = queryResult["UserId"];
-
-        sql = "SELECT role FROM aspnetuserroles WHERE user_id = ?";
-        queryResult = null;
-        zeus.query(sql, [userId], (error, results) => {
+    if (req.session.authenticated) {
+        sql = "SELECT Name FROM aspnetroles INNER JOIN aspnetuserroles ON aspnetroles.Id=aspnetuserroles.RoleId WHERE UserId = ?";
+        zeus.query(sql, [req.session.userId], (error, results) => {
             if (error) {
                 console.log(sql + " failed");
                 return console.error(error.message);
             }
-            queryResult = results.map(v => Object.assign({}, v));
-        });
 
-        if (Object.keys(queryResult).length == 0) {
-            res.status(400);
-            res.send('User \'s roles are not properly configured\n');
-            return;
-        } 
-        switch(queryResult["role"]) {
-            case 1:
-                role = "Admin";
-            case 2:
-                role = "Faculty";
-            case 3:
-                role = "Student";
-            }
-        if (role == null) {
-            res.send('Invalid role number\n');
-        } else {
-            const validSession = {"valid": true, "role": role, "userId": userId};
-            res.send(validSession);
-        }        
+            res.send({"valid": true, "role": results.map(v => Object.assign({}, v))[0]["Name"]});
+        });
     }
+
+    else {
+        res.send({"valid": false});
+    }
+
+    // let queryResult = getUserIdFromSession(req.sessionID);
+    // let userId = null;
+    // let role = null;
+
+    // if (Object.keys(queryResult).length == 0 || !queryResult["valid"]) {
+    //     res.send(queryResult);
+    // } else {
+    //     userId = queryResult["UserId"];
+
+    //     sql = "SELECT role FROM aspnetuserroles WHERE user_id = ?";
+    //     queryResult = null;
+    //     zeus.query(sql, [userId], (error, results) => {
+    //         if (error) {
+    //             console.log(sql + " failed");
+    //             return console.error(error.message);
+    //         }
+    //         queryResult = results.map(v => Object.assign({}, v));
+    //     });
+
+    //     if (Object.keys(queryResult).length == 0) {
+    //         res.status(400);
+    //         res.send('User \'s roles are not properly configured\n');
+    //         return;
+    //     } 
+    //     switch(queryResult["role"]) {
+    //         case 1:
+    //             role = "Admin";
+    //         case 2:
+    //             role = "Faculty";
+    //         case 3:
+    //             role = "Student";
+    //         }
+    //     if (role == null) {
+    //         res.send('Invalid role number\n');
+    //     } else {
+    //         const validSession = {"valid": true, "role": role, "userId": userId};
+    //         res.send(validSession);
+    //     }        
+    // }
 });
 
 
