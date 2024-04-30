@@ -29,6 +29,31 @@ router.post('/updatenote', async function(req, res, next) {
     }
 });
 
+// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), and courses: {course_id, year, term}.
+router.post('/updatecourses', async function(req, res, next) {
+    let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
+
+    if (validSession["valid"]) {
+        let planId = validSession["planId"];
+        
+        let sql = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE year = ?, term = ?";
+
+        let pid = planId;
+        let cid = req.body.course_id;
+        let year = req.body.year;
+        let term = req.body.term;
+
+        var [results, fields] = await zeus.execute(sql, [pid, cid, year, term, year, term]);
+
+        res.send("Plan courses successfully updated\n");
+    }
+
+    else {
+        res.status(400);
+        res.send('Invalid credentials for post request');
+    }
+});
+
 // POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), course_id, year, and term.
 router.post('/updatecourse', async function(req, res, next) {
     let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
