@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
 
+let global_noncollision = 10000;
+
 //=============================================================================================//
 //=======================================FACULTY===============================================//
 //=============================================================================================//
@@ -46,7 +48,7 @@ function popCore(reqs) {
   let core_courses = [];
   for (let course of reqs) {
       if (course.type === "core") {
-          core_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          core_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -60,7 +62,7 @@ function popElectives(reqs) {
   let elec_courses = [];
   for (let course of reqs) {
       if (course.type === "elective") {
-          elec_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          elec_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -74,7 +76,7 @@ function popCognates(reqs) {
   let elec_courses = [];
   for (let course of reqs) {
       if (course.type === "cognate") {
-          elec_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          elec_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -88,7 +90,7 @@ function popGeneds(reqs) {
   let gened_courses = [];
   for (let course of reqs) {
       if (course.type === "gened") {
-          gened_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          gened_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -107,19 +109,19 @@ function Requirements({reqs}) {
           <div className="basicContainer" id="courseReqs">
               <h3 className="btn-accordion" id="coreHeader">Core</h3>
               <div id="core" className="acc-div">
-                  {popCore(reqs)}
+                  {/* {popCore(reqs)} */}
               </div>
               <h3 className="btn-accordion" id="electivesHeader">Electives</h3>
               <div id="electives" className="acc-div">
-                  {popElectives(reqs)}
+                  {/* {popElectives(reqs)} */}
               </div>
               <h3 className="btn-accordion" id="cognatesHeader">Cognates</h3>
               <div id="cognates" className="acc-div">
-                  {popCognates(reqs)} 
+                  {/* {popCognates(reqs)}  */}
               </div>
               <h3 className="btn-accordion" id="genedsHeader">Gen-Eds</h3>
               <div id="geneds" className="acc-div">
-                  {popGeneds(reqs)}
+                  {/* {popGeneds(reqs)} */}
               </div>
           </div>
       </div>
