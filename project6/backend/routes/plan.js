@@ -17,6 +17,7 @@ router.get('/plandata/:plan_id/:student_id?', async function(req, res, next) {
         if (role == "Faculty") {
             facultyNotes = "(SELECT faculty_notes FROM plan WHERE id = ?) AS faculty_notes,";
             planIdCount += 1;
+            console.log("fac")
         }
         
         let sql = "SELECT " + 

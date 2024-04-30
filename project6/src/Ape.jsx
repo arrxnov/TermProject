@@ -295,7 +295,8 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
               </div>
               <div id="plan"></div>
               {/* <Plan plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} /> */}
-              <div id="notes">Placeholder note.</div>
+              <div id="stu_notes">{plandata.student_notes}</div>
+              <div id="fac_notes">{plandata.faculty_notes}</div>
           </div>
           <Table allcourses={allcourses} />
       </div>
