@@ -7,35 +7,79 @@ let global_noncollision = "1";
 let uid_length = 36;
 let plan_id = "";
 jQuery(document).ready(function () {
-    console.log("Form.js running");
     setupHandlers();
     initPage();
 });
 
 async function initPage() {
-    console.log("initPage running");
-    console.log(document.getElementById("course-reqs"));
     jQuery("#courseReqs").accordion({ collapsible: true, });
 
-    // document.getElementById("cognates").setAttribute("ondragover", "dragOverHandler(event)");
-    // document.getElementById("core").setAttribute("ondragover", "dragOverHandler(event)");
-    // document.getElementById("electives").setAttribute("ondragover", "dragOverHandler(event)");
-    // document.getElementById("geneds").setAttribute("ondragover", "dragOverHandler(event)");
+    document.getElementById("cognates").setAttribute("ondragover", "dragOverHandler(event)");
+    document.getElementById("core").setAttribute("ondragover", "dragOverHandler(event)");
+    document.getElementById("electives").setAttribute("ondragover", "dragOverHandler(event)");
+    document.getElementById("geneds").setAttribute("ondragover", "dragOverHandler(event)");
+    document.getElementById("cognates").setAttribute("ondrop", "dropTrash(event, this)");
+    document.getElementById("core").setAttribute("ondrop", "dropTrash(event, this)");
+    document.getElementById("electives").setAttribute("ondrop", "dropTrash(event, this)");
+    document.getElementById("geneds").setAttribute("ondrop", "dropTrash(event, this)");
+    
+    let data = await getAllCourses();
 
-    // document.getElementById("cognates").setAttribute("ondrop", "dropTrash(event, this)");
-    // document.getElementById("core").setAttribute("ondrop", "dropTrash(event, this)");
-    // document.getElementById("electives").setAttribute("ondrop", "dropTrash(event, this)");
-    // document.getElementById("geneds").setAttribute("ondrop", "dropTrash(event, this)");
+    populateSearchTable(data);
 
-    // for (let course in document.getElementsByClassName("course")) {
-    //     course.onmouseup = function (event) {
-    //         if (event.which == 3) {
-    //             remove(event.target);
-    //             checkRequirements();
-    //         }
-    //     }
-    // }
+    for (let course in document.getElementsByClassName("course")) {
+       course.onmouseup = function (event) {
+           if (event.which == 3) {
+               remove(event.target);
+               checkRequirements();
+           }
+       }
+    }
+
+    rows = document.getElementById("searchTable").getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+    for (row of rows) {
+        row.setAttribute("id", global_noncollision++);
+        row.setAttribute("draggable", true);
+        row.setAttribute("ondragstart", "dragStartHandler(event)");
+        row.classList.add("table-member");
+    }
+
+    let minYear = 0;
+    let maxYear = 0;
+    for (let course of plannedcourses) {
+        if (minYear == 0 || course["year"] < minYear) minYear = course["year"];
+        if (maxYear == 0 || course["year"] > maxYear) maxYear = course["year"];
+    }
+
+    for (let i = minYear; i < maxYear; i += 1) {
+        document.getElementById("plan").innerHTML += "<div id=\"year" + i + "\" class=\"year\"></div>";
+    }
+    let currentYear = minYear;
+
+    for (let year of document.getElementsByClassName("year")) {
+        if (currentYear < 2024) {
+            year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester-past\"><div class=\"semesterHeader\"><div class=\"term\">Fall " + (currentYear) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
+            year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester-past\"><div class=\"semesterHeader\"><div class=\"term\">Spring " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
+            year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester-past\"><div class=\"semesterHeader\"><div class=\"term\">Summer " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
+        } else if (currentYear == 2024) {
+            year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester-past\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Fall " + (currentYear) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
+            year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester semester-current\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Spring " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
+            year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Summer " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
+
+        } else {
+            year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Fall " + (currentYear) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
+            year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Spring " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
+        }
+
+        currentYear++;
+    }
 }
+
+
+async function getAllCourses() {
+    let response = await fetch("http://localhost:3000/student/courses/1");
+    return await response.json();
+  }
 
 function setupHandlers() {
     jQuery("#jgradyBtn").click(function () {
@@ -128,7 +172,7 @@ function dragStartHandler(ev) {
 
 function dropHandler(ev, el) {
     ev.preventDefault();
-    const data = ev.dataTransfer.getData("Text");
+    const data = ev.dataTransfer.getData("text");
     ev.dataTransfer.dropEffect = "copyMove";
     if (document.getElementById(data).classList.contains("table-member")) {
         let classDescriptor = document.getElementById(data).getElementsByTagName("td")[0].innerHTML;
@@ -146,10 +190,12 @@ function dropHandler(ev, el) {
     checkRequirements();
 }
 
-function dropTrash(ev, el) {
+function dropTrash(ev) {
     ev.preventDefault();
-    const data = ev.dataTransfer.getData("Text");
-    document.getElementById(data).remove();
+
+    const element = ev.dataTransfer.getData("text");
+    console.log(element);
+    document.getElementById(element).remove();
     checkRequirements();
 }
 

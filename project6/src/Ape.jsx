@@ -1,9 +1,4 @@
-import {
-    useNavigate,
-    BrowserRouter as Router,
-    Routes,
-    Route,
-} from "react-router-dom";
+import React from 'react'
 import { useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
@@ -19,11 +14,6 @@ import './css/datatables.css'
 function Faculty({}) {
     return (
         <>
-            <Helmet>
-                <script src="js/datatables.js"></script>
-                <script src="js/form.js" defer></script>
-            </Helmet>
-            <Header />
             <p>I am faculty!</p>
         </>
     )
@@ -56,7 +46,7 @@ function popCore(reqs) {
   let core_courses = [];
   for (let course of reqs) {
       if (course.type === "core") {
-          core_courses.push(<p className="course req" draggable="true" dragstarthandler={onDragStart}><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          core_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -70,7 +60,7 @@ function popElectives(reqs) {
   let elec_courses = [];
   for (let course of reqs) {
       if (course.type === "elective") {
-          elec_courses.push(<p className="course req" draggable="true" dragstarthandler={onDragStart}><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          elec_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -84,7 +74,7 @@ function popCognates(reqs) {
   let elec_courses = [];
   for (let course of reqs) {
       if (course.type === "cognate") {
-          elec_courses.push(<p className="course req" draggable="true" dragstarthandler={onDragStart}><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          elec_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -98,7 +88,7 @@ function popGeneds(reqs) {
   let gened_courses = [];
   for (let course of reqs) {
       if (course.type === "gened") {
-          gened_courses.push(<p className="course req" draggable="true" dragstarthandler={onDragStart}><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          gened_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -116,19 +106,19 @@ function Requirements({reqs}) {
           </div>
           <div className="basicContainer" id="courseReqs">
               <h3 className="btn-accordion" id="coreHeader">Core</h3>
-              <div id="core" className="acc-div" onDragOver={dragOver} onDrop={dropTrash}>
+              <div id="core" className="acc-div">
                   {popCore(reqs)}
               </div>
               <h3 className="btn-accordion" id="electivesHeader">Electives</h3>
-              <div id="electives" className="acc-div" onDragOver={dragOver} onDrop={dropTrash}>
+              <div id="electives" className="acc-div">
                   {popElectives(reqs)}
               </div>
               <h3 className="btn-accordion" id="cognatesHeader">Cognates</h3>
-              <div id="cognates" className="acc-div" onDragOver={dragOver} onDrop={dropTrash}>
+              <div id="cognates" className="acc-div">
                   {popCognates(reqs)} 
               </div>
               <h3 className="btn-accordion" id="genedsHeader">Gen-Eds</h3>
-              <div id="geneds" className="acc-div" onDragOver={dragOver} onDrop={dropTrash}>
+              <div id="geneds" className="acc-div">
                   {popGeneds(reqs)}
               </div>
           </div>
@@ -153,7 +143,7 @@ function Left({reqs}) {
 function Course({id, course}) {
   return (
       <>
-          <p id={course.term + course.year + id} className="course" draggable={(course.year >= 2024 && (course.term == "SP" && course.year == 2024 ? false : true) ? "true" : "false")} ondragstart={onDragStart}> <span className="course-id">{course.course_id}</span> {course.name}<span className="course-credits">{course.credits}</span></p>
+          <p id={course.term + course.year + id} className="course" draggable={(course.year >= 2024 && (course.term == "SP" && course.year == 2024 ? false : true) ? "true" : "false")} ondragstart="dragStartHandler"> <span className="course-id">{course.course_id}</span> {course.name}<span className="course-credits">{course.credits}</span></p>
       </>
   )
 }
@@ -188,7 +178,7 @@ function Semester({term, year, courses, totalCredits, setTotalCredits}) {
   // setTotalCredits(total + sem);
   return (
       <>
-          <div className="semester fall" onDrop={onDrop} onDragOver={dragOver}>
+          <div className={"semester " + term} ondrop="dropHandler(event, this)" ondragover="dragOverHandler">
               <div className="semesterHeader">
                   <div className="term">{term} {year}</div>
                   <div className="credits">Credits: {semesterCredits}</div>
@@ -321,7 +311,7 @@ function isFaculty() {
     return false;
 }
 
-function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, totalCredits, setTotalCredits) {
+function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, allcourses) {
     if (isFaculty()) {
     return (
       <main>
@@ -332,7 +322,7 @@ function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, totalCred
     return (
       <main>
         <Left reqs={reqs} />
-        <Right info={info} plans={planJSON} plandata={planDataJSON} plancourses={plancourses} isfaculty={false} />
+        <Right info={info} plans={planJSON} plandata={planDataJSON} plancourses={plancourses} isfaculty={false} allcourses={allcourses} />
       </main>
     )
   }
@@ -354,7 +344,7 @@ function saveHandler() {
   console.log("You tried to save!");
 }
 
-function Header(infoJSON, planJSON) {
+function Header({infoJSON, planJSON}) {
   return (
       <>  
           <header>
@@ -401,6 +391,7 @@ function Header(infoJSON, planJSON) {
 }
 
 function populatePlans(planJSON) {
+    console.log(planJSON);
   return (
       <>
           {planJSON.map(plan => <Dropdown.Item key={"plan" + plan.id}>{plan.name}</Dropdown.Item>)}
@@ -473,15 +464,15 @@ function populatePlans(planJSON) {
 //     )
 // }  
 
-function Ape({validated, infoJSON, plan, planDataJSON, reqsJSON, plancourses}) {
+function Ape({validated, infoJSON, plan, planDataJSON, reqsJSON, plancourses, allcourses}) {
     return (
         <>
             <Helmet>
                 <script src="js/datatables.js"></script>
-                <script src="js/form.js" defer></script>
+                <script src="js/form.js" data-json={allcourses} defer></script>
             </Helmet>
             <Header infoJSON={infoJSON} planJSON={plan} />
-            {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses)}
+            {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses, allcourses)}
         </>
     )
 }
