@@ -15,7 +15,7 @@ router.post('/login', async function(req, res, next) {
         req.session.authenticated = true;
         
         sql = "SELECT Name FROM aspnetroles INNER JOIN aspnetuserroles ON aspnetroles.Id=aspnetuserroles.RoleId WHERE UserId = ?";
-        [results, fields] = await (await zeus).execute(sql, [req.session.userId]);
+        [results, fields] = await zeus.execute(sql, [req.session.userId]);
 
         req.session.role = results.map(v => Object.assign({}, v))[0]["Name"];
 
