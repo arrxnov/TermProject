@@ -44,62 +44,6 @@ function Special() {
   )
 }
 
-function popCore(reqs) {
-  let core_courses = [];
-  for (let course of reqs) {
-      if (course.type === "core") {
-          core_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
-      }
-  }
-  return (
-      <>
-          {core_courses.map(course => <>{course}</>)}
-      </>
-  )
-}
-
-function popElectives(reqs) {
-  let elec_courses = [];
-  for (let course of reqs) {
-      if (course.type === "elective") {
-          elec_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
-      }
-  }
-  return (
-      <>
-          {elec_courses.map(course => <>{course}</>)}
-      </>
-  )
-}
-
-function popCognates(reqs) {
-  let elec_courses = [];
-  for (let course of reqs) {
-      if (course.type === "cognate") {
-          elec_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
-      }
-  }
-  return (
-      <>
-          {elec_courses.map(course => <>{course}</>)}
-      </>
-  )
-}
-
-function popGeneds(reqs) {
-  let gened_courses = [];
-  for (let course of reqs) {
-      if (course.type === "gened") {
-          gened_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
-      }
-  }
-  return (
-      <>
-          {gened_courses.map(course => <>{course}</>)}
-      </>
-  )
-}
-
 function Requirements() {
   return (
       <div id="UL">
@@ -203,7 +147,7 @@ function Right({info, plans, plandata}) {
               <div id="planHeader" className="labels-ape">
                   <p><strong>Student:</strong> {info.name}</p>
                   <p><strong>Plan:</strong> {default_plan.name}</p>
-                  <p><strong>Total Hours:</strong> {totalCredits}</p>
+                  <p><strong>Total Hours:</strong></p>
               </div>
               <div id="planSubheader" className="labels-ape">
                   <p><strong>Major:</strong> {printMajors(plandata)}</p>
@@ -398,10 +342,13 @@ function Ape({infoJSON, plan, planDataJSON}) {
         <>
             <Helmet>
                 <script src="js/datatables.js"></script>
-                <script src="js/form.js" data-json={allcourses} defer></script>
+                <script src="js/form.js" defer></script>
             </Helmet>
-            <Header infoJSON={infoJSON} planJSON={plan} />
-            {renderChoose(infoJSON, plan, planDataJSON)}
+            <Header planJSON={plan} />
+            <main>
+                <Left />
+                <Right info={infoJSON} plans={plan} plandata={planDataJSON} />
+            </main>
         </>
     )
 }
@@ -410,7 +357,7 @@ function Login() {
     return (
         <>
             <Helmet>
-                <script src="js/form.js" data-json={allcourses} defer></script>
+                <script src="js/form.js" defer></script>
             </Helmet>
             <form id="loginForm">
                 <input id="user-field" type="text" name="user" placeholder="Username" />

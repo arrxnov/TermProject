@@ -56,7 +56,7 @@ async function initPage() {
     for (let req of requirements) {
         if (req["type"] == "core") {
             document.getElementById("core").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span> " + req["name"] + "<span hidden=\"true\" class=\"course-credits\">" + req.credits + "</span>\n</p>\n";
-        } else if (req["type"] == "gened") {
+        } else if (req["type"] == "gened-core") {
             document.getElementById("geneds").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span> " + req["name"] + "<span hidden=\"true\" class=\"course-credits\">" + req.credits + "</span>\n</p>\n";
         } else if (req["type"] == "elective") {
             document.getElementById("electives").innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course req\" draggable=True ondragstart=\"dragStartHandler(event, this)\"><span class=\"course-id\">" + req["course_id"] + "</span> " + req["name"] + "<span hidden=\"true\" class=\"course-credits\">" + req.credits + "</span>\n</p>\n";
@@ -213,7 +213,9 @@ function setMint() {
 }
 
 async function savePlan() {
-    console.log(document.getElementById("student-notes").value);
+    if (!checkDup()) {
+        return;
+    }
     await fetch('http://localhost:3000/save/updatenote', {
         method: 'POST',
         headers: {
@@ -222,6 +224,13 @@ async function savePlan() {
         },
         body: JSON.stringify({"plan_id": 1, "note": document.getElementById("student-notes").value})
     });
+    let courses = [];
+    let plan = document.getElementById("plan");
+    // for (let course of plan.getElementsByClassName("course")) {
+    //     let jsonCourse = {};
+    //     jsonCourse.course_id = course.getElementsByClassName("course-id")[0].innerText;
+    //     switch (course.parentElement.getElementsByClassName("term")[0].split())
+    // }
 }
 
 async function logout() {
@@ -333,6 +342,28 @@ function checkCredits() {
     document.getElementById("planHeader").getElementsByTagName("p")[2].innerHTML = "Total Hours: " + totalCredits;
 }
 
+function checkDup() {
+    let duplicates = [];
+    let plan = document.getElementById("plan");
+    for (let course of plan.getElementsByClassName("course")) {
+        let occurrences = 0;
+        for (let check of plan.getElementsByClassName("course")) {
+            if (check.getElementsByClassName("course-id")[0].innerText == course.getElementsByClassName("course-id")[0].innerText) {
+                occurrences++;
+            }
+        }
+        if (occurrences > 1) {
+            duplicates.push(course.getElementsByClassName("course-id")[0].innerText);
+        }
+    }
+    if (duplicates.length) {
+        alert("There are duplicate courses in your plan! Please fix this before saving.");
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function dragStartHandler(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
     ev.dataTransfer.effectAllowed = "move";
@@ -357,6 +388,7 @@ function dropHandler(ev, el) {
     }
     checkRequirements();
     checkCredits();
+    checkDup();
 }
 
 function dropTrash(ev) {
