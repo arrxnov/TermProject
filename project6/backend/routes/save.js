@@ -18,7 +18,7 @@ router.post('/updatenote', async function(req, res, next) {
 
         let sql = "UPDATE plan SET " + notes + " = ? WHERE id = ?";
 
-        var [results, fields] = await (await zeus).execute(sql, [req.body.note, planId]);
+        var [results, fields] = await zeus.execute(sql, [req.body.note, planId]);
 
         res.send("Plan note successfully saved\n");
     }
@@ -38,7 +38,7 @@ router.post('/updatecourse', async function(req, res, next) {
         
         let sql = "UPDATE plannedcourse SET year = ?, term = ? WHERE plan_id = ? AND course_id = ?";
 
-        var [results, fields] = await (await zeus).execute(sql, [req.body.year, req.body.term, planId, req.body.course_id]);
+        var [results, fields] = await zeus.execute(sql, [req.body.year, req.body.term, planId, req.body.course_id]);
 
         res.send("Course successfully updated\n");
     }
@@ -58,7 +58,7 @@ router.post('/addcourse', async function(req, res, next) {
         
         let sql = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?)";
 
-        var [results, fields] = await (await zeus).execute(sql, [planId, req.body.course_id, req.body.year, req.body.term]);
+        var [results, fields] = await zeus.execute(sql, [planId, req.body.course_id, req.body.year, req.body.term]);
 
         res.send("Course successfully added\n");
     }

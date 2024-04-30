@@ -11,7 +11,7 @@ router.get('/studentdata/:student_id?', async function(req, res, next) {
 
         let sql = "SELECT name, gpa, major_gpa, default_plan_id FROM user WHERE id = ?";
 
-        var [results, fields] = await (await zeus).execute(sql, [studentId]);
+        var [results, fields] = await zeus.execute(sql, [studentId]);
 
         res.send(results.map(v => Object.assign({}, v))[0]);
     }
@@ -30,7 +30,7 @@ router.get('/plans/:student_id?', async function(req, res, next) {
 
         let sql = "SELECT id, name FROM plan WHERE user_id = ?";
 
-        var [results, fields] = await (await zeus).execute(sql, [studentId]);
+        var [results, fields] = await zeus.execute(sql, [studentId]);
 
         res.send(results.map(v => Object.assign({}, v)));
     }
@@ -47,7 +47,7 @@ router.get('/courses/:student_id?', async function(req, res, next) {
     if (validSession["valid"]) {
         
         let sql = "SELECT * FROM course";
-        var [results, fields] = await (await zeus).execute(sql, []);
+        var [results, fields] = await zeus.execute(sql, []);
 
         res.send(results.map(v => Object.assign({}, v)));
     }
