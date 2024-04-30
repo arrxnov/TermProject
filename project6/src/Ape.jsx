@@ -6,6 +6,7 @@ import Helmet from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
 
 let global_noncollision = 10000;
 
@@ -365,18 +366,58 @@ function Ape({infoJSON, plan, planDataJSON}) {
 }
 
 function Login() {
+    // const LoginForm = () => (
+    //     <Fragment>
+    //         <h1>Login Page</h1>
+            
+    //         { loginUser()["authenticated"] && loginUser ? <Redirect to="/" /> : null }
+
+    //     </Fragment> 
+    // );
+
+    
+    
+    // const Home = ({match:{params:{name}}}) => (
+    //     // props.match.params.name
+    //     <Fragment>
+    //         { name !== 'John Doe' ? <Redirect to="/" /> : null }
+    //         <h1>About {name}</h1>
+    //         <FakeText />
+    //     </Fragment>
+    // );
+    
     return (
-        <>
+        <Router>
             <Helmet>
                 <script src="js/form.js" defer></script>
             </Helmet>
-            <form id="loginForm">
-                <input id="user-field" type="text" name="user" placeholder="Username" />
-                <input id="pass-field" type="password" name="password" placeholder="Password" />
-                <button id="submit-btn" className="btn-clickable" type="submit">Login</button>
-            </form>
-        </>
-    )
+
+            <Switch>
+                <Route path="/" exact component={LoginForm} />
+
+                {
+                isAuthStudent ? 
+                <>
+                <Route path="/student/" component={Student} />
+                </> : <Redirect to="/" />
+                }
+
+                {
+                isAuthFaculty ? 
+                <>
+                <Route path="/student/" component={Student} />
+                <Route path="/faculty/" component={Faculty} />
+                </> : <Redirect to="/" />
+                }
+            </Switch>
+        </Router>
+            
+            // <form id="loginForm">
+            //     <input id="user-field" type="text" name="user" placeholder="Username" />
+            //     <input id="pass-field" type="password" name="password" placeholder="Password" />
+            //     <button id="submit-btn" className="btn-clickable" type="submit">Login</button>
+            // </form>
+    );
 }
 
 export default Ape;
