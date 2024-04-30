@@ -15,7 +15,7 @@ router.get('/advisees', async function(req, res, next) {
             "FROM user INNER JOIN advisee ON user.id=advisee.advisee_id " +
             "WHERE advisee.advisor_id = ?";
 
-        var [results, fields] = await (await zeus).execute(sql, [facultyId]);
+        var [results, fields] = await zeus.execute(sql, [facultyId]);
 
         res.send(results.map(v => Object.assign({}, v)));
     }

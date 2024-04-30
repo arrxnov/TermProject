@@ -6,7 +6,7 @@ var router = express.Router();
 router.post('/login', async function(req, res, next) {
     
     let sql = "SELECT * FROM aspnetusers WHERE UserName = ?";
-    var [results, fields] = await (await zeus).execute(sql, [req.body.username]);
+    var [results, fields] = await zeus.execute(sql, [req.body.username]);
 
     results = results.map(v => Object.assign({}, v))[0];
 
@@ -62,7 +62,7 @@ async function validateStudent(session, studentId=null) {
         
     //     else {
     //         let sql = "SELECT advisor_id FROM advisee WHERE advisee_id = ?";
-    //         var [results, fields] = await (await zeus).execute(sql, [studentId]);
+    //         var [results, fields] = await zeus.execute(sql, [studentId]);
 
     //         if (results.map(v => Object.assign({}, v))[0]["advisor_id"] == session.userId) {
     //             return {"valid": true, "role": "faculty", "facultyId": session.userId, "studentId": studentId};
@@ -90,7 +90,7 @@ async function validatePlan(session, planId, studentId=null) {
     // studentId = queryResult["studentId"];
 
     // let sql = "SELECT user_id FROM plan WHERE id = ?";
-    // var [results, fields] = await (await zeus).execute(sql, [planId]);
+    // var [results, fields] = await zeus.execute(sql, [planId]);
 
     // console.log(results);
 

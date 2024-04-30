@@ -28,7 +28,7 @@ router.get('/plandata/:plan_id/:student_id?', async function(req, res, next) {
             facultyNotes +
             "(SELECT student_notes FROM plan WHERE id = ?) AS student_notes";
         
-        var [results, fields] = await (await zeus).execute(sql, Array(planIdCount).fill(planId));
+        var [results, fields] = await zeus.execute(sql, Array(planIdCount).fill(planId));
 
         results = results.map(v => Object.assign({}, v))[0];
         results.majors = results.majors.split(",");
@@ -53,7 +53,7 @@ router.get('/plancourses/:plan_id/:student_id?', async function(req, res, next) 
             "FROM plannedcourse INNER JOIN course ON plannedcourse.course_id=course.id " +
             "WHERE plannedcourse.plan_id = ?";
 
-        var [results, fields] = await (await zeus).execute(sql, [planId]);
+        var [results, fields] = await zeus.execute(sql, [planId]);
 
         res.send(results.map(v => Object.assign({}, v)));
     }
@@ -84,7 +84,7 @@ router.get('/planreqs/:plan_id/:student_id?', async function(req, res, next) {
                 "FROM gened" +
             ") AS reqs ON course.id=reqs.course_id";
         
-        var [results, fields] = await (await zeus).execute(sql, [planId, planId]);
+        var [results, fields] = await zeus.execute(sql, [planId, planId]);
 
         res.send(results.map(v => Object.assign({}, v)));
     }

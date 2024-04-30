@@ -1,21 +1,36 @@
 var mysql = require('mysql2/promise');
 
-async function initDb() {
-    var db = await mysql.createConnection({
-        host: "163.11.237.170",
-        database: "zeus",
-        user: "lmiller",
-        password: "password"
-    });
+var db = mysql.createPool({
+    host: "163.11.237.170",
+    database: "zeus",
+    user: "lmiller",
+    password: "password",
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+
+console.log("Database Connected!");
+
+// async function initDb() {
+//     var db = await mysql.createPool({
+//         host: "163.11.237.170",
+//         database: "zeus",
+//         user: "lmiller",
+//         password: "password",
+//         waitForConnections: true,
+//         connectionLimit: 10,
+//         queueLimit: 0
+//     });
     
-    // await db.connect(function(err) {
-    //     if (err) throw err;
-    //     console.log("Database Connected!");
-    // });
+//     // await db.connect(function(err) {
+//     //     if (err) throw err;
+//     //     console.log("Database Connected!");
+//     // });
 
-    console.log("Database Connected!")
+//     console.log("Database Connected!")
 
-    return db;
-}
+//     return db;
+// }
 
-module.exports = initDb();
+module.exports = db;
