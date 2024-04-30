@@ -14,9 +14,10 @@ router.get('/plandata/:plan_id/:student_id?', async function(req, res, next) {
         let planIdCount = 5;
         let facultyNotes = "";
 
-        if (role == "faculty") {
+        if (role == "Faculty") {
             facultyNotes = "(SELECT faculty_notes FROM plan WHERE id = ?) AS faculty_notes,";
             planIdCount += 1;
+            console.log("fac")
         }
         
         let sql = "SELECT " + 
@@ -51,7 +52,7 @@ router.get('/plancourses/:plan_id/:student_id?', async function(req, res, next) 
         let sql = "SELECT plannedcourse.course_id, course.name, course.credits, plannedcourse.year, plannedcourse.term " + 
             "FROM plannedcourse INNER JOIN course ON plannedcourse.course_id=course.id " +
             "WHERE plannedcourse.plan_id = ?";
-            
+
         var [results, fields] = await (await zeus).execute(sql, [planId]);
 
         res.send(results.map(v => Object.assign({}, v)));

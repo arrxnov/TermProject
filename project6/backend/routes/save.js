@@ -12,7 +12,7 @@ router.post('/updatenote', async function(req, res, next) {
         let planId = validSession["planId"];
 
         var notes = "student_notes";
-        if (role == "faculty") {
+        if (role == "Faculty") {
             notes = "faculty_notes";
         }
 
