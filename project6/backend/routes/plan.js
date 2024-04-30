@@ -4,8 +4,15 @@ var auth = require('./auth');
 var router = express.Router();
 
 // Path: /plan/plandata/<plan_id>/<student_id (optional if student signed in)>
-router.get('/plandata/:plan_id/:student_id?', function(req, res, next) {
-    let validSession = auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
+router.get('/plandata/:plan_id/:student_id?', async function(req, res, next) {
+    var validSession = await auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
+
+    // const secondFunction = async () => {
+    //     const result = await firstFunction()
+    //     // do something else here after firstFunction completes
+    //   }
+
+    console.log(validSession);
 
     if (validSession["valid"]) {
         let planId = validSession["planId"];
