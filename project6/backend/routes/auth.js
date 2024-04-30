@@ -4,6 +4,7 @@ var zeus = require('../db/database');
 var router = express.Router();
 
 router.post('/login', function(req, res, next) {
+
     let sql = "SELECT * FROM aspnetusers WHERE UserName = ?";
     zeus.query(sql, [req.body.username], async (error, results) => {
         if (error) {
@@ -31,17 +32,19 @@ router.post('/login', function(req, res, next) {
         }
 
         else {
-            res.send({"valid": false});
+            res.send({"authenticated": false});
         }
     });
 });
 
 router.get('/checklogin', function(req, res, next) {
     if (req.session.authenticated) {
-        res.send({"valid": true})
+        res.send({"authenticated": true})
     }
-    
-    res.send({"valid": false});
+
+    else {
+        res.send({"authenticated": false});
+    }
 });
 
 router.get('/logout', function(req, res, next) {
@@ -110,7 +113,6 @@ function validatePlan(session, planId, studentId=null) {
         }   
     });
 }
-
 
 module.exports = router;
 module.exports.validateFaculty = validateFaculty;
