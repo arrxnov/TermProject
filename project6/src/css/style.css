@@ -5,7 +5,7 @@
     --btn-atlantis: rgb(3, 14, 58);
     --btn-avenue: rgb(24, 40, 54);
     --btn-sponsored: red;
-    --btn-theme: var(--btn-mint);
+    --btn-theme: var(--btn-avenue);
 
     --bg-mint: url("../images/mint.jpg");
     --bg-fuscia: url("../images/fuscia.jpg");
@@ -13,7 +13,7 @@
     --bg-atlantis: url("../images/atlantis.jpg");
     --bg-avenue: url("../images/creston-from-carson-ave.jpg");
     --bg-sponsored: url("../images/china.gif");
-    --bg-theme: var(--bg-mint);
+    --bg-theme: var(--bg-avenue);
     
     --text-color: rgb(230, 230, 230);
     --text-color-dark: black;
@@ -506,4 +506,33 @@ main {
 #logout-btn {
     height: 45%;
 }
+
+#stu_notes_label {
+    flex: auto;
+    justify-content: center;
+    align-content: center;
+    height: 80%;
+    padding: 8px;
+}
+
+#fac_notes_label {
+    flex: auto;
+    justify-content: center;
+    align-content: center;
+    height: 80%;
+    padding: 8px;
+}
+
+textarea {
+    flex: auto;
+    height: 80%;
+    width: 90%;
+    outline: none;
+    border: none;
+    margin: 2px;
+    color: white;
+    border-radius: 4px;
+    background-color: var(--transparency-light);
+}
+
 /* Login Form ------------------------------------------------------------------ */

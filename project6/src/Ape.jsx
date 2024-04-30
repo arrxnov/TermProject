@@ -298,10 +298,14 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
               <div id="plan"></div>
               {/* <Plan plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} /> */}
               <div id="MR">
+                <label id="stu_notes_label" className="labels-ape" for="student-notes">Student Notes</label>
                 <div id="stu_notes">
+                  
                   <textarea id="student-notes" contentEditable="true" />
                 </div>
+                <label id="fac_notes_label" className="labels-ape" for="faculty-notes">Faculty Notes</label>
                 <div id="fac_notes">
+                    
                     <textarea id="faculty-notes" contentEditable="true" />
                 </div>
                 <div id="year-btns">
