@@ -29,38 +29,24 @@ router.post('/updatenote', async function(req, res, next) {
     }
 });
 
-// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), course_id, year, and term.
-router.post('/updatecourse', async function(req, res, next) {
+// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), and courses: {course_id, year, term}.
+router.post('/updatecourses', async function(req, res, next) {
     let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
 
     if (validSession["valid"]) {
-        let planId = validSession["planId"];
+        var planId = validSession["planId"];
         
-        let sql = "UPDATE plannedcourse SET year = ?, term = ? WHERE plan_id = ? AND course_id = ?";
+        var sql = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE year = ?, term = ?";
 
-        var [results, fields] = await zeus.execute(sql, [req.body.year, req.body.term, planId, req.body.course_id]);
+        for (let course of req.body.courses) {
+            let cid = course["course_id"];
+            let year = course["year"];
+            let term = course["term"];
 
-        res.send("Course successfully updated\n");
-    }
+            await zeus.execute(sql, [planId, cid, year, term, year, term]);
+        }
 
-    else {
-        res.status(400);
-        res.send('Invalid credentials for post request');
-    }
-});
-
-// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), course_id, year, and term.
-router.post('/addcourse', async function(req, res, next) {
-    let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
-
-    if (validSession["valid"]) {
-        let planId = validSession["planId"];
-        
-        let sql = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?)";
-
-        var [results, fields] = await zeus.execute(sql, [planId, req.body.course_id, req.body.year, req.body.term]);
-
-        res.send("Course successfully added\n");
+        res.send("Plan courses successfully updated\n");
     }
 
     else {
