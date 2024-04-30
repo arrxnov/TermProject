@@ -70,6 +70,10 @@ let reqsJSON = await getRequirements();
 //     reqsJSON = await getRequirements();
 // }
 
+function shouldComponentUpdate() {
+    return false;
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <>
         <Ape infoJSON={infoJSON} plan={plan} planDataJSON={planDataJSON} plancourses={plancourses} reqsJSON={reqsJSON} />

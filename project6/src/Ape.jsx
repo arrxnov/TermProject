@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
 
+let global_noncollision = 10000;
+
 //=============================================================================================//
 //=======================================FACULTY===============================================//
 //=============================================================================================//
@@ -46,7 +48,7 @@ function popCore(reqs) {
   let core_courses = [];
   for (let course of reqs) {
       if (course.type === "core") {
-          core_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          core_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -60,7 +62,7 @@ function popElectives(reqs) {
   let elec_courses = [];
   for (let course of reqs) {
       if (course.type === "elective") {
-          elec_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          elec_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -74,7 +76,7 @@ function popCognates(reqs) {
   let elec_courses = [];
   for (let course of reqs) {
       if (course.type === "cognate") {
-          elec_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          elec_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -88,7 +90,7 @@ function popGeneds(reqs) {
   let gened_courses = [];
   for (let course of reqs) {
       if (course.type === "gened") {
-          gened_courses.push(<p className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
+          gened_courses.push(<p id={global_noncollision++} className="course req" draggable="true" dragstarthandler="dragStartHandler"><span className="course-id">{course.course_id}</span> {course.name}</p>);
       }
   }
   return (
@@ -107,19 +109,19 @@ function Requirements({reqs}) {
           <div className="basicContainer" id="courseReqs">
               <h3 className="btn-accordion" id="coreHeader">Core</h3>
               <div id="core" className="acc-div">
-                  {popCore(reqs)}
+                  {/* {popCore(reqs)} */}
               </div>
               <h3 className="btn-accordion" id="electivesHeader">Electives</h3>
               <div id="electives" className="acc-div">
-                  {popElectives(reqs)}
+                  {/* {popElectives(reqs)} */}
               </div>
               <h3 className="btn-accordion" id="cognatesHeader">Cognates</h3>
               <div id="cognates" className="acc-div">
-                  {popCognates(reqs)} 
+                  {/* {popCognates(reqs)}  */}
               </div>
               <h3 className="btn-accordion" id="genedsHeader">Gen-Eds</h3>
               <div id="geneds" className="acc-div">
-                  {popGeneds(reqs)}
+                  {/* {popGeneds(reqs)} */}
               </div>
           </div>
       </div>
@@ -295,8 +297,22 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
               </div>
               <div id="plan"></div>
               {/* <Plan plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} /> */}
-              <div id="stu_notes">{plandata.student_notes}</div>
-              <div id="fac_notes">{plandata.faculty_notes}</div>
+              <div id="MR">
+                <div id="stu_notes">
+                  <textarea id="student-notes" contentEditable="true">
+                      {plandata.student_notes}
+                  </textarea>
+                </div>
+                <div id="fac_notes">
+                    <textarea contentEditable="true">
+                        {plandata.faculty_notes}
+                    </textarea>
+                </div>
+                <div id="year-btns">
+                  <button id="addyear-btn" className="btn-clickable">Add Year</button>
+                  <button id="deleteyear-btn" className="btn-clickable">Delete Year</button>
+                </div>
+              </div>
           </div>
           <Table allcourses={allcourses} />
       </div>
@@ -341,12 +357,6 @@ function logOutHandler(ev) {
   console.log("You tried to log out!");
 }
 
-function saveHandler() {
-  // POST saved data to database
-  
-  console.log("You tried to save!");
-}
-
 function Header({infoJSON, planJSON}) {
   return (
       <>  
@@ -385,8 +395,8 @@ function Header({infoJSON, planJSON}) {
                           <Dropdown.Item>Speak With a Manager</Dropdown.Item>
                       </Dropdown.Menu>
                   </Dropdown>
-                  <Button className="btn-clickable" onClick={saveHandler}>Save</Button>
-                  <Button className="btn-clickable" onClick={logOutHandler}>Log Out</Button>
+                  <button id="save-btn" className="btn-clickable">Save</button>
+                  <button id="logout-btn" className="btn-clickable" onClick={logOutHandler}>Log Out</button>
                   </div> 
           </header>
       </>
@@ -479,4 +489,20 @@ function Ape({validated, infoJSON, plan, planDataJSON, reqsJSON, plancourses, al
         </>
     )
 }
+
+function Login() {
+    return (
+        <>
+            <Helmet>
+                <script src="js/form.js" data-json={allcourses} defer></script>
+            </Helmet>
+            <form id="loginForm">
+                <input id="user-field" type="text" name="user" placeholder="Username" />
+                <input id="pass-field" type="password" name="password" placeholder="Password" />
+                <button id="submit-btn" className="btn-clickable" type="submit">Login</button>
+            </form>
+        </>
+    )
+}
+
 export default Ape;
