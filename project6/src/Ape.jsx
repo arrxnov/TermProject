@@ -299,14 +299,10 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
               {/* <Plan plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} /> */}
               <div id="MR">
                 <div id="stu_notes">
-                  <textarea id="student-notes" contentEditable="true">
-                      {plandata.student_notes}
-                  </textarea>
+                  <textarea id="student-notes" contentEditable="true" />
                 </div>
                 <div id="fac_notes">
-                    <textarea contentEditable="true">
-                        {plandata.faculty_notes}
-                    </textarea>
+                    <textarea id="faculty-notes" contentEditable="true" />
                 </div>
                 <div id="year-btns">
                   <button id="addyear-btn" className="btn-clickable">Add Year</button>

@@ -18,13 +18,26 @@ async function initPage() {
     document.getElementById("core").setAttribute("ondragover", "dragOverHandler(event)");
     document.getElementById("electives").setAttribute("ondragover", "dragOverHandler(event)");
     document.getElementById("geneds").setAttribute("ondragover", "dragOverHandler(event)");
+
     document.getElementById("cognates").setAttribute("ondrop", "dropTrash(event, this)");
     document.getElementById("core").setAttribute("ondrop", "dropTrash(event, this)");
     document.getElementById("electives").setAttribute("ondrop", "dropTrash(event, this)");
     document.getElementById("geneds").setAttribute("ondrop", "dropTrash(event, this)");
+
     document.getElementById("courseFinder").setAttribute("ondragover", "dragOverHandler(event)");
     document.getElementById("courseFinder").setAttribute("ondrop", "dropTrash(event, this)");
     
+    let planData = await getPlanData();
+
+    document.getElementById("student-notes").innerText = planData.student_notes;
+    if (document.getElementById("faculty-notes") !== undefined) {
+        document.getElementById("faculty-notes").innerText = planData.faculty;
+    }
+
+    // document.getElementById("mint-btn").addEventListener("click", setMint, false);
+    // document.getElementById("atlantis-btn").addEventListener("click", setAtlantis, false);
+    // document.getElementById("avenue-btn").addEventListener("click", setAvenue, false);
+
     let data = await getAllCourses();
 
     populateSearchTable(data);
@@ -52,10 +65,7 @@ async function initPage() {
         }
     }
 
-    console.log(document.getElementsByClassName("req"));
-
     for (let req of document.getElementsByClassName("req")) {
-        console.log(req.getAttribute("id"));
         req.setAttribute("id", global_noncollision++);
     }
 
@@ -80,7 +90,7 @@ async function initPage() {
         if (maxYear == 0 || course["year"] > maxYear) maxYear = course["year"];
     }
 
-    for (let i = minYear; i < maxYear; i += 1) {
+    for (let i = parseInt(minYear); i < parseInt(maxYear); i += 1) {
         document.getElementById("plan").innerHTML += "<div id=\"year" + i + "\" class=\"year\"></div>";
     }
     let currentYear = minYear;
@@ -147,7 +157,12 @@ async function getPlanCourses() {
 async function getAllCourses() {
     let response = await fetch("http://localhost:3000/student/courses/1");
     return await response.json();
-  }
+}
+
+async function getPlanData() {
+    let response = await fetch("http://localhost:3000/plan/plandata/1");
+    return await response.json();
+}
 
 function setupHandlers() {
     jQuery("#jgradyBtn").click(function () {
@@ -182,14 +197,30 @@ function setupHandlers() {
     jQuery("#logout-btn").click(logout);
 }
 
+function setAtlantis() {
+    jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-atlantis)");
+    jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-atlantis)");
+}
+
+function setAvenue() {
+    jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-avenue)");
+    jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-avenue)");
+}
+
+function setMint() {
+    jQuery("body").get(0).style.setProperty("--bg-theme", "var(--bg-mint)");
+    jQuery("body").get(0).style.setProperty("--btn-theme", "var(--btn-mint)");
+}
+
 async function savePlan() {
-    let response = await fetch('http://localhost:3000/updatenote', {
+    console.log(document.getElementById("student-notes").value);
+    let response = await fetch('http://localhost:3000/save/updatenote', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"plan_id": 1, "note": document.getElementById("student-notes").innerText})
+        body: JSON.stringify({"plan_id": 1, "note": document.getElementById("student-notes").value})
     });
 }
 
@@ -200,7 +231,6 @@ async function logout() {
 
 function addYear() {
     let lastYear = document.getElementsByClassName("year")[document.getElementsByClassName("year").length - 1];
-    console.log(parseInt(lastYear.getAttribute("id").replace("year", "") + 1));
     let currentYear = parseInt(lastYear.getAttribute("id").replace("year", "")) + 1;
     
     document.getElementById("plan").innerHTML += "<div id=\"year" + currentYear + "\" class=\"year\"></div>";
@@ -331,7 +361,6 @@ function dropTrash(ev) {
     ev.preventDefault();
 
     const element = ev.dataTransfer.getData("text");
-    console.log(element);
     document.getElementById(element).remove();
     checkRequirements();
     checkCredits();
