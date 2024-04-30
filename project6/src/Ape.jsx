@@ -8,10 +8,26 @@ import { useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import Helmet from 'react-helmet'
-// import Faculty from './Faculty.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
+
+//=============================================================================================//
+//=======================================FACULTY===============================================//
+//=============================================================================================//
+
+function Faculty({}) {
+    return (
+        <>
+            <Helmet>
+                <script src="js/datatables.js"></script>
+                <script src="js/form.js" defer></script>
+            </Helmet>
+            <Header />
+            <p>I am faculty!</p>
+        </>
+    )
+}
 
 //=============================================================================================//
 //=======================================LEFT SIDE FUNCTIONS===================================//
@@ -392,67 +408,81 @@ function populatePlans(planJSON) {
   )
 }
 
-//=============================================================================================//
-//=========================================LOGIN STUFF=========================================//
-//=============================================================================================//
+// //=============================================================================================//
+// //=========================================LOGIN STUFF=========================================//
+// //=============================================================================================//
 
-async function submitHandler(username, password, setValid, ev) {  
-    let response = await fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({"username": username, "phash": password});
-    });
-    let ret = await response.json();
-    if (ret.authenticated) setValid(true);
-    else setValid(false);
-}
+// async function submitHandler(username, password, setValid, ev) {  
+//     ev.preventDefault();
+//     let response = await fetch('http://localhost:3000/auth/login', {
+//         method: 'POST',
+//         headers: {
+//           'Accept': 'application/json',
+//           'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({"username": username, "passwd": password})
+//     });
+//     let ret = await response.json();
+//     if (ret.authenticated == true) {
+//         console.log("Iss ma boi!");
+//         setValid(true);
+//     }
+//     else {
+//         console.log("Who is dat boi?");
+//         setValid(false);
+//     }
+// }
 
-function Login(setValid) {
-    let [username, setUsername] = useState('');
-    let [password, setPassword] = useState('');
+// async function Login(setValid) {
+//     let [username, setUsername] = useState('');
+//     let [password, setPassword] = useState('');
+//     async function submitHandler(ev) {  
+//         ev.preventDefault();
+//         let response = await fetch('http://localhost:3000/auth/login', {
+//             method: 'POST',
+//             headers: {
+//               'Accept': 'application/json',
+//               'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({"username": username, "passwd": password})
+//         });
+//         let ret = await response.json();
+//         if (ret.authenticated == true) {
+//             console.log("Iss ma boi!");
+//             setValid(true);
+//         }
+//         else {
+//             console.log("Who is dat boi?");
+//             setValid(false);
+//         }
+//     }
+//     return (
+//         <>
+//             <header>
+//                 <img src="src/images/ape-no-bg.png" id="icon" alt="image of an ape reading" />
+//                 <h1>APE</h1>
+//             </header>
+//             <main>
+//                 <form id="login-form" onSubmit={submitHandler}>
+//                     <input onChange={(ev) => {setUsername(ev.target.value)}} type="text" id="user" name="user" placeholder="Username" />
+//                     <input onChange={(ev) => {setPassword(ev.target.value)}} type="password" id="pw" name="pw" placeholder="Password" />
+//                     <button type="submit">Submit</button>
+//                 </form>
+//             </main>
+//         </>
+//     )
+// }  
+
+function Ape({validated, infoJSON, plan, planDataJSON, reqsJSON, plancourses}) {
     return (
         <>
-            <header>
-                <img src="src/images/ape-no-bg.png" id="icon" alt="image of an ape reading" />
-                <h1>APE</h1>
-            </header>
-            <main>
-                <form id="login-form" onSubmit={(ev) => { submitHandler(username, password, setValid, ev); }}>
-                    <input onChange={(ev) => {setUsername(ev.target.value)}} type="text" id="user" name="user" placeholder="Username" />
-                    <input onChange={(ev) => {setPassword(ev.target.value)}} type="password" id="pw" name="pw" placeholder="Password" />
-                    <button type="submit" default="disable">Submit</button>
-                </form>
-            </main>
+            <Helmet>
+                <script src="js/datatables.js"></script>
+                <script src="js/form.js" defer></script>
+            </Helmet>
+            <Header infoJSON={infoJSON} planJSON={plan} />
+            {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses)}
         </>
     )
 }
-
-function Ape({validated, infoJSON, plan, planDataJSON, reqsJSON, plancourses}) {
-    let [valid, setValid] = useState(validated);
-    if (valid) {
-        return (
-            <>
-                <Helmet>
-                    <script src="js/datatables.js"></script>
-                    <script src="js/form.js" defer></script>
-                </Helmet>
-                <Header infoJSON={infoJSON} planJSON={plan} />
-                {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses)}
-            </>
-        )
-    } else {
-        return (
-            <>
-                <Helmet>
-                    <script src="js/form.js" defer></script>
-                </Helmet>
-                <Login setValid={setValid} />
-            </>
-        )
-    }
-}
-
 export default Ape;

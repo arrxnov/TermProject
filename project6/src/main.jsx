@@ -54,7 +54,7 @@ async function getUserInfo() {
 //=============================GLOBAL AND RENDER ROUTINE=======================================//
 //=============================================================================================//
 
-let validated = await checkUser();
+let validated = true; // skip auth
 
 let plan = {};
 let infoJSON = {};
