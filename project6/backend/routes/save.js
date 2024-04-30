@@ -34,58 +34,19 @@ router.post('/updatecourses', async function(req, res, next) {
     let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
 
     if (validSession["valid"]) {
-        let planId = validSession["planId"];
+        var planId = validSession["planId"];
         
-        let sql = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE year = ?, term = ?";
+        var sql = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE year = ?, term = ?";
 
-        let pid = planId;
-        let cid = req.body.course_id;
-        let year = req.body.year;
-        let term = req.body.term;
+        for (let course of req.body.courses) {
+            let cid = course["course_id"];
+            let year = course["year"];
+            let term = course["term"];
 
-        var [results, fields] = await zeus.execute(sql, [pid, cid, year, term, year, term]);
+            await zeus.execute(sql, [planId, cid, year, term, year, term]);
+        }
 
         res.send("Plan courses successfully updated\n");
-    }
-
-    else {
-        res.status(400);
-        res.send('Invalid credentials for post request');
-    }
-});
-
-// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), course_id, year, and term.
-router.post('/updatecourse', async function(req, res, next) {
-    let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
-
-    if (validSession["valid"]) {
-        let planId = validSession["planId"];
-        
-        let sql = "UPDATE plannedcourse SET year = ?, term = ? WHERE plan_id = ? AND course_id = ?";
-
-        var [results, fields] = await zeus.execute(sql, [req.body.year, req.body.term, planId, req.body.course_id]);
-
-        res.send("Course successfully updated\n");
-    }
-
-    else {
-        res.status(400);
-        res.send('Invalid credentials for post request');
-    }
-});
-
-// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), course_id, year, and term.
-router.post('/addcourse', async function(req, res, next) {
-    let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
-
-    if (validSession["valid"]) {
-        let planId = validSession["planId"];
-        
-        let sql = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?)";
-
-        var [results, fields] = await zeus.execute(sql, [planId, req.body.course_id, req.body.year, req.body.term]);
-
-        res.send("Course successfully added\n");
     }
 
     else {
