@@ -3,10 +3,9 @@ var zeus = require('../db/database');
 var auth = require('./auth');
 var router = express.Router();
 
-// PATH: /save/plandata
 // POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), and note.
-router.post('/plandata', function(req, res, next) {
-    let validSession = auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
+router.post('/updatenote', async function(req, res, next) {
+    let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
 
     if (validSession["valid"]) {
         let role = validSession["role"];
@@ -17,44 +16,53 @@ router.post('/plandata', function(req, res, next) {
             notes = "faculty_notes";
         }
 
-        let sql = "UPDATE plan " +
-            "SET " + notes + " = ? " + 
-            "WHERE id = ?";
-        zeus.query(sql, [req.body.note, planId], (error, results) => {
-            if (error) {
-                console.log(sql + " failed");
-                return console.error(error.message);
-            }
+        let sql = "UPDATE plan SET " + notes + " = ? WHERE id = ?";
 
-            res.send("Plan note successfully saved\n");
-        });
+        var [results, fields] = await (await zeus).execute(sql, [req.body.note, planId]);
+
+        res.send("Plan note successfully saved\n");
     }
+
     else {
         res.status(400);
         res.send('Invalid credentials for post request');
     }
 });
 
-// PATH: /save/plancourses
-// POST request needs to have the following parameters: session_id, plan_id, student_id (optional if student is signed in), course_id, year, and term.
-router.post('/plancourses', function(req, res, next) {
-    let validSession = auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
+// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), course_id, year, and term.
+router.post('/updatecourse', async function(req, res, next) {
+    let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
 
     if (validSession["valid"]) {
         let planId = validSession["planId"];
         
-        let sql = "UPDATE plannedcourse " +
-            "SET year = ?, term = ? " + 
-            "WHERE plan_id = ? AND course_id = ?";
-        zeus.query(sql, [req.body.year, req.body.term, planId, req.body.course_id], (error, results) => {
-            if (error) {
-                console.log(sql + " failed");
-                return console.error(error.message);
-            }
+        let sql = "UPDATE plannedcourse SET year = ?, term = ? WHERE plan_id = ? AND course_id = ?";
 
-            res.send("Planned course successfully saved\n");
-        });
+        var [results, fields] = await (await zeus).execute(sql, [req.body.year, req.body.term, planId, req.body.course_id]);
+
+        res.send("Course successfully updated\n");
     }
+
+    else {
+        res.status(400);
+        res.send('Invalid credentials for post request');
+    }
+});
+
+// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), course_id, year, and term.
+router.post('/addcourse', async function(req, res, next) {
+    let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
+
+    if (validSession["valid"]) {
+        let planId = validSession["planId"];
+        
+        let sql = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?)";
+
+        var [results, fields] = await (await zeus).execute(sql, [planId, req.body.course_id, req.body.year, req.body.term]);
+
+        res.send("Course successfully added\n");
+    }
+
     else {
         res.status(400);
         res.send('Invalid credentials for post request');

@@ -3,16 +3,9 @@ var zeus = require('../db/database');
 var auth = require('./auth');
 var router = express.Router();
 
-// Path: /plan/plandata/<plan_id>/<student_id (optional if student signed in)>
 router.get('/plandata/:plan_id/:student_id?', async function(req, res, next) {
-    var validSession = await auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
-
-    // const secondFunction = async () => {
-    //     const result = await firstFunction()
-    //     // do something else here after firstFunction completes
-    //   }
-
-    console.log(validSession);
+    
+    let validSession = await auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
 
     if (validSession["valid"]) {
         let planId = validSession["planId"];
@@ -33,28 +26,24 @@ router.get('/plandata/:plan_id/:student_id?', async function(req, res, next) {
             "(SELECT catalog_year FROM plan WHERE id = ?) AS catalog_year," +
             facultyNotes +
             "(SELECT student_notes FROM plan WHERE id = ?) AS student_notes";
-        zeus.query(sql, Array(planIdCount).fill(planId), (error, results) => {
-            if (error) {
-                console.log(sql + " failed");
-                return console.error(error.message);
-            }
+        
+        var [results, fields] = await (await zeus).execute(sql, Array(planIdCount).fill(planId));
 
-            results = results.map(v => Object.assign({}, v))[0];
-            results.majors = results.majors.split(",");
-            results.minors = results.minors.split(",");
+        results = results.map(v => Object.assign({}, v))[0];
+        results.majors = results.majors.split(",");
+        results.minors = results.minors.split(",");
 
-            res.send(results);
-        });
+        res.send(results);
     }
+
     else {
         res.status(400);
         res.send('Invalid credentials for requested resource\n');
     }
 });
 
-// Path: /plan/plancourses/<plan_id>/<student_id (optional if student signed in)>
-router.get('/plancourses/:plan_id/:student_id?', function(req, res, next) {
-    let validSession = auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
+router.get('/plancourses/:plan_id/:student_id?', async function(req, res, next) {
+    let validSession = await auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
 
     if (validSession["valid"]) {
         let planId = validSession["planId"];
@@ -62,24 +51,20 @@ router.get('/plancourses/:plan_id/:student_id?', function(req, res, next) {
         let sql = "SELECT plannedcourse.course_id, course.name, course.credits, plannedcourse.year, plannedcourse.term " + 
             "FROM plannedcourse INNER JOIN course ON plannedcourse.course_id=course.id " +
             "WHERE plannedcourse.plan_id = ?";
-        zeus.query(sql, [planId], (error, results) => {
-            if (error) {
-                console.log(sql + " failed");
-                return console.error(error.message);
-            }
+            
+        var [results, fields] = await (await zeus).execute(sql, [planId]);
 
-            res.send(results.map(v => Object.assign({}, v)));
-        });
+        res.send(results.map(v => Object.assign({}, v)));
     }
+
     else {
         res.status(400);
         res.send('Invalid credentials for requested resource\n');
     }
 });
 
-// Path: /plan/planreqs/<plan_id>/<student_id (optional if student signed in)>
-router.get('/planreqs/:plan_id/:student_id?', function(req, res, next) {
-    let validSession = auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
+router.get('/planreqs/:plan_id/:student_id?', async function(req, res, next) {
+    let validSession = await auth.validatePlan(req.session, req.params.plan_id, req.params.student_id);
 
     if (validSession["valid"]) {
         let planId = validSession["planId"];
@@ -97,15 +82,12 @@ router.get('/planreqs/:plan_id/:student_id?', function(req, res, next) {
                 "SELECT course_id, type " +
                 "FROM gened" +
             ") AS reqs ON course.id=reqs.course_id";
-        zeus.query(sql, [planId, planId], (error, results) => {
-            if (error) {
-                console.log(sql + " failed");
-                return console.error(error.message);
-            }
+        
+        var [results, fields] = await (await zeus).execute(sql, [planId, planId]);
 
-            res.send(results.map(v => Object.assign({}, v)));
-        });
+        res.send(results.map(v => Object.assign({}, v)));
     }
+
     else {
         res.status(400);
         res.send('Invalid credentials for requested resource\n');
