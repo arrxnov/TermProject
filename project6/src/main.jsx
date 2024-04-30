@@ -59,8 +59,6 @@ async function getUserInfo() {
 let infoJSON = await getUserInfo();
 let plan = await getPlanJSON();
 let planDataJSON = await getPlanDataJSON();
-let plancourses = await getPlanCourses();
-let reqsJSON = await getRequirements();
 
 // if (validated) {
 //     infoJSON = await getUserInfo();
@@ -70,12 +68,8 @@ let reqsJSON = await getRequirements();
 //     reqsJSON = await getRequirements();
 // }
 
-function shouldComponentUpdate() {
-    return false;
-}
-
 ReactDOM.createRoot(document.getElementById('root')).render(
     <>
-        <Ape infoJSON={infoJSON} plan={plan} planDataJSON={planDataJSON} plancourses={plancourses} reqsJSON={reqsJSON} />
+        <Ape infoJSON={infoJSON} plan={plan} planDataJSON={planDataJSON} />
     </>
 )

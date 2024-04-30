@@ -214,7 +214,7 @@ function setMint() {
 
 async function savePlan() {
     console.log(document.getElementById("student-notes").value);
-    let response = await fetch('http://localhost:3000/save/updatenote', {
+    await fetch('http://localhost:3000/save/updatenote', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -225,7 +225,7 @@ async function savePlan() {
 }
 
 async function logout() {
-    let response = await fetch("http://localhost:3000/logout");
+    await fetch("http://localhost:3000/logout");
     window.href.location = "http://localhost:5173/login";
 }
 
