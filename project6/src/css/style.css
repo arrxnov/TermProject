@@ -220,7 +220,7 @@ ul.menu > li ul li {
 }
 
 .semester-current {
-    outline: dotted var(--btn-theme) 4px;
+    outline: solid var(--btn-theme) 4px;
     transition: all 400ms ease-in-out;
 }
 /* Generic Classes ------------------------------------------------------------- */

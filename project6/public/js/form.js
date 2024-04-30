@@ -30,7 +30,7 @@ async function initPage() {
     let planData = await getPlanData();
 
     document.getElementById("student-notes").innerText = planData.student_notes;
-    if (document.getElementById("faculty-notes") !== undefined) {
+    if (document.getElementById("faculty-notes") !== null) {
         document.getElementById("faculty-notes").innerText = planData.faculty;
     }
 
