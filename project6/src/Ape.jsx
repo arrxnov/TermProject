@@ -100,7 +100,7 @@ function popGeneds(reqs) {
   )
 }
 
-function Requirements({reqs}) {
+function Requirements() {
   return (
       <div id="UL">
           <div className="labels-ape">
@@ -109,29 +109,25 @@ function Requirements({reqs}) {
           <div className="basicContainer" id="courseReqs">
               <h3 className="btn-accordion" id="coreHeader">Core</h3>
               <div id="core" className="acc-div">
-                  {/* {popCore(reqs)} */}
               </div>
               <h3 className="btn-accordion" id="electivesHeader">Electives</h3>
               <div id="electives" className="acc-div">
-                  {/* {popElectives(reqs)} */}
               </div>
               <h3 className="btn-accordion" id="cognatesHeader">Cognates</h3>
               <div id="cognates" className="acc-div">
-                  {/* {popCognates(reqs)}  */}
               </div>
               <h3 className="btn-accordion" id="genedsHeader">Gen-Eds</h3>
               <div id="geneds" className="acc-div">
-                  {/* {popGeneds(reqs)} */}
               </div>
           </div>
       </div>
   )
 }
 
-function Left({reqs}) {
+function Left() {
   return (
       <div id="leftContainer">
-          <Requirements reqs={reqs}/>
+          <Requirements />
           <Special />
       </div>
   )
@@ -141,84 +137,6 @@ function Left({reqs}) {
 //=============================================================================================//
 //=====================================RIGHT SIDE FUNCTIONS====================================//
 //=============================================================================================//
-
-function Course({id, course}) {
-  return (
-      <>
-          <p id={course.term + course.year + id} className="course" draggable={(course.year >= 2024 && (course.term == "SP" && course.year == 2024 ? false : true) ? "true" : "false")} ondragstart="dragStartHandler"> <span className="course-id">{course.course_id}</span> {course.name}<span className="course-credits">{course.credits}</span></p>
-      </>
-  )
-}
-
-function printCourses(term, year, courses, semesterCredits, setSemesterCredits, totalCredits, setTotalCredits) {
-  let retcourses = [];
-  let credits = 0.0;
-  let noncoll = 0;
-  for (let course of courses) {
-      if ((course.term === "FA" && term !== "Fall")
-          || (course.term === "SP" && term !== "Spring")
-          || (course.term === "SU" && term !== "Summer")
-      ) {
-          continue;
-      }  
-      if (course.year === year) {
-          retcourses.push(<Course id={noncoll} course={course} />);
-          credits += course.credits;
-          noncoll++;
-      }
-  }
-
-  // setSemesterCredits(credits);
-  return retcourses;
-}
-
-// function Semester({term, year, courses, totalCredits, setTotalCredits}) {
-//   const [semesterCredits, setSemesterCredits] = React.useState(0);
-//   let semcourses = printCourses(term, year, courses, semesterCredits, setSemesterCredits);
-//   // let total = totalCredits;
-//   // let sem = semesterCredits;
-//   // setTotalCredits(total + sem);
-//   return (
-//       <>
-//           <div className={"semester " + term} ondrop="dropHandler(event, this)" ondragover="dragOverHandler">
-//               <div className="semesterHeader">
-//                   <div className="term">{term} {year}</div>
-//                   <div className="credits">Credits: {semesterCredits}</div>
-//               </div>
-//               {semcourses.map(course => <>{course}</>)}
-//           </div>
-//       </>
-//   )
-// }
-
-function Year({year, plancourses, totalCredits, setTotalCredits}) {
-  return (
-      <div id={"year" + year} className="year">
-          {/* <Semester year={parseInt(year)} term="Fall" courses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />
-          <Semester year={parseInt(year) + 1} term="Spring" courses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />
-          <Semester year={parseInt(year) + 1} term="Summer" courses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} /> */}
-      </div>
-  )
-}
-
-function Plan({plancourses, totalCredits, setTotalCredits}) {
-  let years = [];
-  for (let course of plancourses) {
-      if (course.term === "FA" && !years.includes(course.year)) {
-          years.push(course.year);
-      } else if ((course.term === "SP" || course.term === "SU") && !years.includes(course.year - 1)) {
-          years.push(course.year);
-      }
-  }
-
-  years.sort();
-  
-  return (
-      <div id="plan">
-          {/* {years.map(year => <Year key={"year" + year} year={year} plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />)} */}
-      </div>
-  )
-}
 
 function Table() {
   return (
@@ -270,8 +188,7 @@ function printMinors(plandata) {
   return minorstring;
 }
 
-function Right({info, plans, plandata, plancourses, allcourses}) {
-  const [totalCredits, setTotalCredits] = React.useState(0);
+function Right({info, plans, plandata}) {
   let default_plan = {};
   for (let plan of plans) {
       if (plan.id === info.default_plan_id) {
@@ -296,17 +213,16 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
                   <p><strong>Major GPA:</strong> {info.major_gpa}</p>
               </div>
               <div id="plan"></div>
-              {/* <Plan plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} /> */}
               <div id="MR">
+                <label id="stu_notes_label" className="labels-ape" for="student-notes">Student Notes</label>
                 <div id="stu_notes">
-                  <textarea id="student-notes" contentEditable="true">
-                      {plandata.student_notes}
-                  </textarea>
+                  
+                  <textarea id="student-notes" contentEditable="true" />
                 </div>
+                <label id="fac_notes_label" className="labels-ape" for="faculty-notes">Faculty Notes</label>
                 <div id="fac_notes">
-                    <textarea contentEditable="true">
-                        {plandata.faculty_notes}
-                    </textarea>
+                    
+                    <textarea id="faculty-notes" contentEditable="true" />
                 </div>
                 <div id="year-btns">
                   <button id="addyear-btn" className="btn-clickable">Add Year</button>
@@ -314,7 +230,7 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
                 </div>
               </div>
           </div>
-          <Table allcourses={allcourses} />
+          <Table  />
       </div>
   )
 }
@@ -330,7 +246,7 @@ function isFaculty() {
     return false;
 }
 
-function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, allcourses) {
+function renderChoose(info, planJSON, planDataJSON) {
     if (isFaculty()) {
     return (
       <main>
@@ -340,8 +256,8 @@ function renderChoose(info, planJSON, planDataJSON, reqs, plancourses, allcourse
   } else {
     return (
       <main>
-        <Left reqs={reqs} />
-        <Right info={info} plans={planJSON} plandata={planDataJSON} plancourses={plancourses} isfaculty={false} allcourses={allcourses} />
+        <Left />
+        <Right info={info} plans={planJSON} plandata={planDataJSON} />
       </main>
     )
   }
@@ -357,7 +273,7 @@ function logOutHandler(ev) {
   console.log("You tried to log out!");
 }
 
-function Header({infoJSON, planJSON}) {
+function Header({planJSON}) {
   return (
       <>  
           <header>
@@ -477,7 +393,7 @@ function populatePlans(planJSON) {
 //     )
 // }  
 
-function Ape({validated, infoJSON, plan, planDataJSON, reqsJSON, plancourses, allcourses}) {
+function Ape({infoJSON, plan, planDataJSON}) {
     return (
         <>
             <Helmet>
@@ -485,7 +401,7 @@ function Ape({validated, infoJSON, plan, planDataJSON, reqsJSON, plancourses, al
                 <script src="js/form.js" data-json={allcourses} defer></script>
             </Helmet>
             <Header infoJSON={infoJSON} planJSON={plan} />
-            {renderChoose(infoJSON, plan, planDataJSON, reqsJSON, plancourses, allcourses)}
+            {renderChoose(infoJSON, plan, planDataJSON)}
         </>
     )
 }
