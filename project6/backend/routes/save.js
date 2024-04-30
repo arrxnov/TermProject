@@ -18,7 +18,7 @@ router.post('/updatenote', async function(req, res, next) {
 
         let sql = "UPDATE plan SET " + notes + " = ? WHERE id = ?";
 
-        var [results, fields] = await zeus.execute(sql, [req.body.note, planId]);
+        await zeus.execute(sql, [req.body.note, planId]);
 
         res.send("Plan note successfully saved\n");
     }
@@ -36,14 +36,13 @@ router.post('/updatecourses', async function(req, res, next) {
     if (validSession["valid"]) {
         var planId = validSession["planId"];
         
-        var sql = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE year = ?, term = ?";
+        var drop = "DELETE FROM plannedcourse WHERE plan_id = ?";
+        var update = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?)";
+
+        await zeus.execute(drop, [planId]);
 
         for (let course of req.body.courses) {
-            let cid = course["course_id"];
-            let year = course["year"];
-            let term = course["term"];
-
-            await zeus.execute(sql, [planId, cid, year, term, year, term]);
+            await zeus.execute(update, [planId, course["course_id"], course["year"], course["term"]]);
         }
 
         res.send("Plan courses successfully updated\n");
