@@ -1,16 +1,21 @@
-var mysql = require('mysql');
-var md5 = require('md5');
+var mysql = require('mysql2/promise');
 
-var db = mysql.createConnection({
-    host: "163.11.237.170",
-    database: "zeus",
-    user: "lmiller",
-    password: "password"
-});
+async function initDb() {
+    var db = await mysql.createConnection({
+        host: "163.11.237.170",
+        database: "zeus",
+        user: "lmiller",
+        password: "password"
+    });
+    
+    // await db.connect(function(err) {
+    //     if (err) throw err;
+    //     console.log("Database Connected!");
+    // });
 
-db.connect(function(err) {
-    if (err) throw err;
-    console.log("Database Connected!");
-});
+    console.log("Database Connected!")
 
-module.exports = db;
+    return db;
+}
+
+module.exports = initDb();

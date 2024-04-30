@@ -1,40 +1,30 @@
 var express = require('express');
-var { createHash } = require('crypto');
 var zeus = require('../db/database');
+var { createHash } = require('crypto');
 var router = express.Router();
 
-router.post('/login', function(req, res, next) {
-
+router.post('/login', async function(req, res, next) {
+    
     let sql = "SELECT * FROM aspnetusers WHERE UserName = ?";
-    zeus.query(sql, [req.body.username], async (error, results) => {
-        if (error) {
-            console.log(sql + " failed");
-            return console.error(error.message);
-        }
+    var [results, fields] = await (await zeus).execute(sql, [req.body.username]);
 
-        results = results.map(v => Object.assign({}, v))[0];
+    results = results.map(v => Object.assign({}, v))[0];
 
-        if (results && results["PasswordHash"] == createHash('sha256').update(req.body.passwd).digest('hex')) {
-            req.session.userId = results["Id"];
-            req.session.authenticated = true;
-            
-            sql = "SELECT Name FROM aspnetroles INNER JOIN aspnetuserroles ON aspnetroles.Id=aspnetuserroles.RoleId WHERE UserId = ?";
-            zeus.query(sql, [req.session.userId], async (error, results) => {
-                if (error) {
-                    console.log(sql + " failed");
-                    return console.error(error.message);
-                }
+    if (results && results["PasswordHash"] == createHash('sha256').update(req.body.passwd).digest('hex')) {
+        req.session.userId = results["Id"];
+        req.session.authenticated = true;
+        
+        sql = "SELECT Name FROM aspnetroles INNER JOIN aspnetuserroles ON aspnetroles.Id=aspnetuserroles.RoleId WHERE UserId = ?";
+        [results, fields] = await (await zeus).execute(sql, [req.session.userId]);
 
-                req.session.role = results.map(v => Object.assign({}, v))[0]["Name"];
+        req.session.role = results.map(v => Object.assign({}, v))[0]["Name"];
 
-                res.send({"authenticated": req.session.authenticated, "sessionId": req.session.id, "role": req.session.role});
-            });
-        }
+        res.send({"authenticated": req.session.authenticated, "sessionId": req.session.id, "role": req.session.role});
+    }
 
-        else {
-            res.send({"authenticated": false});
-        }
-    });
+    else {
+        res.send({"authenticated": false});
+    }
 });
 
 router.get('/checklogin', function(req, res, next) {
@@ -48,19 +38,23 @@ router.get('/checklogin', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res, next) {
-    req.session.authenticated = false; // req.session = null
+    req.session.authenticated = false;
     res.send("Session terminated");
 });
 
 
 function validateFaculty(session) {
-    // return {"valid": session.authenticated && session.role == "Faculty"};
+    // if (session.authenticated && session.role == "Faculty") {
+    //     return {"valid": true, "facultyId": session.userId};
+    // }
+
+    // return {"valid": false};
 
     return {"valid": true};
 }
 
 
-function validateStudent(session, studentId=null) {
+async function validateStudent(session, studentId=null) {
     // if (session.authenticated) {
     //     if (session.role == "Student") {
     //         return {"valid": true, "role": "student", "studentId": session.userId};
@@ -68,21 +62,15 @@ function validateStudent(session, studentId=null) {
         
     //     else {
     //         let sql = "SELECT advisor_id FROM advisee WHERE advisee_id = ?";
-    //         zeus.query(sql, [studentId], async (error, results) => {
-    //             if (error) {
-    //                 console.log(sql + " failed");
-    //                 return console.error(error.message);
-    //             }
+    //         var [results, fields] = await (await zeus).execute(sql, [studentId]);
 
-    //             if (results.map(v => Object.assign({}, v))[0]["advisor_id"] == session.userId) {
-    //                 return {"valid": true, "role": "faculty", "facultyId": session.userId, "studentId": studentId};
-    //             }
+    //         if (results.map(v => Object.assign({}, v))[0]["advisor_id"] == session.userId) {
+    //             return {"valid": true, "role": "faculty", "facultyId": session.userId, "studentId": studentId};
+    //         }
 
-    //             else {
-    //                 return {"valid": false};
-    //             }
-
-    //         });
+    //         else {
+    //             return {"valid": false};
+    //         }
     //     }
 
     // } else {
@@ -92,8 +80,8 @@ function validateStudent(session, studentId=null) {
     return {"valid": true, "role": "Student", "studentId": "d1eae408-2a14-4740-ba90-d2caedacee76"};
 }
 
-function validatePlan(session, planId, studentId=null) {
-    // let queryResult = validateStudent(session, studentId);
+async function validatePlan(session, planId, studentId=null) {
+    // let queryResult = await validateStudent(session, studentId);
     // if (!queryResult["valid"]) {
     //     return queryResult;
     // }
@@ -102,20 +90,17 @@ function validatePlan(session, planId, studentId=null) {
     // studentId = queryResult["studentId"];
 
     // let sql = "SELECT user_id FROM plan WHERE id = ?";
-    // zeus.query(sql, [planId], (error, results) => {
-    //     if (error) {
-    //         console.log(sql + " failed");
-    //         return console.error(error.message);
-    //     }
+    // var [results, fields] = await (await zeus).execute(sql, [planId]);
 
-    //     if (results.map(v => Object.assign({}, v))[0]["user_id"] == studentId) {
-    //         return {"valid": true, "role": role, "planId": planId, "studentId": studentId};
-    //     }
-        
-    //     else {
-    //         return {"valid": false};
-    //     }   
-    // });
+    // console.log(results);
+
+    // if (results.map(v => Object.assign({}, v))[0]["user_id"] == studentId) {
+    //     return {"valid": true, "role": role, "planId": planId, "studentId": studentId};
+    // }
+
+    // else {
+    //     return {"valid": false};
+    // }
 
     return {"valid": true, "role": "Student", "planId": 1, "studentId": "d1eae408-2a14-4740-ba90-d2caedacee76"};
 }
