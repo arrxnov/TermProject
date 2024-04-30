@@ -27,14 +27,14 @@ async function initPage() {
 
     populateSearchTable(data);
 
-    for (let course in document.getElementsByClassName("course")) {
-       course.onmouseup = function (event) {
-           if (event.which == 3) {
-               remove(event.target);
-               checkRequirements();
-           }
-       }
-    }
+    // for (let course in document.getElementsByClassName("course")) {
+    //    course.onmouseup = function (event) {
+    //        if (event.which == 3) {
+    //            remove(event.target);
+    //            checkRequirements();
+    //        }
+    //    }
+    // }
 
     rows = document.getElementById("searchTable").getElementsByTagName("tbody")[0].getElementsByTagName("tr");
     for (row of rows) {
@@ -46,6 +46,9 @@ async function initPage() {
 
     let minYear = 0;
     let maxYear = 0;
+
+    let plannedcourses = await getPlanCourses();
+
     for (let course of plannedcourses) {
         if (minYear == 0 || course["year"] < minYear) minYear = course["year"];
         if (maxYear == 0 || course["year"] > maxYear) maxYear = course["year"];
@@ -57,24 +60,55 @@ async function initPage() {
     let currentYear = minYear;
 
     for (let year of document.getElementsByClassName("year")) {
-        if (currentYear < 2024) {
+        if (currentYear < 2023) {
             year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester-past\"><div class=\"semesterHeader\"><div class=\"term\">Fall " + (currentYear) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
             year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester-past\"><div class=\"semesterHeader\"><div class=\"term\">Spring " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
             year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester-past\"><div class=\"semesterHeader\"><div class=\"term\">Summer " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
-        } else if (currentYear == 2024) {
+        } else if (currentYear == 2023) {
             year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester-past\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Fall " + (currentYear) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
             year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester semester-current\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Spring " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
             year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Summer " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
-
         } else {
             year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Fall " + (currentYear) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
             year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Spring " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
+            year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Summer " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: </span></div>";
         }
 
         currentYear++;
     }
+
+    for (let semester of document.getElementsByClassName("semester")) {
+        for (let course of plannedcourses) {
+            if (course.term == "FA") term = "Fall";
+            else if (course.term == "SP") term = "Spring";
+            else term = "Summer";
+            if (semester.getElementsByClassName("semesterHeader")[0].innerHTML.includes(course.year)
+                && semester.getElementsByClassName("semesterHeader")[0].innerHTML.includes(term) ) {
+                if (semester.classList.contains("semester-current")) {
+                    semester.innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course\"><span class=\"course-id\">" + course.course_id + "</span> " + course.name + "<span class=\"course-credits\">" + course.credits + "</span></p>";
+                } else {
+                    semester.innerHTML += "<p id=\"" + global_noncollision++ + "\" class=\"course\" draggable=\"true\" ondragstart=\"dragStartHandler(event)\"><span class=\"course-id\">" + course.course_id + "</span>\n" + course.name + "<span class=\"course-credits\">" + course.credits + "</span>\n</p>";
+                }
+            }
+        }
+    }
+    for (let semester of document.getElementsByClassName("semester-past")) {
+        for (let course of plannedcourses) {
+            if (course.term == "FA") term = "Fall";
+            else if (course.term == "SP") term = "Spring";
+            else term = "Summer";
+            if (semester.getElementsByClassName("semesterHeader")[0].innerHTML.includes(course.year) 
+                && semester.getElementsByClassName("semesterHeader")[0].innerHTML.includes(term)) {
+                semester.innerHTML += "<p class=\"course\" id=" + global_noncollision++ + "\"><span class=\"course-id\">" + course.course_id + "</span>\n" + course.name + "<span class=\"course-credits\">" + course.credits + "</span>\n<\p>";
+            }
+        }
+    }
 }
 
+async function getPlanCourses() {
+    let response = await fetch("http://localhost:3000/plan/plancourses/1");
+    if (response.status < 400) return await response.json();
+}
 
 async function getAllCourses() {
     let response = await fetch("http://localhost:3000/student/courses/1");
