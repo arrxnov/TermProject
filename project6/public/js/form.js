@@ -22,6 +22,8 @@ async function initPage() {
     document.getElementById("core").setAttribute("ondrop", "dropTrash(event, this)");
     document.getElementById("electives").setAttribute("ondrop", "dropTrash(event, this)");
     document.getElementById("geneds").setAttribute("ondrop", "dropTrash(event, this)");
+    document.getElementById("courseFinder").setAttribute("ondragover", "dragOverHandler(event)");
+    document.getElementById("courseFinder").setAttribute("ondrop", "dropTrash(event, this)");
     
     let data = await getAllCourses();
 
@@ -173,6 +175,53 @@ function setupHandlers() {
     jQuery("#minerBtn").click(function () {
         window.open("", "_blank");
     });
+
+    jQuery("#addyear-btn").click(addYear);
+    jQuery("#deleteyear-btn").click(deleteYear);
+    jQuery("#save-btn").click(savePlan);
+    jQuery("#logout-btn").click(logout);
+}
+
+async function savePlan() {
+    let response = await fetch('http://localhost:3000/updatenote', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"plan_id": 1, "note": document.getElementById("student-notes").innerText})
+    });
+}
+
+async function logout() {
+    let response = await fetch("http://localhost:3000/logout");
+    window.href.location = "http://localhost:5173/login";
+}
+
+function addYear() {
+    let lastYear = document.getElementsByClassName("year")[document.getElementsByClassName("year").length - 1];
+    console.log(parseInt(lastYear.getAttribute("id").replace("year", "") + 1));
+    let currentYear = parseInt(lastYear.getAttribute("id").replace("year", "")) + 1;
+    
+    document.getElementById("plan").innerHTML += "<div id=\"year" + currentYear + "\" class=\"year\"></div>";
+
+    year = document.getElementById("year" + (currentYear));
+
+    year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Fall " + (currentYear) + "</div><span class=\"semesterCredits\">Credits: 0</span></div>";
+    year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Spring " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: 0</span></div>";
+    year.innerHTML += "<div id=\"" + global_noncollision++ + "\" class=\"semester\" ondrop=\"dropHandler(event, this)\" ondragover=\"dragOverHandler(event,this)\"><div class=\"semesterHeader\"><div class=\"term\">Summer " + (currentYear + 1) + "</div><span class=\"semesterCredits\">Credits: 0</span></div>";
+}
+
+function deleteYear() {
+    let lastYear = document.getElementsByClassName("year")[document.getElementsByClassName("year").length - 1];
+    let semesters = lastYear.getElementsByClassName("semester");
+    for (let semester of semesters) {
+        if (semester.getElementsByClassName("course").length !== 0) {
+            alert("You cannot delete a year with courses planned!");
+            return;
+        }
+    }
+    lastYear.remove();
 }
 
 function populateSearchTable(data) {

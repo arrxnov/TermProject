@@ -477,4 +477,33 @@ main {
     flex: auto;
     flex-grow: 0;
 }
+
+#MR {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#year-btns {
+    display: flex;
+    flex: auto;
+    flex-grow: 1;
+}
+
+#stu_notes {
+    flex-grow: 4;
+    flex: auto;
+}
+
+#fac_notes {
+    flex-grow: 4;
+    flex: auto;
+}
+
+#save-btn {
+    height: 45%;
+}
+
+#logout-btn {
+    height: 45%;
+}
 /* Login Form ------------------------------------------------------------------ */

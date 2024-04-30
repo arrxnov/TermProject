@@ -297,8 +297,22 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
               </div>
               <div id="plan"></div>
               {/* <Plan plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} /> */}
-              <div id="stu_notes">{plandata.student_notes}</div>
-              <div id="fac_notes">{plandata.faculty_notes}</div>
+              <div id="MR">
+                <div id="stu_notes">
+                  <textarea id="student-notes" contentEditable="true">
+                      {plandata.student_notes}
+                  </textarea>
+                </div>
+                <div id="fac_notes">
+                    <textarea contentEditable="true">
+                        {plandata.faculty_notes}
+                    </textarea>
+                </div>
+                <div id="year-btns">
+                  <button id="addyear-btn" className="btn-clickable">Add Year</button>
+                  <button id="deleteyear-btn" className="btn-clickable">Delete Year</button>
+                </div>
+              </div>
           </div>
           <Table allcourses={allcourses} />
       </div>
@@ -343,12 +357,6 @@ function logOutHandler(ev) {
   console.log("You tried to log out!");
 }
 
-function saveHandler() {
-  // POST saved data to database
-  
-  console.log("You tried to save!");
-}
-
 function Header({infoJSON, planJSON}) {
   return (
       <>  
@@ -387,8 +395,8 @@ function Header({infoJSON, planJSON}) {
                           <Dropdown.Item>Speak With a Manager</Dropdown.Item>
                       </Dropdown.Menu>
                   </Dropdown>
-                  <Button className="btn-clickable" onClick={saveHandler}>Save</Button>
-                  <Button className="btn-clickable" onClick={logOutHandler}>Log Out</Button>
+                  <button id="save-btn" className="btn-clickable">Save</button>
+                  <button id="logout-btn" className="btn-clickable" onClick={logOutHandler}>Log Out</button>
                   </div> 
           </header>
       </>
@@ -481,4 +489,20 @@ function Ape({validated, infoJSON, plan, planDataJSON, reqsJSON, plancourses, al
         </>
     )
 }
+
+function Login() {
+    return (
+        <>
+            <Helmet>
+                <script src="js/form.js" data-json={allcourses} defer></script>
+            </Helmet>
+            <form id="loginForm">
+                <input id="user-field" type="text" name="user" placeholder="Username" />
+                <input id="pass-field" type="password" name="password" placeholder="Password" />
+                <button id="submit-btn" className="btn-clickable" type="submit">Login</button>
+            </form>
+        </>
+    )
+}
+
 export default Ape;
