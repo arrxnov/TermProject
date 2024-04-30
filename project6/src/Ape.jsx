@@ -132,6 +132,21 @@ function printMinors(plandata) {
   return minorstring;
 }
 
+function facNotes () {
+    if (isFaculty()) {
+        return (
+            <>
+                <label id="fac_notes_label" className="labels-ape" for="faculty-notes">Faculty Notes</label>
+                <div id="fac_notes">
+                    <textarea id="faculty-notes" contentEditable="true" />
+                </div>
+            </>
+        )
+    } else {
+        return <></>
+    }
+}
+
 function Right({info, plans, plandata}) {
   let default_plan = {};
   for (let plan of plans) {
@@ -163,11 +178,7 @@ function Right({info, plans, plandata}) {
                   
                   <textarea id="student-notes" contentEditable="true" />
                 </div>
-                <label id="fac_notes_label" className="labels-ape" for="faculty-notes">Faculty Notes</label>
-                <div id="fac_notes">
-                    
-                    <textarea id="faculty-notes" contentEditable="true" />
-                </div>
+                {facNotes()}
                 <div id="year-btns">
                   <button id="addyear-btn" className="btn-clickable">Add Year</button>
                   <button id="deleteyear-btn" className="btn-clickable">Delete Year</button>

@@ -226,11 +226,34 @@ async function savePlan() {
     });
     let courses = [];
     let plan = document.getElementById("plan");
-    // for (let course of plan.getElementsByClassName("course")) {
-    //     let jsonCourse = {};
-    //     jsonCourse.course_id = course.getElementsByClassName("course-id")[0].innerText;
-    //     switch (course.parentElement.getElementsByClassName("term")[0].split())
-    // }
+    for (let course of plan.getElementsByClassName("course")) {
+        let jsonCourse = {};
+        jsonCourse.course_id = course.getElementsByClassName("course-id")[0].innerText;
+        switch (course.parentElement.getElementsByClassName("term")[0].innerText.split(" ")[0]) {
+            case "Fall":
+                jsonCourse.term = "FA";
+                break;
+            case "Spring":
+                jsonCourse.term = "SP";
+                break;
+            case "Summer":
+                jsonCourse.term = "SU";
+                break;
+            default:
+                break;
+        }
+        jsonCourse.year = course.parentElement.getElementsByClassName("term")[0].innerText.split(" ")[1];
+        courses.push(jsonCourse);
+    }
+    console.log(courses);
+    await fetch('http://localhost:3000/save/updatecourses', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"plan_id": 1, "courses": courses})
+    });
 }
 
 async function logout() {
