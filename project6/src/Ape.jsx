@@ -170,31 +170,31 @@ function printCourses(term, year, courses, semesterCredits, setSemesterCredits, 
   return retcourses;
 }
 
-function Semester({term, year, courses, totalCredits, setTotalCredits}) {
-  const [semesterCredits, setSemesterCredits] = React.useState(0);
-  let semcourses = printCourses(term, year, courses, semesterCredits, setSemesterCredits);
-  // let total = totalCredits;
-  // let sem = semesterCredits;
-  // setTotalCredits(total + sem);
-  return (
-      <>
-          <div className={"semester " + term} ondrop="dropHandler(event, this)" ondragover="dragOverHandler">
-              <div className="semesterHeader">
-                  <div className="term">{term} {year}</div>
-                  <div className="credits">Credits: {semesterCredits}</div>
-              </div>
-              {semcourses.map(course => <>{course}</>)}
-          </div>
-      </>
-  )
-}
+// function Semester({term, year, courses, totalCredits, setTotalCredits}) {
+//   const [semesterCredits, setSemesterCredits] = React.useState(0);
+//   let semcourses = printCourses(term, year, courses, semesterCredits, setSemesterCredits);
+//   // let total = totalCredits;
+//   // let sem = semesterCredits;
+//   // setTotalCredits(total + sem);
+//   return (
+//       <>
+//           <div className={"semester " + term} ondrop="dropHandler(event, this)" ondragover="dragOverHandler">
+//               <div className="semesterHeader">
+//                   <div className="term">{term} {year}</div>
+//                   <div className="credits">Credits: {semesterCredits}</div>
+//               </div>
+//               {semcourses.map(course => <>{course}</>)}
+//           </div>
+//       </>
+//   )
+// }
 
 function Year({year, plancourses, totalCredits, setTotalCredits}) {
   return (
       <div id={"year" + year} className="year">
-          <Semester year={parseInt(year)} term="Fall" courses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />
+          {/* <Semester year={parseInt(year)} term="Fall" courses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />
           <Semester year={parseInt(year) + 1} term="Spring" courses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />
-          <Semester year={parseInt(year) + 1} term="Summer" courses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />
+          <Semester year={parseInt(year) + 1} term="Summer" courses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} /> */}
       </div>
   )
 }
@@ -213,7 +213,7 @@ function Plan({plancourses, totalCredits, setTotalCredits}) {
   
   return (
       <div id="plan">
-          {years.map(year => <Year key={"year" + year} year={year} plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />)}
+          {/* {years.map(year => <Year key={"year" + year} year={year} plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />)} */}
       </div>
   )
 }
@@ -293,7 +293,8 @@ function Right({info, plans, plandata, plancourses, allcourses}) {
                   <p><strong>GPA:</strong> {info.gpa}</p>
                   <p><strong>Major GPA:</strong> {info.major_gpa}</p>
               </div>
-              <Plan plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} />
+              <div id="plan"></div>
+              {/* <Plan plancourses={plancourses} totalCredits={totalCredits} setTotalCredits={setTotalCredits} /> */}
           </div>
           <Table allcourses={allcourses} />
       </div>
