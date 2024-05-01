@@ -1,0 +1,538 @@
+:root {
+    --btn-mint: rgb(7, 65, 42);
+    --btn-fuscia: rgb(0, 0, 0);
+    --btn-inferno: rgb(0, 0, 0);
+    --btn-atlantis: rgb(3, 14, 58);
+    --btn-avenue: rgb(24, 40, 54);
+    --btn-sponsored: red;
+    --btn-theme: var(--btn-avenue);
+
+    --bg-mint: url("../images/mint.jpg");
+    --bg-fuscia: url("../images/fuscia.jpg");
+    --bg-inferno: url("../images/inferno.jpg");
+    --bg-atlantis: url("../images/atlantis.jpg");
+    --bg-avenue: url("../images/creston-from-carson-ave.jpg");
+    --bg-sponsored: url("../images/china.gif");
+    --bg-theme: var(--bg-avenue);
+    
+    --text-color: rgb(230, 230, 230);
+    --text-color-dark: black;
+    --transparency-disabled: rgba(0, 0, 0, 0.25);
+    --transparency-dark: rgba(0, 0, 0, 0.6);
+    --transparency-light: rgba(0, 0, 0, 0.35);
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: Montserrat;
+    font-size: 11pt;
+    color: var(--text-color);
+    background-image: var(--bg-theme);
+    background-size: cover;
+}
+
+/* Universal tag categories ---------------------------------------------------- */
+p {
+    margin: 0;
+    padding: 0;
+}
+/* Universal tag categories ---------------------------------------------------- */
+
+/* Generic Classes ------------------------------------------------------------- */
+.basicContainer {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    margin: 4px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--transparency-light);
+    box-shadow: 1px 1px 5px;
+}
+
+.labels-ape {
+    /* total height is 34px */
+    font-family: Montserrat;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    flex-grow: 0;
+    margin: 4px;
+    padding: 4px;
+    height: 34px;
+    font-size: 12pt;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--transparency-dark);
+    box-shadow: 1px 1px 7px;
+}
+
+.btn {
+    margin: 4px;
+    min-height: 30px;
+    min-width: 100px;
+    font-family: inherit;
+    font-size: 12pt;
+    font-weight: bold;
+    flex-grow: 1;
+    border: none;
+    border-radius: 4px;
+    color: var(--text-color);
+    background-color: var(--transparency-disabled);
+    transition: all .4s ease-in-out;
+    box-shadow: 1px 1px 5px;
+}
+
+.btn-clickable {
+    margin: 4px;
+    min-height: 30px;
+    min-width: 100px;
+    font-family: inherit;
+    font-size: 12pt;
+    font-weight: bold;
+    flex-grow: 1;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    color: var(--text-color);
+    background-color: var(--btn-theme);
+    transition: all .4s ease-in-out;
+    box-shadow: 1px 1px 5px;
+}
+
+.btn-clickable:hover {
+    transition: all .2s ease-in-out;
+    background-color: var(--transparency-light);
+}
+
+.btn-clickable:active {
+    transition: all 0s;
+    box-shadow: none;
+}
+
+.btn-accordion {
+    margin: 6px 0px;
+    padding: 0;
+    cursor: pointer;
+    text-align: center;
+    background-color: var(--btn-theme);
+    border-radius: 4px;
+    box-shadow: 1px 1px 7px;
+}
+
+.btn-accordion:hover {
+    transition: all .4s ease-in-out;
+    background-color: var(--transparency-light);
+}
+
+.btn-accordion:active {
+    transition: all 0s;
+    box-shadow: none;
+}
+
+ul.menu {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+ul.menu > li {
+    list-style:none;
+    float:left;
+    margin:0;
+    padding:0;
+    position:relative;
+}
+
+ul.menu p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    min-height: 30px;
+    min-width: 100px;
+    font-size: 11pt;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: var(--btn-theme);
+}
+
+ul.menu > li ul.subMenu {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    display: none;
+}
+
+ul.menu > li ul.subMenu ul {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    display: none;
+    left: 100px;
+    top: 0;
+}
+
+ul.menu > li ul li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+}
+
+.course {
+    margin: 4px;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.course:hover {
+    background-color: var(--transparency-dark);
+}
+
+.course-id {
+    background-color: var(--btn-theme);
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.course-credits {
+    float: right;
+}
+
+.acc-div {
+    overflow-y: auto;
+    scrollbar-color: var(--btn-theme);
+    scrollbar-width: thin;
+}
+
+.semester-current {
+    outline: solid var(--btn-theme) 4px;
+    transition: all 400ms ease-in-out;
+}
+/* Generic Classes ------------------------------------------------------------- */
+
+/* Header ---------------------------------------------------------------------- */
+header {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+header h1 {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+    align-self: center;
+    font-size: 3rem;
+    margin: 10px;
+    color: var(--text-color-dark);
+}
+
+#icon {
+    /* total height is 78px */
+    object-fit: cover;
+    width: 70px;
+    height: 70px;
+    margin: 4px;
+    padding: 0px;
+}
+
+#headerBtns {
+    display: flex;
+    flex: column nowrap;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#optionsHeader {
+    font-size: 12pt;
+}
+/* Header ---------------------------------------------------------------------- */
+
+/* Basic Structure ------------------------------------------------------------- */
+main {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex: 1;
+    flex-flow: row nowrap;
+    border: none;
+}
+
+#leftContainer {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    width: 15vw;
+    min-width: 200px;
+}
+
+#UL {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    height: 60vh;
+}
+
+#LL {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    height: calc(100vh - 60vh - 78px);
+}
+
+#rightContainer {
+    flex-grow: 5;
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    width: 85vw;
+}
+
+#UR {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    height: 60vh;
+}
+
+#LR {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 0px;
+    padding: 0px;
+    height: calc(100vh - 60vh - 78px);
+}
+
+/* Left container -------------------------------------------------------------- */
+#courseReqs {
+    display: flex;
+    flex-flow: column nowrap;
+    flex-grow: 1;
+    height: calc(60vh - 34px);
+    overflow: auto;
+}
+
+#courseReqs div {
+    background-color: var(--transparency-light);
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: 1px 1px 7px;
+}
+
+#homePages {
+    display: flex;
+    flex-flow: column nowrap;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: space-around;
+}  
+
+#miscBox {
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    height: calc(100vh - 60vh - 78px - 34px);
+    overflow: auto;
+    scrollbar-color: var(--btn-theme);
+    scrollbar-width: thin;
+}
+
+#minerBtn {
+    display: none;
+}
+/* Left container -------------------------------------------------------------- */
+
+/* Right container ------------------------------------------------------------- */
+#plan {
+    flex: 1;
+    flex-grow: 2;
+    flex-flow: column nowrap;
+    display: flex;
+    height: calc(60vh - 34px - 34px);
+    overflow: auto;
+    scrollbar-color: var(--btn-theme);
+    scrollbar-width: thin;
+}
+
+#plan div div p {
+    cursor: pointer;
+}
+
+#planHeader {
+    justify-content: space-around;
+}
+
+#planSubheader {
+    font-weight: normal;
+    justify-content: space-around;
+}
+
+.year {
+    flex: 1;
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.semester {
+    flex: 1;
+    flex-grow: 1;
+    margin: 4px;
+    padding: 10px;
+    font-size: 11pt;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--transparency-light);
+    box-shadow: 1px 1px 7px;
+    color: var(--text-color);
+}
+
+.semester-past {
+    flex: 1;
+    flex-grow: 1;
+    margin: 4px;
+    padding: 10px;
+    font-size: 11pt;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--transparency-dark);
+    box-shadow: 1px 1px 7px;
+    color: var(--text-color);
+}
+
+.semester p {
+    border-radius: 4px;
+}
+
+.semester p:hover {
+    background-color: var(--transparency-dark);
+}
+
+.semesterHeader {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#courseFinder {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+}
+/* Right container ------------------------------------------------------------- */
+/* Basic Structure ------------------------------------------------------------- */
+
+/* Login Form ------------------------------------------------------------------ */
+#login-form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: stretch;
+    flex-grow: 1;
+}
+
+#login-form form {
+    display: flex;
+    flex-grow: 1;
+    flex-flow: column nowrap;
+    align-items: center;
+    align-content: center;
+}
+
+#login-form .spacer {
+    flex: auto;
+    flex-grow: 1;
+}
+
+#login-form input {
+    flex: auto;
+    flex-grow: 0;
+    outline: none;
+}
+
+#login-form button {
+    flex: auto;
+    flex-grow: 0;
+}
+
+#MR {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#year-btns {
+    display: flex;
+    flex: auto;
+    flex-grow: 1;
+}
+
+#stu_notes {
+    flex-grow: 4;
+    flex: auto;
+}
+
+#fac_notes {
+    flex-grow: 4;
+    flex: auto;
+}
+
+#save-btn {
+    height: 45%;
+}
+
+#logout-btn {
+    height: 45%;
+}
+
+#stu_notes_label {
+    flex: auto;
+    justify-content: center;
+    align-content: center;
+    height: 80%;
+    padding: 8px;
+}
+
+#fac_notes_label {
+    flex: auto;
+    justify-content: center;
+    align-content: center;
+    height: 80%;
+    padding: 8px;
+}
+
+textarea {
+    flex: auto;
+    height: 80%;
+    width: 90%;
+    outline: none;
+    border: none;
+    margin: 2px;
+    color: white;
+    border-radius: 4px;
+    background-color: var(--transparency-light);
+}
+
+/* Login Form ------------------------------------------------------------------ */
