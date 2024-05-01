@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
-import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Routes, Navigate } from "react-router-dom";
 
 let global_noncollision = 10000;
 
@@ -351,7 +351,7 @@ function Login() {
     //     <Fragment>
     //         <h1>Login Page</h1>
             
-    //         { loginUser()["authenticated"] && loginUser ? <Redirect to="/" /> : null }
+    //         { loginUser()["authenticated"] && loginUser ? <Navigate to="/" /> : null }
 
     //     </Fragment> 
     // );
@@ -361,7 +361,7 @@ function Login() {
     // const Home = ({match:{params:{name}}}) => (
     //     // props.match.params.name
     //     <Fragment>
-    //         { name !== 'John Doe' ? <Redirect to="/" /> : null }
+    //         { name !== 'John Doe' ? <Navigate to="/" /> : null }
     //         <h1>About {name}</h1>
     //         <FakeText />
     //     </Fragment>
@@ -373,14 +373,14 @@ function Login() {
                 <script src="js/form.js" defer></script>
             </Helmet>
 
-            <Switch>
+            <Routes>
                 <Route path="/" exact component={LoginForm} />
 
                 {
                 isAuthStudent ? 
                 <>
                 <Route path="/student/" component={Student} />
-                </> : <Redirect to="/" />
+                </> : <Navigate to="/" />
                 }
 
                 {
@@ -388,9 +388,9 @@ function Login() {
                 <>
                 <Route path="/student/" component={Student} />
                 <Route path="/faculty/" component={Faculty} />
-                </> : <Redirect to="/" />
+                </> : <Navigate to="/" />
                 }
-            </Switch>
+            </Routes>
         </Router>
             
             // <form id="loginForm">
