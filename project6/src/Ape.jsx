@@ -1,7 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
-import Button from 'react-bootstrap/Button'
 import Helmet from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
@@ -136,9 +134,9 @@ function facNotes () {
     if (isFaculty()) {
         return (
             <>
-                <label id="fac_notes_label" className="labels-ape" for="faculty-notes">Faculty Notes</label>
+                <label id="fac_notes_label" className="labels-ape" htmlFor="faculty-notes">Faculty Notes</label>
                 <div id="fac_notes">
-                    <textarea id="faculty-notes" contentEditable="true" />
+                    <textarea id="faculty-notes" resizable="false" contentEditable="true" suppressContentEditableWarning={true} />
                 </div>
             </>
         )
@@ -147,36 +145,27 @@ function facNotes () {
     }
 }
 
-function Right({info, plans, plandata}) {
-  let default_plan = {};
-  for (let plan of plans) {
-      if (plan.id === info.default_plan_id) {
-          default_plan = plan;
-          break;
-      }
-  }
-  
+function Right() {
   return (
       <div id="rightContainer">
           <div id="UR">
               <div id="planHeader" className="labels-ape">
-                  <p><strong>Student:</strong> {info.name}</p>
-                  <p><strong>Plan:</strong> {default_plan.name}</p>
+                  <p><strong>Student:</strong></p>
+                  <p><strong>Plan:</strong></p>
                   <p><strong>Total Hours:</strong></p>
               </div>
               <div id="planSubheader" className="labels-ape">
-                  <p><strong>Major:</strong> {printMajors(plandata)}</p>
-                  <p><strong>Minor:</strong> {printMinors(plandata)}</p>
-                  <p><strong>Catalog:</strong> {plandata.catalog_year}</p>
-                  <p><strong>GPA:</strong> {info.gpa}</p>
-                  <p><strong>Major GPA:</strong> {info.major_gpa}</p>
+                  <p><strong>Major:</strong></p>
+                  <p><strong>Minor:</strong></p>
+                  <p><strong>Catalog:</strong></p>
+                  <p><strong>GPA:</strong></p>
+                  <p><strong>Major GPA:</strong></p>
               </div>
               <div id="plan"></div>
               <div id="MR">
-                <label id="stu_notes_label" className="labels-ape" for="student-notes">Student Notes</label>
+                <label id="stu_notes_label" className="labels-ape" htmlFor="student-notes">Student Notes</label>
                 <div id="stu_notes">
-                  
-                  <textarea id="student-notes" contentEditable="true" />
+                  <textarea id="student-notes" contentEditable="true" resizable="false" suppressContentEditableWarning={true} />
                 </div>
                 {facNotes()}
                 <div id="year-btns">
@@ -221,18 +210,11 @@ function renderChoose(info, planJSON, planDataJSON) {
 //=============================================================================================//
 //=======================================HEADER CODE===========================================//
 //=============================================================================================//
-function logOutHandler(ev) {
-  // Log out user
-  // TODO check if this actually works
-  window.location.href = '/logout'
-  console.log("You tried to log out!");
-}
-
 function Header({planJSON}) {
   return (
       <>  
           <header>
-              <img src="src/images/ape-no-bg.png" id="icon" alt="image of an ape reading" />
+              <img src="ape-no-bg.png" id="icon" alt="image of an ape reading" />
               <h1>APE</h1>
               <div id="headerBtns">
                   <Dropdown key="1">
@@ -250,9 +232,9 @@ function Header({planJSON}) {
                           Themes
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                          <Dropdown.Item id="mint-btn">Mint</Dropdown.Item>
-                          <Dropdown.Item id="atlantis-btn">Atlantis</Dropdown.Item>
-                          <Dropdown.Item id="avenue-btn">Avenue</Dropdown.Item>
+                          <Dropdown.Item id="mint-btn" href="javascript:setMint()">Mint</Dropdown.Item>
+                          <Dropdown.Item id="atlantis-btn" href="javascript:setAtlantis()">Atlantis</Dropdown.Item>
+                          <Dropdown.Item id="avenue-btn" href="javascript:setAvenue()">Avenue</Dropdown.Item>
                       </Dropdown.Menu>
                   </Dropdown>
                   <Dropdown key="3">
@@ -267,7 +249,7 @@ function Header({planJSON}) {
                       </Dropdown.Menu>
                   </Dropdown>
                   <button id="save-btn" className="btn-clickable">Save</button>
-                  <button id="logout-btn" className="btn-clickable" onClick={logOutHandler}>Log Out</button>
+                  <button id="logout-btn" className="btn-clickable">Log Out</button>
                   </div> 
           </header>
       </>
@@ -275,10 +257,9 @@ function Header({planJSON}) {
 }
 
 function populatePlans(planJSON) {
-    console.log(planJSON);
   return (
       <>
-          {planJSON.map(plan => <Dropdown.Item key={"plan" + plan.id}>{plan.name}</Dropdown.Item>)}
+          {planJSON.map(plan => <Dropdown.Item href={"javascript: changePlan(\"" + plan.id + "\")"} key={"plan" + plan.id}>{plan.name}</Dropdown.Item>)}
       </>
   )
 }
@@ -348,7 +329,7 @@ function populatePlans(planJSON) {
 //     )
 // }  
 
-function Ape({infoJSON, plan, planDataJSON}) {
+function Ape({plan}) {
     return (
         <>
             <Helmet>
@@ -358,7 +339,7 @@ function Ape({infoJSON, plan, planDataJSON}) {
             <Header planJSON={plan} />
             <main>
                 <Left />
-                <Right info={infoJSON} plans={plan} plandata={planDataJSON} />
+                <Right />
             </main>
         </>
     )

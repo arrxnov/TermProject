@@ -5,14 +5,21 @@
 
 let global_noncollision = "1";
 let uid_length = 36;
-let plan_id = "";
+let plan_id = "4";
+let student_id = "1";
+
 jQuery(document).ready(function () {
     setupHandlers();
-    initPage();
+    initPage(true);
 });
 
-async function initPage() {
-    
+async function initPage(initTable) {
+    document.getElementById("cognates").innerHTML = "";
+    document.getElementById("core").innerHTML = "";
+    document.getElementById("electives").innerHTML = "";
+    document.getElementById("geneds").innerHTML = "";
+
+    document.getElementById("plan").innerHTML = "";
 
     document.getElementById("cognates").setAttribute("ondragover", "dragOverHandler(event)");
     document.getElementById("core").setAttribute("ondragover", "dragOverHandler(event)");
@@ -34,22 +41,47 @@ async function initPage() {
         document.getElementById("faculty-notes").innerText = planData.faculty;
     }
 
-    // document.getElementById("mint-btn").addEventListener("click", setMint, false);
-    // document.getElementById("atlantis-btn").addEventListener("click", setAtlantis, false);
-    // document.getElementById("avenue-btn").addEventListener("click", setAvenue, false);
+    let plans = await getPlans();
+    let userInfo = await getUserInfo();
+    let default_plan = "";
+    let majors = "";
+    let minors = "";
+
+    console.log(planData);
+
+    for (let plan of plans) {
+        if (plan.id == plan_id) {
+            default_plan = plan.name;
+            for (let major of planData.majors) {
+                majors += major;
+                if (major !== planData.majors[planData.majors.length-1]) {
+                    majors += ", ";
+                }
+            }
+            for (let minor of planData.minors) {
+                minors += minor;
+                if (minor !== planData.minors[planData.minors.length-1]) {
+                    minors += ", ";
+                }
+            }
+            break;
+        }
+    }
+
+    document.getElementById("planHeader").getElementsByTagName("p")[0].innerHTML = "<strong>Student: </strong>" + userInfo.name;
+    document.getElementById("planHeader").getElementsByTagName("p")[1].innerHTML = "<strong>Plan: </strong>" + default_plan;
+    
+    document.getElementById("planSubheader").getElementsByTagName("p")[0].innerHTML = "<strong>Major: </strong>" + majors;
+    document.getElementById("planSubheader").getElementsByTagName("p")[1].innerHTML = "<strong>Minor: </strong>" + minors;
+    document.getElementById("planSubheader").getElementsByTagName("p")[2].innerHTML = "<strong>Catalog: </strong>" + planData.catalog_year;
+    document.getElementById("planSubheader").getElementsByTagName("p")[3].innerHTML = "<strong>GPA: </strong>" + userInfo.gpa;
+    document.getElementById("planSubheader").getElementsByTagName("p")[4].innerHTML = "<strong>Major GPA: </strong>" + userInfo.major_gpa;
 
     let data = await getAllCourses();
 
-    populateSearchTable(data);
-
-    // for (let course in document.getElementsByClassName("course")) {
-    //    course.onmouseup = function (event) {
-    //        if (event.which == 3) {
-    //            remove(event.target);
-    //            checkRequirements();
-    //        }
-    //    }
-    // }
+    if (initTable) {
+        populateSearchTable(data);
+    }
 
     let requirements = await getRequirements();
 
@@ -144,23 +176,39 @@ async function initPage() {
     checkCredits();
 }
 
+function changePlan(newplan) {
+    plan_id = newplan;
+    setupHandlers();
+    initPage(false);
+}
+
+async function getUserInfo() {
+    let response = await fetch("http://localhost:3000/student/studentdata");
+    return await response.json();
+}
+
 async function getRequirements() {
-    let response = await fetch("http://localhost:3000/plan/planreqs/1");
+    let response = await fetch("http://localhost:3000/plan/planreqs/" + plan_id);
     if (response.status < 400) return await response.json();
 }
 
 async function getPlanCourses() {
-    let response = await fetch("http://localhost:3000/plan/plancourses/1");
+    let response = await fetch("http://localhost:3000/plan/plancourses/" + plan_id);
     if (response.status < 400) return await response.json();
 }
 
 async function getAllCourses() {
-    let response = await fetch("http://localhost:3000/student/courses/1");
+    let response = await fetch("http://localhost:3000/student/courses/" + plan_id);
     return await response.json();
 }
 
 async function getPlanData() {
-    let response = await fetch("http://localhost:3000/plan/plandata/1");
+    let response = await fetch("http://localhost:3000/plan/plandata/" + plan_id);
+    return await response.json();
+}
+
+async function getPlans() {
+    let response = await fetch("http://localhost:3000/student/plans");
     return await response.json();
 }
 
@@ -195,6 +243,11 @@ function setupHandlers() {
     jQuery("#deleteyear-btn").click(deleteYear);
     jQuery("#save-btn").click(savePlan);
     jQuery("#logout-btn").click(logout);
+
+    for (let dropdown of document.getElementsByClassName("dropdown")) {
+        let thingy = dropdown.getElementsByTagName("a")[0];
+        console.log(thingy);
+    }
 }
 
 function setAtlantis() {
@@ -245,7 +298,6 @@ async function savePlan() {
         jsonCourse.year = course.parentElement.getElementsByClassName("term")[0].innerText.split(" ")[1];
         courses.push(jsonCourse);
     }
-    console.log(courses);
     await fetch('http://localhost:3000/save/updatecourses', {
         method: 'POST',
         headers: {

@@ -81,28 +81,28 @@ async function validateStudent(session, studentId=null) {
 }
 
 async function validatePlan(session, planId, studentId=null) {
-    // let queryResult = await validateStudent(session, studentId);
-    // if (!queryResult["valid"]) {
-    //     return queryResult;
-    // }
+    let queryResult = await validateStudent(session, studentId);
+    if (!queryResult["valid"]) {
+        return queryResult;
+    }
 
-    // let role = queryResult["role"];
-    // studentId = queryResult["studentId"];
+    let role = queryResult["role"];
+    studentId = queryResult["studentId"];
 
-    // let sql = "SELECT user_id FROM plan WHERE id = ?";
-    // var [results, fields] = await zeus.execute(sql, [planId]);
+    let sql = "SELECT user_id FROM plan WHERE id = ?";
+    var [results, fields] = await zeus.execute(sql, [planId]);
 
-    // console.log(results);
+    console.log(results);
 
-    // if (results.map(v => Object.assign({}, v))[0]["user_id"] == studentId) {
-    //     return {"valid": true, "role": role, "planId": planId, "studentId": studentId};
-    // }
+    if (results.map(v => Object.assign({}, v))[0]["user_id"] == studentId) {
+        return {"valid": true, "role": role, "planId": planId, "studentId": studentId};
+    }
 
-    // else {
-    //     return {"valid": false};
-    // }
+    else {
+        return {"valid": false};
+    }
 
-    return {"valid": true, "role": "Student", "planId": 1, "studentId": "d1eae408-2a14-4740-ba90-d2caedacee76"};
+    // return {"valid": true, "role": "Student", "planId": 4, "studentId": "d1eae408-2a14-4740-ba90-d2caedacee76"};
 }
 
 module.exports = router;
