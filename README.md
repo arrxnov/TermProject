@@ -29,3 +29,5 @@ Functionality works best when tested with the following credentials:
  - profdude@cedarville.edu : Stupid-v0ting-machines! (faculty)
 
 If a session gets stuck just rendering the background for some reason, run "localStorage.setItem('ape_session', '');" in the console, log in as a user, and hit ctrl-F5.
+
+API robustness can also be tested using postman.
