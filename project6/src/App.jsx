@@ -13,7 +13,7 @@ function App({plan}) {
 
   if (role == "Faculty") {
     return (
-      <Faculty />
+      <Ape />
     );
   }
 

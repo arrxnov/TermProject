@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 async function loginUser(credentials) {
-    console.log(JSON.stringify(credentials)); // FIXME
-
     return fetch('http://localhost:3000/auth/login', {
         method: 'POST',
         headers: {
@@ -24,7 +22,6 @@ export default function Login({ setToken, setRole }) {
         username,
         password
         });
-        console.log(response); // FIXME
         setToken(response.sessionId);
         setRole(response.role);
     }
