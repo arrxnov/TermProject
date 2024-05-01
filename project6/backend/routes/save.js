@@ -12,7 +12,7 @@ router.post('/updatenote', async function(req, res, next) {
 
         var notes = "student_notes";
         if (role == "Faculty") {
-            notes = "faculty_notes";
+            var notes = "faculty_notes";
         }
 
         let sql = "UPDATE plan SET " + notes + " = ? WHERE id = ?";
@@ -37,10 +37,12 @@ router.post('/updatecourses', async function(req, res, next) {
         var drop = "DELETE FROM plannedcourse WHERE plan_id = ?";
         var update = "INSERT INTO plannedcourse VALUES (?, ?, ?, ?)";
 
-        await zeus.execute(drop, [planId]);
+        let [results, fields] = await zeus.execute(drop, [planId]);
 
         for (let course of req.body.courses) {
-            await zeus.execute(update, [planId, course["course_id"], course["year"], course["term"]]);
+            if (results) {
+                await zeus.execute(update, [planId, course["course_id"], course["year"], course["term"]]);
+            }
         }
 
         res.send("Plan courses successfully updated\n");

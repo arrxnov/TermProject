@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 async function loginUser(credentials) {
     return fetch('http://localhost:3000/auth/login', {
         method: 'POST',
+        credentials: "include",
         headers: {
         'Content-Type': 'application/json'
         },
@@ -12,7 +13,7 @@ async function loginUser(credentials) {
         .then(data => data.json())
 }
   
-export default function Login({ setToken, setRole }) {
+export default function Login({ setToken }) {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
 
@@ -23,7 +24,6 @@ export default function Login({ setToken, setRole }) {
         password
         });
         setToken(response.sessionId);
-        setRole(response.role);
     }
 
     return(
@@ -47,6 +47,5 @@ export default function Login({ setToken, setRole }) {
 }
   
 Login.propTypes = {
-    setToken: PropTypes.func.isRequired,
-    setRole: PropTypes.func.isRequired
+    setToken: PropTypes.func.isRequired
 };
