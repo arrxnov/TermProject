@@ -1,8 +1,34 @@
-# React + Vite
+# Web Apps Project Repo
+## Web Apps Project 6
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+To run this project:
+* you must be connected to the VPN
+* you must have vite and node js installed on your machine
+* npm install the following (see backend package.json for version info)
+  * cors
+  * debug
+  * express
+  * express-session
+  * http-errors
+  * morgan
+  * mysql2
+* the following must also be present for the frontend (see frontend package.json for version info)
+  * bootstrap
+  * default
+  * jquery
+  * react
+  * react-bootstrap
+  * react-dnd
+  * react-dom
+  * react-helmet
+  * react-router-dom
+* run "npm start" from the project6/backend/ directory
+* run "npm run dev" from project6/ directory
 
-Currently, two official plugins are available:
+Functionality works best when tested with the following credentials:
+ - loganmiller216@cedarville.edu : Dog-h1t-wh0le-ba$h-trashcan (student)
+ - profdude@cedarville.edu : Stupid-v0ting-machines! (faculty)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+If a session gets stuck just rendering the background for some reason, run "localStorage.setItem('ape_session', '');" in the console, log in as a user, and hit ctrl-F5.
+
+API robustness can also be tested using postman.
