@@ -4,6 +4,21 @@ import Helmet from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+let global_noncollision = 10000;
+
+//=============================================================================================//
+//=======================================FACULTY===============================================//
+//=============================================================================================//
+
+function Faculty({}) {
+    return (
+        <>
+            <p>I am faculty!</p>
+        </>
+    )
+}
 
 //=============================================================================================//
 //=======================================LEFT SIDE FUNCTIONS===================================//
@@ -92,8 +107,8 @@ function Table() {
   )
 }
 
-function facNotes (role) {
-    if (role == "Faculty") {
+function facNotes () {
+    if (isFaculty()) {
         return (
             <>
                 <label id="fac_notes_label" className="labels-ape" htmlFor="faculty-notes">Faculty Notes</label>
@@ -107,7 +122,7 @@ function facNotes (role) {
     }
 }
 
-function Right({role}) {
+function Right() {
   return (
       <div id="rightContainer">
           <div id="UR">
@@ -129,7 +144,7 @@ function Right({role}) {
                 <div id="stu_notes">
                   <textarea id="student-notes" contentEditable="true" resizable="false" suppressContentEditableWarning={true} />
                 </div>
-                {facNotes(role)}
+                {facNotes()}
                 <div id="year-btns">
                   <button id="addyear-btn" className="btn-clickable">Add Year</button>
                   <button id="deleteyear-btn" className="btn-clickable">Delete Year</button>
@@ -165,12 +180,12 @@ function isFaculty() {
 //=============================================================================================//
 //=======================================HEADER CODE===========================================//
 //=============================================================================================//
-function Header({planJSON, role}) {
+function Header({planJSON}) {
   return (
       <>  
           <header>
               <img src="ape-no-bg.png" id="icon" alt="image of an ape reading" />
-              {role == "Faculty" ? <h1>APE - FACULTY</h1> : <h1>APE</h1>}
+              <h1>APE</h1>
               <div id="headerBtns">
                   <Dropdown key="1">
                       <Dropdown.Toggle className="btn-clickable" id="dropdown-basic">

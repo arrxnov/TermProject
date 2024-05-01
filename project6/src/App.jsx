@@ -25,7 +25,7 @@ export default function App() {
 
   if (role == "Faculty") {
     return (
-      <Ape plan={plan} role={role} />
+      <Ape />
     );
   }
 
