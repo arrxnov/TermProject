@@ -44,40 +44,40 @@ router.get('/logout', function(req, res, next) {
 
 
 function validateFaculty(session) {
-    // if (session.authenticated && session.role == "Faculty") {
-    //     return {"valid": true, "facultyId": session.userId};
-    // }
+    if (session.authenticated && session.role == "Faculty") {
+        return {"valid": true, "facultyId": session.userId};
+    }
 
-    // return {"valid": false};
+    return {"valid": false};
 
-    return {"valid": true};
+    // return {"valid": true};
 }
 
 
 async function validateStudent(session, studentId=null) {
-    // if (session.authenticated) {
-    //     if (session.role == "Student") {
-    //         return {"valid": true, "role": "student", "studentId": session.userId};
-    //     } 
+    if (session.authenticated) {
+        if (session.role == "Student") {
+            return {"valid": true, "role": "student", "studentId": session.userId};
+        } 
         
-    //     else {
-    //         let sql = "SELECT advisor_id FROM advisee WHERE advisee_id = ?";
-    //         var [results, fields] = await zeus.execute(sql, [studentId]);
+        else {
+            let sql = "SELECT advisor_id FROM advisee WHERE advisee_id = ?";
+            var [results, fields] = await zeus.execute(sql, [studentId]);
 
-    //         if (results.map(v => Object.assign({}, v))[0]["advisor_id"] == session.userId) {
-    //             return {"valid": true, "role": "faculty", "facultyId": session.userId, "studentId": studentId};
-    //         }
+            if (results.map(v => Object.assign({}, v))[0]["advisor_id"] == session.userId) {
+                return {"valid": true, "role": "faculty", "facultyId": session.userId, "studentId": studentId};
+            }
 
-    //         else {
-    //             return {"valid": false};
-    //         }
-    //     }
+            else {
+                return {"valid": false};
+            }
+        }
 
-    // } else {
-    //     return {"valid": false};
-    // }
+    } else {
+        return {"valid": false};
+    }
 
-    return {"valid": true, "role": "Student", "studentId": "d1eae408-2a14-4740-ba90-d2caedacee76"};
+    // return {"valid": true, "role": "Student", "studentId": "d1eae408-2a14-4740-ba90-d2caedacee76"};
 }
 
 async function validatePlan(session, planId, studentId=null) {
