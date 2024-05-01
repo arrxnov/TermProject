@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Student from './Student';
+import Ape from './Ape'
 import Faculty from './Faculty';
 import Login from './Login';
 
@@ -19,7 +19,7 @@ function App() {
 
   else if (role == "Student") {
     return (
-      <Student />
+      <Ape />
     );
   }
 }
