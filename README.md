@@ -2,6 +2,7 @@
 ## Web Apps Project 6
 
 To run this project:
+* you must be connected to the VPN
 * you must have vite and node js installed on your machine
 * npm install the following (see backend package.json for version info)
   * cors
