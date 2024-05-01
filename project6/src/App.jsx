@@ -13,13 +13,13 @@ function App({plan}) {
 
   if (role == "Faculty") {
     return (
-      <Ape />
+      <Ape plan={plan} role={role} />
     );
   }
 
   else if (role == "Student") {
     return (
-      <Ape plan={plan} />
+      <Ape plan={plan} role={role} />
     );
   }
 }

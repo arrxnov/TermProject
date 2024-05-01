@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown'
 import Helmet from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-let global_noncollision = 10000;
 
 //=============================================================================================//
 //=======================================FACULTY===============================================//
 //=============================================================================================//
 
-function Faculty({}) {
+function Faculty({role}) {
     return (
         <>
-            <p>I am faculty!</p>
+            <main>
+              <Left />
+              <Right role={role} />
+            </main>
         </>
     )
 }
@@ -108,8 +107,8 @@ function Table() {
   )
 }
 
-function facNotes () {
-    if (isFaculty()) {
+function facNotes (role) {
+    if (role == "Faculty") {
         return (
             <>
                 <label id="fac_notes_label" className="labels-ape" htmlFor="faculty-notes">Faculty Notes</label>
@@ -123,7 +122,7 @@ function facNotes () {
     }
 }
 
-function Right() {
+function Right({role}) {
   return (
       <div id="rightContainer">
           <div id="UR">
@@ -145,7 +144,7 @@ function Right() {
                 <div id="stu_notes">
                   <textarea id="student-notes" contentEditable="true" resizable="false" suppressContentEditableWarning={true} />
                 </div>
-                {facNotes()}
+                {facNotes(role)}
                 <div id="year-btns">
                   <button id="addyear-btn" className="btn-clickable">Add Year</button>
                   <button id="deleteyear-btn" className="btn-clickable">Delete Year</button>
@@ -160,26 +159,18 @@ function Right() {
 //=============================================================================================//
 //=================================MAIN RENDER CODE HELPERS====================================//
 //=============================================================================================//
-function isFaculty() {
-    // FIXME: access current session ID
-    // let sessionId = false;
-    // let res = auth.validateFaculty(sessionId);
-    // return res["valid"];
-    return false;
-}
-
-function renderChoose(info, planJSON, planDataJSON) {
-    if (isFaculty()) {
+function renderChoose(role) {
+    if (role == "Faculty") {
     return (
       <main>
-        <Faculty />
+        <Faculty role={role} />
       </main>
     )
   } else {
     return (
       <main>
         <Left />
-        <Right info={info} plans={planJSON} plandata={planDataJSON} />
+        <Right role={role} />
       </main>
     )
   }
@@ -188,12 +179,12 @@ function renderChoose(info, planJSON, planDataJSON) {
 //=============================================================================================//
 //=======================================HEADER CODE===========================================//
 //=============================================================================================//
-function Header({planJSON}) {
+function Header({planJSON, role}) {
   return (
       <>  
           <header>
               <img src="ape-no-bg.png" id="icon" alt="image of an ape reading" />
-              <h1>APE</h1>
+              {role == "Faculty" ? <h1>APE - FACULTY</h1> : <h1>APE</h1>}
               <div id="headerBtns">
                   <Dropdown key="1">
                       <Dropdown.Toggle className="btn-clickable" id="dropdown-basic">
@@ -242,17 +233,16 @@ function populatePlans(planJSON) {
   )
 }  
 
-function Ape({plan}) {
+function Ape({plan, role}) {
     return (
         <>
             <Helmet>
                 <script src="js/datatables.js"></script>
                 <script src="js/form.js" defer></script>
             </Helmet>
-            <Header planJSON={plan} />
+            <Header planJSON={plan} role={role} />
             <main>
-                <Left />
-                <Right />
+                {renderChoose(role)}
             </main>
         </>
     )
