@@ -29,11 +29,11 @@ router.post('/login', async function(req, res, next) {
 
 router.get('/checklogin', function(req, res, next) {
     if (req.session.authenticated) {
-        res.send({"authenticated": true})
+        res.send({"authenticated": true, "role": req.session.role})
     }
 
     else {
-        res.send({"authenticated": false});
+        res.send({"authenticated": false, "role": ""});
     }
 });
 
