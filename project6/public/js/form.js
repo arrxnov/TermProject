@@ -47,8 +47,6 @@ async function initPage(initTable) {
     let majors = "";
     let minors = "";
 
-    console.log(planData);
-
     for (let plan of plans) {
         if (plan.id == plan_id) {
             default_plan = plan.name;
@@ -243,11 +241,6 @@ function setupHandlers() {
     jQuery("#deleteyear-btn").click(deleteYear);
     jQuery("#save-btn").click(savePlan);
     jQuery("#logout-btn").click(logout);
-
-    for (let dropdown of document.getElementsByClassName("dropdown")) {
-        let thingy = dropdown.getElementsByTagName("a")[0];
-        console.log(thingy);
-    }
 }
 
 function setAtlantis() {

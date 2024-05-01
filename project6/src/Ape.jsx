@@ -252,7 +252,6 @@ function Ape({plan}) {
             <Header planJSON={plan} />
             <main>
                 <Left />
-                {console.log("passed left")}
                 <Right />
             </main>
         </>
