@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
-import { BrowserRouter as Router, Route, Link, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Routes, Navigate, useNavigate } from "react-router-dom";
 
 let global_noncollision = 10000;
 
@@ -346,59 +346,91 @@ function Ape({plan}) {
     )
 }
 
-function Login() {
-    // const LoginForm = () => (
-    //     <Fragment>
-    //         <h1>Login Page</h1>
-            
-    //         { loginUser()["authenticated"] && loginUser ? <Navigate to="/" /> : null }
+async function loginUser(username, password) {
+    let response = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({"username": username, "passwd": password})
+    });
+    let results = await response.json();
+    if (results.authenticated) {
+        if (results.role == "Faculty") {
+            isAuthFaculty = true;
+            return "faculty";
+        } else if (results.role == "Student") {
+            isAuthStudent = true;
+            return "student";
+        }
+    } else {
+        return "";
+    }
+}
 
-    //     </Fragment> 
-    // );
+let isAuthStudent = false;
+let isAuthFaculty = false;
 
-    
-    
-    // const Home = ({match:{params:{name}}}) => (
-    //     // props.match.params.name
-    //     <Fragment>
-    //         { name !== 'John Doe' ? <Navigate to="/" /> : null }
-    //         <h1>About {name}</h1>
-    //         <FakeText />
-    //     </Fragment>
-    // );
-    
+async function checkUser() {
+    let response = await fetch("http://localhost:3000/auth/checklogin");
+    let value = await response.json();
+    if (value.authenticated) {
+        console.log("Yup dat boi logged in");
+    } else {
+        console.log("Who dat mann?")
+    }
+    return value;
+}
+
+const LoginForm = () => {
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
     return (
-        <Router>
-            <Helmet>
-                <script src="js/form.js" defer></script>
-            </Helmet>
+        <React.Fragment>
+            <h1>Login Page</h1>
+            <form id="loginForm">
+                <input onChange={(ev) => { setUsername(ev.target.value); }} id="user-field" type="text" name="user" placeholder="Username" />
+                <input onChange={(ev) => { setPassword(ev.target.value); }}id="pass-field" type="password" name="password" placeholder="Password" />
+                <button id="submit-btn" className="btn-clickable" type="submit" onSubmit={() => { navigate("/" + loginUser(username, password)); }}>Login</button>
+            </form>
+        </React.Fragment> 
+    )
+}
 
-            <Routes>
-                <Route path="/" exact component={LoginForm} />
 
-                {
-                isAuthStudent ? 
-                <>
-                <Route path="/student/" component={Student} />
-                </> : <Navigate to="/" />
-                }
+function Login() {
+    return (
+        <>
+            <Router>
+                <Helmet>
+                    <script src="js/form.js" defer></script>
+                </Helmet>
+                <Routes>
+                    <Route path="/" exact component={LoginForm} />
+                    {
+                    isAuthStudent ? 
+                    <>
+                    <Route path="/student/" component={Student} />
+                    </> : <Navigate to="/" />
+                    }
 
-                {
-                isAuthFaculty ? 
-                <>
-                <Route path="/student/" component={Student} />
-                <Route path="/faculty/" component={Faculty} />
-                </> : <Navigate to="/" />
-                }
-            </Routes>
-        </Router>
-            
-            // <form id="loginForm">
-            //     <input id="user-field" type="text" name="user" placeholder="Username" />
-            //     <input id="pass-field" type="password" name="password" placeholder="Password" />
-            //     <button id="submit-btn" className="btn-clickable" type="submit">Login</button>
-            // </form>
+                    {
+                    isAuthFaculty ? 
+                    <>
+                    <Route path="/student/" component={Ape} />
+                    <Route path="/faculty/" component={Faculty} />
+                    </> : <Navigate to="/" />
+                    }
+                </Routes>
+                {() => {
+                    const navigate = useNavigate();
+                    let role = checkUser().role;
+                    navigate("/" + role);
+                }}
+            </Router>
+        </>
     );
 }
 
-export default Ape;
+export default Login;

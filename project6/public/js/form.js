@@ -5,7 +5,7 @@
 
 let global_noncollision = "1";
 let uid_length = 36;
-let plan_id = "4";
+let plan_id = "1";
 let student_id = "1";
 
 jQuery(document).ready(function () {
