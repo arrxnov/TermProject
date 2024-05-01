@@ -27,8 +27,6 @@ app.use(session({
     secret: crypto.randomBytes(32).toString('hex'),
     resave: false,
     saveUninitialized: true
-    // store: ??
-    // cookie: { secure: true }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRouter);

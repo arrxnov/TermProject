@@ -3,7 +3,6 @@ var zeus = require('../db/database');
 var auth = require('./auth');
 var router = express.Router();
 
-// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), and note.
 router.post('/updatenote', async function(req, res, next) {
     let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
 
@@ -29,7 +28,6 @@ router.post('/updatenote', async function(req, res, next) {
     }
 });
 
-// POST request needs to have the following parameters: plan_id, student_id (optional if student is signed in), and courses: {course_id, year, term}.
 router.post('/updatecourses', async function(req, res, next) {
     let validSession = await auth.validatePlan(req.session, req.body.plan_id, req.body.student_id);
 

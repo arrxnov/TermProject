@@ -13,7 +13,7 @@ function App() {
 
   if (role == "Faculty") {
     return (
-      <Faculty />
+      <Ape />
     );
   }
 
