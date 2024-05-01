@@ -392,14 +392,17 @@ const LoginForm = () => {
             <form id="loginForm">
                 <input onChange={(ev) => { setUsername(ev.target.value); }} id="user-field" type="text" name="user" placeholder="Username" />
                 <input onChange={(ev) => { setPassword(ev.target.value); }}id="pass-field" type="password" name="password" placeholder="Password" />
-                <button id="submit-btn" className="btn-clickable" type="submit" onSubmit={() => { navigate("/" + loginUser(username, password)); }}>Login</button>
+                <button id="submit-btn" className="btn-clickable" type="submit" onSubmit={() => { 
+                    ev.preventDefault(); 
+                    navigate("/" + loginUser(username, password)); 
+                }}>Login</button>
             </form>
         </React.Fragment> 
     )
 }
 
-
 function Login() {
+    checkUser();
     return (
         <>
             <Router>
@@ -407,27 +410,10 @@ function Login() {
                     <script src="js/form.js" defer></script>
                 </Helmet>
                 <Routes>
-                    <Route path="/" exact component={LoginForm} />
-                    {
-                    isAuthStudent ? 
-                    <>
-                    <Route path="/student/" component={Student} />
-                    </> : <Navigate to="/" />
-                    }
-
-                    {
-                    isAuthFaculty ? 
-                    <>
-                    <Route path="/student/" component={Ape} />
-                    <Route path="/faculty/" component={Faculty} />
-                    </> : <Navigate to="/" />
-                    }
+                    <Route path="/" exact /*component={LoginForm}*/ element={isAuthStudent ? <Navigate to="/student" /> : isAuthFaculty ? <Navigate to="/faculty" /> : <LoginForm /> } />
+                    <Route path="/student" element={isAuthStudent ? <Ape /> : <Navigate to="/" /> } />
+                    <Route path="/faculty/" element={isAuthFaculty ? <Faculty /> : <Navigate to="/faculty" /> } />
                 </Routes>
-                {() => {
-                    const navigate = useNavigate();
-                    let role = checkUser().role;
-                    navigate("/" + role);
-                }}
             </Router>
         </>
     );
