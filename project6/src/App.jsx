@@ -3,7 +3,7 @@ import Ape from './Ape'
 import Faculty from './Faculty';
 import Login from './Login';
 
-function App() {
+function App({plan}) {
   const [token, setToken] = useState();
   const [role, setRole] = useState();
 
@@ -19,9 +19,8 @@ function App() {
 
   else if (role == "Student") {
     return (
-      <Ape />
+      <Ape plan={plan} />
     );
   }
 }
-
 export default App;
