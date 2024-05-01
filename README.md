@@ -23,3 +23,9 @@ To run this project:
   * react-router-dom
 * run "npm start" from the project6/backend/ directory
 * run "npm run dev" from project6/ directory
+
+Functionality works best when tested with the following credentials:
+ - loganmiller216@cedarville.edu : Dog-h1t-wh0le-ba$h-trashcan (student)
+ - profdude@cedarville.edu : Stupid-v0ting-machines! (faculty)
+
+If a session gets stuck just rendering the background for some reason, run "localStorage.setItem('ape_session', '');" in the console, log in as a user, and hit ctrl-F5.
