@@ -108,30 +108,6 @@ function Table() {
   )
 }
 
-function printMajors(plandata) {
-  let majorstring = "";
-  let majors = plandata.majors;
-  for (let major of majors) {
-      majorstring += major;
-      if (major !== majors[majors.length - 1]) {
-          majorstring += ", "
-      }
-  }
-  return majorstring;
-}
-
-function printMinors(plandata) {
-  let minorstring = "";
-  let minors = plandata.minors;
-  for (let minor of minors) {
-      minorstring += minor;
-      if (minor !== minors[minors.length - 1]) {
-          minorstring += ", "
-      }
-  }
-  return minorstring;
-}
-
 function facNotes () {
     if (isFaculty()) {
         return (
@@ -266,13 +242,7 @@ function populatePlans(planJSON) {
   )
 }  
 
-async function getPlans() {
-    let response = await fetch("http://localhost:3000/student/plans");
-    return await response.json();
-}
-
-async function Ape() {
-    let plan = await getPlans();
+function Ape({plan}) {
     return (
         <>
             <Helmet>
@@ -282,6 +252,7 @@ async function Ape() {
             <Header planJSON={plan} />
             <main>
                 <Left />
+                {console.log("passed left")}
                 <Right />
             </main>
         </>
