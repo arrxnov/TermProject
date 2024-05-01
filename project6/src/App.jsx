@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Ape from './Ape'
-import Faculty from './Faculty';
 import Login from './Login';
+import useToken from './useToken';
 
-function App({plan}) {
-  const [token, setToken] = useState();
+export default function App() {
+  const { token, setToken } = useToken();
   const [role, setRole] = useState();
 
+  useEffect(() => {
+    const checkAuth = async () => {
+        const response = await fetch("http://localhost:3000/auth/checklogin", {credentials: "include"});
+        const result = await response.json();
+        if (result.authenticated) {
+          setRole(result.role);
+        }
+    };
+
+    checkAuth();
+  }, []);
+
   if(!token) {
-    return <Login setToken={setToken} setRole={setRole} />
+    return <Login setToken={setToken} />
   }
 
   if (role == "Faculty") {
@@ -19,8 +31,7 @@ function App({plan}) {
 
   else if (role == "Student") {
     return (
-      <Ape plan={plan} role={role} />
+      <Ape />
     );
   }
 }
-export default App;

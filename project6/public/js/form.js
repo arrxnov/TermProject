@@ -1,12 +1,6 @@
-/*
- * Filename: student.js
- * Authors: Logan Miller, Jacob Grady, Kai Delsing
- */
-
 let global_noncollision = "1";
 let uid_length = 36;
 let plan_id = "1";
-let student_id = "1";
 
 jQuery(document).ready(function () {
     setupHandlers();
@@ -38,7 +32,7 @@ async function initPage(initTable) {
 
     document.getElementById("student-notes").innerText = planData.student_notes;
     if (document.getElementById("faculty-notes") !== null) {
-        document.getElementById("faculty-notes").innerText = planData.faculty;
+        document.getElementById("faculty-notes").innerText = planData.faculty_notes;
     }
 
     let plans = await getPlans();
@@ -181,32 +175,32 @@ function changePlan(newplan) {
 }
 
 async function getUserInfo() {
-    let response = await fetch("http://localhost:3000/student/studentdata");
+    let response = await fetch("http://localhost:3000/student/studentdata", {credentials: "include"});
     return await response.json();
 }
 
 async function getRequirements() {
-    let response = await fetch("http://localhost:3000/plan/planreqs/" + plan_id);
+    let response = await fetch("http://localhost:3000/plan/planreqs/" + plan_id, {credentials: "include"});
     if (response.status < 400) return await response.json();
 }
 
 async function getPlanCourses() {
-    let response = await fetch("http://localhost:3000/plan/plancourses/" + plan_id);
+    let response = await fetch("http://localhost:3000/plan/plancourses/" + plan_id, {credentials: "include"});
     if (response.status < 400) return await response.json();
 }
 
 async function getAllCourses() {
-    let response = await fetch("http://localhost:3000/student/courses/" + plan_id);
+    let response = await fetch("http://localhost:3000/student/courses/", {credentials: "include"});
     return await response.json();
 }
 
 async function getPlanData() {
-    let response = await fetch("http://localhost:3000/plan/plandata/" + plan_id);
+    let response = await fetch("http://localhost:3000/plan/plandata/" + plan_id, {credentials: "include"});
     return await response.json();
 }
 
 async function getPlans() {
-    let response = await fetch("http://localhost:3000/student/plans");
+    let response = await fetch("http://localhost:3000/student/plans", {credentials: "include"});
     return await response.json();
 }
 
@@ -241,6 +235,10 @@ function setupHandlers() {
     jQuery("#deleteyear-btn").click(deleteYear);
     jQuery("#save-btn").click(savePlan);
     jQuery("#logout-btn").click(logout);
+
+    for (let dropdown of document.getElementsByClassName("dropdown")) {
+        let thingy = dropdown.getElementsByTagName("a")[0];
+    }
 }
 
 function setAtlantis() {
@@ -262,13 +260,22 @@ async function savePlan() {
     if (!checkDup()) {
         return;
     }
+    let response = await fetch('http://localhost:3000/auth/checklogin', {credentials: "include"});
+    let result = await response.json();
+    if (result.role == "Faculty") {
+        var json = {"plan_id": 1, "note": document.getElementById("faculty-notes").value};
+    } else {
+        var json = {"plan_id": 1, "note": document.getElementById("student-notes").value};
+    }
+
     await fetch('http://localhost:3000/save/updatenote', {
         method: 'POST',
+        credentials: "include",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"plan_id": 1, "note": document.getElementById("student-notes").value})
+        body: JSON.stringify(json)
     });
     let courses = [];
     let plan = document.getElementById("plan");
@@ -293,6 +300,7 @@ async function savePlan() {
     }
     await fetch('http://localhost:3000/save/updatecourses', {
         method: 'POST',
+        credentials: "include",
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -302,8 +310,9 @@ async function savePlan() {
 }
 
 async function logout() {
-    await fetch("http://localhost:3000/logout");
-    window.href.location = "http://localhost:5173/login";
+    await fetch("http://localhost:3000/logout", {credentials: "include"});
+    localStorage.setItem('ape_session', '');
+    location.reload();
 }
 
 function addYear() {

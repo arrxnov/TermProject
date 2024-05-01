@@ -1,24 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown'
 import Helmet from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
-
-//=============================================================================================//
-//=======================================FACULTY===============================================//
-//=============================================================================================//
-
-function Faculty({role}) {
-    return (
-        <>
-            <main>
-              <Left />
-              <Right role={role} />
-            </main>
-        </>
-    )
-}
 
 //=============================================================================================//
 //=======================================LEFT SIDE FUNCTIONS===================================//
@@ -159,21 +144,22 @@ function Right({role}) {
 //=============================================================================================//
 //=================================MAIN RENDER CODE HELPERS====================================//
 //=============================================================================================//
-function renderChoose(role) {
-    if (role == "Faculty") {
-    return (
-      <main>
-        <Faculty role={role} />
-      </main>
-    )
-  } else {
-    return (
-      <main>
-        <Left />
-        <Right role={role} />
-      </main>
-    )
-  }
+function isFaculty() {
+    const [role, setRole] = useState();
+    
+    useEffect(() => {
+        const checkFaculty = async () => {
+            const response = await fetch("http://localhost:3000/auth/checklogin", {credentials: "include"});
+            const result = await response.json();
+            if (result.authenticated) {
+              setRole(result.role);
+            }
+        };
+    
+        checkFaculty();
+    }, []);
+
+    return role == "Faculty";
 }
 
 //=============================================================================================//
@@ -233,19 +219,38 @@ function populatePlans(planJSON) {
   )
 }  
 
-function Ape({plan, role}) {
-    return (
-        <>
-            <Helmet>
-                <script src="js/datatables.js"></script>
-                <script src="js/form.js" defer></script>
-            </Helmet>
-            <Header planJSON={plan} role={role} />
-            <main>
-                {renderChoose(role)}
-            </main>
-        </>
-    )
-}
+export default function Ape() {
+    const [plan, setPlan] = useState();
 
-export default Ape;
+    useEffect(() => {
+        const fetchPlan = async () => {
+            const response = await fetch("http://localhost:3000/student/plans", {credentials: "include"});
+            const result = await response.json();
+            setPlan(result);
+        };
+
+        fetchPlan();
+    }, []);
+
+    if (plan) {
+        return (
+            <>
+                <Helmet>
+                    <script src="js/datatables.js"></script>
+                    <script src="js/form.js" defer></script>
+                </Helmet>
+                <Header planJSON={plan} />
+                <main>
+                    <Left />
+                    <Right />
+                </main>
+            </>
+        );
+    }
+
+    else {
+        return (
+            <h1>Error</h1>
+        );
+    }
+}
