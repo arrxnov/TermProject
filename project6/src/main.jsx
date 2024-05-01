@@ -4,7 +4,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Login from './Ape'
+import App from './App'
 
 //=============================================================================================//
 //=================================ASYNC FETCH FUNCTIONS=======================================//
@@ -31,6 +31,6 @@ import Login from './Ape'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <>
-        <Login />
+        <App />
     </>
 )

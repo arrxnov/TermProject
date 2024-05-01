@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Dropdown from 'react-bootstrap/Dropdown'
 import Helmet from 'react-helmet'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/style.css'
 import './css/datatables.css'
-import { BrowserRouter as Router, Route, Link, Routes, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 let global_noncollision = 10000;
 
@@ -346,91 +347,145 @@ function Ape({plan}) {
     )
 }
 
-async function loginUser(username, password) {
-    let response = await fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({"username": username, "passwd": password})
+async function loginUser(credentials) {
+  console.log(JSON.stringify(credentials)); // FIXME
+
+  return fetch('http://localhost:3000/auth/login', {
+   method: 'POST',
+   headers: {
+     'Content-Type': 'application/json'
+   },
+   body: JSON.stringify(credentials)
+ })
+   .then(data => data.json())
+}
+
+export function Login({ setToken }) {
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const token = await loginUser({
+      username,
+      password
     });
-    let results = await response.json();
-    if (results.authenticated) {
-        if (results.role == "Faculty") {
-            isAuthFaculty = true;
-            return "faculty";
-        } else if (results.role == "Student") {
-            isAuthStudent = true;
-            return "student";
-        }
-    } else {
-        return "";
-    }
+    console.log(token); // FIXME
+    setToken(token);
+  }
+
+  return(
+    <div className="login-wrapper">
+      <h1>Please Log In</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <p>Username</p>
+          <input type="text" onChange={e => setUserName(e.target.value)} />
+        </label>
+        <label>
+          <p>Password</p>
+          <input type="password" onChange={e => setPassword(e.target.value)} />
+        </label>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  )
 }
 
-let isAuthStudent = false;
-let isAuthFaculty = false;
-
-async function checkUser() {
-    let response = await fetch("http://localhost:3000/auth/checklogin");
-    let value = await response.json();
-    if (value.authenticated) {
-        console.log("Yup dat boi logged in");
-    } else {
-        console.log("Who dat mann?")
-    }
-    return value;
-}
-
-const LoginForm = () => {
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    return (
-        <React.Fragment>
-            <h1>Login Page</h1>
-            <form id="loginForm">
-                <input onChange={(ev) => { setUsername(ev.target.value); }} id="user-field" type="text" name="user" placeholder="Username" />
-                <input onChange={(ev) => { setPassword(ev.target.value); }}id="pass-field" type="password" name="password" placeholder="Password" />
-                <button id="submit-btn" className="btn-clickable" type="submit" onSubmit={() => { navigate("/" + loginUser(username, password)); }}>Login</button>
-            </form>
-        </React.Fragment> 
-    )
-}
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
+};
 
 
-function Login() {
-    return (
-        <>
-            <Router>
-                <Helmet>
-                    <script src="js/form.js" defer></script>
-                </Helmet>
-                <Routes>
-                    <Route path="/" exact component={LoginForm} />
-                    {
-                    isAuthStudent ? 
-                    <>
-                    <Route path="/student/" component={Student} />
-                    </> : <Navigate to="/" />
-                    }
 
-                    {
-                    isAuthFaculty ? 
-                    <>
-                    <Route path="/student/" component={Ape} />
-                    <Route path="/faculty/" component={Faculty} />
-                    </> : <Navigate to="/" />
-                    }
-                </Routes>
-                {() => {
-                    const navigate = useNavigate();
-                    let role = checkUser().role;
-                    navigate("/" + role);
-                }}
-            </Router>
-        </>
-    );
-}
 
-export default Login;
+// async function loginUser(username, password) {
+//     let response = await fetch('http://localhost:3000/auth/login', {
+//         method: 'POST',
+//         headers: {
+//           'Accept': 'application/json',
+//           'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({"username": username, "passwd": password})
+//     });
+//     let results = await response.json();
+//     if (results.authenticated) {
+//         if (results.role == "Faculty") {
+//             isAuthFaculty = true;
+//             return "faculty";
+//         } else if (results.role == "Student") {
+//             isAuthStudent = true;
+//             return "student";
+//         }
+//     } else {
+//         return "";
+//     }
+// }
+
+// let isAuthStudent = false;
+// let isAuthFaculty = false;
+
+// async function checkUser() {
+//     let response = await fetch("http://localhost:3000/auth/checklogin");
+//     let value = await response.json();
+//     if (value.authenticated) {
+//         console.log("Yup dat boi logged in");
+//     } else {
+//         console.log("Who dat mann?")
+//     }
+//     return value;
+// }
+
+// const LoginForm = () => {
+//     const [username, setUsername] = React.useState("");
+//     const [password, setPassword] = React.useState("");
+//     return (
+//         <React.Fragment>
+//             <h1>Login Page</h1>
+//             <form id="loginForm">
+//                 <input onChange={(ev) => { setUsername(ev.target.value); }} id="user-field" type="text" name="user" placeholder="Username" />
+//                 <input onChange={(ev) => { setPassword(ev.target.value); }}id="pass-field" type="password" name="password" placeholder="Password" />
+//                 <button id="submit-btn" className="btn-clickable" type="submit" onSubmit={() => { navigate("/" + loginUser(username, password)); }}>Login</button>
+//             </form>
+//         </React.Fragment> 
+//     )
+// }
+
+
+// function Login() {
+//     return (
+//         <>
+//             <Router>
+//                 <Helmet>
+//                     <script src="js/form.js" defer></script>
+//                 </Helmet>
+//                 <Routes>
+//                     <Route path="/" exact component={LoginForm} />
+//                     {
+//                     isAuthStudent ? 
+//                     <>
+//                     <Route path="/student/" component={Student} />
+//                     </> : <Navigate to="/" />
+//                     }
+
+//                     {
+//                     isAuthFaculty ? 
+//                     <>
+//                     <Route path="/student/" component={Ape} />
+//                     <Route path="/faculty/" component={Faculty} />
+//                     </> : <Navigate to="/" />
+//                     }
+//                 </Routes>
+//                 {() => {
+//                     const navigate = useNavigate();
+//                     let role = checkUser().role;
+//                     navigate("/" + role);
+//                 }}
+//             </Router>
+//         </>
+//     );
+// }
+
+// export default Login;

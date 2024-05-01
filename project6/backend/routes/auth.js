@@ -10,7 +10,7 @@ router.post('/login', async function(req, res, next) {
 
     results = results.map(v => Object.assign({}, v))[0];
 
-    if (results && results["PasswordHash"] == createHash('sha256').update(req.body.passwd).digest('hex')) {
+    if (results && results["PasswordHash"] == createHash('sha256').update(req.body.password).digest('hex')) {
         req.session.userId = results["Id"];
         req.session.authenticated = true;
         
